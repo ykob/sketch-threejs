@@ -1,0 +1,32 @@
+{
+  "name": "demo-template-canvas",
+  "version": "0.0.0",
+  "description": "it's the format of demo with html canvas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ykob/my-gulp-set.git"
+  },
+  "keywords": [
+    "canvas"
+  ],
+  "author": "yoichi kobayashi",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ykob/my-gulp-set/issues"
+  },
+  "devDependencies": {
+    "connect": "~3.3.4",
+    "serve-static": "~1.8.1",
+    "browser-sync": "~2.0.1",
+    "gulp": "~3.8.10",
+    "gulp-uglify": "~1.1.0",
+    "gulp-ruby-sass": "~1.0.0-alpha.3",
+    "gulp-plumber": "~0.6.6",
+    "gulp-rename": "~1.2.0",
+    "gulp-concat": "~2.5.2"
+  }
+}

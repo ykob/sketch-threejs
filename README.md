@@ -1,2 +1,3 @@
 # demo-template-threejs
-Three.jsのデモを作成する際に使用する。
+
+Three.jsを使ったdemo用のテンプレート。

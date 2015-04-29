@@ -1,0 +1,7 @@
+*.sublime-project
+*.sublime-workspace
+node_modules
+.sass-cache/
+./css/
+./js/
+ignore
