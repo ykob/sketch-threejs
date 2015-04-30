@@ -27,14 +27,14 @@ Three.jsでは*透視投影*と*正投影*の2つの方法でカメラを設定�
 視点から手前の物体を大きく、遠くの物体を小さく描画し、遠近感を生み出す方式。  
 これは通常生活における物の見え方と同じ。
 
-THREE.PerspectiveCamera()
+THREE.PerspectiveCamera()  
 http://threejs.org/docs/#Reference/Cameras/PerspectiveCamera
 
 #### [正投影](http://ja.wikipedia.org/wiki/%E6%AD%A3%E6%8A%95%E5%BD%B1%E5%9B%B3)
 
 物体の見た目の大きさを、視点からの距離によらず描画する方式。
 
-THREE.OrthographicCamera()
+THREE.OrthographicCamera()  
 http://threejs.org/docs/#Reference/Cameras/OrthographicCamera
 
 ---
