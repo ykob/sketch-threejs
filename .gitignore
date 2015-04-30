@@ -2,6 +2,6 @@
 *.sublime-workspace
 node_modules
 .sass-cache/
-./css/
-./js/
+css/
+js/
 ignore
