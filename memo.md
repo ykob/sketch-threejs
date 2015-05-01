@@ -51,11 +51,15 @@ Three.jsでは、*点光源*、*スポット光源*、*平行光源*、*環境�
 
 #### 点光源
 
-発光部の大きさが受光部までの距離に比べて小さく、点とみなせる光源。
+方向性を持たない比較的小さな光源。局所的に空間を照らす。  
+光源からの距離が離れると光強度が低下する．
 
 - [THREE.PointLight(hex, intensity, distance)](http://threejs.org/docs/#Reference/Lights/PointLight)
 
 #### スポット光源
+
+方向性を持った点光源。  
+光源に加えて、光軸の方向、広がり角度、及び光軸から半径方向の光量分布を指定する。
 
 - [THREE.SpotLight(hex, intensity, distance, angle, exponent)](http://threejs.org/docs/#Reference/Lights/SpotLight)
 
@@ -64,6 +68,8 @@ Three.jsでは、*点光源*、*スポット光源*、*平行光源*、*環境�
 - [THREE.HemisphereLight()]()
 
 #### 環境光
+
+空気による散乱や、周囲の物体との相互反射によって生じる間接光源。
 
 - [THREE.AmbientLight(hex)](http://threejs.org/docs/#Reference/Lights/AmbientLight)
 
