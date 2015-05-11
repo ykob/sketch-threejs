@@ -13,14 +13,20 @@ var directionalLightHelper;
 var pointLightHelper;
 var spotLightHelper;
 var hemisphereLightHelper;
-var axis;
-var box;
+var boxObjArr = [];
 
 var threeStart = function() {
   initThree();
   initCamera();
-  initObject();
   initLight();
+  
+  for (var i = 0; i < 200; i++) {
+    boxObjArr[i] = new boxObj();
+    boxObjArr[i].setPosition();
+    boxObjArr[i].setRotation();
+    scene.add(boxObjArr[i].mesh);
+  }
+  
   renderloop();
 };
 
@@ -40,7 +46,7 @@ var initThree = function() {
 
 var initCamera = function() {
   camera = new THREE.PerspectiveCamera(45, bodyWidth / bodyHeight, 1, 10000);
-  camera.position.set(100, 100, 100);
+  camera.position.set(500, 500, 500);
   camera.up.set(0, 0, 1);
   camera.lookAt({
     x: 0,
@@ -48,14 +54,14 @@ var initCamera = function() {
     z: 0
   });
   
-  trackball = new THREE.TrackballControls(camera, canvas);
-  trackball.screen.width = bodyWidth;
-  trackball.screen.height = bodyHeight;
-  trackball.noRotate = false;
-  trackball.rotateSpeed = 4;
-  trackball.noZoom = false;
-  trackball.zoomSpeed = 1;
-  trackball.noPan = true;
+  // trackball = new THREE.TrackballControls(camera, canvas);
+  // trackball.screen.width = bodyWidth;
+  // trackball.screen.height = bodyHeight;
+  // trackball.noRotate = false;
+  // trackball.rotateSpeed = 3;
+  // trackball.noZoom = false;
+  // trackball.zoomSpeed = 1;
+  // trackball.noPan = true;
 };
 
 var initLight = function() {
@@ -63,9 +69,9 @@ var initLight = function() {
   pointLight = new THREE.PointLight(0xffffff, 1);
   spotLight = new THREE.SpotLight(0xffffff, 1, 200, getRadian(10));
   hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
-  ambientLight = new THREE.AmbientLight(0xffffff);
+  ambientLight = new THREE.AmbientLight(0x111111);
 
-  directionalLight.position.set(60, 60, 90);
+  directionalLight.position.set(300, 200, 400);
   pointLight.position.set(20, 20, 30);
   spotLight.position.set(40, 40, 100);
   hemisphereLight.position.set(50, 20, 70);
@@ -75,32 +81,55 @@ var initLight = function() {
   spotLightHelper = new THREE.SpotLightHelper(spotLight, 1);
   hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 1);
   
-  scene.add(spotLight);
-  scene.add(spotLightHelper);
+  scene.add(pointLight);
+  scene.add(ambientLight);
 };
 
-var initObject = function() {
-  var geometry;
-  var material;
-  
-  axis = new THREE.AxisHelper(50);
-  axis.position.set(0, 0, 0);
-  
-  geometry = new THREE.BoxGeometry(20, 20, 20);
-  material = new THREE.MeshLambertMaterial({
-    color: 0xff0000
+var boxObj = function() {
+  this.size = 24;
+  this.angle = getRadian(getRandomInt(0, 360));
+  this.angle2 = getRadian(getRandomInt(0, 360));
+  this.r = 200;
+  this.x = Math.cos(this.angle) * Math.cos(this.angle2) * this.r;
+  this.y = Math.cos(this.angle) * Math.sin(this.angle2) * this.r;
+  this.z = Math.sin(this.angle) * this.r;
+  this.rotateX = this.angle;
+  this.rotateY = this.angle;
+  this.rotateZ = this.angle;
+
+  this.geometry = new THREE.BoxGeometry(this.size, this.size, this.size);
+  this.material = new THREE.MeshLambertMaterial({
+    color: 0xffffff
   });
-  box = new THREE.Mesh(geometry, material);
-  axis.position.set(0, 0, 0);
-
-  scene.add(axis);
-  scene.add(box);
+  this.mesh = new THREE.Mesh(this.geometry, this.material);
 };
+
+boxObj.prototype.changePositionVal = function() {
+  this.x = Math.cos(this.angle) * Math.cos(this.angle2) * this.r;
+  this.y = Math.cos(this.angle) * Math.sin(this.angle2) * this.r;
+  this.z = Math.sin(this.angle) * this.r;
+};
+
+boxObj.prototype.setPosition = function() {
+  this.mesh.position.set(this.x, this.y, this.z);
+};
+
+boxObj.prototype.setRotation = function() {
+  this.mesh.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
+};
+
 
 var render = function() {
   renderer.clear();
+  for (var i = 0; i < boxObjArr.length; i++) {
+    boxObjArr[i].angle += getRadian(0.5);
+    boxObjArr[i].angle2 += getRadian(0.5);
+    boxObjArr[i].changePositionVal();
+    boxObjArr[i].setPosition();
+    boxObjArr[i].setRotation();
+  };
   renderer.render(scene, camera);
-  trackball.update();
+  //trackball.update();
 };
 
 var renderloop = function() {
