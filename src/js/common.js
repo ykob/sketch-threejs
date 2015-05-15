@@ -25,14 +25,3 @@ var debounce = function(object, eventType, callback){
     }, 500);
   }, false);
 };
-
-var canvasResize = function() {
-  bodyWidth  = document.body.clientWidth;
-  bodyHeight = document.body.clientHeight;
-};
-
-debounce(window, 'resize', function(event){
-  canvasResize();
-});
-
-canvasResize();

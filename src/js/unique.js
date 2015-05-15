@@ -4,6 +4,7 @@ var scene;
 var canvas;
 var camera;
 var trackball;
+
 var directionalLight;
 var pointLight;
 var spotLight;
@@ -13,6 +14,7 @@ var directionalLightHelper;
 var pointLightHelper;
 var spotLightHelper;
 var hemisphereLightHelper;
+
 var boxObjArr = [];
 
 var threeStart = function() {
@@ -20,9 +22,13 @@ var threeStart = function() {
   initCamera();
   initLight();
   
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 128; i++) {
     boxObjArr[i] = new boxObj();
+    boxObjArr[i].angle = getRadian(i * 16);
+    boxObjArr[i].angle2 = getRadian(Math.floor(i / 10) * 20);
+    boxObjArr[i].changePositionVal();
     boxObjArr[i].setPosition();
+    boxObjArr[i].changeRotationVal();
     boxObjArr[i].setRotation();
     scene.add(boxObjArr[i].mesh);
   }
@@ -54,49 +60,75 @@ var initCamera = function() {
     z: 0
   });
   
-  // trackball = new THREE.TrackballControls(camera, canvas);
-  // trackball.screen.width = bodyWidth;
-  // trackball.screen.height = bodyHeight;
-  // trackball.noRotate = false;
-  // trackball.rotateSpeed = 3;
-  // trackball.noZoom = false;
-  // trackball.zoomSpeed = 1;
-  // trackball.noPan = true;
+  trackball = new THREE.TrackballControls(camera, canvas);
+  trackball.screen.width = bodyWidth;
+  trackball.screen.height = bodyHeight;
+  trackball.noRotate = false;
+  trackball.rotateSpeed = 3;
+  trackball.noZoom = false;
+  trackball.zoomSpeed = 1;
+  trackball.noPan = true;
 };
 
 var initLight = function() {
-  directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  pointLight = new THREE.PointLight(0xffffff, 1);
-  spotLight = new THREE.SpotLight(0xffffff, 1, 200, getRadian(10));
-  hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
-  ambientLight = new THREE.AmbientLight(0x111111);
-
-  directionalLight.position.set(300, 200, 400);
-  pointLight.position.set(20, 20, 30);
-  spotLight.position.set(40, 40, 100);
-  hemisphereLight.position.set(50, 20, 70);
+  // directionalLight = new THREE.DirectionalLight(0xffffff, 1):
+  // directionalLight.position.set(300, 200, 400);
+  // directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
   
-  directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
+  pointLight = new THREE.PointLight(0xffffff, 1);
+  pointLight.position.set(0, 0, 0);
   pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
-  spotLightHelper = new THREE.SpotLightHelper(spotLight, 1);
-  hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 1);
+  
+  // spotLight = new THREE.SpotLight(0xffffff, 1, 200, getRadian(10));
+  // spotLight.position.set(40, 40, 100);
+  // spotLightHelper = new THREE.SpotLightHelper(spotLight, 1);
+  
+  // hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
+  // hemisphereLight.position.set(50, 20, 70);
+  // hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 1);
+  
+  ambientLight = new THREE.AmbientLight(0x111111);
   
   scene.add(pointLight);
   scene.add(ambientLight);
+  
+  var pointLightSphere = new lightSphereObj();
+  pointLightSphere.setPosition();
+  scene.add(pointLightSphere.mesh);
+};
+
+var lightSphereObj = function() {
+  this.r = 50;
+  this.x = 0;
+  this.y = 0;
+  this.z = 0;
+  this.segments = 24;
+  this.geometry = new THREE.SphereGeometry(this.r, this.segments);
+  this.material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    emissive: 0xffffff,
+    opacity: 0.9,
+    transparent: true
+  });
+  this.mesh = new THREE.Mesh(this.geometry, this.material);
+};
+
+lightSphereObj.prototype.setPosition = function() {
+  this.mesh.position.set(this.x, this.y, this.z);
 };
 
 var boxObj = function() {
-  this.size = 24;
-  this.angle = getRadian(getRandomInt(0, 360));
-  this.angle2 = getRadian(getRandomInt(0, 360));
-  this.r = 200;
-  this.x = Math.cos(this.angle) * Math.cos(this.angle2) * this.r;
-  this.y = Math.cos(this.angle) * Math.sin(this.angle2) * this.r;
-  this.z = Math.sin(this.angle) * this.r;
-  this.rotateX = this.angle;
-  this.rotateY = this.angle;
-  this.rotateZ = this.angle;
-
+  this.size = getRandomInt(8, 36);
+  this.angle = 0;
+  this.angle2 = 0;
+  this.r = 240;
+  this.x = 0;
+  this.y = 0;
+  this.z = 0;
+  this.rotateX = 0;
+  this.rotateY = 0;
+  this.rotateZ = 0;
+  
   this.geometry = new THREE.BoxGeometry(this.size, this.size, this.size);
   this.material = new THREE.MeshLambertMaterial({
     color: 0xffffff
@@ -114,6 +146,12 @@ boxObj.prototype.setPosition = function() {
   this.mesh.position.set(this.x, this.y, this.z);
 };
 
+boxObj.prototype.changeRotationVal = function() {
+  this.rotateX = this.angle * 2;
+  this.rotateY = this.angle * 2;
+  this.rotateZ = this.angle2 * 2;
+};
+
 boxObj.prototype.setRotation = function() {
   this.mesh.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
 };
@@ -126,10 +164,11 @@ var render = function() {
     boxObjArr[i].angle2 += getRadian(0.5);
     boxObjArr[i].changePositionVal();
     boxObjArr[i].setPosition();
+    boxObjArr[i].changeRotationVal();
     boxObjArr[i].setRotation();
   };
   renderer.render(scene, camera);
-  //trackball.update();
+  trackball.update();
 };
 
 var renderloop = function() {
@@ -142,5 +181,17 @@ var renderloop = function() {
   render();
   lastTimeRender = +new Date();
 };
+
+var resizeRenderer = function() {
+  bodyWidth  = document.body.clientWidth;
+  bodyHeight = document.body.clientHeight;
+  console.log(renderer);
+  renderer.setSize(bodyWidth, bodyHeight);
+  initCamera();
+};
+
+debounce(window, 'resize', function(event){
+  resizeRenderer();
+});
 
 threeStart();
