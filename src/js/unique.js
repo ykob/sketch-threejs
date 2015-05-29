@@ -6,8 +6,16 @@ var camera;
 var trackball;
 var hemiLight;
 
+var cameraRadBase = 0;
+var cameraRad1 = 0;
+var cameraRad2 = 0;
+var cameraX = 0;
+var cameraY = 0;
+var cameraZ = 0;
+var cameraR = 800;
+
 var planeObjArr = [];
-var planeNumAll = 360;
+var planeNumAll = 900;
 var vectorCenter = new THREE.Vector3(0, 0, 0);
 
 var threeStart = function() {
@@ -21,7 +29,7 @@ var threeStart = function() {
     planeObjArr[i] = new Plane();
     planeObjArr[i].init();
     planeObjArr[i].rad1Base = getRadian(radUnit * i );
-    planeObjArr[i].rad2Base = getRadian(radUnit * i * 24);
+    planeObjArr[i].rad2Base = getRadian(radUnit * i * 27);
   }
   
   renderloop();
@@ -42,8 +50,15 @@ var initThree = function() {
 };
 
 var initCamera = function() {
-  camera = new THREE.PerspectiveCamera(45, bodyWidth / bodyHeight, 1, 10000);
-  camera.position.set(500, 500, 500);
+  var rad1 = getRadian(45);
+  var rad2 = getRadian(45);
+  var r = 800;
+  var x = Math.cos(rad1) * Math.cos(rad2) * r;
+  var y = Math.cos(rad1) * Math.sin(rad2) * r;
+  var z = Math.sin(rad1) * r;
+  
+  camera = new THREE.PerspectiveCamera(45, bodyWidth / bodyHeight, 1, 4000);
+  camera.position.set(x, y, z);
   camera.up.set(0, 1, 0);
   camera.lookAt({
     x: 0,
@@ -51,14 +66,14 @@ var initCamera = function() {
     z: 0
   });
   
-  trackball = new THREE.TrackballControls(camera, canvas);
-  trackball.screen.width = bodyWidth;
-  trackball.screen.height = bodyHeight;
-  trackball.noRotate = false;
-  trackball.rotateSpeed = 3;
-  trackball.noZoom = false;
-  trackball.zoomSpeed = 1;
-  trackball.noPan = true;
+  // trackball = new THREE.TrackballControls(camera, canvas);
+  // trackball.screen.width = bodyWidth;
+  // trackball.screen.height = bodyHeight;
+  // trackball.noRotate = false;
+  // trackball.rotateSpeed = 3;
+  // trackball.noZoom = false;
+  // trackball.zoomSpeed = 1;
+  // trackball.noPan = true;
 };
 
 var initLight = function() {
@@ -69,11 +84,10 @@ var initLight = function() {
   for (var i = 0; i < colorNum; i++) {
     var rad = getRadian(0);
     var rad2 = getRadian(degUnit * i);
-    var x = Math.cos(rad) * Math.cos(rad2) * 5000;
-    var y = Math.cos(rad) * Math.sin(rad2) * 5000;
-    var z = Math.sin(rad) * 5000;
-    var light = new THREE.PointLight(colorArr[i], 0.7);
-    console.log(i);
+    var x = Math.cos(rad) * Math.cos(rad2) * 20000;
+    var z = Math.cos(rad) * Math.sin(rad2) * 20000;
+    var y = Math.sin(rad) * 20000;
+    var light = new THREE.PointLight(colorArr[i], 0.6);
     light.position.set(x, y, z);
     scene.add(light);
   };
@@ -98,7 +112,7 @@ var Plane = function() {
   this.mesh = new THREE.Mesh(this.geometry, this.material);
 };
 
-var planeGeometry = new THREE.BoxGeometry(30, 1, 30);
+var planeGeometry = new THREE.BoxGeometry(30, 0, 30);
 
 var planeMaterial = new THREE.MeshLambertMaterial({
   color: 0xffffff
@@ -116,8 +130,8 @@ Plane.prototype.init = function() {
 
 Plane.prototype.changePosition = function() {
   this.x = Math.cos(this.rad1) * Math.cos(this.rad2) * this.r;
-  this.y = Math.cos(this.rad1) * Math.sin(this.rad2) * this.r;
-  this.z = Math.sin(this.rad1) * this.r;
+  this.z = Math.cos(this.rad1) * Math.sin(this.rad2) * this.r;
+  this.y = Math.sin(this.rad1) * this.r;
   this.mesh.position.set(this.x, this.y, this.z);
 };
 
@@ -134,15 +148,28 @@ Plane.prototype.changeRotation = function() {
 var render = function() {
   renderer.clear();
   for (var i = 0; i < planeObjArr.length; i++) {
-    planeObjArr[i].rad1Base += getRadian(0.5);
-    planeObjArr[i].rad2Base += getRadian(0.5);
+    planeObjArr[i].rad1Base += getRadian(0.25);
+    planeObjArr[i].rad2Base += getRadian(0.25);
     planeObjArr[i].rad1 = planeObjArr[i].rad1Base;
     planeObjArr[i].rad2 = planeObjArr[i].rad2Base;
     planeObjArr[i].changePosition();
     planeObjArr[i].changeRotation();
   };
   renderer.render(scene, camera);
-  trackball.update();
+  
+  cameraRadBase += getRadian(0.5);
+  cameraRad1 = Math.sin(cameraRadBase);
+  cameraRad2 = Math.cos(cameraRadBase);
+  cameraX = Math.cos(cameraRad1) * Math.cos(cameraRad2) * cameraR;
+  cameraZ = Math.cos(cameraRad1) * Math.sin(cameraRad2) * cameraR;
+  cameraY = Math.sin(cameraRad1) * cameraR;
+  camera.position.set(cameraX, cameraY, cameraZ);
+  camera.lookAt({
+    x: 0,
+    y: 0,
+    z: 0
+  });
+  //trackball.update();
 };
 
 var renderloop = function() {
