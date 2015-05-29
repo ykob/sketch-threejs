@@ -31,7 +31,6 @@ gulp.task('uglify', function(){
   gulp.src(src)
     .pipe(plumber())
     .pipe(concat('common.min.js'))
-    .pipe(uglify())
     .pipe(gulp.dest(dst))
     .pipe(reload({
       stream: true
