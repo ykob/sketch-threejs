@@ -1,7 +1,5 @@
-*.sublime-project
-*.sublime-workspace
 node_modules
-.sass-cache/
-css/style.min.css
-js/common.min.js
 ignore
+js/main.js
+css/style.css
+.sass-cache

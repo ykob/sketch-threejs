@@ -1,63 +1,40 @@
-var path = {
-  src: './src',
-  dst: './'
-};
-
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var uglify = require('gulp-uglify');
-var sass = require('gulp-ruby-sass');
-var plumber = require('gulp-plumber');
-var rename = require('gulp-rename');
-var concat = require('gulp-concat');
+var sequence = require('gulp-sequence');
+var requireDir = require('require-dir');
+var CONFIG = require('./package.json').projectConfig;
 
-gulp.task('browser-sync', function() {
-  browserSync({
+requireDir('./tasks');
+
+reload = browserSync.reload;
+
+// ローカルサーバ
+gulp.task('serve', function() {
+  var obj = {};
+  
+  return browserSync({
+    notify: false,
+    startPath: CONFIG.PATH,
     server: {
-      baseDir: path.dst
+      baseDir: './',
+      index: CONFIG.DST + CONFIG.PATH + '/index.html',
+      routes: (
+        obj['' + CONFIG.PATH] = '' + CONFIG.DST + CONFIG.PATH + '/',
+        obj
+      )
     }
   });
 });
 
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
+// 'default' タスク実行前に処理しておきたいタスク
+gulp.task('start', sequence([
+  'sass',
+  'browserify'
+], 'serve'));
 
-gulp.task('uglify', function(){
-  var src = [path.src + '/js/*.js'];
-  var dst = path.dst + '/js/';
-  
-  gulp.src(src)
-    .pipe(plumber())
-    .pipe(concat('common.min.js'))
-    .pipe(gulp.dest(dst))
-    .pipe(reload({
-      stream: true
-    }));
+// 作業開始
+// ファイルの変更監視で対象タスク実行とブラウザのオートリロード
+gulp.task('default', ['start'], function() {
+  gulp.watch(['./' + CONFIG.SRC + '/**/*.{scss,sass}'], ['sass', reload]);
+  gulp.watch(['./' + CONFIG.SRC + '/**/*.js'], ['browserify', reload]);
 });
-
-gulp.task('sass', function() {
-  var src = [path.src + '/scss/style.scss'];
-  var dst = path.dst + '/css/';
-  var option = {
-    style: 'compressed'
-  };
-  
-  return sass(src, option)
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(gulp.dest(dst))
-    .pipe(reload({
-      stream: true
-    }));
-});
-
-gulp.task('watch', function(){
-  gulp.watch(path.dst + '/*.html', ['bs-reload']);
-  gulp.watch(path.src + '/js/*.js', ['uglify']);
-  gulp.watch(path.src + '/scss/*.scss', ['sass']);
-});
-
-gulp.task('default', ['browser-sync', 'watch']);
