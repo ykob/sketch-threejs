@@ -1,19 +1,10 @@
+var Get = require('./get');
+var get = new Get();
+
 var bodyWidth  = document.body.clientWidth;
 var bodyHeight = document.body.clientHeight;
 var fps = 60;
 var frameTime = 1000 / fps;
-
-var getRandomInt = function(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-var getDegree = function(radian) {
-  return radian / Math.PI * 180;
-};
-
-var getRadian = function(degrees) {
-  return degrees * Math.PI / 180;
-};
 
 var debounce = function(object, eventType, callback){
   var timer;
@@ -56,8 +47,8 @@ var threeStart = function() {
   for (var i = 0; i < planeNumAll; i++) {
     planeObjArr[i] = new Plane();
     planeObjArr[i].init();
-    planeObjArr[i].rad1Base = getRadian(radUnit * i );
-    planeObjArr[i].rad2Base = getRadian(radUnit * i * 27);
+    planeObjArr[i].rad1Base = get.radian(radUnit * i );
+    planeObjArr[i].rad2Base = get.radian(radUnit * i * 27);
   }
   
   renderloop();
@@ -78,8 +69,8 @@ var initThree = function() {
 };
 
 var initCamera = function() {
-  var rad1 = getRadian(45);
-  var rad2 = getRadian(45);
+  var rad1 = get.radian(45);
+  var rad2 = get.radian(45);
   var r = 800;
   var x = Math.cos(rad1) * Math.cos(rad2) * r;
   var y = Math.cos(rad1) * Math.sin(rad2) * r;
@@ -110,8 +101,8 @@ var initLight = function() {
   var degUnit  = 360 / colorNum;
   
   for (var i = 0; i < colorNum; i++) {
-    var rad = getRadian(0);
-    var rad2 = getRadian(degUnit * i);
+    var rad = get.radian(0);
+    var rad2 = get.radian(degUnit * i);
     var x = Math.cos(rad) * Math.cos(rad2) * 20000;
     var z = Math.cos(rad) * Math.sin(rad2) * 20000;
     var y = Math.sin(rad) * 20000;
@@ -176,8 +167,8 @@ Plane.prototype.changeRotation = function() {
 var render = function() {
   renderer.clear();
   for (var i = 0; i < planeObjArr.length; i++) {
-    planeObjArr[i].rad1Base += getRadian(0.25);
-    planeObjArr[i].rad2Base += getRadian(0.25);
+    planeObjArr[i].rad1Base += get.radian(0.25);
+    planeObjArr[i].rad2Base += get.radian(0.25);
     planeObjArr[i].rad1 = planeObjArr[i].rad1Base;
     planeObjArr[i].rad2 = planeObjArr[i].rad2Base;
     planeObjArr[i].changePosition();
@@ -185,7 +176,7 @@ var render = function() {
   };
   renderer.render(scene, camera);
   
-  cameraRadBase += getRadian(0.5);
+  cameraRadBase += get.radian(0.5);
   cameraRad1 = Math.sin(cameraRadBase);
   cameraRad2 = Math.cos(cameraRadBase);
   cameraX = Math.cos(cameraRad1) * Math.cos(cameraRad2) * cameraR;
