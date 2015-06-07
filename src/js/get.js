@@ -1,17 +1,17 @@
-var getRandomInt = function(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-var getDegree = function(radian) {
-  return radian / Math.PI * 180;
-};
-
-var getRadian = function(degrees) {
-  return degrees * Math.PI / 180;
-};
-
-module.exports = {
-  randomInt: getRandomInt(),
-  degree: getDegree(),
-  radian: getRadian()
-};
+module.exports = (function(){
+  var Get = function() {};
+  
+  Get.prototype.randomInt = function(min, max){
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+  
+  Get.prototype.degree = function(radian) {
+    return radian / Math.PI * 180;
+  };
+  
+  Get.prototype.radian = function(degrees) {
+    return degrees * Math.PI / 180;
+  };
+  
+  return Get;
+})();

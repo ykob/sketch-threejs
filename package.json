@@ -20,14 +20,5 @@
     "PATH": "./",
     "DST": "./",
     "SRC": "src"
-  },
-  "devDependencies": {
-    "require-dir": "~0.3.0",
-    "vinyl-source-stream": "~1.1.0",
-    "gulp-sequence": "~0.3.2",
-    "gulp": "~3.9.0",
-    "browserify": "~10.2.3",
-    "gulp-ruby-sass": "~1.0.5",
-    "browser-sync": "~2.7.6"
   }
 }
