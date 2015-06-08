@@ -17,8 +17,8 @@
   "author": "Yoichi Kobayashi",
   "license": "MIT",
   "projectConfig": {
-    "PATH": "./",
-    "DST": "./",
+    "PATH": "",
+    "DST": "",
     "SRC": "src"
   }
 }
