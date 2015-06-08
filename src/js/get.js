@@ -1,4 +1,4 @@
-module.exports = (function(){
+var exports = function(){
   var Get = function() {};
   
   Get.prototype.randomInt = function(min, max){
@@ -14,4 +14,6 @@ module.exports = (function(){
   };
   
   return Get;
-})();
+};
+
+module.exports = exports();
