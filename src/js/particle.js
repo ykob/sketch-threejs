@@ -5,7 +5,9 @@ var exports = function() {
   var Particle = function() {
     this.size = 1;
     this.scale = 0;
-    this.rad = 0;
+    this.rad1Base = 0;
+    this.rad1 = 0;
+    this.rad2Base = 0;
     this.rad2 = 0;
     this.r = 0;
     this.x = 0;
@@ -23,14 +25,14 @@ var exports = function() {
     this.geometry = geometry;
     this.material = material;
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.scale = get.randomInt(8, 24);
-    this.r = 80;
-    this.rad = get.radian(360 * index / all);
-    this.rad2 = get.radian(360 * index * 10 / all);
+    this.scale = 60;
+    this.r = 320;
+
     this.changeScale();
-    this.changePositionVal();
+    this.rad1Base = get.radian(360 * index / all);
+    this.rad2Base = get.radian(360 * index / all);
+    this.move(index);
     this.setPosition();
-    this.changeRotationVal();
     this.setRotation();
     scene.add(this.mesh);
   };
@@ -41,23 +43,22 @@ var exports = function() {
     this.mesh.scale.z = this.scale * this.size;
   };
 
-  Particle.prototype.changePositionVal = function() {
-    this.x = Math.cos(this.rad) * Math.cos(this.rad2) * (this.r);
-    this.z = Math.cos(this.rad) * Math.sin(this.rad2) * (this.r);
-    this.y = Math.sin(this.rad) * (this.r);
+  Particle.prototype.move = function(index) {
+    this.rad1 = get.radian(Math.sin(this.rad1Base) * 10);
+    this.rad2 = this.rad2Base;
   };
 
   Particle.prototype.setPosition = function() {
+    this.x = Math.cos(this.rad1) * Math.cos(this.rad2) * (this.r);
+    this.z = Math.cos(this.rad1) * Math.sin(this.rad2) * (this.r);
+    this.y = Math.sin(this.rad1) * (this.r);
     this.mesh.position.set(this.x, this.y, this.z);
   };
 
-  Particle.prototype.changeRotationVal = function() {
-    this.rotateX = this.rad * 3;
-    this.rotateY = this.rad * 3;
-    this.rotateZ = this.rad * 3;
-  };
-
   Particle.prototype.setRotation = function() {
+    this.rotateX = this.rad1 * 3;
+    this.rotateY = this.rad1 * 3;
+    this.rotateZ = this.rad1 * 3;
     this.mesh.rotation.set(this.rotateX, this.rotateY, this.rotateZ);
   };
   

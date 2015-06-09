@@ -9,13 +9,24 @@ body {
   height: 100%;
   overflow: hidden;
 }
-h1 {
+canvas {
   position: absolute;
-  top: 50%;
-  right: 0;
-  left: 0;
-  margin-top: -1.5rem;
-  font-size: 3rem;
-  font-family: 'Hammersmith One', sans-serif;
-  text-align: center;
+}
+p {
+  &.photo-by {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    z-index: 1000;
+    padding: 0.7em 1em;
+    color: #fff;
+    font-size: 80%;
+    background-color: #000;
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }

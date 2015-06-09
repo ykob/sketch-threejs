@@ -2,7 +2,8 @@ var Get = require('./get');
 var get = new Get();
 var debounce = require('./debounce');
 var Camera = require('./camera');
-var HemiLight = require('./hemiLight');
+var PointLight = require('./pointLight');
+var Globe = require('./globe');
 var Ball = require('./ball');
 var Particle = require('./particle');
 
@@ -17,9 +18,10 @@ var renderer;
 var scene;
 var camera;
 var light;
+var globe;
 var ball;
 var particleArr = [];
-var particleNum = 128;
+var particleNum = 64;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -37,10 +39,10 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(48, 24);
+  var ballGeometry = new THREE.SphereGeometry(120, 24);
   var ballMaterial = new THREE.MeshLambertMaterial({
     color: 0xffffff,
-    opacity: 0.9,
+    opacity: 0.8,
     transparent: true
   });
   var baseGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -51,10 +53,13 @@ var init = function() {
   initThree();
   
   camera = new Camera();
-  camera.init(bodyWidth, bodyHeight, 45, 60, 800);
+  camera.init(bodyWidth, bodyHeight, 10, 60, 1200);
   
-  light = new HemiLight();
-  light.init(scene, 45, 45, 800, 0xffffff, 0x333333, 1);
+  light = new PointLight();
+  light.init(scene, 0, 90, 1000, 0xffffff, 1, 10000);
+  
+  globe = new Globe();
+  globe.init(scene);
   
   ball = new Ball();
   ball.init(scene, ballGeometry, ballMaterial);
@@ -74,11 +79,10 @@ var render = function() {
   renderer.clear();
   
   for (var i = 0; i < particleArr.length; i++) {
-    particleArr[i].rad += get.radian(1);
-    particleArr[i].rad2 += get.radian(2);
-    particleArr[i].changePositionVal();
+    particleArr[i].rad1Base += get.radian(1);
+    particleArr[i].rad2Base += get.radian(2);
+    particleArr[i].move();
     particleArr[i].setPosition();
-    particleArr[i].changeRotationVal();
     particleArr[i].setRotation();
   };
   
@@ -101,7 +105,7 @@ var resizeRenderer = function() {
   bodyWidth  = document.body.clientWidth;
   bodyHeight = document.body.clientHeight;
   renderer.setSize(bodyWidth, bodyHeight);
-  camera.init(bodyWidth, bodyHeight, 45, 45, 800);
+  camera.init(bodyWidth, bodyHeight, 10, 60, 1200);
 };
 
 init();

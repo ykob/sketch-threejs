@@ -16,7 +16,7 @@ var exports = function(){
     this.width = width;
     this.height = height;
     this.r = r;
-    this.obj = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 4000);
+    this.obj = new THREE.PerspectiveCamera(50, this.width / this.height, 1, 10000);
     this.setPosition(rad1, rad2);
     this.initTrackBall();
   };
@@ -43,9 +43,9 @@ var exports = function(){
     this.trackball.screen.height = this.height;
     this.trackball.noRotate = false;
     this.trackball.rotateSpeed = 3;
-    this.trackball.noZoom = false;
+    this.trackball.noZoom = true;
     this.trackball.zoomSpeed = 1;
-    this.trackball.noPan = true;
+    this.trackball.noPan = false;
     this.trackball.maxDistance = 3000;
     this.trackball.minDistance = 500;
   };

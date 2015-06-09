@@ -10,7 +10,7 @@ gulp.task('sass', function() {
   return rubySass(path, {
     style: 'compressed'
   })
-    .pipe(gulp.dest(CONFIG.DST + CONFIG.PATH + '/css', {
+    .pipe(gulp.dest('./css/', {
       cwd: './'
     }));
 });

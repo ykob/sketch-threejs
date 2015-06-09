@@ -1,5 +1,5 @@
 var exports = function(){
-  var HemiLight = function() {
+  var PointLight = function() {
     this.rad1 = 0;
     this.rad2 = 0;
     this.x = 0;
@@ -9,14 +9,14 @@ var exports = function(){
     this.obj;
   };
   
-  HemiLight.prototype.init = function(scene, rad1, rad2, r, hex1, hex2, intensity) {
+  PointLight.prototype.init = function(scene, rad1, rad2, r, hex, intensity, distance) {
     this.r = r;
-    this.obj = new THREE.HemisphereLight(hex1, hex2, intensity);
+    this.obj = new THREE.PointLight(hex, intensity, distance);
     this.setPosition(rad1, rad2);
     scene.add(this.obj);
   };
   
-  HemiLight.prototype.setPosition = function(rad1, rad2) {
+  PointLight.prototype.setPosition = function(rad1, rad2) {
     this.rad1 = rad1;
     this.rad2 = rad2;
     this.x = Math.cos(this.rad1) * Math.cos(this.rad2) * this.r;
@@ -26,7 +26,7 @@ var exports = function(){
     this.obj.position.set(this.x, this.y, this.z);
   };
   
-  return HemiLight;
+  return PointLight;
 };
 
 module.exports = exports();
