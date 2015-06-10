@@ -1,3 +1,6 @@
+var Get = require('./get');
+var get = new Get();
+
 var exports = function(){
   var HemiLight = function() {
     this.rad1 = 0;
@@ -17,13 +20,11 @@ var exports = function(){
   };
   
   HemiLight.prototype.setPosition = function(rad1, rad2) {
+    var points;
     this.rad1 = rad1;
     this.rad2 = rad2;
-    this.x = Math.cos(this.rad1) * Math.cos(this.rad2) * this.r;
-    this.y = Math.cos(this.rad1) * Math.sin(this.rad2) * this.r;
-    this.z = Math.sin(this.rad1) * this.r;
-
-    this.obj.position.set(this.x, this.y, this.z);
+    points = get.pointSphere(this.rad1, this.rad2, this.r);
+    this.obj.position.set(points[0], points[1], points[2]);
   };
   
   return HemiLight;

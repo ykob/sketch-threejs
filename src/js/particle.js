@@ -49,10 +49,8 @@ var exports = function() {
   };
 
   Particle.prototype.setPosition = function() {
-    this.x = Math.cos(this.rad1) * Math.cos(this.rad2) * (this.r);
-    this.z = Math.cos(this.rad1) * Math.sin(this.rad2) * (this.r);
-    this.y = Math.sin(this.rad1) * (this.r);
-    this.mesh.position.set(this.x, this.y, this.z);
+    var points = get.pointSphere(this.rad1, this.rad2, this.r);
+    this.mesh.position.set(points[0], points[1], points[2]);
   };
 
   Particle.prototype.setRotation = function() {

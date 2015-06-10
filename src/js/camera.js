@@ -1,3 +1,6 @@
+var Get = require('./get');
+var get = new Get();
+
 var exports = function(){
   var Camera = function() {
     this.width = 0;
@@ -12,23 +15,23 @@ var exports = function(){
     this.trackball;
   };
   
-  Camera.prototype.init = function(width, height, rad1, rad2, r) {
+  Camera.prototype.init = function(width, height) {
     this.width = width;
     this.height = height;
-    this.r = r;
+    this.r = 1200;
+    this.rad1 = get.radian(30);
+    this.rad2 = get.radian(0);
     this.obj = new THREE.PerspectiveCamera(50, this.width / this.height, 1, 10000);
-    this.setPosition(rad1, rad2);
+    this.setPosition(this.rad1, this.rad2, this.r);
     this.initTrackBall();
   };
   
   Camera.prototype.setPosition = function(rad1, rad2) {
+    var points;
     this.rad1 = rad1;
     this.rad2 = rad2;
-    this.x = Math.cos(this.rad1) * Math.cos(this.rad2) * this.r;
-    this.y = Math.cos(this.rad1) * Math.sin(this.rad2) * this.r;
-    this.z = Math.sin(this.rad1) * this.r;
-
-    this.obj.position.set(this.x, this.y, this.z);
+    points = get.pointSphere(this.rad1, this.rad2, this.r);
+    this.obj.position.set(points[0], points[1], points[2]);
     this.obj.up.set(0, 1, 0);
     this.obj.lookAt({
       x: 0,

@@ -53,10 +53,10 @@ var init = function() {
   initThree();
   
   camera = new Camera();
-  camera.init(bodyWidth, bodyHeight, 10, 60, 1200);
+  camera.init(bodyWidth, bodyHeight);
   
   light = new PointLight();
-  light.init(scene, 0, 90, 1000, 0xffffff, 1, 10000);
+  light.init(scene, get.radian(90), 0, 1000, 0xffffff, 1, 10000);
   
   globe = new Globe();
   globe.init(scene);
@@ -105,7 +105,7 @@ var resizeRenderer = function() {
   bodyWidth  = document.body.clientWidth;
   bodyHeight = document.body.clientHeight;
   renderer.setSize(bodyWidth, bodyHeight);
-  camera.init(bodyWidth, bodyHeight, 10, 60, 1200);
+  camera.init(bodyWidth, bodyHeight);
 };
 
 init();
