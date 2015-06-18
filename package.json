@@ -4,12 +4,11 @@
   "description": "demo template of three.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/tsumikiinc/gulpfiles.git"
+    "url": "https://github.com/ykob/demo-template-threejs.git"
   },
   "private": true,
   "scripts": {
-    "start": "gulp",
-    "build": "gulp build"
+    "start": "gulp"
   },
   "engines": {
     "node": "0.12.x"
