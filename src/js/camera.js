@@ -27,10 +27,7 @@ var exports = function(){
   };
   
   Camera.prototype.setPosition = function(rad1, rad2) {
-    var points;
-    this.rad1 = rad1;
-    this.rad2 = rad2;
-    points = get.pointSphere(this.rad1, this.rad2, this.r);
+    var points = get.pointSphere(rad1, rad2, this.r);
     this.obj.position.set(points[0], points[1], points[2]);
     this.obj.up.set(0, 1, 0);
     this.obj.lookAt({

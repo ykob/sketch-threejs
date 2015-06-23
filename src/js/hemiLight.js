@@ -20,10 +20,7 @@ var exports = function(){
   };
   
   HemiLight.prototype.setPosition = function(rad1, rad2) {
-    var points;
-    this.rad1 = rad1;
-    this.rad2 = rad2;
-    points = get.pointSphere(this.rad1, this.rad2, this.r);
+    var points = get.pointSphere(rad1, rad2, this.r);
     this.obj.position.set(points[0], points[1], points[2]);
   };
   
