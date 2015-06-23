@@ -39,10 +39,9 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(120, 24);
-  var ballMaterial = new THREE.MeshLambertMaterial({
+  var ballGeometry = new THREE.SphereGeometry(240, 24, 24);
+  var ballMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff,
-    opacity: 0.8,
     transparent: true
   });
   var baseGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -64,10 +63,10 @@ var init = function() {
   ball = new Ball();
   ball.init(scene, ballGeometry, ballMaterial);
   
-  for (var i = 0; i < particleNum; i++) {
-    particleArr[i] = new Particle();
-    particleArr[i].init(scene, baseGeometry, baseMaterial, i, particleNum);
-  };
+  // for (var i = 0; i < particleNum; i++) {
+  //   particleArr[i] = new Particle();
+  //   particleArr[i].init(scene, baseGeometry, baseMaterial, i, particleNum);
+  // };
   
   renderloop();
   debounce(window, 'resize', function(event){
