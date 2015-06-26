@@ -27,10 +27,11 @@ var exports = function() {
   
   Mesh.prototype.updateVertices = function() {
     var vertices = this.mesh.geometry.vertices;
-    // for (var i = 0; i < vertices.length; i++) {
-    //   vertices[i].normalize().multiplyScalar(get.randomInt(200, 210));
-    // }
-    this.mesh.geometry.mergeVertices();
+    for (var i = 0; i < vertices.length; i++) {
+      vertices[i].normalize().multiplyScalar(get.randomInt(200, 210));
+    }
+    this.mesh.geometry.computeFaceNormals();
+    this.mesh.geometry.computeVertexNormals();
     this.mesh.geometry.verticesNeedUpdate = true;
   };
   
