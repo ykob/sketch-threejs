@@ -3,9 +3,7 @@ var get = new Get();
 var debounce = require('./debounce');
 var Camera = require('./camera');
 var PointLight = require('./pointLight');
-var Globe = require('./globe');
-var Ball = require('./ball');
-var Particle = require('./particle');
+var Mesh = require('./mesh');
 
 var bodyWidth = document.body.clientWidth;
 var bodyHeight = document.body.clientHeight;
@@ -39,14 +37,10 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(240, 24, 24);
+  var ballGeometry = new THREE.SphereGeometry(240, 30, 30);
   var ballMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff,
     transparent: true
-  });
-  var baseGeometry = new THREE.BoxGeometry(1, 1, 1);
-  var baseMaterial = new THREE.MeshLambertMaterial({
-    color: 0xffffff
   });
   
   initThree();
@@ -57,16 +51,8 @@ var init = function() {
   light = new PointLight();
   light.init(scene, get.radian(90), 0, 1000, 0xffffff, 1, 10000);
   
-  globe = new Globe();
-  globe.init(scene);
-  
-  ball = new Ball();
+  ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
-  
-  // for (var i = 0; i < particleNum; i++) {
-  //   particleArr[i] = new Particle();
-  //   particleArr[i].init(scene, baseGeometry, baseMaterial, i, particleNum);
-  // };
   
   renderloop();
   debounce(window, 'resize', function(event){

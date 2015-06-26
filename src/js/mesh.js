@@ -2,17 +2,16 @@ var Get = require('./get');
 var get = new Get();
 
 var exports = function() {
-  var Ball = function() {
+  var Mesh = function() {
     this.x = 0;
     this.y = 0;
     this.z = 0;
-    this.segments = 24;
     this.geometry;
     this.material;
     this.mesh;
   };
 
-  Ball.prototype.init = function(scene, geometry, material) {
+  Mesh.prototype.init = function(scene, geometry, material) {
     this.geometry = geometry;
     this.material = material;
     this.mesh = new THREE.Mesh(this.geometry, this.material);
@@ -22,11 +21,11 @@ var exports = function() {
     console.log(this.mesh.geometry);
   };
 
-  Ball.prototype.setPosition = function() {
+  Mesh.prototype.setPosition = function() {
     this.mesh.position.set(this.x, this.y, this.z);
   };
   
-  Ball.prototype.updateVertices = function() {
+  Mesh.prototype.updateVertices = function() {
     var vertices = this.mesh.geometry.vertices;
     // for (var i = 0; i < vertices.length; i++) {
     //   vertices[i].normalize().multiplyScalar(get.randomInt(200, 210));
@@ -35,7 +34,7 @@ var exports = function() {
     this.mesh.geometry.verticesNeedUpdate = true;
   };
   
-  return Ball;
+  return Mesh;
 };
 
 module.exports = exports();
