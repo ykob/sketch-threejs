@@ -3,6 +3,7 @@ var get = new Get();
 var debounce = require('./debounce');
 var Camera = require('./camera');
 var PointLight = require('./pointLight');
+var HemiLight = require('./hemiLight');
 var Mesh = require('./mesh');
 
 var bodyWidth = document.body.clientWidth;
@@ -37,10 +38,9 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(240, 30, 30);
+  var ballGeometry = new THREE.SphereGeometry(240, 24, 24);
   var ballMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    transparent: true
+    wireframe: true
   });
   
   initThree();
@@ -48,8 +48,8 @@ var init = function() {
   camera = new Camera();
   camera.init(bodyWidth, bodyHeight);
   
-  light = new PointLight();
-  light.init(scene, get.radian(90), 0, 1000, 0xffffff, 1, 10000);
+  light = new HemiLight();
+  light.init(scene, get.radian(90), 0, 1000, 0xeeeeee, 0x333333, 1);
   
   ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
