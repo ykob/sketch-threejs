@@ -15,12 +15,12 @@ var exports = function(){
     this.trackball;
   };
   
-  Camera.prototype.init = function(width, height) {
+  Camera.prototype.init = function(rad1, rad2, width, height) {
     this.width = width;
     this.height = height;
     this.r = 1200;
-    this.rad1 = get.radian(30);
-    this.rad2 = get.radian(0);
+    this.rad1 = rad1;
+    this.rad2 = rad2;
     this.obj = new THREE.PerspectiveCamera(50, this.width / this.height, 1, 10000);
     this.setPosition(this.rad1, this.rad2, this.r);
     this.initTrackBall();

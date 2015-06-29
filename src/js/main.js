@@ -9,8 +9,8 @@ var Mesh = require('./mesh');
 var bodyWidth = document.body.clientWidth;
 var bodyHeight = document.body.clientHeight;
 var fps = 60;
-var frameTime = 1000 / this.fps;
-var lastTimeRender;
+var frameTime;
+var lastTimeRender = +new Date();
 
 var canvas;
 var renderer;
@@ -32,30 +32,25 @@ var initThree = function() {
   }
   renderer.setSize(bodyWidth, bodyHeight);
   canvas.appendChild(renderer.domElement);
-  renderer.setClearColor(0x111111, 1.0);
+  renderer.setClearColor(0xeeeeee, 1.0);
   
   scene = new THREE.Scene();
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(240, 24, 24);
+  var ballGeometry = new THREE.SphereGeometry(300, 20, 20);
   var ballMaterial = new THREE.MeshLambertMaterial({
     color: 0xffffff,
     shading: THREE.FlatShading
   });
-  var baseGeometry = new THREE.Geometry();
-
-  ballGeometry.mergeVertices();
-  ballGeometry.computeFaceNormals();
-  ballGeometry.computeVertexNormals();
 
   initThree();
   
   camera = new Camera();
-  camera.init(bodyWidth, bodyHeight);
+  camera.init(get.radian(45), get.radian(0), bodyWidth, bodyHeight);
   
   light = new HemiLight();
-  light.init(scene, get.radian(0), get.radian(45), 1000, 0xeeeeee, 0x333333, 1);
+  light.init(scene, get.radian(0), get.radian(120), 1000, 0x66ff99, 0x3366aa, 1);
   
   ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
@@ -69,34 +64,27 @@ var init = function() {
 var render = function() {
   renderer.clear();
   
-  for (var i = 0; i < particleArr.length; i++) {
-    particleArr[i].rad1Base += get.radian(1);
-    particleArr[i].rad2Base += get.radian(2);
-    particleArr[i].move();
-    particleArr[i].setPosition();
-    particleArr[i].setRotation();
-  };
+  ball.updateVertices();
   
   renderer.render(scene, camera.obj);
-  camera.trackball.update();
 };
 
 var renderloop = function() {
   var now = +new Date();
   requestAnimationFrame(renderloop);
 
-  if (now - lastTimeRender < frameTime) {
-    return;
+  if (now - lastTimeRender > 1000 / fps) {
+    render();
+    lastTimeRender = +new Date();
   }
-  render();
-  lastTimeRender = +new Date();
+  camera.trackball.update();
 };
 
 var resizeRenderer = function() {
   bodyWidth  = document.body.clientWidth;
   bodyHeight = document.body.clientHeight;
   renderer.setSize(bodyWidth, bodyHeight);
-  camera.init(bodyWidth, bodyHeight);
+  camera.init(get.radian(45), get.radian(0), bodyWidth, bodyHeight);
 };
 
 init();
