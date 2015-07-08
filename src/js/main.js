@@ -38,7 +38,7 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(300, 20, 20);
+  var ballGeometry = new THREE.IcosahedronGeometry(160, 3);
   var ballMaterial = new THREE.MeshLambertMaterial({
     color: 0xffffff,
     shading: THREE.FlatShading
