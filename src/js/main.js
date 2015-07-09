@@ -71,7 +71,7 @@ var render = function() {
 
 var renderloop = function() {
   var now = +new Date();
-  requestAnimationFrame(renderloop);
+  setTimeout(renderloop, 1000 / fps);
 
   if (now - lastTimeRender > 1000 / fps) {
     render();
