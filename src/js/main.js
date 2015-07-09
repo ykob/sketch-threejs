@@ -77,7 +77,6 @@ var renderloop = function() {
     render();
     lastTimeRender = +new Date();
   }
-  camera.trackball.update();
 };
 
 var resizeRenderer = function() {

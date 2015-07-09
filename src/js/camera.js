@@ -12,7 +12,6 @@ var exports = function(){
     this.z = 0;
     this.r = 0;
     this.obj;
-    this.trackball;
   };
   
   Camera.prototype.init = function(rad1, rad2, width, height) {
@@ -23,7 +22,6 @@ var exports = function(){
     this.rad2 = rad2;
     this.obj = new THREE.PerspectiveCamera(50, this.width / this.height, 1, 10000);
     this.setPosition(this.rad1, this.rad2, this.r);
-    this.initTrackBall();
   };
   
   Camera.prototype.setPosition = function(rad1, rad2) {
@@ -36,20 +34,7 @@ var exports = function(){
       z: 0
     });
   };
-  
-  Camera.prototype.initTrackBall = function() {
-    this.trackball = new THREE.TrackballControls(this.obj, this.canvas);
-    this.trackball.screen.width = this.width;
-    this.trackball.screen.height = this.height;
-    this.trackball.noRotate = false;
-    this.trackball.rotateSpeed = 3;
-    this.trackball.noZoom = true;
-    this.trackball.zoomSpeed = 1;
-    this.trackball.noPan = false;
-    this.trackball.maxDistance = 3000;
-    this.trackball.minDistance = 500;
-  };
-  
+
   return Camera;
 };
 
