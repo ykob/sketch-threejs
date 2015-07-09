@@ -11,6 +11,9 @@ var bodyHeight = document.body.clientHeight;
 var fps = 60;
 var frameTime;
 var lastTimeRender = +new Date();
+var raycaster = new THREE.Raycaster();
+var mouseVector = new THREE.Vector2(-2, -2);
+var intersects;
 
 var canvas;
 var renderer;
@@ -56,8 +59,70 @@ var init = function() {
   ball.init(scene, ballGeometry, ballMaterial);
   
   renderloop();
+  setEvent();
   debounce(window, 'resize', function(event){
     resizeRenderer();
+  });
+};
+
+var setEvent = function () {
+  var mousedownX = 0;
+  var mousedownY = 0;
+  var mousemoveX = 0;
+  var mousemoveY = 0;
+
+  var eventTouchStart = function(x, y) {
+  };
+  
+  var eventTouchMove = function(x, y) {
+    mousemoveX = x;
+    mousemoveY = y;
+    mouseVector.x = (x / window.innerWidth) * 2 - 1;
+    mouseVector.y = - (y / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseVector, camera.obj);
+    intersects = raycaster.intersectObjects(scene.children);
+    console.log(intersects);
+  };
+  
+  var eventTouchEnd = function(x, y) {
+  };
+
+  canvas.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+  });
+
+  canvas.addEventListener('selectstart', function (event) {
+    event.preventDefault();
+  });
+
+  canvas.addEventListener('mousedown', function (event) {
+    event.preventDefault();
+    eventTouchStart(event.clientX, event.clientY);
+  });
+
+  canvas.addEventListener('mousemove', function (event) {
+    event.preventDefault();
+    eventTouchMove(event.clientX, event.clientY);
+  });
+
+  canvas.addEventListener('mouseup', function (event) {
+    event.preventDefault();
+    eventTouchEnd();
+  });
+
+  canvas.addEventListener('touchstart', function (event) {
+    event.preventDefault();
+    eventTouchStart(event.touches[0].clientX, event.touches[0].clientY);
+  });
+
+  canvas.addEventListener('touchmove', function (event) {
+    event.preventDefault();
+    eventTouchMove(event.touches[0].clientX, event.touches[0].clientY);
+  });
+
+  canvas.addEventListener('touchend', function (event) {
+    event.preventDefault();
+    eventTouchEnd();
   });
 };
 
