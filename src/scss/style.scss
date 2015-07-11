@@ -12,21 +12,4 @@ body {
 canvas {
   position: absolute;
 }
-p {
-  &.photo-by {
-    position: absolute;
-    bottom: 1em;
-    left: 1em;
-    z-index: 1000;
-    padding: 0.7em 1em;
-    color: #fff;
-    font-size: 80%;
-    background-color: #000;
-    a {
-      color: #fff;
-      &:hover {
-        text-decoration: none;
-      }
-    }
-  }
-}
+
