@@ -20,7 +20,7 @@ var exports = function() {
     this.material = material;
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.r = this.geometry.parameters.radius;
-    this.vertexWaveCoe = this.r / 30;
+    this.vertexWaveCoe = this.r / 50;
 
     this.geometry.mergeVertices();
     this.updateVerticesInt();
@@ -47,6 +47,7 @@ var exports = function() {
       var r = this.r;
       this.vertexArr[i] = r;
       this.vertexDeg[i] = get.randomInt(0, 360);
+      r = this.vertexArr[i] + Math.sin(get.radian(this.vertexDeg[i])) * this.vertexWaveCoe;
       vertices[i].normalize().multiplyScalar(r);
     }
     this.comuputeGeometry();
