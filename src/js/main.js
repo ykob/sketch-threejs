@@ -25,6 +25,8 @@ var ball;
 var particleArr = [];
 var particleNum = 64;
 
+var isGlipedBall = false;
+
 var initThree = function() {
   canvas = document.getElementById('canvas');
   renderer = new THREE.WebGLRenderer({
@@ -41,19 +43,18 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.IcosahedronGeometry(160, 3);
-  var ballMaterial = new THREE.MeshLambertMaterial({
-    color: 0xffffff,
-    shading: THREE.FlatShading
+  var ballGeometry = new THREE.SphereGeometry(120, 40, 40);
+  var ballMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff
   });
 
   initThree();
   
   camera = new Camera();
-  camera.init(get.radian(45), get.radian(0), bodyWidth, bodyHeight);
+  camera.init(get.radian(30), get.radian(0), bodyWidth, bodyHeight);
   
   light = new HemiLight();
-  light.init(scene, get.radian(0), get.radian(120), 1000, 0x66ff99, 0x3366aa, 1);
+  light.init(scene, get.radian(30), get.radian(60), 1000, 0xff9999, 0x3366cc, 1);
   
   ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
@@ -72,6 +73,17 @@ var setEvent = function () {
   var mousemoveY = 0;
 
   var eventTouchStart = function(x, y) {
+    mousedownX = 0;
+    mousedownY = 0;
+    mouseVector.x = (x / window.innerWidth) * 2 - 1;
+    mouseVector.y = - (y / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseVector, camera.obj);
+    intersects = raycaster.intersectObjects(scene.children);
+    for (var i = 0; i < intersects.length; i++) {
+      if (intersects[i].object.id == ball.id) {
+        isGlipedBall = true;
+      }
+    };
   };
   
   var eventTouchMove = function(x, y) {
@@ -79,12 +91,13 @@ var setEvent = function () {
     mousemoveY = y;
     mouseVector.x = (x / window.innerWidth) * 2 - 1;
     mouseVector.y = - (y / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouseVector, camera.obj);
-    intersects = raycaster.intersectObjects(scene.children);
-    console.log(intersects);
   };
   
   var eventTouchEnd = function(x, y) {
+    if (isGlipedBall) {
+      ball.released();
+      isGlipedBall = false;
+    }
   };
 
   canvas.addEventListener('contextmenu', function (event) {
@@ -130,18 +143,17 @@ var render = function() {
   renderer.clear();
   
   ball.updateVertices();
+  if (isGlipedBall) {
+    ball.gliped();
+  }
   
   renderer.render(scene, camera.obj);
 };
 
 var renderloop = function() {
   var now = +new Date();
+  render();
   setTimeout(renderloop, 1000 / fps);
-
-  if (now - lastTimeRender > 1000 / fps) {
-    render();
-    lastTimeRender = +new Date();
-  }
 };
 
 var resizeRenderer = function() {
