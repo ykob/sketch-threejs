@@ -33,6 +33,14 @@ var exports = function() {
     this.mesh.position.set(this.x, this.y, this.z);
   };
   
+  Mesh.prototype.comuputeGeometry = function() {
+    this.mesh.geometry.computeVertexNormals();
+    this.mesh.geometry.computeFaceNormals();
+    this.mesh.geometry.verticesNeedUpdate = true;
+    this.mesh.geometry.elementsNeedUpdate = true;
+    this.mesh.geometry.normalsNeedUpdate = true;
+  };
+  
   Mesh.prototype.updateVerticesInt = function() {
     var vertices = this.mesh.geometry.vertices;
     for (var i = 0; i < vertices.length; i++) {
@@ -41,11 +49,7 @@ var exports = function() {
       this.vertexDeg[i] = get.randomInt(0, 360);
       vertices[i].normalize().multiplyScalar(r);
     }
-    this.mesh.geometry.computeVertexNormals();
-    this.mesh.geometry.computeFaceNormals();
-    this.mesh.geometry.verticesNeedUpdate = true;
-    this.mesh.geometry.elementsNeedUpdate = true;
-    this.mesh.geometry.normalsNeedUpdate = true;
+    this.comuputeGeometry();
   };
   
   Mesh.prototype.updateVertices = function() {
@@ -56,11 +60,7 @@ var exports = function() {
       r = this.vertexArr[i] + Math.sin(get.radian(this.vertexDeg[i])) * this.vertexWaveCoe;
       vertices[i].normalize().multiplyScalar(r);
     }
-    this.mesh.geometry.computeVertexNormals();
-    this.mesh.geometry.computeFaceNormals();
-    this.mesh.geometry.verticesNeedUpdate = true;
-    this.mesh.geometry.elementsNeedUpdate = true;
-    this.mesh.geometry.normalsNeedUpdate = true;
+    this.comuputeGeometry();
   };
   
   return Mesh;
