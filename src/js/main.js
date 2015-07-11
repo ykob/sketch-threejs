@@ -9,8 +9,6 @@ var Mesh = require('./mesh');
 var bodyWidth = document.body.clientWidth;
 var bodyHeight = document.body.clientHeight;
 var fps = 60;
-var frameTime;
-var lastTimeRender = +new Date();
 var raycaster = new THREE.Raycaster();
 var mouseVector = new THREE.Vector2(-2, -2);
 var intersects;
@@ -43,7 +41,7 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(120, 40, 40);
+  var ballGeometry = new THREE.SphereGeometry(120, 60, 60);
   var ballMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff
   });

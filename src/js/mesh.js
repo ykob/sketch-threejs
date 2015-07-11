@@ -26,7 +26,7 @@ var exports = function() {
     this.material = material;
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.r = this.geometry.parameters.radius;
-    this.vertexWaveCoe = this.r / 5;
+    this.vertexWaveCoe = this.r / 6;
 
     this.geometry.mergeVertices();
     this.updateVerticesInt();
@@ -83,8 +83,8 @@ var exports = function() {
   };
   
   Mesh.prototype.released = function() {
-    this.k = 0.25;
-    this.cd = 0.35;
+    this.k = 0.12;
+    this.cd = 0.3;
     this.valBase = 0;
   };
   
