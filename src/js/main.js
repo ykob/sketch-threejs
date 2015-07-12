@@ -9,6 +9,7 @@ var Mesh = require('./mesh');
 var bodyWidth = document.body.clientWidth;
 var bodyHeight = document.body.clientHeight;
 var fps = 60;
+var lasttimeBallMove = +new Date();
 var raycaster = new THREE.Raycaster();
 var mouseVector = new THREE.Vector2(-2, -2);
 var intersects;
@@ -41,18 +42,19 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(120, 60, 60);
+  var ballGeometry = new THREE.SphereGeometry(120, 15, 15);
   var ballMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff
+    color: 0xffffff,
+    shading: THREE.FlatShading
   });
 
   initThree();
   
   camera = new Camera();
-  camera.init(get.radian(30), get.radian(0), bodyWidth, bodyHeight);
+  camera.init(get.radian(20), get.radian(0), bodyWidth, bodyHeight);
   
   light = new HemiLight();
-  light.init(scene, get.radian(30), get.radian(60), 1000, 0xff9999, 0x3366cc, 1);
+  light.init(scene, get.radian(30), get.radian(60), 1000, 0xeeeeff, 0x223322, 1);
   
   ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
@@ -140,6 +142,7 @@ var setEvent = function () {
 var render = function() {
   renderer.clear();
   
+  ball.moveObject();
   ball.updateVertices();
   if (isGlipedBall) {
     ball.gliped();
@@ -151,6 +154,13 @@ var render = function() {
 var renderloop = function() {
   var now = +new Date();
   render();
+  if (now - lasttimeBallMove > 500) {
+    var rad1 = get.radian(get.randomInt(0, 10));
+    var rad2 = get.radian(get.randomInt(0, 480));
+    var r = get.randomInt(120, 360);
+    ball.updateMoveValBase(rad1, rad2, r);
+    lasttimeBallMove = +new Date();
+  }
   setTimeout(renderloop, 1000 / fps);
 };
 
@@ -158,7 +168,7 @@ var resizeRenderer = function() {
   bodyWidth  = document.body.clientWidth;
   bodyHeight = document.body.clientHeight;
   renderer.setSize(bodyWidth, bodyHeight);
-  camera.init(get.radian(45), get.radian(0), bodyWidth, bodyHeight);
+  camera.init(get.radian(20), get.radian(0), bodyWidth, bodyHeight);
 };
 
 init();

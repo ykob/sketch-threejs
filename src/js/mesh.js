@@ -7,12 +7,22 @@ var exports = function() {
     this.x = 0;
     this.y = 0;
     this.z = 0;
-    this.cd = 0.2;
-    this.k  = 0.4;
-    this.val  = 0;
-    this.valBase = this.val;
-    this.a = 0;
-    this.v = 0;
+    this.move = {
+      cd: 0.3,
+      k: 0.2,
+      val: [0, 0, 0],
+      valBase: [0, 0, 0],
+      a: [0, 0, 0],
+      v: [0, 0, 0]
+    };
+    this.expand = {
+      cd: 0.2,
+      k: 0.4,
+      val: 0,
+      valBase: 0,
+      a: 0,
+      v: 0
+    };
     this.geometry;
     this.material;
     this.mesh;
@@ -26,7 +36,7 @@ var exports = function() {
     this.material = material;
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.r = this.geometry.parameters.radius;
-    this.vertexWaveCoe = this.r / 6;
+    this.vertexWaveCoe = this.r / 60;
 
     this.geometry.mergeVertices();
     this.updateVerticesInt();
@@ -53,7 +63,7 @@ var exports = function() {
     for (var i = 0; i < vertices.length; i++) {
       var r = this.r;
       this.vertexArr[i] = r;
-      this.vertexDeg[i] = vertices[i].y;
+      this.vertexDeg[i] = get.randomInt(0, 360);
       r = this.vertexArr[i] + Math.sin(get.radian(this.vertexDeg[i])) * this.vertexWaveCoe;
       vertices[i].normalize().multiplyScalar(r);
     }
@@ -62,30 +72,48 @@ var exports = function() {
   
   Mesh.prototype.updateVertices = function() {
     var vertices = this.mesh.geometry.vertices;
-    this.a = (this.valBase - this.val) * this.k;
-    this.a -= this.cd * this.v;
-    this.v += this.a;
-    this.val += this.v;
+    this.expand.a = (this.expand.valBase - this.expand.val) * this.expand.k / 2;
+    this.expand.a -= this.expand.cd * this.expand.v;
+    this.expand.v += this.expand.a;
+    this.expand.val += this.expand.v;
     for (var i = 0; i < this.vertexArr.length; i++) {
       var r;
       this.vertexDeg[i] += 8;
       
-      r = this.vertexArr[i] + this.val + Math.sin(get.radian(this.vertexDeg[i])) * this.vertexWaveCoe;
+      r = this.vertexArr[i] + this.expand.val + Math.sin(get.radian(this.vertexDeg[i])) * this.vertexWaveCoe;
       vertices[i].normalize().multiplyScalar(r);
     }
     this.comuputeGeometry();
   };
   
   Mesh.prototype.gliped = function() {
-    this.k = 0.03;
-    this.cd = 0.4;
-    this.valBase = 240;
+    this.expand.k = 0.03;
+    this.expand.cd = 0.4;
+    this.expand.valBase = 120;
   };
   
   Mesh.prototype.released = function() {
-    this.k = 0.12;
-    this.cd = 0.3;
-    this.valBase = 0;
+    this.expand.k = 0.2;
+    this.expand.cd = 0.3;
+    this.expand.valBase = 0;
+  };
+  
+  Mesh.prototype.updateMoveValBase = function(rad1, rad2, r) {
+    this.move.valBase = get.pointSphere(rad1, rad2, r);
+    console.log(this.move.valBase);
+  };
+  
+  Mesh.prototype.moveObject = function() {
+    for (var i = 0; i < 3; i++) {
+      this.move.a[i] = (this.move.valBase[i] - this.move.val[i]) * this.move.k;
+      this.move.a[i] -= this.move.cd * this.move.v[i];
+      this.move.v[i] += this.move.a[i];
+      this.move.val[i] += this.move.v[i];
+    }
+    this.x = this.move.val[0];
+    this.y = this.move.val[1];
+    this.z = this.move.val[2];
+    this.setPosition();
   };
   
   return Mesh;

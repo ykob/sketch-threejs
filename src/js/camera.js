@@ -20,7 +20,7 @@ var exports = function(){
     this.r = 1200;
     this.rad1 = rad1;
     this.rad2 = rad2;
-    this.obj = new THREE.PerspectiveCamera(50, this.width / this.height, 1, 10000);
+    this.obj = new THREE.PerspectiveCamera(35, this.width / this.height, 1, 10000);
     this.setPosition(this.rad1, this.rad2, this.r);
   };
   
