@@ -21,8 +21,6 @@ var camera;
 var light;
 var globe;
 var ball;
-var particleArr = [];
-var particleNum = 64;
 
 var isGlipedBall = false;
 
@@ -42,9 +40,9 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.SphereGeometry(120, 15, 15);
+  var ballGeometry = new THREE.DodecahedronGeometry(100, 1);
   var ballMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
+    color: 0xccccff,
     shading: THREE.FlatShading
   });
 
@@ -54,7 +52,7 @@ var init = function() {
   camera.init(get.radian(20), get.radian(0), bodyWidth, bodyHeight);
   
   light = new HemiLight();
-  light.init(scene, get.radian(30), get.radian(60), 1000, 0xeeeeff, 0x223322, 1);
+  light.init(scene, get.radian(30), get.radian(60), 1000, 0xeeeeff, 0x777700, 1);
   
   ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
@@ -154,7 +152,7 @@ var render = function() {
 var renderloop = function() {
   var now = +new Date();
   render();
-  if (now - lasttimeBallMove > 500) {
+  if (now - lasttimeBallMove > 1000) {
     var rad1 = get.radian(get.randomInt(0, 10));
     var rad2 = get.radian(get.randomInt(0, 480));
     var r = get.randomInt(120, 360);
