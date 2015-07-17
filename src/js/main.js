@@ -19,10 +19,7 @@ var renderer;
 var scene;
 var camera;
 var light;
-var globe;
 var ball;
-
-var isGlipedBall = false;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -40,10 +37,9 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.DodecahedronGeometry(100, 1);
+  var ballGeometry = new THREE.DodecahedronGeometry(10, 3);
   var ballMaterial = new THREE.MeshPhongMaterial({
-    color: 0xccccff,
-    shading: THREE.FlatShading
+    color: 0xffffff
   });
 
   initThree();
@@ -56,6 +52,7 @@ var init = function() {
   
   ball = new Mesh();
   ball.init(scene, ballGeometry, ballMaterial);
+  scene.add(ball.mesh);
   
   renderloop();
   setEvent();
@@ -77,11 +74,6 @@ var setEvent = function () {
     mouseVector.y = - (y / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouseVector, camera.obj);
     intersects = raycaster.intersectObjects(scene.children);
-    for (var i = 0; i < intersects.length; i++) {
-      if (intersects[i].object.id == ball.id) {
-        isGlipedBall = true;
-      }
-    };
   };
   
   var eventTouchMove = function(x, y) {
@@ -92,10 +84,6 @@ var setEvent = function () {
   };
   
   var eventTouchEnd = function(x, y) {
-    if (isGlipedBall) {
-      ball.released();
-      isGlipedBall = false;
-    }
   };
 
   canvas.addEventListener('contextmenu', function (event) {
@@ -139,26 +127,12 @@ var setEvent = function () {
 
 var render = function() {
   renderer.clear();
-  
-  ball.moveObject();
-  ball.updateVertices();
-  if (isGlipedBall) {
-    ball.gliped();
-  }
-  
   renderer.render(scene, camera.obj);
 };
 
 var renderloop = function() {
   var now = +new Date();
   render();
-  if (now - lasttimeBallMove > 1000) {
-    var rad1 = get.radian(get.randomInt(0, 10));
-    var rad2 = get.radian(get.randomInt(0, 480));
-    var r = get.randomInt(120, 360);
-    ball.updateMoveValBase(rad1, rad2, r);
-    lasttimeBallMove = +new Date();
-  }
   setTimeout(renderloop, 1000 / fps);
 };
 
