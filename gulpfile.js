@@ -29,12 +29,11 @@ gulp.task('serve', function() {
 // 'default' タスク実行前に処理しておきたいタスク
 gulp.task('start', sequence([
   'sass',
-  'browserify'
+  'watchify'
 ], 'serve'));
 
 // 作業開始
 // ファイルの変更監視で対象タスク実行とブラウザのオートリロード
 gulp.task('default', ['start'], function() {
   gulp.watch(['./' + CONFIG.SRC + '/**/*.{scss,sass}'], ['sass', reload]);
-  gulp.watch(['./' + CONFIG.SRC + '/**/*.js'], ['browserify', reload]);
 });
