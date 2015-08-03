@@ -132,8 +132,12 @@ var render = function() {
 
 var renderloop = function() {
   var now = +new Date();
-  render();
-  setTimeout(renderloop, 1000 / fps);
+  requestAnimationFrame(renderloop);
+
+  if (now - lastTimeRender > 1000 / fps) {
+    render();
+    lastTimeRender = +new Date();
+  }
 };
 
 var resizeRenderer = function() {
