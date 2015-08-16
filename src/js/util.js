@@ -1,26 +1,26 @@
 var exports = function(){
-  var Get = function() {};
+  var Util = function() {};
   
-  Get.prototype.randomInt = function(min, max){
+  Util.prototype.getRandomInt = function(min, max){
     return Math.floor(Math.random() * (max - min)) + min;
   };
   
-  Get.prototype.degree = function(radian) {
+  Util.prototype.getDegree = function(radian) {
     return radian / Math.PI * 180;
   };
   
-  Get.prototype.radian = function(degrees) {
+  Util.prototype.getRadian = function(degrees) {
     return degrees * Math.PI / 180;
   };
   
-  Get.prototype.pointSphere = function(rad1, rad2, r) {
+  Util.prototype.getPointSphere = function(rad1, rad2, r) {
     var x = Math.cos(rad1) * Math.cos(rad2) * r;
     var z = Math.cos(rad1) * Math.sin(rad2) * r;
     var y = Math.sin(rad1) * r;
     return [x, y, z];
   };
   
-  return Get;
+  return Util;
 };
 
 module.exports = exports();

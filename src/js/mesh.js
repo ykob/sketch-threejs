@@ -1,5 +1,5 @@
-var Get = require('./get');
-var get = new Get();
+var Util = require('./util');
+var util = new Util();
 
 var exports = function() {
   var Mesh = function() {

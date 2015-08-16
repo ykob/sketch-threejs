@@ -1,17 +1,17 @@
-var Get = require('./get');
-var get = new Get();
+var Util = require('./util');
+var util = new Util();
 var debounce = require('./debounce');
 var Camera = require('./camera');
 var PointLight = require('./pointLight');
 var HemiLight = require('./hemiLight');
 var Mesh = require('./mesh');
 
-var bodyWidth = document.body.clientWidth;
-var bodyHeight = document.body.clientHeight;
+var body_width = document.body.clientWidth;
+var body_height = document.body.clientHeight;
 var fps = 60;
-var lasttimeBallMove = +new Date();
+var last_time_render = Date.now();
 var raycaster = new THREE.Raycaster();
-var mouseVector = new THREE.Vector2(-2, -2);
+var mouse_vector = new THREE.Vector2(-2, -2);
 var intersects;
 
 var canvas;
@@ -29,7 +29,7 @@ var initThree = function() {
   if (!renderer) {
     alert('Three.jsの初期化に失敗しました。');
   }
-  renderer.setSize(bodyWidth, bodyHeight);
+  renderer.setSize(body_width, body_height);
   canvas.appendChild(renderer.domElement);
   renderer.setClearColor(0xeeeeee, 1.0);
   
@@ -37,22 +37,13 @@ var initThree = function() {
 };
 
 var init = function() {
-  var ballGeometry = new THREE.DodecahedronGeometry(10, 3);
-  var ballMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff
-  });
-
   initThree();
   
   camera = new Camera();
-  camera.init(get.radian(20), get.radian(0), bodyWidth, bodyHeight);
+  camera.init(util.getRadian(20), util.getRadian(0), body_width, body_height);
   
   light = new HemiLight();
-  light.init(scene, get.radian(30), get.radian(60), 1000, 0xeeeeff, 0x777700, 1);
-  
-  ball = new Mesh();
-  ball.init(scene, ballGeometry, ballMaterial);
-  scene.add(ball.mesh);
+  light.init(scene, util.getRadian(30), util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
   
   renderloop();
   setEvent();
@@ -62,25 +53,21 @@ var init = function() {
 };
 
 var setEvent = function () {
-  var mousedownX = 0;
-  var mousedownY = 0;
-  var mousemoveX = 0;
-  var mousemoveY = 0;
+  var mouse_down = new THREE.Vector2();
+  var mouse_move = new THREE.Vector2();
 
   var eventTouchStart = function(x, y) {
-    mousedownX = 0;
-    mousedownY = 0;
-    mouseVector.x = (x / window.innerWidth) * 2 - 1;
-    mouseVector.y = - (y / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouseVector, camera.obj);
+    mouse_down.set(x, y);
+    mouse_vector.x = (x / window.innerWidth) * 2 - 1;
+    mouse_vector.y = - (y / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse_vector, camera.obj);
     intersects = raycaster.intersectObjects(scene.children);
   };
   
   var eventTouchMove = function(x, y) {
-    mousemoveX = x;
-    mousemoveY = y;
-    mouseVector.x = (x / window.innerWidth) * 2 - 1;
-    mouseVector.y = - (y / window.innerHeight) * 2 + 1;
+    mouse_move.set(x, y);
+    mouse_vector.x = (x / window.innerWidth) * 2 - 1;
+    mouse_vector.y = - (y / window.innerHeight) * 2 + 1;
   };
   
   var eventTouchEnd = function(x, y) {
@@ -131,20 +118,20 @@ var render = function() {
 };
 
 var renderloop = function() {
-  var now = +new Date();
+  var now = Date.now();
   requestAnimationFrame(renderloop);
 
-  if (now - lastTimeRender > 1000 / fps) {
+  if (now - last_time_render > 1000 / fps) {
     render();
-    lastTimeRender = +new Date();
+    last_time_render = Date.now();
   }
 };
 
 var resizeRenderer = function() {
-  bodyWidth  = document.body.clientWidth;
-  bodyHeight = document.body.clientHeight;
-  renderer.setSize(bodyWidth, bodyHeight);
-  camera.init(get.radian(20), get.radian(0), bodyWidth, bodyHeight);
+  body_width  = document.body.clientWidth;
+  body_height = document.body.clientHeight;
+  renderer.setSize(body_width, body_height);
+  camera.init(util.getRadian(20), util.getRadian(0), body_width, body_height);
 };
 
 init();
