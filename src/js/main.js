@@ -24,9 +24,13 @@ var hannya_text = '観自在菩薩 行深般若波羅蜜多時 照見五蘊皆�
 var hannya_length = hannya_text.length;
 var hannya_col_max = 15;
 var hannya_row_max = Math.floor(hannya_length / hannya_col_max);
-var hannya_particles = [];
+var hannya_particle;
 var hannya_geometry = new THREE.Geometry();
-var hannya_materials = [];
+var hannya_material;
+// var dummy_texture = new THREE.ImageUtils.loadTexture('img/particle.png', null, function() {
+//   dummy_texture.magFilter = THREE.NearestFilter;
+//   dummy_texture.minFilter = THREE.NearestFilter;
+// });
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -53,6 +57,47 @@ var init = function() {
   light = new HemiLight();
   light.init(scene, util.getRadian(30), util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
   
+  
+  // 1つのPointCloudに複数のtextureを張るデモ(以下参考)
+  // http://jsfiddle.net/6qrubbk6/5/
+  
+  // var particleCount = 100;
+  // var uniforms = {
+  //     textures: {
+  //         type: 'tv',
+  //         value: this.getTextures()
+  //     }
+  // };
+  // var attributes = {
+  //     texIndex: {
+  //         type: 'f',
+  //         value: []
+  //     },
+  //     color: {
+  //         type: 'c',
+  //         value: []
+  //     },
+  // };
+  // var material = new THREE.ShaderMaterial({
+  //     uniforms: uniforms,
+  //     attributes: attributes,
+  //     vertexShader: document.getElementById('vertexShader').textContent,
+  //     fragmentShader: document.getElementById('fragmentShader').textContent,
+  //     transparent: true
+  // });
+  // var geometry = new THREE.Geometry();
+  // for (var i = 0; i < particleCount; i++) {
+  //     geometry.vertices.push(new THREE.Vector3(
+  //     (Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50));
+  //     attributes.texIndex.value.push(Math.random() * 3 | 0);
+  //     attributes.color.value.push(new THREE.Color(0xffffff));
+  // }
+
+  // var particles = new THREE.PointCloud(geometry, material);
+  // particles.sortParticles = true;
+  // this.container.add(particles);
+  
+  
   var grid = 50;
   for (var i = 0; i < hannya_length; i++) {
     var row = Math.floor(i / hannya_col_max);
@@ -63,17 +108,16 @@ var init = function() {
     vertex.y = 0;
     vertex.z = row * grid - hannya_row_max * grid / 2;
     hannya_geometry.vertices.push(vertex);
-    hannya_materials[i] = new THREE.PointCloudMaterial({
-      size: 20,
-      color: 0xff0000,
-      //map: text_image,
-      blending: THREE.AdditiveBlending,
-      depthTest: false,
-      transparent : true
-    });
-    hannya_particles[i] = new THREE.PointCloud(hannya_geometry, hannya_materials[i]);
-    scene.add(hannya_particles[i]);
   }
+  hannya_material = new THREE.PointCloudMaterial({
+    size: 30,
+    //map: dummy_texture,
+    blending: THREE.AdditiveBlending,
+    depthTest: false,
+    transparent : true
+  });
+  hannya_particle = new THREE.PointCloud(hannya_geometry, hannya_material);
+  scene.add(hannya_particle);
   
   renderloop();
   setEvent();
@@ -144,8 +188,7 @@ var setEvent = function () {
 
 var render = function() {
   renderer.clear();
-  for (var i = 0; i < hannya_particles.length; i++) {
-  };
+
   renderer.render(scene, camera.obj);
 };
 

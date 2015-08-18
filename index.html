@@ -17,6 +17,38 @@
 <body>
   <div id="canvas"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+  <script id="vertexShader" type="x-shader/x-vertex">
+    attribute vec3 color;
+    attribute float texIndex;
+
+    varying vec3 vColor;
+    varying float vTexIndex;
+
+    void main() {
+      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+
+      vColor = color;
+      vTexIndex = texIndex;
+
+      gl_PointSize = 50.0;
+      gl_Position = projectionMatrix * mvPosition;
+    }
+  </script>
+  <script id="fragmentShader" type="x-shader/x-fragment">
+    uniform sampler2D textures[3];
+
+    varying vec3 vColor;
+    varying float vTexIndex;
+
+    void main() {
+      vec4 startColor = vec4(vColor, 1.0);
+      vec4 finalColor;
+
+      finalColor = texture2D(textures[0], gl_PointCoord);
+
+      gl_FragColor = startColor * finalColor;
+    }
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
