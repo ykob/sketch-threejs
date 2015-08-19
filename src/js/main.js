@@ -206,6 +206,8 @@ var resizeRenderer = function() {
   body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
   camera.init(util.getRadian(60), util.getRadian(30), body_width, body_height);
+  controls = new THREE.TrackballControls(camera.obj);
+  controls.rotateSpeed = 2;
 };
 
 init();
