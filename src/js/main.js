@@ -103,54 +103,61 @@ var init = function() {
   var hannya_text = '観自在菩薩 行深般若波羅蜜多時 照見五蘊皆空 度一切苦厄 舎利子 色不異空 空不異色 色即是空 空即是色 受想行識亦復如是 舎利子 是諸法空相 不生不滅 不垢不浄 不増不減 是故空中 無色無受想行識 無眼耳鼻舌身意 無色声香味触法 無眼界乃至無意識界 無無明亦無無明尽 乃至無老死 亦無老死尽 無苦集滅道 無智亦無得 以無所得故 菩提薩埵 依般若波羅蜜多故 心無罣礙 無罣礙故 無有恐怖 遠離一切顛倒夢想 究竟涅槃 三世諸仏 依般若波羅蜜多故 得阿耨多羅三藐三菩提 故知般若波羅蜜多 是大神呪 是大明呪 是無上呪 是無等等呪 能除一切苦 真実不虚 故説般若波羅蜜多呪 即説呪日 羯諦羯諦 波羅羯諦 波羅僧羯諦 菩提薩婆訶 般若心経';
   var hannya_length = hannya_text.length;
   var hannya_col_max = 15;
-  var hannya_row_max = Math.floor(hannya_length / hannya_col_max);
-  var hannya_uniforms = {
-    textures: {
-      type: 'tv',
-      value: []
-    },
-    texture: {
-      type: 't',
-      value: dummy_texture1
-    }
-  };
-  var hannya_attributes = {
-    texture_index: {
-      type: 'f',
-      value: []
-    },
-    color: {
-      type: 'c',
-      value: []
-    }
-  };
-  var hannya_geometry = new THREE.Geometry();
-  var hannya_material = new THREE.ShaderMaterial({
-    uniforms: hannya_uniforms,
-    attributes: hannya_attributes,
-    vertexShader: document.getElementById('vertexShader').textContent,
-    fragmentShader: document.getElementById('fragmentShader').textContent,
-    transparent: true
-  });
-  var hannya_particle;
+  var hannya_row_max = Math.ceil(hannya_length / hannya_col_max);
+  var hannya_geometries = [];
+  var hannya_materials = [];
+  var hannya_particles = [];
+
+  for (var i = 0; i < hannya_row_max; i++) {
+    var hannya_uniforms = {
+      textures: {
+        type: 'tv',
+        value: []
+      },
+      texture: {
+        type: 't',
+        value: dummy_texture1
+      }
+    };
+    var hannya_attributes = {
+      texture_index: {
+        type: 'f',
+        value: []
+      },
+      color: {
+        type: 'c',
+        value: []
+      }
+    };
+    hannya_geometries[i] = new THREE.Geometry();
+    hannya_materials[i] = new THREE.ShaderMaterial({
+      uniforms: hannya_uniforms,
+      attributes: hannya_attributes,
+      vertexShader: document.getElementById('vertexShader').textContent,
+      fragmentShader: document.getElementById('fragmentShader').textContent,
+      transparent: true
+    });
+  }
   
   for (var i = 0; i < hannya_length; i++) {
     var row = Math.floor(i / hannya_col_max);
     var col = i % hannya_col_max;
+    var geometry = hannya_geometries[row];
+    var material = hannya_materials[row];
     var vertex = new THREE.Vector3();
     
     vertex.x = col * hannya_grid - hannya_col_max * hannya_grid / 2;
     vertex.y = 0;
     vertex.z = row * hannya_grid - hannya_row_max * hannya_grid / 2;
-    hannya_geometry.vertices.push(vertex);
-    hannya_attributes.texture_index.value.push(Math.floor(i % 3));
-    hannya_attributes.color.value.push(new THREE.Color(0xff0000));
+    geometry.vertices.push(vertex);
+    material.attributes.texture_index.value.push(Math.floor(i % 3));
+    material.attributes.color.value.push(new THREE.Color(0xff0000));
+    material.uniforms.textures.value.push(dummy_texture1);
+    material.uniforms.textures.value.push(dummy_texture2);
+    material.uniforms.textures.value.push(dummy_texture3);
+    hannya_particles[row] = new THREE.PointCloud(geometry, material);
+    scene.add(hannya_particles[row]);
   }
-  hannya_uniforms.textures.value.push(dummy_texture1);
-  hannya_uniforms.textures.value.push(dummy_texture2);
-  hannya_uniforms.textures.value.push(dummy_texture3);
-  hannya_particle = new THREE.PointCloud(hannya_geometry, hannya_material);
-  scene.add(hannya_particle);
   
   renderloop();
   setEvent();
