@@ -7,7 +7,7 @@ var exports = function(){
     this.height = 0;
     this.rad1 = 0;
     this.rad2 = 0;
-    this.r = 1200;
+    this.r = 1600;
     this.obj;
   };
   
