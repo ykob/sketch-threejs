@@ -1,10 +1,7 @@
-var Util = require('./util');
-var util = new Util();
+var Util = require('./Util');
 var debounce = require('./debounce');
 var Camera = require('./camera');
-var PointLight = require('./pointLight');
 var HemiLight = require('./hemiLight');
-var Mesh = require('./mesh');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
@@ -15,11 +12,11 @@ var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
 var intersects;
 
-var canvas;
-var renderer;
-var scene;
-var camera;
-var light;
+var canvas = null;
+var renderer = null;
+var scene = null;
+var camera = null;
+var light = null;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -41,10 +38,10 @@ var init = function() {
   initThree();
   
   camera = new Camera();
-  camera.init(util.getRadian(60), util.getRadian(30), body_width, body_height);
+  camera.init(body_width, body_height);
   
   light = new HemiLight();
-  light.init(scene, util.getRadian(30), util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
+  light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
   
   renderloop();
   setEvent();
@@ -53,12 +50,15 @@ var init = function() {
   });
 };
 
+var poolObject = function() {
+  
+};
+
 var raycast = function(vector) {
   vector.x = (vector.x / window.innerWidth) * 2 - 1;
   vector.y = - (vector.y / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(vector, camera.obj);
   intersects = raycaster.intersectObjects(scene.children);
-  console.log(intersects);
 };
 
 var setEvent = function () {
@@ -133,7 +133,7 @@ var resizeRenderer = function() {
   body_width  = document.body.clientWidth;
   body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
-  camera.init(util.getRadian(60), util.getRadian(30), body_width, body_height);
+  camera.init(Util.getRadian(60), Util.getRadian(30), body_width, body_height);
 };
 
 init();

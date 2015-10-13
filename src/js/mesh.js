@@ -1,5 +1,4 @@
 var Util = require('./util');
-var util = new Util();
 
 var exports = function() {
   var Mesh = function() {
