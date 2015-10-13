@@ -11,7 +11,8 @@ var body_height = document.body.clientHeight;
 var fps = 60;
 var last_time_render = Date.now();
 var raycaster = new THREE.Raycaster();
-var mouse_vector = new THREE.Vector2(-2, -2);
+var vector_mouse_down = new THREE.Vector2();
+var vector_mouse_move = new THREE.Vector2();
 var intersects;
 
 var canvas;
@@ -19,8 +20,6 @@ var renderer;
 var scene;
 var camera;
 var light;
-
-var controls;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -54,25 +53,26 @@ var init = function() {
   });
 };
 
-var setEvent = function () {
-  var mouse_down = new THREE.Vector2();
-  var mouse_move = new THREE.Vector2();
+var raycast = function(vector) {
+  vector.x = (vector.x / window.innerWidth) * 2 - 1;
+  vector.y = - (vector.y / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(vector, camera.obj);
+  intersects = raycaster.intersectObjects(scene.children);
+  console.log(intersects);
+};
 
-  var eventTouchStart = function(x, y) {
-    mouse_down.set(x, y);
-    mouse_vector.x = (x / window.innerWidth) * 2 - 1;
-    mouse_vector.y = - (y / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouse_vector, camera.obj);
-    intersects = raycaster.intersectObjects(scene.children);
+var setEvent = function () {
+  var touchStart = function(x, y) {
+    vector_mouse_down.set(x, y);
+    raycast(vector_mouse_down);
   };
   
-  var eventTouchMove = function(x, y) {
-    mouse_move.set(x, y);
-    mouse_vector.x = (x / window.innerWidth) * 2 - 1;
-    mouse_vector.y = - (y / window.innerHeight) * 2 + 1;
+  var touchMove = function(x, y) {
+    vector_mouse_move.set(x, y);
+    raycast(vector_mouse_move);
   };
   
-  var eventTouchEnd = function(x, y) {
+  var touchEnd = function(x, y) {
   };
 
   canvas.addEventListener('contextmenu', function (event) {
@@ -85,38 +85,37 @@ var setEvent = function () {
 
   canvas.addEventListener('mousedown', function (event) {
     event.preventDefault();
-    eventTouchStart(event.clientX, event.clientY);
+    touchStart(event.clientX, event.clientY);
   });
 
   canvas.addEventListener('mousemove', function (event) {
     event.preventDefault();
-    eventTouchMove(event.clientX, event.clientY);
+    touchMove(event.clientX, event.clientY);
   });
 
   canvas.addEventListener('mouseup', function (event) {
     event.preventDefault();
-    eventTouchEnd();
+    touchEnd();
   });
 
   canvas.addEventListener('touchstart', function (event) {
     event.preventDefault();
-    eventTouchStart(event.touches[0].clientX, event.touches[0].clientY);
+    touchStart(event.touches[0].clientX, event.touches[0].clientY);
   });
 
   canvas.addEventListener('touchmove', function (event) {
     event.preventDefault();
-    eventTouchMove(event.touches[0].clientX, event.touches[0].clientY);
+    touchMove(event.touches[0].clientX, event.touches[0].clientY);
   });
 
   canvas.addEventListener('touchend', function (event) {
     event.preventDefault();
-    eventTouchEnd();
+    touchEnd();
   });
 };
 
 var render = function() {
   renderer.clear();
-  controls.update(); 
   renderer.render(scene, camera.obj);
 };
 
