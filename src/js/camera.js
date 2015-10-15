@@ -4,9 +4,9 @@ var exports = function(){
   var Camera = function() {
     this.width = 0;
     this.height = 0;
-    this.rad1 = Util.getRadian(60);
+    this.rad1 = Util.getRadian(30);
     this.rad2 = Util.getRadian(30);
-    this.range = 1600;
+    this.range = 1000;
     this.obj;
   };
   

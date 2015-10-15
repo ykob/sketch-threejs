@@ -32,16 +32,23 @@ var initThree = function() {
   
   scene = new THREE.Scene();
   //scene.fog = new THREE.FogExp2(0x000000, 2000);
-};
-
-var init = function() {
-  initThree();
   
   camera = new Camera();
   camera.init(body_width, body_height);
   
   light = new HemiLight();
   light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
+  
+  var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
+  var dummy_material = new THREE.MeshLambertMaterial({
+    color: 0xffffff
+  });
+  var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
+  scene.add(dummy_obj);
+};
+
+var init = function() {
+  initThree();
   
   renderloop();
   setEvent();
