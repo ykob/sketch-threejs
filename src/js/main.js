@@ -140,7 +140,7 @@ var resizeRenderer = function() {
   body_width  = document.body.clientWidth;
   body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
-  camera.init(Util.getRadian(60), Util.getRadian(30), body_width, body_height);
+  camera.resize(body_width, body_height);
 };
 
 init();
