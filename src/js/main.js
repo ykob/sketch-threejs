@@ -49,7 +49,7 @@ var initThree = function() {
 
 var init = function() {
   initThree();
-  
+
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
