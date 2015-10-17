@@ -39,12 +39,26 @@ var initThree = function() {
   light = new HemiLight();
   light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
   
-  var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
-  var dummy_material = new THREE.MeshLambertMaterial({
-    color: 0xffffff
+  // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
+  // var dummy_material = new THREE.MeshLambertMaterial({
+  //   color: 0xffffff
+  // });
+  // var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
+  // scene.add(dummy_obj);
+  
+  var points_geometry = new THREE.Geometry();
+  var points_material = new THREE.PointsMaterial({
+    color: 0x000000,
+    size: 20
   });
-  var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
-  scene.add(dummy_obj);
+  for (var i = 0; i < 100; i++) {
+    var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
+    var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
+    var pos = Util.getSpherical(rad1, rad2, 200);
+    points_geometry.vertices.push(new THREE.Vector3(pos[0], pos[1], pos[2]));
+  }
+  var points = new THREE.Points(points_geometry, points_material);
+  scene.add(points);
 };
 
 var init = function() {
