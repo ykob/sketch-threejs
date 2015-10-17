@@ -2,6 +2,7 @@ var Util = require('./Util');
 var debounce = require('./debounce');
 var Camera = require('./camera');
 var HemiLight = require('./hemiLight');
+var Mover = require('./mover');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
@@ -18,6 +19,12 @@ var scene = null;
 var camera = null;
 var light = null;
 
+var movers = [];
+var points_geometry = null;
+var points_material = null;
+var points = null;
+var points_range_rad = 0;
+
 var initThree = function() {
   canvas = document.getElementById('canvas');
   renderer = new THREE.WebGLRenderer({
@@ -28,7 +35,7 @@ var initThree = function() {
   }
   renderer.setSize(body_width, body_height);
   canvas.appendChild(renderer.domElement);
-  renderer.setClearColor(0xffffff, 1.0);
+  renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
   //scene.fog = new THREE.FogExp2(0x000000, 2000);
@@ -45,25 +52,11 @@ var initThree = function() {
   // });
   // var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
   // scene.add(dummy_obj);
-  
-  var points_geometry = new THREE.Geometry();
-  var points_material = new THREE.PointsMaterial({
-    color: 0x000000,
-    size: 20
-  });
-  for (var i = 0; i < 100; i++) {
-    var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
-    var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-    var pos = Util.getSpherical(rad1, rad2, 200);
-    points_geometry.vertices.push(new THREE.Vector3(pos[0], pos[1], pos[2]));
-  }
-  var points = new THREE.Points(points_geometry, points_material);
-  scene.add(points);
 };
 
 var init = function() {
   initThree();
-
+  buildPoints();
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
@@ -71,8 +64,40 @@ var init = function() {
   });
 };
 
-var poolObject = function() {
-  
+var buildPoints = function() {
+  points_geometry = new THREE.Geometry();
+  points_material = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 10,
+    transparent: true,
+    opacity: 0.08,
+    brending: THREE.AdditiveBlending,
+    depthTest: false
+  });
+  for (var i = 0; i < 120; i++) {
+    for (var j = 0; j < 120; j++) {
+      var rad1 = Util.getRadian(i * 3);
+      var rad2 = Util.getRadian(j * 3);
+      var mover = new Mover();
+      mover.init(rad1, rad2);
+      movers.push(mover);
+      points_geometry.vertices.push(mover.position);
+    }
+  }
+  points = new THREE.Points(points_geometry, points_material);
+  scene.add(points);
+};
+
+var updatePoints = function() {
+  var points_vertices = [];
+  points_range_rad -= Util.getRadian(4);
+  for (var i = 0; i < movers.length; i++) {
+    movers[i].range = Math.sin(points_range_rad) * 100 + 150;
+    movers[i].move();
+    points_vertices.push(movers[i].position);
+  }
+  points.geometry.vertices = points_vertices;
+  points.geometry.verticesNeedUpdate = true;
 };
 
 var raycast = function(vector) {
@@ -137,6 +162,7 @@ var setEvent = function () {
 
 var render = function() {
   renderer.clear();
+  updatePoints();
   renderer.render(scene, camera.obj);
 };
 
