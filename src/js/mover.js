@@ -1,28 +1,54 @@
 var Util = require('./util');
+var Force = require('./force');
 
 var exports = function(){
   var Mover = function() {
-    this.rad1 = 0;
-    this.rad2 = 0;
-    this.range = 200;
     this.position = new THREE.Vector3();
+    this.velocity = new THREE.Vector3();
+    this.acceleration = new THREE.Vector3();
+    this.anchor = new THREE.Vector3();
+    this.mass = 1;
+    this.r = 0;
+    this.g = 0;
+    this.b = 0;
+    this.a = 1;
+    this.time = 0;
   };
   
   Mover.prototype = {
-    init: function(rad1, rad2) {
-      this.rad1 = rad1;
-      this.rad2 = rad2;
-      this.updatePosition();
-    },
-    move: function() {
-      this.rad1 += Util.getRadian(0.2);
-      this.rad2 += Util.getRadian(0.6);
-      this.updatePosition();
+    init: function(vector) {
+      this.mass = this.radius / 100;
+      this.position = vector.clone();
+      this.velocity = vector.clone();
+      this.anchor = vector.clone();
+      this.acceleration.set(0, 0);
+      this.a = 1;
+      this.time = 0;
     },
     updatePosition: function() {
-      var pos = Util.getSpherical(this.rad1, this.rad2, this.range);
-      this.position.set(pos[0], pos[1], pos[2]);
-    }
+      this.position.copy(this.velocity);
+    },
+    updateVelocity: function() {
+      this.velocity.add(this.acceleration);
+      if (this.velocity.distanceTo(this.position) >= 1) {
+        this.direct(this.velocity);
+      }
+    },
+    applyForce: function(vector) {
+      this.acceleration.add(vector);
+    },
+    applyFriction: function() {
+      var friction = Force.friction(this.acceleration, 0.1);
+      this.applyForce(friction);
+    },
+    applyDragForce: function(value) {
+      var drag = Force.drag(this.acceleration, value);
+      this.applyForce(drag);
+    },
+    hook: function(rest_length, k) {
+      var force = Force.hook(this.velocity, this.anchor, rest_length, k);
+      this.applyForce(force);
+    },
   };
 
   return Mover;
