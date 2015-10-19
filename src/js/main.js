@@ -23,7 +23,8 @@ var movers = [];
 var points_geometry = null;
 var points_material = null;
 var points = null;
-var points_range_rad = 0;
+
+var antigravity = new THREE.Vector3(0, 1, 0);
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -68,11 +69,18 @@ var buildPoints = function() {
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 10
+    size: 4,
+    transparent: true,
+    opacity: 0.8
   });
-  for (var i = 0; i < 1000; i++) {
+  for (var i = 0; i < 10000; i++) {
     var mover = new Mover();
-    mover.init(new THREE.Vector3(0, 0, 0));
+    var range = Util.getRandomInt(0, 200);
+    var rad = Util.getRadian(Util.getRandomInt(0, 360));
+    var x = Math.cos(rad) * range;
+    var z = Math.sin(rad) * range;
+    mover.init(new THREE.Vector3(x, -200, z));
+    mover.mass = Util.getRandomInt(100, 140) / 100;
     movers.push(mover);
     points_geometry.vertices.push(mover.position);
   }
@@ -82,7 +90,19 @@ var buildPoints = function() {
 
 var updatePoints = function() {
   for (var i = 0; i < movers.length; i++) {
-    points.geometry.vertices[i] = movers[i].position;
+    var mover = movers[i];
+    if (mover.position.y > 200) {
+      var range = Util.getRandomInt(0, 200);
+      var rad = Util.getRadian(Util.getRandomInt(0, 360));
+      var x = Math.cos(rad) * range;
+      var z = Math.sin(rad) * range;
+      mover.init(new THREE.Vector3(x, -200, z));
+      mover.mass = Util.getRandomInt(100, 140) / 100;
+    }
+    mover.applyForce(antigravity);
+    mover.updateVelocity();
+    mover.updatePosition();
+    points.geometry.vertices[i] = mover.position;
   }
   points.geometry.verticesNeedUpdate = true;
 };

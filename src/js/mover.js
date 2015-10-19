@@ -20,7 +20,7 @@ var exports = function(){
       this.position = vector.clone();
       this.velocity = vector.clone();
       this.anchor = vector.clone();
-      this.acceleration.set(0, 0);
+      this.acceleration.set(0, 0, 0);
       this.a = 1;
       this.time = 0;
     },
@@ -28,10 +28,11 @@ var exports = function(){
       this.position.copy(this.velocity);
     },
     updateVelocity: function() {
+      this.acceleration.divideScalar(this.mass);
       this.velocity.add(this.acceleration);
-      if (this.velocity.distanceTo(this.position) >= 1) {
-        this.direct(this.velocity);
-      }
+      // if (this.velocity.distanceTo(this.position) >= 1) {
+      //   this.direct(this.velocity);
+      // }
     },
     applyForce: function(vector) {
       this.acceleration.add(vector);
