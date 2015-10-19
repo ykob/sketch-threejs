@@ -39,13 +39,13 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  //scene.fog = new THREE.FogExp2(0x000000, 2000);
+  scene.fog = new THREE.Fog(0x000000, 800, 1600);
   
   camera = new Camera();
   camera.init(body_width, body_height);
   
   light = new HemiLight();
-  light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
+  light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0xccffee, 0x003311, 1);
   
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
@@ -68,19 +68,19 @@ var init = function() {
 var buildPoints = function() {
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
-    color: 0xffffff,
-    size: 4,
+    color: 0xfff966,
+    size: 6,
     transparent: true,
-    opacity: 0.8
+    opacity: 1
   });
-  for (var i = 0; i < 10000; i++) {
+  for (var i = 0; i < 20000; i++) {
     var mover = new Mover();
-    var range = Util.getRandomInt(0, 200);
+    var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 600;
     var rad = Util.getRadian(Util.getRandomInt(0, 360));
     var x = Math.cos(rad) * range;
     var z = Math.sin(rad) * range;
-    mover.init(new THREE.Vector3(x, -200, z));
-    mover.mass = Util.getRandomInt(100, 140) / 100;
+    mover.init(new THREE.Vector3(x, -100, z));
+    mover.mass = Util.getRandomInt(100, 200) / 100;
     movers.push(mover);
     points_geometry.vertices.push(mover.position);
   }
@@ -89,21 +89,24 @@ var buildPoints = function() {
 };
 
 var updatePoints = function() {
+  var points_vertices = [];
   for (var i = 0; i < movers.length; i++) {
     var mover = movers[i];
-    if (mover.position.y > 200) {
-      var range = Util.getRandomInt(0, 200);
-      var rad = Util.getRadian(Util.getRandomInt(0, 360));
-      var x = Math.cos(rad) * range;
-      var z = Math.sin(rad) * range;
-      mover.init(new THREE.Vector3(x, -200, z));
-      mover.mass = Util.getRandomInt(100, 140) / 100;
-    }
     mover.applyForce(antigravity);
     mover.updateVelocity();
     mover.updatePosition();
-    points.geometry.vertices[i] = mover.position;
+    //points.geometry.vertices[i] = mover.position;
+    if (mover.position.y > 100) {
+      var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 600;
+      var rad = Util.getRadian(Util.getRandomInt(0, 360));
+      var x = Math.cos(rad) * range;
+      var z = Math.sin(rad) * range;
+      mover.init(new THREE.Vector3(x, -100, z));
+      mover.mass = Util.getRandomInt(100, 200) / 100;
+    }
+    points_vertices[i] = mover.position;
   }
+  points.geometry.vertices = points_vertices;
   points.geometry.verticesNeedUpdate = true;
 };
 
