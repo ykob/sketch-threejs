@@ -17,7 +17,6 @@ var exports = function(){
   
   Mover.prototype = {
     init: function(vector) {
-      this.mass = this.radius / 100;
       this.position = vector.clone();
       this.velocity = vector.clone();
       this.anchor = vector.clone();

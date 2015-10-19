@@ -68,35 +68,22 @@ var buildPoints = function() {
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 10,
-    transparent: true,
-    opacity: 0.08,
-    brending: THREE.AdditiveBlending,
-    depthTest: false
+    size: 10
   });
-  for (var i = 0; i < 120; i++) {
-    for (var j = 0; j < 120; j++) {
-      var rad1 = Util.getRadian(i * 3);
-      var rad2 = Util.getRadian(j * 3);
-      var mover = new Mover();
-      mover.init(rad1, rad2);
-      movers.push(mover);
-      points_geometry.vertices.push(mover.position);
-    }
+  for (var i = 0; i < 1000; i++) {
+    var mover = new Mover();
+    mover.init(new THREE.Vector3(0, 0, 0));
+    movers.push(mover);
+    points_geometry.vertices.push(mover.position);
   }
   points = new THREE.Points(points_geometry, points_material);
   scene.add(points);
 };
 
 var updatePoints = function() {
-  var points_vertices = [];
-  points_range_rad -= Util.getRadian(4);
   for (var i = 0; i < movers.length; i++) {
-    movers[i].range = Math.sin(points_range_rad) * 100 + 150;
-    movers[i].move();
-    points_vertices.push(movers[i].position);
+    points.geometry.vertices[i] = movers[i].position;
   }
-  points.geometry.vertices = points_vertices;
   points.geometry.verticesNeedUpdate = true;
 };
 
