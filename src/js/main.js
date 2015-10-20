@@ -6,7 +6,6 @@ var Mover = require('./mover');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
-var fps = 60;
 var last_time_activate = Date.now();
 var raycaster = new THREE.Raycaster();
 var vector_mouse_down = new THREE.Vector2();
