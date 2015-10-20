@@ -13,6 +13,7 @@ var exports = function(){
     this.b = 0;
     this.a = 1;
     this.time = 0;
+    this.is_active = false;
   };
   
   Mover.prototype = {
@@ -49,6 +50,12 @@ var exports = function(){
       var force = Force.hook(this.velocity, this.anchor, rest_length, k);
       this.applyForce(force);
     },
+    activate: function () {
+      this.is_active = true;
+    },
+    inactivate: function () {
+      this.is_active = false;
+    }
   };
 
   return Mover;

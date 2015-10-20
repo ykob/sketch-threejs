@@ -7,7 +7,7 @@ var Mover = require('./mover');
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
 var fps = 60;
-var last_time_render = Date.now();
+var last_time_activate = Date.now();
 var raycaster = new THREE.Raycaster();
 var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
@@ -19,12 +19,13 @@ var scene = null;
 var camera = null;
 var light = null;
 
+var movers_num = 100000;
 var movers = [];
 var points_geometry = null;
 var points_material = null;
 var points = null;
 
-var antigravity = new THREE.Vector3(0, 2, 0);
+var antigravity = new THREE.Vector3(0, 3, 0);
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -65,6 +66,20 @@ var init = function() {
   });
 };
 
+var activateMover = function () {
+  var count = 0;
+
+  for (var i = 0; i < movers.length; i++) {
+    var mover = movers[i];
+    
+    if (mover.is_active) continue;
+    mover.activate();
+    mover.velocity.y = -200;
+    count++;
+    if (count >= 20) break;
+  }
+};
+
 var buildPoints = function() {
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
@@ -86,16 +101,16 @@ var buildPoints = function() {
     depthTest: false,
     blending: THREE.AdditiveBlending,
   });
-  for (var i = 0; i < 30000; i++) {
+  for (var i = 0; i < movers_num; i++) {
     var mover = new Mover();
     var range = (1 - Math.log(Util.getRandomInt(2, 256)) / Math.log(256)) * 500;
     var rad = Util.getRadian(Util.getRandomInt(0, 360));
     var x = Math.cos(rad) * range;
     var z = Math.sin(rad) * range;
-    mover.init(new THREE.Vector3(x, -200, z));
-    mover.mass = Util.getRandomInt(100, 200) / 100;
+    mover.init(new THREE.Vector3(x, -900, z));
+    mover.mass = Util.getRandomInt(300, 500) / 100;
     movers.push(mover);
-    if (i < 15000) {
+    if (i % 2 === 0) {
       points_geometry.vertices.push(mover.position);
     } else {
       points_geometry2.vertices.push(mover.position);
@@ -112,21 +127,23 @@ var updatePoints = function() {
   var points_vertices2 = [];
   for (var i = 0; i < movers.length; i++) {
     var mover = movers[i];
-    mover.applyForce(antigravity);
-    mover.updateVelocity();
-    mover.updatePosition();
-    if (mover.position.y > 500) {
-      var range = (1 - Math.log(Util.getRandomInt(2, 256)) / Math.log(256)) * 500;
-      var rad = Util.getRadian(Util.getRandomInt(0, 360));
-      var x = Math.cos(rad) * range;
-      var z = Math.sin(rad) * range;
-      mover.init(new THREE.Vector3(x, -200, z));
-      mover.mass = Util.getRandomInt(100, 200) / 100;
+    if (mover.is_active) {
+      mover.applyForce(antigravity);
+      mover.updateVelocity();
+      mover.updatePosition();
+      if (mover.position.y > 500) {
+        var range = (1 - Math.log(Util.getRandomInt(2, 256)) / Math.log(256)) * 500;
+        var rad = Util.getRadian(Util.getRandomInt(0, 360));
+        var x = Math.cos(rad) * range;
+        var z = Math.sin(rad) * range;
+        mover.init(new THREE.Vector3(x, -200, z));
+        mover.mass = Util.getRandomInt(300, 500) / 100;
+      }
     }
-    if (i < 15000) {
-      points_vertices[i] = mover.position;
+    if (i % 2 === 0) {
+      points_vertices.push(mover.position);
     } else {
-      points_vertices2[i - 15000] = mover.position;
+      points_vertices2.push(mover.position);
     }
   }
   points.geometry.vertices = points_vertices;
@@ -204,10 +221,10 @@ var render = function() {
 var renderloop = function() {
   var now = Date.now();
   requestAnimationFrame(renderloop);
-
-  if (now - last_time_render > 1000 / fps) {
-    render();
-    last_time_render = Date.now();
+  render();
+  if (now - last_time_activate > 10) {
+    activateMover();
+    last_time_activate = Date.now();
   }
 };
 
