@@ -25,7 +25,7 @@ var points_geometry = null;
 var points_material = null;
 var points = null;
 
-var antigravity = new THREE.Vector3(0, 3, 0);
+var antigravity = new THREE.Vector3(0, 5, 0);
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -46,7 +46,7 @@ var initThree = function() {
   camera.init(body_width, body_height);
   
   light = new HemiLight();
-  light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0xccffee, 0x003311, 1);
+  light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0x77ffaa, 0x77ffaa, 1);
   
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
@@ -74,7 +74,7 @@ var activateMover = function () {
     
     if (mover.is_active) continue;
     mover.activate();
-    mover.velocity.y = -200;
+    mover.velocity.y = -300;
     count++;
     if (count >= 20) break;
   }
@@ -107,7 +107,7 @@ var buildPoints = function() {
     var rad = Util.getRadian(Util.getRandomInt(0, 360));
     var x = Math.cos(rad) * range;
     var z = Math.sin(rad) * range;
-    mover.init(new THREE.Vector3(x, -900, z));
+    mover.init(new THREE.Vector3(x, -1000, z));
     mover.mass = Util.getRandomInt(300, 500) / 100;
     movers.push(mover);
     if (i % 2 === 0) {
@@ -136,7 +136,7 @@ var updatePoints = function() {
         var rad = Util.getRadian(Util.getRandomInt(0, 360));
         var x = Math.cos(rad) * range;
         var z = Math.sin(rad) * range;
-        mover.init(new THREE.Vector3(x, -200, z));
+        mover.init(new THREE.Vector3(x, -300, z));
         mover.mass = Util.getRandomInt(300, 500) / 100;
       }
     }
@@ -151,6 +151,11 @@ var updatePoints = function() {
   points2.geometry.vertices = points_vertices2;
   points2.geometry.verticesNeedUpdate = true;
 };
+
+var rotateCamera = function() {
+  camera.rad2 += Util.getRadian(0.2);
+  camera.reset();
+}
 
 var raycast = function(vector) {
   vector.x = (vector.x / window.innerWidth) * 2 - 1;
@@ -215,6 +220,7 @@ var setEvent = function () {
 var render = function() {
   renderer.clear();
   updatePoints();
+  rotateCamera();
   renderer.render(scene, camera.obj);
 };
 
