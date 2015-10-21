@@ -18,13 +18,13 @@ var scene = null;
 var camera = null;
 var light = null;
 
-var movers_num = 50000;
+var movers_num = 10000;
 var movers = [];
 var points_geometry = null;
 var points_material = null;
 var points = null;
 
-var antigravity = new THREE.Vector3(0, 10, 0);
+var antigravity = new THREE.Vector3(0, 30, 0);
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -45,7 +45,8 @@ var initThree = function() {
   camera.init(body_width, body_height);
   
   light = new HemiLight();
-  light.init(scene, Util.getRadian(30), Util.getRadian(60), 1000, 0x77ffaa, 0x77ffaa, 1);
+  light.init(0xffff99, 0x99ffcc);
+  scene.add(light.obj);
   
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
@@ -82,8 +83,8 @@ var activateMover = function () {
 var buildPoints = function() {
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
-    color: 0xffffcc,
-    size: 40,
+    color: 0xffff99,
+    size: 30,
     transparent: true,
     opacity: 0.5,
     map: THREE.ImageUtils.loadTexture('/img/particle001.png'),
@@ -92,8 +93,8 @@ var buildPoints = function() {
   });
   points_geometry2 = new THREE.Geometry();
   points_material2 = new THREE.PointsMaterial({
-    color: 0xffaaaa,
-    size: 40,
+    color: 0x99ffcc,
+    size: 30,
     transparent: true,
     opacity: 0.5,
     map: THREE.ImageUtils.loadTexture('/img/particle001.png'),
@@ -102,12 +103,12 @@ var buildPoints = function() {
   });
   for (var i = 0; i < movers_num; i++) {
     var mover = new Mover();
-    var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 300 + 50;
-    var rad = Util.getRadian(Util.getRandomInt(0, 36000) / 100);
+    var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 250 + 50;
+    var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
     var x = Math.cos(rad) * range;
     var z = Math.sin(rad) * range;
     mover.init(new THREE.Vector3(x, 1000, z));
-    mover.mass = Util.getRandomInt(300, 500) / 100;
+    mover.mass = Util.getRandomInt(200, 500) / 100;
     movers.push(mover);
     if (i % 2 === 0) {
       points_geometry.vertices.push(mover.position);
@@ -131,12 +132,12 @@ var updatePoints = function() {
       mover.updateVelocity();
       mover.updatePosition();
       if (mover.position.y > 1000) {
-        var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 300 + 50;
-        var rad = Util.getRadian(Util.getRandomInt(0, 36000) / 100);
+        var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 250 + 50;
+        var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
         var x = Math.cos(rad) * range;
         var z = Math.sin(rad) * range;
         mover.init(new THREE.Vector3(x, -300, z));
-        mover.mass = Util.getRandomInt(300, 500) / 100;
+        mover.mass = Util.getRandomInt(200, 500) / 100;
       }
     }
     if (i % 2 === 0) {
@@ -161,6 +162,30 @@ var raycast = function(vector) {
   vector.y = - (vector.y / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(vector, camera.obj);
   intersects = raycaster.intersectObjects(scene.children);
+};
+
+var render = function() {
+  renderer.clear();
+  updatePoints();
+  //rotateCamera();
+  renderer.render(scene, camera.obj);
+};
+
+var renderloop = function() {
+  var now = Date.now();
+  requestAnimationFrame(renderloop);
+  render();
+  if (now - last_time_activate > 10) {
+    activateMover();
+    last_time_activate = Date.now();
+  }
+};
+
+var resizeRenderer = function() {
+  body_width  = document.body.clientWidth;
+  body_height = document.body.clientHeight;
+  renderer.setSize(body_width, body_height);
+  camera.resize(body_width, body_height);
 };
 
 var setEvent = function () {
@@ -215,29 +240,4 @@ var setEvent = function () {
     touchEnd();
   });
 };
-
-var render = function() {
-  renderer.clear();
-  updatePoints();
-  rotateCamera();
-  renderer.render(scene, camera.obj);
-};
-
-var renderloop = function() {
-  var now = Date.now();
-  requestAnimationFrame(renderloop);
-  render();
-  if (now - last_time_activate > 10) {
-    activateMover();
-    last_time_activate = Date.now();
-  }
-};
-
-var resizeRenderer = function() {
-  body_width  = document.body.clientWidth;
-  body_height = document.body.clientHeight;
-  renderer.setSize(body_width, body_height);
-  camera.resize(body_width, body_height);
-};
-
 init();
