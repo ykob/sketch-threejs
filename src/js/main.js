@@ -18,15 +18,15 @@ var scene = null;
 var camera = null;
 var light = null;
 
-var movers_num = 5000;
+var movers_num = 10000;
 var movers = [];
 var points_geometry = null;
 var points_material = null;
 var points = null;
 
-var sphere_geometry = null;
-var sphere_material = null;
-var sphere = null;
+var textplate_geometry = null;
+var textplate_material = null;
+var textplate = null;
 
 var antigravity = new THREE.Vector3(0, 30, 0);
 
@@ -63,6 +63,7 @@ var initThree = function() {
 var init = function() {
   initThree();
   buildPoints();
+  buildTextPlate();
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
@@ -105,7 +106,7 @@ var buildPoints = function() {
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
     color: 0xffff99,
-    size: 30,
+    size: 20,
     transparent: true,
     opacity: 0.6,
     map: texture,
@@ -115,7 +116,7 @@ var buildPoints = function() {
   points_geometry2 = new THREE.Geometry();
   points_material2 = new THREE.PointsMaterial({
     color: 0x99ffcc,
-    size: 30,
+    size: 20,
     transparent: true,
     opacity: 0.6,
     map: texture,
@@ -173,6 +174,41 @@ var updatePoints = function() {
   points2.geometry.verticesNeedUpdate = true;
 };
 
+var buildTextPlate = function() {
+  var str = 'three.js Points';
+  var tx_canvas = document.createElement('canvas');
+  var tx_ctx = tx_canvas.getContext('2d');
+  var tx_grad = null;
+  var texture = null;
+  tx_canvas.width = 1000;
+  tx_canvas.height = 1000;
+  tx_ctx.fillStyle = 'rgb(255, 255, 255)';
+  tx_ctx.font = 'bold 80px "source code pro"';
+  tx_ctx.textAlign = "center";
+  tx_ctx.fillText(str, 500, 500);
+  tx_ctx.fill();
+  texture = new THREE.Texture(tx_canvas);
+  texture.minFilter = THREE.NearestFilter;
+  texture.needsUpdate = true;
+  textplate_geometry = new THREE.PlaneGeometry(300, 300, 32);
+  textplate_material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    map: texture,
+    transparent: true
+  });
+  textplate = new THREE.Mesh(textplate_geometry, textplate_material);
+  textplate.position.y = 200;
+  textplate.rotation.set(Util.getRadian(-90), 0, Util.getRadian(90));
+  scene.add(textplate);
+};
+
+var rotateTextPlate = function() {
+  textplate.rotation.x += 0.001;
+  textplate.rotation.y += 0.002;
+  textplate.rotation.z += 0.001;
+};
+
 var rotateCamera = function() {
   camera.rad2 += Util.getRadian(0.1);
   camera.reset();
@@ -188,6 +224,7 @@ var raycast = function(vector) {
 var render = function() {
   renderer.clear();
   updatePoints();
+  rotateTextPlate();
   //rotateCamera();
   renderer.render(scene, camera.obj);
 };

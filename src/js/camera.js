@@ -3,7 +3,7 @@ var Util = require('./util');
 var exports = function(){
   var Camera = function() {
     this.rad1 = Util.getRadian(90);
-    this.rad2 = Util.getRadian(30);
+    this.rad2 = Util.getRadian(0);
     this.range = 1000;
     this.obj;
   };
