@@ -18,11 +18,15 @@ var scene = null;
 var camera = null;
 var light = null;
 
-var movers_num = 10000;
+var movers_num = 5000;
 var movers = [];
 var points_geometry = null;
 var points_material = null;
 var points = null;
+
+var sphere_geometry = null;
+var sphere_material = null;
+var sphere = null;
 
 var antigravity = new THREE.Vector3(0, 30, 0);
 
@@ -81,13 +85,30 @@ var activateMover = function () {
 };
 
 var buildPoints = function() {
+  var tx_canvas = document.createElement('canvas');
+  var tx_ctx = tx_canvas.getContext('2d');
+  var tx_grad = null;
+  var texture = null;
+  tx_canvas.width = 200;
+  tx_canvas.height = 200;
+  tx_grad = tx_ctx.createRadialGradient(100, 100, 20, 100, 100, 100);
+  tx_grad.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
+  tx_grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
+  tx_grad.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
+  tx_ctx.fillStyle = tx_grad;
+  tx_ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
+  tx_ctx.fill();
+  texture = new THREE.Texture(tx_canvas);
+  texture.minFilter = THREE.NearestFilter;
+  texture.needsUpdate = true;
+  
   points_geometry = new THREE.Geometry();
   points_material = new THREE.PointsMaterial({
     color: 0xffff99,
     size: 30,
     transparent: true,
-    opacity: 0.5,
-    map: THREE.ImageUtils.loadTexture('/img/particle001.png'),
+    opacity: 0.6,
+    map: texture,
     depthTest: false,
     blending: THREE.AdditiveBlending,
   });
@@ -96,8 +117,8 @@ var buildPoints = function() {
     color: 0x99ffcc,
     size: 30,
     transparent: true,
-    opacity: 0.5,
-    map: THREE.ImageUtils.loadTexture('/img/particle001.png'),
+    opacity: 0.6,
+    map: texture,
     depthTest: false,
     blending: THREE.AdditiveBlending,
   });
@@ -155,7 +176,7 @@ var updatePoints = function() {
 var rotateCamera = function() {
   camera.rad2 += Util.getRadian(0.1);
   camera.reset();
-}
+};
 
 var raycast = function(vector) {
   vector.x = (vector.x / window.innerWidth) * 2 - 1;
