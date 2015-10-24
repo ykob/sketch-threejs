@@ -13,7 +13,7 @@ var exports = function(){
   };
   
   Points.prototype = {
-    init: function(vector) {
+    init: function() {
       this.createTexture();
       this.geometry = new THREE.Geometry();
       this.material = new THREE.PointsMaterial({
@@ -31,6 +31,7 @@ var exports = function(){
         var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
         var x = Math.cos(rad) * range;
         var z = Math.sin(rad) * range;
+
         mover.init(new THREE.Vector3(x, 1000, z));
         mover.mass = Util.getRandomInt(200, 500) / 100;
         this.movers.push(mover);
