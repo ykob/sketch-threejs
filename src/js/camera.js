@@ -27,6 +27,10 @@ var exports = function(){
       var points = Util.getSpherical(this.rad1, this.rad2, this.range);
       this.obj.position.set(points[0], points[1], points[2]);
     },
+    rotate: function() {
+      this.rad2 += Util.getRadian(0.1);
+      this.reset();
+    },
     lookAtCenter: function() {
       this.obj.lookAt({
         x: 0,

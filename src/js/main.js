@@ -68,11 +68,6 @@ var init = function() {
   });
 };
 
-var rotateCamera = function() {
-  camera.rad2 += Util.getRadian(0.1);
-  camera.reset();
-};
-
 var raycast = function(vector) {
   vector.x = (vector.x / window.innerWidth) * 2 - 1;
   vector.y = - (vector.y / window.innerHeight) * 2 + 1;
@@ -84,7 +79,7 @@ var render = function() {
   renderer.clear();
   points.update();
   text_plate.rotate();
-  //rotateCamera();
+  //camera.rotate();
   renderer.render(scene, camera.obj);
 };
 
