@@ -2,7 +2,7 @@ var Util = require('./Util');
 var debounce = require('./debounce');
 var Camera = require('./camera');
 var HemiLight = require('./hemiLight');
-var Mover = require('./mover');
+var Points = require('./points');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
@@ -17,18 +17,11 @@ var renderer = null;
 var scene = null;
 var camera = null;
 var light = null;
-
-var movers_num = 10000;
-var movers = [];
-var points_geometry = null;
-var points_material = null;
 var points = null;
 
 var textplate_geometry = null;
 var textplate_material = null;
 var textplate = null;
-
-var antigravity = new THREE.Vector3(0, 30, 0);
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -52,6 +45,10 @@ var initThree = function() {
   light.init(0xffff99, 0x99ffcc);
   scene.add(light.obj);
   
+  points = new Points();
+  points.init();
+  scene.add(points.obj);
+  
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
   //   color: 0xffffff
@@ -62,116 +59,12 @@ var initThree = function() {
 
 var init = function() {
   initThree();
-  buildPoints();
   buildTextPlate();
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
     resizeRenderer();
   });
-};
-
-var activateMover = function () {
-  var count = 0;
-
-  for (var i = 0; i < movers.length; i++) {
-    var mover = movers[i];
-    
-    if (mover.is_active) continue;
-    mover.activate();
-    mover.velocity.y = -300;
-    count++;
-    if (count >= 50) break;
-  }
-};
-
-var buildPoints = function() {
-  var tx_canvas = document.createElement('canvas');
-  var tx_ctx = tx_canvas.getContext('2d');
-  var tx_grad = null;
-  var texture = null;
-  tx_canvas.width = 200;
-  tx_canvas.height = 200;
-  tx_grad = tx_ctx.createRadialGradient(100, 100, 20, 100, 100, 100);
-  tx_grad.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
-  tx_grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
-  tx_grad.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
-  tx_ctx.fillStyle = tx_grad;
-  tx_ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
-  tx_ctx.fill();
-  texture = new THREE.Texture(tx_canvas);
-  texture.minFilter = THREE.NearestFilter;
-  texture.needsUpdate = true;
-  
-  points_geometry = new THREE.Geometry();
-  points_material = new THREE.PointsMaterial({
-    color: 0xffff99,
-    size: 20,
-    transparent: true,
-    opacity: 0.6,
-    map: texture,
-    depthTest: false,
-    blending: THREE.AdditiveBlending,
-  });
-  points_geometry2 = new THREE.Geometry();
-  points_material2 = new THREE.PointsMaterial({
-    color: 0x99ffcc,
-    size: 20,
-    transparent: true,
-    opacity: 0.6,
-    map: texture,
-    depthTest: false,
-    blending: THREE.AdditiveBlending,
-  });
-  for (var i = 0; i < movers_num; i++) {
-    var mover = new Mover();
-    var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 250 + 50;
-    var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
-    var x = Math.cos(rad) * range;
-    var z = Math.sin(rad) * range;
-    mover.init(new THREE.Vector3(x, 1000, z));
-    mover.mass = Util.getRandomInt(200, 500) / 100;
-    movers.push(mover);
-    if (i % 2 === 0) {
-      points_geometry.vertices.push(mover.position);
-    } else {
-      points_geometry2.vertices.push(mover.position);
-    }
-  }
-  points = new THREE.Points(points_geometry, points_material);
-  points2 = new THREE.Points(points_geometry2, points_material2);
-  scene.add(points);
-  scene.add(points2);
-};
-
-var updatePoints = function() {
-  var points_vertices = [];
-  var points_vertices2 = [];
-  for (var i = 0; i < movers.length; i++) {
-    var mover = movers[i];
-    if (mover.is_active) {
-      mover.applyForce(antigravity);
-      mover.updateVelocity();
-      mover.updatePosition();
-      if (mover.position.y > 1000) {
-        var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 250 + 50;
-        var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
-        var x = Math.cos(rad) * range;
-        var z = Math.sin(rad) * range;
-        mover.init(new THREE.Vector3(x, -300, z));
-        mover.mass = Util.getRandomInt(200, 500) / 100;
-      }
-    }
-    if (i % 2 === 0) {
-      points_vertices.push(mover.position);
-    } else {
-      points_vertices2.push(mover.position);
-    }
-  }
-  points.geometry.vertices = points_vertices;
-  points.geometry.verticesNeedUpdate = true;
-  points2.geometry.vertices = points_vertices2;
-  points2.geometry.verticesNeedUpdate = true;
 };
 
 var buildTextPlate = function() {
@@ -223,7 +116,7 @@ var raycast = function(vector) {
 
 var render = function() {
   renderer.clear();
-  updatePoints();
+  points.update();
   rotateTextPlate();
   //rotateCamera();
   renderer.render(scene, camera.obj);
@@ -234,7 +127,7 @@ var renderloop = function() {
   requestAnimationFrame(renderloop);
   render();
   if (now - last_time_activate > 10) {
-    activateMover();
+    points.activateMover();
     last_time_activate = Date.now();
   }
 };
