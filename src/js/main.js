@@ -3,6 +3,7 @@ var debounce = require('./debounce');
 var Camera = require('./camera');
 var HemiLight = require('./hemiLight');
 var Points = require('./points');
+var TextPlate = require('./textPlate');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
@@ -18,10 +19,7 @@ var scene = null;
 var camera = null;
 var light = null;
 var points = null;
-
-var textplate_geometry = null;
-var textplate_material = null;
-var textplate = null;
+var text_plate = null;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -49,6 +47,10 @@ var initThree = function() {
   points.init();
   scene.add(points.obj);
   
+  text_plate = new TextPlate();
+  text_plate.init();
+  scene.add(text_plate.obj);
+  
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
   //   color: 0xffffff
@@ -59,47 +61,11 @@ var initThree = function() {
 
 var init = function() {
   initThree();
-  buildTextPlate();
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
     resizeRenderer();
   });
-};
-
-var buildTextPlate = function() {
-  var str = 'three.js Points';
-  var tx_canvas = document.createElement('canvas');
-  var tx_ctx = tx_canvas.getContext('2d');
-  var tx_grad = null;
-  var texture = null;
-  tx_canvas.width = 1000;
-  tx_canvas.height = 1000;
-  tx_ctx.fillStyle = 'rgb(255, 255, 255)';
-  tx_ctx.font = 'bold 80px "source code pro"';
-  tx_ctx.textAlign = "center";
-  tx_ctx.fillText(str, 500, 500);
-  tx_ctx.fill();
-  texture = new THREE.Texture(tx_canvas);
-  texture.minFilter = THREE.NearestFilter;
-  texture.needsUpdate = true;
-  textplate_geometry = new THREE.PlaneGeometry(300, 300, 32);
-  textplate_material = new THREE.MeshLambertMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide,
-    map: texture,
-    transparent: true
-  });
-  textplate = new THREE.Mesh(textplate_geometry, textplate_material);
-  textplate.position.y = 200;
-  textplate.rotation.set(Util.getRadian(-90), 0, Util.getRadian(90));
-  scene.add(textplate);
-};
-
-var rotateTextPlate = function() {
-  textplate.rotation.x += 0.001;
-  textplate.rotation.y += 0.002;
-  textplate.rotation.z += 0.001;
 };
 
 var rotateCamera = function() {
@@ -117,7 +83,7 @@ var raycast = function(vector) {
 var render = function() {
   renderer.clear();
   points.update();
-  rotateTextPlate();
+  text_plate.rotate();
   //rotateCamera();
   renderer.render(scene, camera.obj);
 };
