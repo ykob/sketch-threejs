@@ -33,18 +33,28 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, 800, 1600);
+  scene.fog = new THREE.Fog(0x000000, 0, 1600);
   
   camera = new Camera();
   camera.init(body_width, body_height);
   
   light = new HemiLight();
-  light.init(0xffff99, 0x99ffcc);
+  light.init(0xffff99, 0xffff99);
   scene.add(light.obj);
   
   points = new Points();
   points.init();
   scene.add(points.obj);
+  
+  var plane_geometry = new THREE.PlaneGeometry(500, 500, 16, 16);
+  var plane_material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    wireframe: true
+  });
+  var plane_obj = new THREE.Mesh(plane_geometry, plane_material);
+  plane_obj.rotation.set(Util.getRadian(90), 0, Util.getRadian(90));
+  plane_obj.position.set(0, -100, 0);
+  scene.add(plane_obj);
   
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
@@ -73,7 +83,7 @@ var raycast = function(vector) {
 var render = function() {
   renderer.clear();
   points.update();
-  //camera.rotate();
+  camera.rotate();
   renderer.render(scene, camera.obj);
 };
 

@@ -9,7 +9,7 @@ var exports = function(){
     this.material = null;
     this.obj = null;
     this.texture = null;
-    this.antigravity = new THREE.Vector3(0, 30, 0);
+    this.antigravity = new THREE.Vector3(0, 0.1, 0);
   };
   
   Points.prototype = {
@@ -17,23 +17,18 @@ var exports = function(){
       this.createTexture();
       this.geometry = new THREE.Geometry();
       this.material = new THREE.PointsMaterial({
-        color: 0xffff99,
-        size: 20,
+        color: 0xff8833,
+        size: 120,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.5,
         map: this.texture,
         depthTest: false,
         blending: THREE.AdditiveBlending,
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
-        var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 250 + 50;
-        var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
-        var x = Math.cos(rad) * range;
-        var z = Math.sin(rad) * range;
 
-        mover.init(new THREE.Vector3(x, 1000, z));
-        mover.mass = Util.getRandomInt(200, 500) / 100;
+        mover.init(new THREE.Vector3(0, 0, 0));
         this.movers.push(mover);
         this.geometry.vertices.push(mover.position);
       }
@@ -49,13 +44,7 @@ var exports = function(){
           mover.updateVelocity();
           mover.updatePosition();
           if (mover.position.y > 1000) {
-            var range = Math.log(Util.getRandomInt(2, 256)) / Math.log(256) * 250 + 50;
-            var rad = Util.getRadian(Util.getRandomInt(0, 180) * 2);
-            var x = Math.cos(rad) * range;
-            var z = Math.sin(rad) * range;
-
-            mover.init(new THREE.Vector3(x, -300, z));
-            mover.mass = Util.getRandomInt(200, 500) / 100;
+            mover.inactivate();
           }
         }
         points_vertices.push(mover.position);
@@ -70,10 +59,14 @@ var exports = function(){
         var mover = this.movers[i];
         
         if (mover.is_active) continue;
+        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(200, 256)) / Math.log(256) * 270);
+        var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
+        var force = Util.getSpherical(rad1, rad2, 3);
         mover.activate();
-        mover.velocity.y = -300;
+        mover.init(new THREE.Vector3(0, 0, 0));
+        mover.applyForce(force);
         count++;
-        if (count >= 50) break;
+        if (count >= 10) break;
       }
     },
     createTexture: function() {
