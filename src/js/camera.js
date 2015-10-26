@@ -2,7 +2,7 @@ var Util = require('./util');
 
 var exports = function(){
   var Camera = function() {
-    this.rad1 = Util.getRadian(90);
+    this.rad1 = Util.getRadian(20);
     this.rad2 = Util.getRadian(0);
     this.range = 1000;
     this.obj;
@@ -25,10 +25,11 @@ var exports = function(){
     },
     setPosition: function() {
       var points = Util.getSpherical(this.rad1, this.rad2, this.range);
-      this.obj.position.set(points[0], points[1], points[2]);
+      this.obj.position.copy(points);
     },
     rotate: function() {
-      this.rad2 += Util.getRadian(0.1);
+      this.rad1 += Util.getRadian(0.25);
+      this.rad2 += Util.getRadian(0.5);
       this.reset();
     },
     lookAtCenter: function() {

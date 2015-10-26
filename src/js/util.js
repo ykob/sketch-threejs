@@ -12,7 +12,7 @@ var exports = {
     var x = Math.cos(rad1) * Math.cos(rad2) * r;
     var z = Math.cos(rad1) * Math.sin(rad2) * r;
     var y = Math.sin(rad1) * r;
-    return [x, y, z];
+    return new THREE.Vector3(x, y, z);
   }
 };
 
