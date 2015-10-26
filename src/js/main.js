@@ -3,7 +3,6 @@ var debounce = require('./debounce');
 var Camera = require('./camera');
 var HemiLight = require('./hemiLight');
 var Points = require('./points');
-var TextPlate = require('./textPlate');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
@@ -47,10 +46,6 @@ var initThree = function() {
   points.init();
   scene.add(points.obj);
   
-  text_plate = new TextPlate();
-  text_plate.init();
-  scene.add(text_plate.obj);
-  
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
   //   color: 0xffffff
@@ -78,7 +73,6 @@ var raycast = function(vector) {
 var render = function() {
   renderer.clear();
   points.update();
-  text_plate.rotate();
   //camera.rotate();
   renderer.render(scene, camera.obj);
 };
