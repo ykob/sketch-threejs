@@ -17,7 +17,7 @@ var exports = function(){
       this.createTexture();
       this.geometry = new THREE.Geometry();
       this.material = new THREE.PointsMaterial({
-        color: 0xff8833,
+        color: 0xff6633,
         size: 120,
         transparent: true,
         opacity: 0.5,
