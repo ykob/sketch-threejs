@@ -3,19 +3,20 @@ var Mover = require('./mover');
 
 var exports = function(){
   var Points = function() {
-    this.movers_num = 10000;
+    this.movers_num = 5000;
     this.movers = [];
     this.geometry = null;
     this.material = null;
     this.obj = null;
     this.texture = null;
+    this.positions = new Float32Array(this.movers_num * 3);
     this.antigravity = new THREE.Vector3(0, 0.1, 0);
   };
   
   Points.prototype = {
     init: function() {
       this.createTexture();
-      this.geometry = new THREE.Geometry();
+      this.geometry = new THREE.BufferGeometry();
       this.material = new THREE.PointsMaterial({
         color: 0xff6633,
         size: 120,
@@ -30,13 +31,14 @@ var exports = function(){
 
         mover.init(new THREE.Vector3(0, 0, 0));
         this.movers.push(mover);
-        this.geometry.vertices.push(mover.position);
+        this.positions[i * 3 + 0] = mover.position.x;
+        this.positions[i * 3 + 1] = mover.position.y;
+        this.positions[i * 3 + 2] = mover.position.z;
       }
+      this.geometry.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
       this.obj = new THREE.Points(this.geometry, this.material);
     },
     update: function() {
-      var points_vertices = [];
-
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) {
@@ -47,17 +49,18 @@ var exports = function(){
             mover.inactivate();
           }
         }
-        points_vertices.push(mover.position);
+        this.positions[i * 3 + 0] = mover.position.x;
+        this.positions[i * 3 + 1] = mover.position.y;
+        this.positions[i * 3 + 2] = mover.position.z;
       }
-      this.obj.geometry.vertices = points_vertices;
-      this.obj.geometry.verticesNeedUpdate = true;
+      this.obj.geometry.position = this.positions;
+      this.obj.geometry.attributes.position.needsUpdate = true;
     },
     activateMover: function() {
       var count = 0;
 
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
-        
         if (mover.is_active) continue;
         var rad1 = Util.getRadian(Math.log(Util.getRandomInt(200, 256)) / Math.log(256) * 270);
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
