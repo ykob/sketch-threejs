@@ -11,6 +11,7 @@ var exports = function(){
     this.texture = null;
     this.positions = new Float32Array(this.movers_num * 3);
     this.colors = new Float32Array(this.movers_num * 3);
+    this.opacities = new Float32Array(this.movers_num);
     this.sizes = new Float32Array(this.movers_num);
     this.gravity = new THREE.Vector3(0, -0.05, 0);
   };
@@ -41,15 +42,18 @@ var exports = function(){
         var color = new THREE.Color('hsl(' + Util.getRandomInt(20, 240) + ', 60%, 50%)');
 
         mover.init(new THREE.Vector3(0, 0, 0));
+        mover.a = 0.0;
         this.movers.push(mover);
         this.positions[i * 3 + 0] = mover.position.x;
         this.positions[i * 3 + 1] = mover.position.y;
         this.positions[i * 3 + 2] = mover.position.z;
         color.toArray(this.colors, i * 3);
-        this.sizes[i] = 20;
+        this.opacities[i] = mover.a;
+        this.sizes[i] = 30;
       }
       this.geometry.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
       this.geometry.addAttribute('customColor', new THREE.BufferAttribute(this.colors, 3));
+      this.geometry.addAttribute('vertexOpacity', new THREE.BufferAttribute(this.opacities, 1));
       this.geometry.addAttribute('size', new THREE.BufferAttribute(this.sizes, 1));
       this.obj = new THREE.Points(this.geometry, this.material);
     },
@@ -62,15 +66,19 @@ var exports = function(){
           mover.updatePosition();
           if (mover.position.y < -1000) {
             mover.init(new THREE.Vector3(0, 0, 0));
+            mover.a = 0.0;
             mover.inactivate();
           }
         }
         this.positions[i * 3 + 0] = mover.position.x;
         this.positions[i * 3 + 1] = mover.position.y;
         this.positions[i * 3 + 2] = mover.position.z;
+        this.opacities[i] = mover.a;
       }
       this.obj.geometry.position = this.positions;
+      this.obj.geometry.vertexOpacity = this.opacities;
       this.obj.geometry.attributes.position.needsUpdate = true;
+      this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
     },
     activateMover: function() {
       var count = 0;
@@ -83,6 +91,7 @@ var exports = function(){
         var force = Util.getSpherical(rad1, rad2, 5);
         mover.activate();
         mover.init(new THREE.Vector3(0, 0, 0));
+        mover.a = 0.3;
         mover.applyForce(force);
         count++;
         if (count >= 200) break;
