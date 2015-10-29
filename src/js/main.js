@@ -46,16 +46,6 @@ var initThree = function() {
   points.init();
   scene.add(points.obj);
   
-  var plane_geometry = new THREE.PlaneGeometry(500, 500, 16, 16);
-  var plane_material = new THREE.MeshLambertMaterial({
-    color: 0xffffff,
-    wireframe: true
-  });
-  var plane_obj = new THREE.Mesh(plane_geometry, plane_material);
-  plane_obj.rotation.set(Util.getRadian(90), 0, Util.getRadian(90));
-  plane_obj.position.set(0, -100, 0);
-  scene.add(plane_obj);
-  
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
   // var dummy_material = new THREE.MeshLambertMaterial({
   //   color: 0xffffff

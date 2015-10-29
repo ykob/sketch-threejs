@@ -3,14 +3,15 @@ var Mover = require('./mover');
 
 var exports = function(){
   var Points = function() {
-    this.movers_num = 5000;
+    this.movers_num = 100000;
     this.movers = [];
     this.geometry = null;
     this.material = null;
     this.obj = null;
     this.texture = null;
     this.positions = new Float32Array(this.movers_num * 3);
-    this.antigravity = new THREE.Vector3(0, 0.1, 0);
+    this.colors = new Float32Array(this.movers_num * 3);
+    this.gravity = new THREE.Vector3(0, -0.05, 0);
   };
   
   Points.prototype = {
@@ -18,34 +19,38 @@ var exports = function(){
       this.createTexture();
       this.geometry = new THREE.BufferGeometry();
       this.material = new THREE.PointsMaterial({
-        color: 0xff6633,
-        size: 120,
+        color: 0xffffff,
+        size: 16,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.7,
         map: this.texture,
         depthTest: false,
         blending: THREE.AdditiveBlending,
+        vertexColors: THREE.VertexColors
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
+        var color = new THREE.Color('hsl(' + Util.getRandomInt(20, 240) + ', 60%, 50%)');
 
         mover.init(new THREE.Vector3(0, 0, 0));
         this.movers.push(mover);
         this.positions[i * 3 + 0] = mover.position.x;
         this.positions[i * 3 + 1] = mover.position.y;
         this.positions[i * 3 + 2] = mover.position.z;
+        color.toArray(this.colors, i * 3);
       }
       this.geometry.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+      this.geometry.addAttribute('color', new THREE.BufferAttribute(this.colors, 3));
       this.obj = new THREE.Points(this.geometry, this.material);
     },
     update: function() {
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) {
-          mover.applyForce(this.antigravity);
+          mover.applyForce(this.gravity);
           mover.updateVelocity();
           mover.updatePosition();
-          if (mover.position.y > 1000) {
+          if (mover.position.y < -1000) {
             mover.inactivate();
           }
         }
@@ -62,14 +67,14 @@ var exports = function(){
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) continue;
-        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(200, 256)) / Math.log(256) * 270);
-        var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-        var force = Util.getSpherical(rad1, rad2, 3);
+        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(12, 24)) / Math.log(24) * 90);
+        var rad2 = Util.getRadian(Util.getRandomInt(0, 18) * 20);
+        var force = Util.getSpherical(rad1, rad2, 5);
         mover.activate();
         mover.init(new THREE.Vector3(0, 0, 0));
         mover.applyForce(force);
         count++;
-        if (count >= 10) break;
+        if (count >= 200) break;
       }
     },
     createTexture: function() {
