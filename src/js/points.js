@@ -61,6 +61,7 @@ var exports = function(){
           mover.updateVelocity();
           mover.updatePosition();
           if (mover.position.y < -1000) {
+            mover.init(new THREE.Vector3(0, 0, 0));
             mover.inactivate();
           }
         }
