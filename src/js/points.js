@@ -20,9 +20,9 @@ var exports = function(){
       this.geometry = new THREE.BufferGeometry();
       this.material = new THREE.PointsMaterial({
         color: 0xffffff,
-        size: 16,
+        size: 20,
         transparent: true,
-        opacity: 0.7,
+        opacity: 0.5,
         map: this.texture,
         depthTest: false,
         blending: THREE.AdditiveBlending,
@@ -67,8 +67,8 @@ var exports = function(){
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) continue;
-        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(12, 24)) / Math.log(24) * 90);
-        var rad2 = Util.getRadian(Util.getRandomInt(0, 18) * 20);
+        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(32, 128)) / Math.log(128) * 90);
+        var rad2 = Util.getRadian(Util.getRandomInt(0, 24) * 15);
         var force = Util.getSpherical(rad1, rad2, 5);
         mover.activate();
         mover.init(new THREE.Vector3(0, 0, 0));
