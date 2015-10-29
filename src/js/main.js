@@ -18,7 +18,6 @@ var scene = null;
 var camera = null;
 var light = null;
 var points = null;
-var text_plate = null;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -146,4 +145,5 @@ var setEvent = function () {
     touchEnd();
   });
 };
+
 init();
