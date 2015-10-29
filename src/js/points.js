@@ -11,6 +11,7 @@ var exports = function(){
     this.texture = null;
     this.positions = new Float32Array(this.movers_num * 3);
     this.colors = new Float32Array(this.movers_num * 3);
+    this.sizes = new Float32Array(this.movers_num);
     this.gravity = new THREE.Vector3(0, -0.05, 0);
   };
   
@@ -18,15 +19,22 @@ var exports = function(){
     init: function() {
       this.createTexture();
       this.geometry = new THREE.BufferGeometry();
-      this.material = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 20,
+      this.material = new THREE.ShaderMaterial({
+        uniforms: {
+          color: {
+            type: 'c',
+            value: new THREE.Color(0xffffff)
+          },
+          texture: {
+            type: 't',
+            value: this.texture
+          }
+        },
+        vertexShader: document.getElementById('vertex-shader').textContent,
+        fragmentShader: document.getElementById('fragment-shader').textContent,
         transparent: true,
-        opacity: 0.5,
-        map: this.texture,
         depthTest: false,
-        blending: THREE.AdditiveBlending,
-        vertexColors: THREE.VertexColors
+        blending: THREE.AdditiveBlending
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
@@ -38,9 +46,11 @@ var exports = function(){
         this.positions[i * 3 + 1] = mover.position.y;
         this.positions[i * 3 + 2] = mover.position.z;
         color.toArray(this.colors, i * 3);
+        this.sizes[i] = 20;
       }
       this.geometry.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
-      this.geometry.addAttribute('color', new THREE.BufferAttribute(this.colors, 3));
+      this.geometry.addAttribute('customColor', new THREE.BufferAttribute(this.colors, 3));
+      this.geometry.addAttribute('size', new THREE.BufferAttribute(this.sizes, 1));
       this.obj = new THREE.Points(this.geometry, this.material);
     },
     update: function() {
