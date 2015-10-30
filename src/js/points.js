@@ -3,7 +3,7 @@ var Mover = require('./mover');
 
 var exports = function(){
   var Points = function() {
-    this.movers_num = 100000;
+    this.movers_num = 20000;
     this.movers = [];
     this.geometry = null;
     this.material = null;
@@ -13,7 +13,7 @@ var exports = function(){
     this.colors = new Float32Array(this.movers_num * 3);
     this.opacities = new Float32Array(this.movers_num);
     this.sizes = new Float32Array(this.movers_num);
-    this.gravity = new THREE.Vector3(0, -0.05, 0);
+    this.anti_gravity = new THREE.Vector3(0, 0.004, 0);
   };
   
   Points.prototype = {
@@ -39,7 +39,9 @@ var exports = function(){
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
-        var color = new THREE.Color('hsl(' + Util.getRandomInt(20, 240) + ', 60%, 50%)');
+        var h = Util.getRandomInt(0, 80);
+        var s = Util.getRandomInt(20, 80);
+        var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
         mover.init(new THREE.Vector3(0, 0, 0));
         mover.a = 0.0;
@@ -49,7 +51,7 @@ var exports = function(){
         this.positions[i * 3 + 2] = mover.position.z;
         color.toArray(this.colors, i * 3);
         this.opacities[i] = mover.a;
-        this.sizes[i] = 30;
+        this.sizes[i] = Util.getRandomInt(10, 60);
       }
       this.geometry.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
       this.geometry.addAttribute('customColor', new THREE.BufferAttribute(this.colors, 3));
@@ -61,10 +63,13 @@ var exports = function(){
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) {
-          mover.applyForce(this.gravity);
+          mover.time++;
+          mover.applyForce(this.anti_gravity);
           mover.updateVelocity();
           mover.updatePosition();
-          if (mover.position.y < -1000) {
+          if (mover.time > 300) mover.a -= 0.01;
+          if (mover.time > 500) {
+            mover.time = 0;
             mover.init(new THREE.Vector3(0, 0, 0));
             mover.a = 0.0;
             mover.inactivate();
@@ -86,15 +91,15 @@ var exports = function(){
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) continue;
-        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(32, 128)) / Math.log(128) * 90);
-        var rad2 = Util.getRadian(Util.getRandomInt(0, 24) * 15);
-        var force = Util.getSpherical(rad1, rad2, 5);
+        var rad = Util.getRadian(Util.getRandomInt(0, 36000)/ 100);
+        var range = Math.log(Util.getRandomInt(2400, 128000) / 1000) / Math.log(128) * 400;
+        var x = Math.cos(rad) * range;
+        var z = Math.sin(rad) * range;
         mover.activate();
-        mover.init(new THREE.Vector3(0, 0, 0));
+        mover.init(new THREE.Vector3(x, -150, z));
         mover.a = 0.3;
-        mover.applyForce(force);
         count++;
-        if (count >= 200) break;
+        if (count >= 50) break;
       }
     },
     createTexture: function() {

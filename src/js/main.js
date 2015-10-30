@@ -72,7 +72,7 @@ var raycast = function(vector) {
 var render = function() {
   renderer.clear();
   points.update();
-  camera.rotate();
+  //camera.rotate();
   renderer.render(scene, camera.obj);
 };
 
@@ -80,7 +80,7 @@ var renderloop = function() {
   var now = Date.now();
   requestAnimationFrame(renderloop);
   render();
-  if (now - last_time_activate > 10) {
+  if (now - last_time_activate > 100) {
     points.activateMover();
     last_time_activate = Date.now();
   }
