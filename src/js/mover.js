@@ -11,7 +11,7 @@ var exports = function(){
     this.r = 0;
     this.g = 0;
     this.b = 0;
-    this.a = 1;
+    this.a = 0;
     this.time = 0;
     this.is_active = false;
   };
