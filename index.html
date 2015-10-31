@@ -42,7 +42,6 @@
     void main() {
       gl_FragColor = vec4(color * vColor, fOpacity);
       gl_FragColor = gl_FragColor * texture2D(texture, gl_PointCoord);
-      //if (gl_FlagColor.a < ALPHATEST) discard;
     }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>

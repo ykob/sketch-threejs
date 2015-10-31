@@ -32,20 +32,20 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, 0, 100);
+  scene.fog = new THREE.Fog(0x000000, 0, 1600);
   
   camera = new Camera();
   camera.init(body_width, body_height);
   
   light = new HemiLight();
-  light.init(0xffff99, 0xffff99);
+  light.init();
   scene.add(light.obj);
   
   points = new Points();
   points.init(scene);
   scene.add(points.obj);
   
-  // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
+  // var dummy_geometry = new THREE.DodecahedronGeometry(100, 2);
   // var dummy_material = new THREE.MeshLambertMaterial({
   //   color: 0xffffff
   // });
@@ -71,7 +71,8 @@ var raycast = function(vector) {
 
 var render = function() {
   renderer.clear();
-  points.rad2 += Util.getRadian(1);
+  points.rad1_base += Util.getRadian(3);
+  points.rad2 += Util.getRadian(4);
   points.update();
   //camera.rotate();
   renderer.render(scene, camera.obj);
