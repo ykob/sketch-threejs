@@ -32,7 +32,7 @@ var exports = function(){
         vertexShader: document.getElementById('vertex-shader').textContent,
         fragmentShader: document.getElementById('fragment-shader').textContent,
         transparent: true,
-        depthTest: false,
+        depthWrite: false,
         blending: THREE.AdditiveBlending
       });
       for (var i = 0; i < this.movers_num; i++) {
