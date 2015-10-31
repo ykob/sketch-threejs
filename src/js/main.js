@@ -32,7 +32,7 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, 0, 1600);
+  scene.fog = new THREE.Fog(0x000000, 0, 100);
   
   camera = new Camera();
   camera.init(body_width, body_height);
@@ -42,7 +42,7 @@ var initThree = function() {
   scene.add(light.obj);
   
   points = new Points();
-  points.init();
+  points.init(scene);
   scene.add(points.obj);
   
   // var dummy_geometry = new THREE.BoxGeometry(100, 100, 100);
@@ -71,6 +71,7 @@ var raycast = function(vector) {
 
 var render = function() {
   renderer.clear();
+  points.rad2 += Util.getRadian(1);
   points.update();
   //camera.rotate();
   renderer.render(scene, camera.obj);
@@ -80,7 +81,7 @@ var renderloop = function() {
   var now = Date.now();
   requestAnimationFrame(renderloop);
   render();
-  if (now - last_time_activate > 100) {
+  if (now - last_time_activate > 1) {
     points.activateMover();
     last_time_activate = Date.now();
   }

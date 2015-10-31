@@ -3,7 +3,7 @@ var Mover = require('./mover');
 
 var exports = function(){
   var Points = function() {
-    this.movers_num = 20000;
+    this.movers_num = 10000;
     this.movers = [];
     this.geometry = null;
     this.material = null;
@@ -13,34 +13,35 @@ var exports = function(){
     this.colors = new Float32Array(this.movers_num * 3);
     this.opacities = new Float32Array(this.movers_num);
     this.sizes = new Float32Array(this.movers_num);
-    this.anti_gravity = new THREE.Vector3(0, 0.004, 0);
+    this.rad1 = 0;
+    this.rad2 = 0;
+    this.anchor = new THREE.Vector3();
+    this.gravity = new THREE.Vector3(0, -0.005, 0)
   };
   
   Points.prototype = {
-    init: function() {
+    init: function(scene) {
       this.createTexture();
       this.geometry = new THREE.BufferGeometry();
       this.material = new THREE.ShaderMaterial({
         uniforms: {
-          color: {
-            type: 'c',
-            value: new THREE.Color(0xffffff)
-          },
-          texture: {
-            type: 't',
-            value: this.texture
-          }
+          color: { type: 'c', value: new THREE.Color(0xffffff) },
+          texture: { type: 't', value: this.texture },
+          fogColor: { type: 'c', value: scene.fog.color },
+          fogNear: { type: 'f', value: scene.fog.near },
+          fogFar: { type: 'f', value: scene.fog.far }
         },
         vertexShader: document.getElementById('vertex-shader').textContent,
         fragmentShader: document.getElementById('fragment-shader').textContent,
         transparent: true,
         depthTest: false,
+        fog: true,
         blending: THREE.AdditiveBlending
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
         var h = Util.getRandomInt(0, 80);
-        var s = Util.getRandomInt(20, 80);
+        var s = Util.getRandomInt(30, 60);
         var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
         mover.init(new THREE.Vector3(0, 0, 0));
@@ -51,7 +52,7 @@ var exports = function(){
         this.positions[i * 3 + 2] = mover.position.z;
         color.toArray(this.colors, i * 3);
         this.opacities[i] = mover.a;
-        this.sizes[i] = Util.getRandomInt(10, 60);
+        this.sizes[i] = Util.getRandomInt(30, 60);
       }
       this.geometry.addAttribute('position', new THREE.BufferAttribute(this.positions, 3));
       this.geometry.addAttribute('customColor', new THREE.BufferAttribute(this.colors, 3));
@@ -60,17 +61,26 @@ var exports = function(){
       this.obj = new THREE.Points(this.geometry, this.material);
     },
     update: function() {
+      this.anchor.copy(Util.getSpherical(this.rad1, this.rad2, 200));
+      this.updateMover();
+      this.obj.geometry.position = this.positions;
+      this.obj.geometry.vertexOpacity = this.opacities;
+      this.obj.geometry.attributes.position.needsUpdate = true;
+      this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
+    },
+    updateMover: function() {
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) {
           mover.time++;
-          mover.applyForce(this.anti_gravity);
+          mover.applyForce(this.gravity);
           mover.updateVelocity();
           mover.updatePosition();
-          if (mover.time > 300) mover.a -= 0.01;
-          if (mover.time > 500) {
-            mover.time = 0;
+          if (mover.time < 100 && mover.a < 0.5) mover.a += 0.05;
+          if (mover.time > 200) mover.a -= 0.01;
+          if (mover.a < 0) {
             mover.init(new THREE.Vector3(0, 0, 0));
+            mover.time = 0;
             mover.a = 0.0;
             mover.inactivate();
           }
@@ -80,10 +90,6 @@ var exports = function(){
         this.positions[i * 3 + 2] = mover.position.z;
         this.opacities[i] = mover.a;
       }
-      this.obj.geometry.position = this.positions;
-      this.obj.geometry.vertexOpacity = this.opacities;
-      this.obj.geometry.attributes.position.needsUpdate = true;
-      this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
     },
     activateMover: function() {
       var count = 0;
@@ -91,15 +97,11 @@ var exports = function(){
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
         if (mover.is_active) continue;
-        var rad = Util.getRadian(Util.getRandomInt(0, 36000)/ 100);
-        var range = Math.log(Util.getRandomInt(2400, 128000) / 1000) / Math.log(128) * 400;
-        var x = Math.cos(rad) * range;
-        var z = Math.sin(rad) * range;
         mover.activate();
-        mover.init(new THREE.Vector3(x, -150, z));
-        mover.a = 0.3;
+        mover.init(this.anchor);
+        mover.a = 0.0;
         count++;
-        if (count >= 50) break;
+        if (count >= 1) break;
       }
     },
     createTexture: function() {
