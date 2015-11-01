@@ -1,8 +1,10 @@
 var Util = require('./util');
 var Mover = require('./mover');
+var Light = require('./pointLight');
 
 var exports = function(){
   var Points = function() {
+    this.scene = null;
     this.movers_num = 30000;
     this.movers = [];
     this.geometry = null;
@@ -17,11 +19,13 @@ var exports = function(){
     this.rad1_base = 0;
     this.rad2 = 0;
     this.anchor = new THREE.Vector3();
-    this.gravity = new THREE.Vector3(0, -0.01, 0)
+    this.gravity = new THREE.Vector3(0, -0.01, 0);
+    this.light = new Light();
   };
   
   Points.prototype = {
     init: function(scene) {
+      this.scene = scene;
       this.createTexture();
       this.geometry = new THREE.BufferGeometry();
       this.material = new THREE.ShaderMaterial({
@@ -37,8 +41,8 @@ var exports = function(){
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
-        var h = Util.getRandomInt(0, 80);
-        var s = Util.getRandomInt(30, 60);
+        var h = Util.getRandomInt(90, 240);
+        var s = Util.getRandomInt(60, 90);
         var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
         mover.init(new THREE.Vector3(0, 0, 0));
@@ -55,6 +59,8 @@ var exports = function(){
       this.geometry.addAttribute('vertexOpacity', new THREE.BufferAttribute(this.opacities, 1));
       this.geometry.addAttribute('size', new THREE.BufferAttribute(this.sizes, 1));
       this.obj = new THREE.Points(this.geometry, this.material);
+      this.light.init();
+      this.scene.add(this.light.obj);
     },
     update: function() {
       this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 30);
@@ -66,6 +72,7 @@ var exports = function(){
       this.obj.geometry.attributes.position.needsUpdate = true;
       this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
       this.obj.geometry.attributes.size.needsUpdate = true;
+      this.light.obj.position.copy(Util.getSpherical(this.rad1, this.rad2, 250));
     },
     updateMover: function() {
       for (var i = 0; i < this.movers.length; i++) {

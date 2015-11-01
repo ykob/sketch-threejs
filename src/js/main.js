@@ -32,25 +32,33 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, 0, 1600);
+  scene.fog = new THREE.Fog(0x000000, 0, 2400);
   
   camera = new Camera();
   camera.init(body_width, body_height);
   
-  light = new HemiLight();
-  light.init();
-  scene.add(light.obj);
+  // light = new HemiLight();
+  // light.init();
+  // scene.add(light.obj);
   
   points = new Points();
   points.init(scene);
   scene.add(points.obj);
   
-  // var dummy_geometry = new THREE.DodecahedronGeometry(100, 2);
-  // var dummy_material = new THREE.MeshLambertMaterial({
-  //   color: 0xffffff
-  // });
-  // var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
-  // scene.add(dummy_obj);
+  var dummy_geometry = new THREE.OctahedronGeometry(100, 1);
+  var dummy_material = new THREE.MeshLambertMaterial({
+    color: 0xffffff
+  });
+  var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
+  scene.add(dummy_obj);
+  
+  var dummy_geometry2 = new THREE.DodecahedronGeometry(1100, 2);
+  var dummy_material2 = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide
+  });
+  var dummy_obj2 = new THREE.Mesh(dummy_geometry2, dummy_material2);
+  scene.add(dummy_obj2);
 };
 
 var init = function() {
@@ -70,9 +78,11 @@ var raycast = function(vector) {
 };
 
 var render = function() {
+  var rad1 = Util.getRadian(3);
+  var rad2 = Util.getRadian(4);
   renderer.clear();
-  points.rad1_base += Util.getRadian(3);
-  points.rad2 += Util.getRadian(4);
+  points.rad1_base += rad1;
+  points.rad2 += rad2;
   points.update();
   //camera.rotate();
   renderer.render(scene, camera.obj);
