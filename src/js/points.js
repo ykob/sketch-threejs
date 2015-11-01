@@ -57,7 +57,7 @@ var exports = function(){
       this.obj = new THREE.Points(this.geometry, this.material);
     },
     update: function() {
-      this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 40);
+      this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 30);
       this.anchor.copy(Util.getSpherical(this.rad1, this.rad2, 250));
       this.updateMover();
       this.obj.geometry.position = this.positions;
@@ -76,10 +76,10 @@ var exports = function(){
           mover.updateVelocity();
           mover.updatePosition();
           if (mover.time > 10) {
-            mover.a -= 0.01;
-            mover.size -= 1;
+            mover.size -= 2;
+            mover.a -= 0.02;
           }
-          if (mover.a < 0) {
+          if (mover.a <= 0) {
             mover.init(new THREE.Vector3(0, 0, 0));
             mover.time = 0;
             mover.a = 0.0;
@@ -103,13 +103,15 @@ var exports = function(){
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
         var range = (1 - Math.log(Util.getRandomInt(2, 64)) / Math.log(64)) * 80;
         var vector = Util.getSpherical(rad1, rad2, range);
+        var force = Util.getSpherical(rad1, rad2, range / 20);
         vector.add(this.anchor);
         mover.activate();
         mover.init(vector);
-        mover.a = 0.5;
-        mover.size = Util.getRandomInt(20, 60);
+        mover.applyForce(force);
+        mover.a = 0.6;
+        mover.size = Util.getRandomInt(20, 80);
         count++;
-        if (count >= 100) break;
+        if (count >= 120) break;
       }
     },
     createTexture: function() {
