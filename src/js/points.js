@@ -19,7 +19,7 @@ var exports = function(){
     this.rad1_base = 0;
     this.rad2 = 0;
     this.anchor = new THREE.Vector3();
-    this.gravity = new THREE.Vector3(0, -0.01, 0);
+    this.gravity = new THREE.Vector3(0, -0.05, 0);
     this.light = new Light();
   };
   
@@ -62,9 +62,13 @@ var exports = function(){
       this.light.init();
       this.scene.add(this.light.obj);
     },
+    move: function() {
+      this.rad1_base += Util.getRadian(1);
+      this.rad2 += Util.getRadian(3);
+    },
     update: function() {
       this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 30);
-      this.anchor.copy(Util.getSpherical(this.rad1, this.rad2, 250));
+      this.anchor.copy(Util.getSpherical(this.rad1, this.rad2, 200));
       this.updateMover();
       this.obj.geometry.position = this.positions;
       this.obj.geometry.vertexOpacity = this.opacities;
@@ -72,6 +76,7 @@ var exports = function(){
       this.obj.geometry.attributes.position.needsUpdate = true;
       this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
       this.obj.geometry.attributes.size.needsUpdate = true;
+      this.move();
       this.light.obj.position.copy(Util.getSpherical(this.rad1, this.rad2, 250));
     },
     updateMover: function() {
@@ -80,6 +85,7 @@ var exports = function(){
         if (mover.is_active) {
           mover.time++;
           mover.applyForce(this.gravity);
+          mover.applyDragForce(0.1);
           mover.updateVelocity();
           mover.updatePosition();
           if (mover.time > 10) {
@@ -110,7 +116,7 @@ var exports = function(){
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
         var range = (1 - Math.log(Util.getRandomInt(2, 64)) / Math.log(64)) * 80;
         var vector = Util.getSpherical(rad1, rad2, range);
-        var force = Util.getSpherical(rad1, rad2, range / 20);
+        var force = Util.getSpherical(rad1, rad2, range / 8);
         vector.add(this.anchor);
         mover.activate();
         mover.init(vector);
