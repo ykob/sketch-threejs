@@ -32,7 +32,7 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, 0, 2400);
+  //scene.fog = new THREE.Fog(0x000000, 0, 2400);
   
   camera = new Camera();
   camera.init(body_width, body_height);
@@ -62,7 +62,7 @@ var initThree = function() {
     var debris = new THREE.Mesh(debris_geometry, debris_material);
     var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
     var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-    var range = Util.getRandomInt(250, 1000);
+    var range = Util.getRandomInt(250, 1600);
     var scale = Util.getRandomInt(0.8, 2);
     debris.position.copy(Util.getSpherical(rad1, rad2, range));
     debris.scale.set(scale, scale, scale);
@@ -88,8 +88,15 @@ var raycast = function(vector) {
 
 var render = function() {
   renderer.clear();
-  points.update();
-  camera.rotate();
+  points.updateVelocity();
+  points.updatePoints();
+  camera.anchor = points.position.clone().sub(points.velocity).multiplyScalar(100);
+  camera.hook(0, 0.004);
+  camera.applyDragForce(0.1);
+  camera.updateVelocity();
+  points.updatePosition();
+  camera.updatePosition();
+  camera.obj.lookAt(points.position);
   renderer.render(scene, camera.obj);
 };
 

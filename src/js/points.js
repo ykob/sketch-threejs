@@ -5,7 +5,7 @@ var Light = require('./pointLight');
 var exports = function(){
   var Points = function() {
     this.scene = null;
-    this.movers_num = 30000;
+    this.movers_num = 10000;
     this.movers = [];
     this.geometry = null;
     this.material = null;
@@ -18,7 +18,8 @@ var exports = function(){
     this.rad1 = 0;
     this.rad1_base = 0;
     this.rad2 = 0;
-    this.anchor = new THREE.Vector3();
+    this.position = new THREE.Vector3();
+    this.velocity = new THREE.Vector3();
     this.gravity = new THREE.Vector3(0, -0.05, 0);
     this.light = new Light();
   };
@@ -41,7 +42,7 @@ var exports = function(){
       });
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
-        var h = Util.getRandomInt(90, 240);
+        var h = Util.getRandomInt(0, 90);
         var s = Util.getRandomInt(60, 90);
         var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
@@ -62,13 +63,17 @@ var exports = function(){
       this.light.init();
       this.scene.add(this.light.obj);
     },
-    move: function() {
-      this.rad1_base += Util.getRadian(1);
-      this.rad2 += Util.getRadian(3);
+    updateVelocity: function() {
+      this.rad1_base += Util.getRadian(0.4);
+      this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 40);
+      this.rad2 += Util.getRadian(1.2);
+      this.velocity.copy(Util.getSpherical(this.rad1, this.rad2, 350));
     },
-    update: function() {
-      this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 30);
-      this.anchor.copy(Util.getSpherical(this.rad1, this.rad2, 200));
+    updatePosition: function() {
+      this.position.copy(this.velocity);
+      this.light.obj.position.copy(this.velocity);
+    },
+    updatePoints: function() {
       this.updateMover();
       this.obj.geometry.position = this.positions;
       this.obj.geometry.vertexOpacity = this.opacities;
@@ -76,8 +81,6 @@ var exports = function(){
       this.obj.geometry.attributes.position.needsUpdate = true;
       this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
       this.obj.geometry.attributes.size.needsUpdate = true;
-      this.move();
-      this.light.obj.position.copy(Util.getSpherical(this.rad1, this.rad2, 250));
     },
     updateMover: function() {
       for (var i = 0; i < this.movers.length; i++) {
@@ -117,14 +120,14 @@ var exports = function(){
         var range = (1 - Math.log(Util.getRandomInt(2, 64)) / Math.log(64)) * 80;
         var vector = Util.getSpherical(rad1, rad2, range);
         var force = Util.getSpherical(rad1, rad2, range / 8);
-        vector.add(this.anchor);
+        vector.add(this.position);
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
         mover.a = 0.6;
         mover.size = Util.getRandomInt(20, 80);
         count++;
-        if (count >= 120) break;
+        if (count >= 60) break;
       }
     },
     createTexture: function() {

@@ -5,9 +5,9 @@ var exports = function(){
     this.rad1 = Util.getRadian(0);
     this.rad2 = Util.getRadian(0);
     this.range = 200;
-    this.hex = 0x99eeee;
+    this.hex = 0xdddd33;
     this.intensity = 1;
-    this.distance = 0;
+    this.distance = 2300;
     this.decay = 1;
     this.obj;
   };
