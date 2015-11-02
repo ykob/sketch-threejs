@@ -45,20 +45,13 @@ var initThree = function() {
   points.init(scene);
   scene.add(points.obj);
   
-  var dummy_geometry = new THREE.OctahedronGeometry(100, 1);
-  var dummy_material = new THREE.MeshLambertMaterial({
-    color: 0xffffff
+  var dummy_geometry = new THREE.OctahedronGeometry(80, 2);
+  var dummy_material = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    shading: THREE.FlatShading
   });
   var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
   scene.add(dummy_obj);
-  
-  var dummy_geometry2 = new THREE.DodecahedronGeometry(1100, 2);
-  var dummy_material2 = new THREE.MeshLambertMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide
-  });
-  var dummy_obj2 = new THREE.Mesh(dummy_geometry2, dummy_material2);
-  scene.add(dummy_obj2);
 };
 
 var init = function() {
