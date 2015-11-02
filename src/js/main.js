@@ -52,6 +52,22 @@ var initThree = function() {
   });
   var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
   scene.add(dummy_obj);
+  
+  var debris_geometry = new THREE.OctahedronGeometry(10, 1);
+  var debris_material = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    shading: THREE.FlatShading
+  });
+  for (var i = 0; i < 200; i++) {
+    var debris = new THREE.Mesh(debris_geometry, debris_material);
+    var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
+    var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
+    var range = Util.getRandomInt(250, 1000);
+    var scale = Util.getRandomInt(0.8, 2);
+    debris.position.copy(Util.getSpherical(rad1, rad2, range));
+    debris.scale.set(scale, scale, scale);
+    scene.add(debris);
+  }
 };
 
 var init = function() {
@@ -71,13 +87,9 @@ var raycast = function(vector) {
 };
 
 var render = function() {
-  var rad1 = Util.getRadian(3);
-  var rad2 = Util.getRadian(4);
   renderer.clear();
-  points.rad1_base += rad1;
-  points.rad2 += rad2;
   points.update();
-  //camera.rotate();
+  camera.rotate();
   renderer.render(scene, camera.obj);
 };
 
