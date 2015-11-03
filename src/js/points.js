@@ -67,7 +67,7 @@ var exports = function(){
       this.rad1_base += Util.getRadian(0.4);
       this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 40);
       this.rad2 += Util.getRadian(1.2);
-      this.velocity.copy(Util.getSpherical(this.rad1, this.rad2, 350));
+      this.velocity.copy(Util.getSpherical(this.rad1, this.rad2, 280));
     },
     updatePosition: function() {
       this.position.copy(this.velocity);

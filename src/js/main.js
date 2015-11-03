@@ -19,6 +19,8 @@ var camera = null;
 var light = null;
 var points = null;
 
+var is_tracking = true;
+
 var initThree = function() {
   canvas = document.getElementById('canvas');
   renderer = new THREE.WebGLRenderer({
@@ -58,11 +60,11 @@ var initThree = function() {
     color: 0xffffff,
     shading: THREE.FlatShading
   });
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 300; i++) {
     var debris = new THREE.Mesh(debris_geometry, debris_material);
     var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
     var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-    var range = Util.getRandomInt(250, 1600);
+    var range = Util.getRandomInt(600, 1600);
     var scale = Util.getRandomInt(0.8, 2);
     debris.position.copy(Util.getSpherical(rad1, rad2, range));
     debris.scale.set(scale, scale, scale);
@@ -90,13 +92,23 @@ var render = function() {
   renderer.clear();
   points.updateVelocity();
   points.updatePoints();
-  camera.anchor = points.position.clone().sub(points.velocity).multiplyScalar(100);
+  if (is_tracking === true) {
+    camera.anchor = points.position.clone().sub(points.velocity).normalize().multiplyScalar(550);
+    camera.anchor = points.position.clone().add(camera.anchor);
+    camera.anchor = camera.anchor.add(new THREE.Vector3(0, points.position.y * -2.5, 0));
+  } else {
+    camera.rotate();
+  }
   camera.hook(0, 0.004);
   camera.applyDragForce(0.1);
   camera.updateVelocity();
   points.updatePosition();
   camera.updatePosition();
-  camera.obj.lookAt(points.position);
+  if (is_tracking === true) {
+    camera.obj.lookAt(points.position);
+  } else {
+    camera.lookAtCenter();
+  }
   renderer.render(scene, camera.obj);
 };
 
@@ -129,6 +141,12 @@ var setEvent = function () {
   };
   
   var touchEnd = function(x, y) {
+    if (is_tracking === false) {
+      is_tracking = true;
+    } else {
+      camera.anchor = Util.getSpherical(camera.rad1, camera.rad2, camera.range);
+      is_tracking = false;
+    }
   };
 
   canvas.addEventListener('contextmenu', function (event) {

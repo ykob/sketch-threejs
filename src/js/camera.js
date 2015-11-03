@@ -31,7 +31,7 @@ var exports = function(){
     },
     setPosition: function() {
       var points = Util.getSpherical(this.rad1, this.rad2, this.range);
-      this.obj.position.copy(points);
+      this.anchor.copy(points);
     },
     updatePosition: function() {
       this.obj.position.copy(this.velocity);
