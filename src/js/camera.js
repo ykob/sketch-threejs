@@ -18,18 +18,18 @@ var exports = function(){
     init: function(width, height) {
       this.obj = new THREE.PerspectiveCamera(35, width / height, 1, 10000);
       this.obj.up.set(0, 1, 0);
-      this.setPosition();
+      this.setPositionSpherical();
       this.lookAtCenter();
     },
     reset: function() {
-      this.setPosition();
+      this.setPositionSpherical();
       this.lookAtCenter();
     },
     resize: function(width, height) {
       this.obj.aspect = width / height;
       this.obj.updateProjectionMatrix();
     },
-    setPosition: function() {
+    setPositionSpherical: function() {
       var points = Util.getSpherical(this.rad1, this.rad2, this.range);
       this.anchor.copy(points);
     },
