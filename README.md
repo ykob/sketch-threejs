@@ -1,4 +1,4 @@
-# demo-template-threejs
+# template-threejs
 
 three.jsを使ったdemo用のテンプレート。
 
