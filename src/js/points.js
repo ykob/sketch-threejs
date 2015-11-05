@@ -15,12 +15,11 @@ var exports = function(){
     this.colors = new Float32Array(this.movers_num * 3);
     this.opacities = new Float32Array(this.movers_num);
     this.sizes = new Float32Array(this.movers_num);
-    this.rad1 = 0;
-    this.rad1_base = 0;
-    this.rad2 = 0;
     this.position = new THREE.Vector3();
     this.velocity = new THREE.Vector3();
-    this.gravity = new THREE.Vector3(0, -0.05, 0);
+    this.acceleration = new THREE.Vector3();
+    this.anchor = new THREE.Vector3();
+    this.gravity = new THREE.Vector3(0, -0.1, 0);
     this.light = new Light();
   };
   
@@ -64,10 +63,7 @@ var exports = function(){
       this.scene.add(this.light.obj);
     },
     updateVelocity: function() {
-      this.rad1_base += Util.getRadian(0.4);
-      this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 40);
-      this.rad2 += Util.getRadian(1.2);
-      this.velocity.copy(Util.getSpherical(this.rad1, this.rad2, 280));
+      this.velocity.add(this.acceleration);
     },
     updatePosition: function() {
       this.position.copy(this.velocity);
@@ -85,6 +81,7 @@ var exports = function(){
     updateMover: function() {
       for (var i = 0; i < this.movers.length; i++) {
         var mover = this.movers[i];
+
         if (mover.is_active) {
           mover.time++;
           mover.applyForce(this.gravity);
