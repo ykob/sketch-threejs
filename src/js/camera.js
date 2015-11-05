@@ -23,6 +23,7 @@ var exports = function(){
     },
     reset: function() {
       this.setPositionSpherical();
+      this.velocity.copy(this.anchor);
       this.lookAtCenter();
     },
     resize: function(width, height) {

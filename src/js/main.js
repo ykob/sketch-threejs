@@ -2,11 +2,10 @@ var Util = require('./Util');
 var debounce = require('./debounce');
 var Camera = require('./camera');
 var HemiLight = require('./hemiLight');
-var Points = require('./points');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
-var last_time_activate = Date.now();
+var last_time_xxx = Date.now();
 var raycaster = new THREE.Raycaster();
 var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
@@ -17,9 +16,6 @@ var renderer = null;
 var scene = null;
 var camera = null;
 var light = null;
-var points = null;
-
-var is_tracking = true;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -38,14 +34,11 @@ var initThree = function() {
   
   camera = new Camera();
   camera.init(body_width, body_height);
+  camera.reset();
   
-  // light = new HemiLight();
-  // light.init();
-  // scene.add(light.obj);
-  
-  points = new Points();
-  points.init(scene);
-  scene.add(points.obj);
+  light = new HemiLight();
+  light.init();
+  scene.add(light.obj);
   
   var dummy_geometry = new THREE.OctahedronGeometry(80, 2);
   var dummy_material = new THREE.MeshPhongMaterial({
@@ -54,22 +47,6 @@ var initThree = function() {
   });
   var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
   scene.add(dummy_obj);
-  
-  var debris_geometry = new THREE.OctahedronGeometry(10, 1);
-  var debris_material = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    shading: THREE.FlatShading
-  });
-  for (var i = 0; i < 300; i++) {
-    var debris = new THREE.Mesh(debris_geometry, debris_material);
-    var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
-    var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-    var range = Util.getRandomInt(600, 1600);
-    var scale = Util.getRandomInt(0.8, 2);
-    debris.position.copy(Util.getSpherical(rad1, rad2, range));
-    debris.scale.set(scale, scale, scale);
-    scene.add(debris);
-  }
 };
 
 var init = function() {
@@ -90,25 +67,11 @@ var raycast = function(vector) {
 
 var render = function() {
   renderer.clear();
-  points.updateVelocity();
-  points.updatePoints();
-  if (is_tracking === true) {
-    camera.anchor = points.position.clone().sub(points.velocity).normalize().multiplyScalar(550);
-    camera.anchor = points.position.clone().add(camera.anchor);
-    camera.anchor = camera.anchor.add(new THREE.Vector3(0, points.position.y * -2.5, 0));
-  } else {
-    camera.rotate();
-  }
   camera.hook(0, 0.004);
   camera.applyDragForce(0.1);
   camera.updateVelocity();
-  points.updatePosition();
   camera.updatePosition();
-  if (is_tracking === true) {
-    camera.obj.lookAt(points.position);
-  } else {
-    camera.lookAtCenter();
-  }
+  camera.lookAtCenter();
   renderer.render(scene, camera.obj);
 };
 
@@ -116,10 +79,9 @@ var renderloop = function() {
   var now = Date.now();
   requestAnimationFrame(renderloop);
   render();
-  if (now - last_time_activate > 1) {
-    points.activateMover();
-    last_time_activate = Date.now();
-  }
+  // if (now - last_time_xxx > 1) {
+  //   last_time_xxx = Date.now();
+  // }
 };
 
 var resizeRenderer = function() {
@@ -141,12 +103,6 @@ var setEvent = function () {
   };
   
   var touchEnd = function(x, y) {
-    if (is_tracking === false) {
-      is_tracking = true;
-    } else {
-      camera.anchor = Util.getSpherical(camera.rad1, camera.rad2, camera.range);
-      is_tracking = false;
-    }
   };
 
   canvas.addEventListener('contextmenu', function (event) {
