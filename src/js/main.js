@@ -34,7 +34,6 @@ var initThree = function() {
   
   camera = new Camera();
   camera.init(body_width, body_height);
-  camera.reset();
   
   light = new HemiLight();
   light.init();

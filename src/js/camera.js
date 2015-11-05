@@ -19,11 +19,11 @@ var exports = function(){
       this.obj = new THREE.PerspectiveCamera(35, width / height, 1, 10000);
       this.obj.up.set(0, 1, 0);
       this.setPositionSpherical();
+      this.velocity.copy(this.anchor);
       this.lookAtCenter();
     },
     reset: function() {
       this.setPositionSpherical();
-      this.velocity.copy(this.anchor);
       this.lookAtCenter();
     },
     resize: function(width, height) {
