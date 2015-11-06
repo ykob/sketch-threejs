@@ -1,7 +1,7 @@
-var Util = require('./Util');
-var debounce = require('./debounce');
-var Camera = require('./camera');
-var HemiLight = require('./hemiLight');
+var Util = require('./modules/util');
+var debounce = require('./modules/debounce');
+var Camera = require('./modules/camera');
+var HemiLight = require('./modules/hemiLight');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
