@@ -1,6 +1,7 @@
 # template-threejs
 
-three.jsを使ったdemo用のテンプレート。
+it's my personal sketch that is used three.js.  
+http://ykob.github.io/sketch-threejs/
 
 ## npm install
 
