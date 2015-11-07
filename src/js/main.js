@@ -16,7 +16,8 @@ var camera = null;
 
 var running = null;
 var sketches = {
-  dummy: ['dummy', require('./sketches/dummy.js')],
+  dummy: ['dummy', require('./sketches/dummy')],
+  dummy2: ['dummy2', require('./sketches/dummy2')],
 };
 
 var initThree = function() {
@@ -32,6 +33,7 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
+  console.log(scene);
   
   camera = new Camera();
   camera.init(body_width, body_height);
@@ -79,6 +81,9 @@ var setEvent = function () {
   var touchStart = function(x, y) {
     vector_mouse_down.set(x, y);
     raycast(vector_mouse_down);
+    running.remove(scene);
+    running = new sketches.dummy2[1];
+    running.init(scene);
   };
   
   var touchMove = function(x, y) {

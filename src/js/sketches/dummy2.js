@@ -15,7 +15,7 @@ var exports = function(){
       
       var dummy_geometry = new THREE.OctahedronGeometry(80, 2);
       var dummy_material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
+        color: 0xff3333,
         shading: THREE.FlatShading
       });
       this.mesh = new THREE.Mesh(dummy_geometry, dummy_material);
