@@ -1,6 +1,6 @@
-var Util = require('./util');
-var Mover = require('./mover');
-var Light = require('./pointLight');
+var Util = require('../modules/util');
+var Mover = require('../modules/mover');
+var Light = require('../modules/pointLight');
 
 var exports = function(){
   var Points = function() {

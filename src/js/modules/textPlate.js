@@ -1,4 +1,4 @@
-var Util = require('./util');
+var Util = require('../modules/util');
 
 var exports = function(){
   var TextPlate = function() {

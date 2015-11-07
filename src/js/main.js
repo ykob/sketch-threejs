@@ -1,11 +1,9 @@
 var Util = require('./modules/util');
 var debounce = require('./modules/debounce');
 var Camera = require('./modules/camera');
-var HemiLight = require('./modules/hemiLight');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
-var last_time_xxx = Date.now();
 var raycaster = new THREE.Raycaster();
 var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
@@ -15,7 +13,11 @@ var canvas = null;
 var renderer = null;
 var scene = null;
 var camera = null;
-var light = null;
+
+var running = null;
+var sketches = {
+  dummy: ['dummy', require('./sketches/dummy.js')],
+};
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -30,22 +32,12 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  //scene.fog = new THREE.Fog(0x000000, 0, 2400);
   
   camera = new Camera();
   camera.init(body_width, body_height);
   
-  light = new HemiLight();
-  light.init();
-  scene.add(light.obj);
-  
-  var dummy_geometry = new THREE.OctahedronGeometry(80, 2);
-  var dummy_material = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    shading: THREE.FlatShading
-  });
-  var dummy_obj = new THREE.Mesh(dummy_geometry, dummy_material);
-  scene.add(dummy_obj);
+  running = new sketches.dummy[1];
+  running.init(scene);
 };
 
 var init = function() {
@@ -66,11 +58,7 @@ var raycast = function(vector) {
 
 var render = function() {
   renderer.clear();
-  camera.hook(0, 0.004);
-  camera.applyDragForce(0.1);
-  camera.updateVelocity();
-  camera.updatePosition();
-  camera.lookAtCenter();
+  running.render(camera);
   renderer.render(scene, camera.obj);
 };
 
@@ -78,9 +66,6 @@ var renderloop = function() {
   var now = Date.now();
   requestAnimationFrame(renderloop);
   render();
-  // if (now - last_time_xxx > 1) {
-  //   last_time_xxx = Date.now();
-  // }
 };
 
 var resizeRenderer = function() {

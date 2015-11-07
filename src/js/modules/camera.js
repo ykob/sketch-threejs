@@ -1,5 +1,5 @@
-var Util = require('./util');
-var Force = require('./force');
+var Util = require('../modules/util');
+var Force = require('../modules/force');
 
 var exports = function(){
   var Camera = function() {
