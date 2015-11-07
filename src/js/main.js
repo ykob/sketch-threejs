@@ -33,7 +33,6 @@ var initThree = function() {
   renderer.setClearColor(0x111111, 1.0);
   
   scene = new THREE.Scene();
-  console.log(scene);
   
   camera = new Camera();
   camera.init(body_width, body_height);
