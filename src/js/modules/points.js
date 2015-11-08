@@ -1,6 +1,9 @@
 var Util = require('../modules/util');
 var Mover = require('../modules/mover');
 var Light = require('../modules/pointLight');
+var glslify = require('glslify');
+var vs = glslify('../sketches/points.vs');
+var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
   var Points = function() {
@@ -25,7 +28,6 @@ var exports = function(){
   
   Points.prototype = {
     init: function(scene) {
-      this.scene = scene;
       this.createTexture();
       this.geometry = new THREE.BufferGeometry();
       this.material = new THREE.ShaderMaterial({
@@ -33,8 +35,8 @@ var exports = function(){
           color: { type: 'c', value: new THREE.Color(0xffffff) },
           texture: { type: 't', value: this.texture }
         },
-        vertexShader: document.getElementById('vertex-shader').textContent,
-        fragmentShader: document.getElementById('fragment-shader').textContent,
+        vertexShader: vs,
+        fragmentShader: fs,
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending
@@ -59,8 +61,10 @@ var exports = function(){
       this.geometry.addAttribute('vertexOpacity', new THREE.BufferAttribute(this.opacities, 1));
       this.geometry.addAttribute('size', new THREE.BufferAttribute(this.sizes, 1));
       this.obj = new THREE.Points(this.geometry, this.material);
+      scene.add(this.obj);
       this.light.init();
-      this.scene.add(this.light.obj);
+      scene.add(this.light.obj);
+      console.log(this.obj);
     },
     updateVelocity: function() {
       this.velocity.add(this.acceleration);

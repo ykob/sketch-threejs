@@ -18,6 +18,7 @@ var bundler = function(watch) {
     browserifyOpts.cache = {};
     browserifyOpts.packageCache = {};
     browserifyOpts.fullPath = true;
+    browserifyOpts.transform = ['glslify'];
     b = watchify(browserify(browserifyOpts));
   } else {
     b = browserify(browserifyOpts);

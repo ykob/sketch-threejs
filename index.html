@@ -16,34 +16,6 @@
 </head>
 <body>
   <div id="canvas"></div>
-  <script type="x-shader/x-vertex" id="vertex-shader">
-    attribute vec3 customColor;
-    attribute float vertexOpacity;
-    attribute float size;
-    
-    varying vec3 vColor;
-    varying float fOpacity;
-    
-    void main() {
-      vColor = customColor;
-      fOpacity = vertexOpacity;
-      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-      gl_PointSize = size * (300.0 / length(mvPosition.xyz));
-      gl_Position = projectionMatrix * mvPosition;
-    }
-  </script>
-  <script type="x-shader/x-fragment" id="fragment-shader">
-    uniform vec3 color;
-    uniform sampler2D texture;
-    
-    varying vec3 vColor;
-    varying float fOpacity;
-    
-    void main() {
-      gl_FragColor = vec4(color * vColor, fOpacity);
-      gl_FragColor = gl_FragColor * texture2D(texture, gl_PointCoord);
-    }
-  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
   <script src="js/main.js"></script>
 </body>

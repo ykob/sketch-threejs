@@ -1,25 +1,15 @@
 var Util = require('../modules/util');
-var HemiLight = require('../modules/hemiLight');
+var Points = require('../modules/points.js');
 
 var exports = function(){
   var Sketch = function() {
-    this.light = null;
-    this.mesh = null;
+    this.points = null;
   };
   
   Sketch.prototype = {
     init: function(scene) {
-      this.light = new HemiLight();
-      this.light.init();
-      scene.add(this.light.obj);
-      
-      var dummy_geometry = new THREE.OctahedronGeometry(80, 2);
-      var dummy_material = new THREE.MeshPhongMaterial({
-        color: 0xff3333,
-        shading: THREE.FlatShading
-      });
-      this.mesh = new THREE.Mesh(dummy_geometry, dummy_material);
-      scene.add(this.mesh);
+      this.points = new Points();
+      this.points.init(scene);
     },
     remove: function(scene) {
       this.mesh.geometry.dispose();
