@@ -23,7 +23,7 @@ var exports = function(){
       this.velocity = vector.clone();
       this.anchor = vector.clone();
       this.acceleration.set(0, 0, 0);
-      this.a = 1;
+      this.a = 0;
       this.time = 0;
     },
     updatePosition: function() {
