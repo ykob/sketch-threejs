@@ -16,9 +16,12 @@ var camera = null;
 
 var running = null;
 var sketches = {
-  dummy: ['dummy', require('./sketches/dummy')],
-  dummy2: ['dummy2', require('./sketches/dummy2')],
+  'dummy2': require('./sketches/dummy2'),
+  'dummy':  require('./sketches/dummy'),
 };
+
+var btn_toggle_menu = document.querySelector('.btn-switch-menu');
+var menu = document.querySelector('.menu');
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -37,17 +40,25 @@ var initThree = function() {
   camera = new Camera();
   camera.init(body_width, body_height);
   
-  running = new sketches.dummy[1];
+  running = new sketches['dummy'];
   running.init(scene);
 };
 
 var init = function() {
+  buildMenu();
   initThree();
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
     resizeRenderer();
   });
+};
+
+var buildMenu = function() {
+  for (var i in sketches) {
+    console.log(sketches[i]);
+    
+  }
 };
 
 var raycast = function(vector) {
@@ -77,22 +88,6 @@ var resizeRenderer = function() {
 };
 
 var setEvent = function () {
-  var touchStart = function(x, y) {
-    vector_mouse_down.set(x, y);
-    raycast(vector_mouse_down);
-    running.remove(scene);
-    running = new sketches.dummy2[1];
-    running.init(scene);
-  };
-  
-  var touchMove = function(x, y) {
-    vector_mouse_move.set(x, y);
-    raycast(vector_mouse_move);
-  };
-  
-  var touchEnd = function(x, y) {
-  };
-
   canvas.addEventListener('contextmenu', function (event) {
     event.preventDefault();
   });
@@ -130,6 +125,32 @@ var setEvent = function () {
     event.preventDefault();
     touchEnd();
   });
+  
+  btn_toggle_menu.addEventListener('click', function(event) {
+    event.preventDefault();
+    switchMenu();
+  });
+};
+
+var touchStart = function(x, y) {
+  vector_mouse_down.set(x, y);
+  raycast(vector_mouse_down);
+  running.remove(scene);
+  running = new sketches['dummy2'];
+  running.init(scene);
+};
+
+var touchMove = function(x, y) {
+  vector_mouse_move.set(x, y);
+  raycast(vector_mouse_move);
+};
+
+var touchEnd = function(x, y) {
+};
+
+var switchMenu = function() {
+  btn_toggle_menu.classList.toggle('is-active');
+  menu.classList.toggle('is-active');
 };
 
 init();
