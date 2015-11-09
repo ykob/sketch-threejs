@@ -8,8 +8,36 @@ html {
 body {
   height: 100%;
   overflow: hidden;
+  font-family: 'source code pro';
 }
 canvas {
   position: absolute;
 }
-
+.btn-toggle-menu {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 10000;
+  background-color: #fff;
+}
+.menu {
+  display: none;
+  overflow-y: scroll;
+  padding: 2em;
+  color: #fff;
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.select-sketch {
+  list-style: none;
+  li {
+    cursor: pointer;
+  }
+}
