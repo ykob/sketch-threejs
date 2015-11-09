@@ -64,7 +64,6 @@ var exports = function(){
       scene.add(this.obj);
       this.light.init();
       scene.add(this.light.obj);
-      console.log(this.obj);
     },
     updateVelocity: function() {
       this.velocity.add(this.acceleration);
