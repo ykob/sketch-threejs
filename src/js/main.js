@@ -15,13 +15,15 @@ var scene = null;
 var camera = null;
 
 var running = null;
-var sketches = {
-  'dummy2': require('./sketches/dummy2'),
-  'dummy':  require('./sketches/dummy'),
-};
+var sketches = [
+  { name: 'dummy3', obj: require('./sketches/dummy3')},
+  { name: 'dummy2', obj: require('./sketches/dummy2')},
+  { name: 'dummy',  obj: require('./sketches/dummy')}
+];
 
 var btn_toggle_menu = document.querySelector('.btn-switch-menu');
 var menu = document.querySelector('.menu');
+var select_sketch = document.querySelector('.select-sketch');
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -40,7 +42,7 @@ var initThree = function() {
   camera = new Camera();
   camera.init(body_width, body_height);
   
-  running = new sketches['dummy'];
+  running = new sketches[0].obj;
   running.init(scene);
 };
 
@@ -55,10 +57,26 @@ var init = function() {
 };
 
 var buildMenu = function() {
-  for (var i in sketches) {
-    console.log(sketches[i]);
-    
+  var sketch_instance = [];
+  for (var i = 0; i < sketches.length; i++) {
+    var sketch = sketches[i];
+    var dom = document.createElement('li');
+    dom.setAttribute('data-index', i);
+    sketch_instance[i] = sketch.obj;
+    dom.innerHTML = '<span>' + sketch.name + '</span>';
+    dom.addEventListener('click', function() {
+      var index = this.getAttribute('data-index');
+      switchSketch(sketch_instance[index]);
+    });
+    select_sketch.appendChild(dom);
   }
+};
+
+var switchSketch = function(sketch) {
+  running.remove(scene);
+  running = new sketch;
+  running.init(scene);
+  switchMenu();
 };
 
 var raycast = function(vector) {
@@ -135,9 +153,6 @@ var setEvent = function () {
 var touchStart = function(x, y) {
   vector_mouse_down.set(x, y);
   raycast(vector_mouse_down);
-  running.remove(scene);
-  running = new sketches['dummy2'];
-  running.init(scene);
 };
 
 var touchMove = function(x, y) {
