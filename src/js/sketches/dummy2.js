@@ -12,10 +12,9 @@ var exports = function(){
       this.points.init(scene);
     },
     remove: function(scene) {
-      this.mesh.geometry.dispose();
-      this.mesh.material.dispose();
-      scene.remove(this.mesh);
-      scene.remove(this.light.obj);
+      this.points.geometry.dispose();
+      this.points.material.dispose();
+      scene.remove(this.points);
     },
     render: function(camera) {
       camera.hook(0, 0.004);
