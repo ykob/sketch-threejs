@@ -9,7 +9,7 @@ html {
 body {
   height: 100%;
   overflow: hidden;
-  font-family: 'source code pro';
+  font-family: 'Josefin Sans', sans-serif;;
 }
 canvas {
   position: absolute;
@@ -91,6 +91,7 @@ canvas {
   padding-bottom: 2em;
   background-color: rgba(0, 0, 0, 0.75);
   transition: 0.15s;
+  font-size: 110%;
   &.is-active {
     width: 30%;
   }
