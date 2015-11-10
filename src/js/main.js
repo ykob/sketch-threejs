@@ -16,9 +16,9 @@ var camera = null;
 
 var running = null;
 var sketches = [
-  { name: 'dummy3', obj: require('./sketches/dummy3')},
-  { name: 'dummy2', obj: require('./sketches/dummy2')},
-  { name: 'dummy',  obj: require('./sketches/dummy')}
+  { name: 'comet', obj: require('./sketches/dummy3')},
+  { name: 'hyper space', obj: require('./sketches/dummy2')},
+  { name: 'fire ball',  obj: require('./sketches/dummy')}
 ];
 
 var btn_toggle_menu = document.querySelector('.btn-switch-menu');
