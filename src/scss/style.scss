@@ -20,7 +20,7 @@ canvas {
   cursor: pointer;
   position: absolute;
   top: 1em;
-  right: 1em;
+  right: 2em;
   z-index: 10000;
   border: 0;
   div {
@@ -38,7 +38,7 @@ canvas {
       transition: 0.15s;
     }
     &:before {
-      transform: translateY(1em);
+      transform: translateY(0.937em);
     }
     &:after {
       transform: translateY(2em);
@@ -64,7 +64,7 @@ canvas {
   &.is-active {
     div {
       &:before {
-        transform: scale(0.75, 0.75) translateY(2em) rotate(45deg);
+        transform: scale(0.75, 0.75) translateY(2.1em) rotate(45deg);
       }
       &:after {
         transform: scale(0.75, 0.75) translateY(2em) rotate(-45deg);
