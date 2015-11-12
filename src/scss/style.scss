@@ -2,7 +2,9 @@
   margin: 0;
   padding: 0;
 }
-::selection { background: rgba(0, 0, 0, 0); }
+::selection {
+  background: rgba(0, 0, 0, 0);
+}
 html {
   height: 100%;
 }
@@ -10,6 +12,29 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: 'Josefin Sans', sans-serif;;
+}
+h1 {
+  position: absolute;
+  z-index: 100;
+  top: 20px;
+  left: 20px;
+  color: #fff;
+  font-size: 1.25em;
+  font-weight: 100;
+}
+.sketch-outline {
+  position: absolute;
+  z-index: 100;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+  h2 {
+    line-height: 0.8;
+    margin-bottom: 0.2em;
+    font-size: 9vmax;
+    font-weight: 100;
+    letter-spacing: -0.025em;
+  }
 }
 canvas {
   position: absolute;
@@ -19,8 +44,8 @@ canvas {
   height: 3em;
   cursor: pointer;
   position: absolute;
-  top: 1em;
-  right: 2em;
+  top: 10px;
+  right: 20px;
   z-index: 10000;
   border: 0;
   div {
@@ -93,7 +118,7 @@ canvas {
   transition: 0.15s;
   font-size: 110%;
   &.is-active {
-    width: 30%;
+    width: 300px;
   }
 }
 .select-sketch {
