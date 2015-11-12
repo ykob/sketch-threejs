@@ -16,8 +16,8 @@ var camera = null;
 
 var running = null;
 var sketches = [
-  { name: 'comet', obj: require('./sketches/dummy3')},
   { name: 'hyper space', obj: require('./sketches/dummy2')},
+  { name: 'comet', obj: require('./sketches/dummy3')},
   { name: 'fire ball',  obj: require('./sketches/dummy')}
 ];
 
