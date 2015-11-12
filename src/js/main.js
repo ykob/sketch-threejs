@@ -15,11 +15,7 @@ var scene = null;
 var camera = null;
 
 var running = null;
-var sketches = [
-  { name: 'hyper space', obj: require('./sketches/dummy2')},
-  { name: 'comet', obj: require('./sketches/dummy3')},
-  { name: 'fire ball',  obj: require('./sketches/dummy')}
-];
+var sketches = require('./sketches');
 
 var btn_toggle_menu = document.querySelector('.btn-switch-menu');
 var menu = document.querySelector('.menu');
