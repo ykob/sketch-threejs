@@ -20,6 +20,9 @@ var sketches = require('./sketches');
 var btn_toggle_menu = document.querySelector('.btn-switch-menu');
 var menu = document.querySelector('.menu');
 var select_sketch = document.querySelector('.select-sketch');
+var sketch_title = document.querySelector('.sketch-title');
+var sketch_update = document.querySelector('.sketch-update');
+var sketch_description = document.querySelector('.sketch-description');
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -40,6 +43,9 @@ var initThree = function() {
   
   running = new sketches[0].obj;
   running.init(scene);
+  sketch_title.innerHTML = sketches[0].name;
+  sketch_update.innerHTML = 'update : ' + sketches[0].update;
+  sketch_description.innerHTML = sketches[0].description;
 };
 
 var init = function() {
@@ -53,16 +59,16 @@ var init = function() {
 };
 
 var buildMenu = function() {
-  var sketch_instance = [];
+  var sketch_array = [];
   for (var i = 0; i < sketches.length; i++) {
     var sketch = sketches[i];
     var dom = document.createElement('li');
     dom.setAttribute('data-index', i);
-    sketch_instance[i] = sketch.obj;
+    sketch_array[i] = sketch;
     dom.innerHTML = '<span>' + sketch.name + '</span>';
     dom.addEventListener('click', function() {
       var index = this.getAttribute('data-index');
-      switchSketch(sketch_instance[index]);
+      switchSketch(sketch_array[index]);
     });
     select_sketch.appendChild(dom);
   }
@@ -70,8 +76,11 @@ var buildMenu = function() {
 
 var switchSketch = function(sketch) {
   running.remove(scene);
-  running = new sketch;
+  running = new sketch.obj;
   running.init(scene);
+  sketch_title.innerHTML = sketch.name;
+  sketch_update.innerHTML = 'update : ' + sketch.update;
+  sketch_description.innerHTML = sketch.description;
   switchMenu();
 };
 
