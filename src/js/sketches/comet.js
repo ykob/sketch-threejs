@@ -3,8 +3,8 @@ var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
 var Light = require('../modules/pointLight');
 var glslify = require('glslify');
-var vs = glslify('../sketches/comet.vs');
-var fs = glslify('../sketches/comet.fs');
+var vs = glslify('../sketches/points.vs');
+var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
   var Sketch = function() {
