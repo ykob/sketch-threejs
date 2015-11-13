@@ -42,7 +42,7 @@ var initThree = function() {
   camera.init(body_width, body_height);
   
   running = new sketches[0].obj;
-  running.init(scene);
+  running.init(scene, camera);
   sketch_title.innerHTML = sketches[0].name;
   sketch_update.innerHTML = 'update : ' + sketches[0].update;
   sketch_description.innerHTML = sketches[0].description;
@@ -77,7 +77,7 @@ var buildMenu = function() {
 var switchSketch = function(sketch) {
   running.remove(scene);
   running = new sketch.obj;
-  running.init(scene);
+  running.init(scene, camera);
   sketch_title.innerHTML = sketch.name;
   sketch_update.innerHTML = 'update : ' + sketch.update;
   sketch_description.innerHTML = sketch.description;
