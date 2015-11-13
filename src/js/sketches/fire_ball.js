@@ -100,7 +100,7 @@ var exports = function(){
         for (var i = 0; i < this.movers.length; i++) {
           var mover = this.movers[i];
           if (mover.is_active) continue;
-          var rad1 = Util.getRadian(Math.log(Util.getRandomInt(0, 256)) / Math.log(256) * 250);
+          var rad1 = Util.getRadian(Math.log(Util.getRandomInt(0, 256)) / Math.log(256) * 260);
           var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
           var range = (1- Math.log(Util.getRandomInt(32, 256)) / Math.log(256)) * 12;
           var vector = new THREE.Vector3();
@@ -110,9 +110,9 @@ var exports = function(){
           mover.init(vector);
           mover.applyForce(force);
           mover.a = 0.3;
-          mover.size = Util.getRandomInt(80, 240);
+          mover.size = Math.pow(12 - range, 2) * Util.getRandomInt(1, 3);
           count++;
-          if (count >= 5) break;
+          if (count >= 3) break;
         }
         this.last_time_activate = Date.now();
       }
