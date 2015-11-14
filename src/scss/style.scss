@@ -13,13 +13,25 @@ body {
   overflow: hidden;
   font-family: 'Josefin Sans', sans-serif;;
 }
-h1 {
+a {
+  color: #fff;
+  transition: 0.1s;
+  &:hover {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+.website-outline {
   position: absolute;
   z-index: 100;
   top: 20px;
   left: 20px;
   color: #fff;
-  font-size: 1.25em;
+  .website-title {
+    font-size: 1.25em;
+  }
+  .website-description {
+    margin-top: 0.25em;
+  }
 }
 .sketch-outline {
   position: absolute;
@@ -27,12 +39,15 @@ h1 {
   bottom: 20px;
   left: 20px;
   color: #fff;
-  h2 {
+  .sketch-title {
     line-height: 0.8;
-    margin-bottom: 0.2em;
+    margin-bottom: 0.1em;
     font-size: 9vmax;
     font-weight: 100;
     letter-spacing: -0.025em;
+  }
+  p {
+    margin-top: 0.25em;
   }
 }
 canvas {
