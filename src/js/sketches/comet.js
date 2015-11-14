@@ -136,6 +136,7 @@ var exports = function(){
       points.material.dispose();
       scene.remove(points.obj);
       scene.remove(light.obj);
+      movers = [];
     },
     render: function(camera) {
       activateMover();

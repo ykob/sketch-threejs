@@ -157,6 +157,7 @@ var exports = function(){
       bg.geometry.dispose();
       bg.material.dispose();
       scene.remove(bg);
+      movers = [];
     },
     render: function(camera) {
       points.hook(0, 0.08);
