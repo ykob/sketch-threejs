@@ -66,10 +66,10 @@ var exports = function(){
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
-        mover.a = 0.3;
-        mover.size = Math.pow(12 - range, 2) * Util.getRandomInt(1, 3);
+        mover.a = 0.2;
+        mover.size = Math.pow(12 - range, 2) * Util.getRandomInt(1, 24) / 10;
         count++;
-        if (count >= 3) break;
+        if (count >= 6) break;
       }
       last_time_activate = Date.now();
     }
@@ -140,11 +140,11 @@ var exports = function(){
         sizes: sizes,
         texture: createTexture()
       });
-      light.init(0xff6600);
+      light.init(0xff6600, 1800);
       scene.add(light.obj);
       bg = createBackground();
       scene.add(bg);
-      camera.rad1_base = Util.getRadian(10);
+      camera.rad1_base = Util.getRadian(40);
       camera.rad1 = camera.rad1_base;
       camera.rad2 = Util.getRadian(0);
       camera.setPositionSpherical();
@@ -159,6 +159,14 @@ var exports = function(){
       scene.remove(bg);
     },
     render: function(camera) {
+      points.hook(0, 0.08);
+      points.applyDragForce(0.2);
+      points.updateVelocity();
+      points.updatePosition();
+      light.hook(0, 0.08);
+      light.applyDragForce(0.2);
+      light.updateVelocity();
+      light.updatePosition();
       activateMover();
       updateMover();
       camera.hook(0, 0.004);
@@ -168,7 +176,12 @@ var exports = function(){
       camera.lookAtCenter();
     },
     touchMove: function(vector) {
-      
+      var x = vector.y * document.body.clientWidth / -3;
+      var z = vector.x * document.body.clientWidth / -3;
+      points.anchor.x = x;
+      points.anchor.z = z;
+      light.anchor.x = x;
+      light.anchor.z = z;
     },
   };
 
