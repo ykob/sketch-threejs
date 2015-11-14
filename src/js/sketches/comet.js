@@ -12,19 +12,19 @@ var exports = function(){
   var movers = [];
   var points = new Points();
   var light = new Light();
-  var positions = new Float32Array(this.movers_num * 3);
-  var colors = new Float32Array(this.movers_num * 3);
-  var opacities = new Float32Array(this.movers_num);
-  var sizes = new Float32Array(this.movers_num);
+  var positions = new Float32Array(movers_num * 3);
+  var colors = new Float32Array(movers_num * 3);
+  var opacities = new Float32Array(movers_num);
+  var sizes = new Float32Array(movers_num);
   var gravity = new THREE.Vector3(0, -0.1, 0);
   var last_time_activate = Date.now();
 
   var updateMover = function() {
-    for (var i = 0; i < this.movers.length; i++) {
-      var mover = this.movers[i];
+    for (var i = 0; i < movers.length; i++) {
+      var mover = movers[i];
       if (mover.is_active) {
         mover.time++;
-        mover.applyForce(this.gravity);
+        mover.applyForce(gravity);
         mover.applyDragForce(0.1);
         mover.updateVelocity();
         mover.updatePosition();
@@ -39,28 +39,28 @@ var exports = function(){
           mover.inactivate();
         }
       }
-      this.positions[i * 3 + 0] = mover.position.x;
-      this.positions[i * 3 + 1] = mover.position.y;
-      this.positions[i * 3 + 2] = mover.position.z;
-      this.opacities[i] = mover.a;
-      this.sizes[i] = mover.size;
+      positions[i * 3 + 0] = mover.position.x;
+      positions[i * 3 + 1] = mover.position.y;
+      positions[i * 3 + 2] = mover.position.z;
+      opacities[i] = mover.a;
+      sizes[i] = mover.size;
     }
-    this.points.updatePoints();
+    points.updatePoints();
   };
 
   var activateMover = function() {
     var count = 0;
     var now = Date.now();
-    if (now - this.last_time_activate > 100) {
-      for (var i = 0; i < this.movers.length; i++) {
-        var mover = this.movers[i];
+    if (now - last_time_activate > 100) {
+      for (var i = 0; i < movers.length; i++) {
+        var mover = movers[i];
         if (mover.is_active) continue;
         var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
         var range = (1 - Math.log(Util.getRandomInt(2, 64)) / Math.log(64)) * 80;
         var vector = Util.getSpherical(rad1, rad2, range);
         var force = Util.getSpherical(rad1, rad2, range / 8);
-        vector.add(this.points.obj.position);
+        vector.add(points.obj.position);
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
@@ -69,14 +69,14 @@ var exports = function(){
         count++;
         if (count >= 50) break;
       }
-      this.last_time_activate = Date.now();
+      last_time_activate = Date.now();
     }
   };
 
   var updatePoints = function() {
-    this.points.updateVelocity();
-    this.points.updatePosition();
-    this.light.obj.position.copy(this.points.velocity);
+    points.updateVelocity();
+    points.updatePosition();
+    light.obj.position.copy(points.velocity);
   };
 
   var createTexture = function() {
@@ -103,43 +103,43 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene) {
-      for (var i = 0; i < this.movers_num; i++) {
+      for (var i = 0; i < movers_num; i++) {
         var mover = new Mover();
         var h = Util.getRandomInt(0, 90);
         var s = Util.getRandomInt(60, 90);
         var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
-        this.movers.push(mover);
-        this.positions[i * 3 + 0] = mover.position.x;
-        this.positions[i * 3 + 1] = mover.position.y;
-        this.positions[i * 3 + 2] = mover.position.z;
-        color.toArray(this.colors, i * 3);
-        this.opacities[i] = mover.a;
-        this.sizes[i] = mover.size;
+        movers.push(mover);
+        positions[i * 3 + 0] = mover.position.x;
+        positions[i * 3 + 1] = mover.position.y;
+        positions[i * 3 + 2] = mover.position.z;
+        color.toArray(colors, i * 3);
+        opacities[i] = mover.a;
+        sizes[i] = mover.size;
       }
-      this.points.init({
+      points.init({
         scene: scene,
         vs: vs,
         fs: fs,
-        positions: this.positions,
-        colors: this.colors,
-        opacities: this.opacities,
-        sizes: this.sizes,
-        texture: this.createTexture()
+        positions: positions,
+        colors: colors,
+        opacities: opacities,
+        sizes: sizes,
+        texture: createTexture()
       });
-      this.light.init();
-      scene.add(this.light.obj);
+      light.init();
+      scene.add(light.obj);
     },
     remove: function(scene) {
-      this.points.geometry.dispose();
-      this.points.material.dispose();
-      scene.remove(this.points.obj);
-      scene.remove(this.light.obj);
+      points.geometry.dispose();
+      points.material.dispose();
+      scene.remove(points.obj);
+      scene.remove(light.obj);
     },
     render: function(camera) {
-      this.activateMover();
-      this.updateMover();
+      activateMover();
+      updateMover();
       camera.hook(0, 0.004);
       camera.applyDragForce(0.1);
       camera.updateVelocity();
