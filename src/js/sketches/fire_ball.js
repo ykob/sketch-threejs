@@ -17,11 +17,12 @@ var exports = function(){
     this.opacities = new Float32Array(this.movers_num);
     this.sizes = new Float32Array(this.movers_num);
     this.gravity = new THREE.Vector3(0, 0.1, 0);
+    this.bg = null;
     this.last_time_activate = Date.now();
   };
   
   Sketch.prototype = {
-    init: function(scene) {
+    init: function(scene, camera) {
       for (var i = 0; i < this.movers_num; i++) {
         var mover = new Mover();
         var h = Util.getRandomInt(0, 45);
@@ -47,14 +48,24 @@ var exports = function(){
         sizes: this.sizes,
         texture: this.createTexture()
       });
-      this.light.init();
+      this.light.init(0xff6600);
       scene.add(this.light.obj);
+      this.bg = this.createBackground();
+      console.log(this.bg);
+      scene.add(this.bg);
+      camera.rad1_base = Util.getRadian(10);
+      camera.rad1 = camera.rad1_base;
+      camera.rad2 = Util.getRadian(0);
+      camera.setPositionSpherical();
     },
     remove: function(scene) {
       this.points.geometry.dispose();
       this.points.material.dispose();
       scene.remove(this.points.obj);
       scene.remove(this.light.obj);
+      this.bg.geometry.dispose();
+      this.bg.material.dispose();
+      scene.remove(this.bg);
     },
     render: function(camera) {
       this.activateMover();
@@ -142,6 +153,15 @@ var exports = function(){
       texture.minFilter = THREE.NearestFilter;
       texture.needsUpdate = true;
       return texture;
+    },
+    createBackground: function() {
+      var geometry = new THREE.OctahedronGeometry(1500, 3);
+      var material = new THREE.MeshPhongMaterial({
+        color: 0xffffff,
+        shading: THREE.FlatShading,
+        side: THREE.BackSide
+      });
+      return new THREE.Mesh(geometry, material);
     }
   };
 
