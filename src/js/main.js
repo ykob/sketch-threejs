@@ -4,10 +4,9 @@ var Camera = require('./modules/camera');
 
 var body_width = document.body.clientWidth;
 var body_height = document.body.clientHeight;
-var raycaster = new THREE.Raycaster();
 var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
-var intersects;
+var vector_mouse_end = new THREE.Vector2();
 
 var canvas = null;
 var renderer = null;
@@ -84,13 +83,6 @@ var switchSketch = function(sketch) {
   switchMenu();
 };
 
-var raycast = function(vector) {
-  vector.x = (vector.x / window.innerWidth) * 2 - 1;
-  vector.y = - (vector.y / window.innerHeight) * 2 + 1;
-  raycaster.setFromCamera(vector, camera.obj);
-  intersects = raycaster.intersectObjects(scene.children);
-};
-
 var render = function() {
   renderer.clear();
   running.render(camera);
@@ -155,17 +147,26 @@ var setEvent = function () {
   });
 };
 
+var transformVector2d = function(vector) {
+  vector.x = (vector.x / body_width) * 2 - 1;
+  vector.y = - (vector.y / body_height) * 2 + 1;
+};
+
 var touchStart = function(x, y) {
   vector_mouse_down.set(x, y);
-  raycast(vector_mouse_down);
+  transformVector2d(vector_mouse_down);
+  if (running.touchStart) running.touchStart(vector_mouse_down);
 };
 
 var touchMove = function(x, y) {
   vector_mouse_move.set(x, y);
-  raycast(vector_mouse_move);
+  transformVector2d(vector_mouse_move);
+  if (running.touchMove) running.touchMove(vector_mouse_move);
 };
 
 var touchEnd = function(x, y) {
+  vector_mouse_end.copy(vector_mouse_move);
+  if (running.touchEnd) running.touchEnd(vector_mouse_end);
 };
 
 var switchMenu = function() {
