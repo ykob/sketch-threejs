@@ -19,6 +19,7 @@ var exports = function(){
   var sizes = new Float32Array(movers_num);
   var gravity = new THREE.Vector3(0, 0.1, 0);
   var last_time_activate = Date.now();
+  var is_draged = false;
 
   var updateMover =  function() {
     for (var i = 0; i < movers.length; i++) {
@@ -49,7 +50,7 @@ var exports = function(){
     }
     points.updatePoints();
   };
-  
+
   var activateMover =  function() {
     var count = 0;
     var now = Date.now();
@@ -74,13 +75,22 @@ var exports = function(){
       last_time_activate = Date.now();
     }
   };
-  
+
   var updatePoints =  function() {
     points.updateVelocity();
     points.updatePosition();
     light.obj.position.copy(points.velocity);
   };
-  
+
+  var movePoints = function(vector) {
+    var x = vector.y * document.body.clientWidth / -3;
+    var z = vector.x * document.body.clientWidth / -3;
+    points.anchor.x = x;
+    points.anchor.z = z;
+    light.anchor.x = x;
+    light.anchor.z = z;
+  }
+
   var createTexture =  function() {
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
@@ -176,14 +186,19 @@ var exports = function(){
       camera.updatePosition();
       camera.lookAtCenter();
     },
-    touchMove: function(vector) {
-      var x = vector.y * document.body.clientWidth / -3;
-      var z = vector.x * document.body.clientWidth / -3;
-      points.anchor.x = x;
-      points.anchor.z = z;
-      light.anchor.x = x;
-      light.anchor.z = z;
+    touchStart: function(vector) {
+      movePoints(vector);
+      is_draged = true;
     },
+    touchMove: function(vector_mouse_down, vector_mouse_move) {
+      if (is_draged) {
+        movePoints(vector_mouse_move);
+      }
+    },
+    touchEnd: function(vector) {
+      is_draged = false;
+      points.anchor.set(0, 0, 0);
+    }
   };
 
   return Sketch;

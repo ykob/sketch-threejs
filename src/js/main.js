@@ -161,7 +161,7 @@ var touchStart = function(x, y) {
 var touchMove = function(x, y) {
   vector_mouse_move.set(x, y);
   transformVector2d(vector_mouse_move);
-  if (running.touchMove) running.touchMove(vector_mouse_move);
+  if (running.touchMove) running.touchMove(vector_mouse_down, vector_mouse_move);
 };
 
 var touchEnd = function(x, y) {
