@@ -16,7 +16,7 @@ var exports = function(){
   var colors = new Float32Array(movers_num * 3);
   var opacities = new Float32Array(movers_num);
   var sizes = new Float32Array(movers_num);
-  var gravity = new THREE.Vector3(2, 0, 0);
+  var gravity = new THREE.Vector3(1.5, 0, 0);
   var last_time_activate = Date.now();
   var is_touched = false;
 
@@ -29,7 +29,7 @@ var exports = function(){
         mover.applyDragForce(0.1);
         mover.updateVelocity();
         mover.updatePosition();
-        if (mover.a < 0.6) {
+        if (mover.a < 0.8) {
           mover.a += 0.02;
         }
         if (mover.position.x > 1000) {
@@ -55,8 +55,8 @@ var exports = function(){
       for (var i = 0; i < movers.length; i++) {
         var mover = movers[i];
         if (mover.is_active) continue;
-        var rad = Util.getRadian(Util.getRandomInt(0, 120) * 3);
-        var range = Math.log(Util.getRandomInt(0, 128)) / Math.log(128) * 160 + 60;
+        var rad = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
+        var range = Math.log(Util.getRandomInt(1, 128)) / Math.log(128) * 120 + 60;
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
@@ -64,9 +64,9 @@ var exports = function(){
         mover.activate();
         mover.init(vector);
         mover.a = 0;
-        mover.size = Util.getRandomInt(10, 60);
+        mover.size = Util.getRandomInt(5, 60);
         count++;
-        if (count >= gravity.x * 30) break;
+        if (count >= Math.pow(gravity.x * 2, 2)) break;
       }
       last_time_activate = Date.now();
     }
@@ -102,9 +102,9 @@ var exports = function(){
 
   var changeGravity = function() {
     if (is_touched) {
-      if (gravity.x < 8) gravity.x += 0.02;
+      if (gravity.x < 6) gravity.x += 0.02;
     } else {
-      if (gravity.x > 1) gravity.x -= 0.1;
+      if (gravity.x > 1.5) gravity.x -= 0.1;
     }
   };
 
@@ -112,8 +112,8 @@ var exports = function(){
     init: function(scene, camera) {
       for (var i = 0; i < movers_num; i++) {
         var mover = new Mover();
-        var h = Util.getRandomInt(30, 200);
-        var s = Util.getRandomInt(60, 90);
+        var h = Util.getRandomInt(90, 210);
+        var s = Util.getRandomInt(30, 90);
         var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
