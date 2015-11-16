@@ -8,7 +8,7 @@ var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
   var Sketch = function() {};
-  var movers_num = 50000;
+  var movers_num = 30000;
   var movers = [];
   var points = new Points();
   var light = new Light();
@@ -18,6 +18,7 @@ var exports = function(){
   var sizes = new Float32Array(movers_num);
   var gravity = new THREE.Vector3(2, 0, 0);
   var last_time_activate = Date.now();
+  var is_touched = false;
 
   var updateMover = function() {
     for (var i = 0; i < movers.length; i++) {
@@ -28,8 +29,8 @@ var exports = function(){
         mover.applyDragForce(0.1);
         mover.updateVelocity();
         mover.updatePosition();
-        if (mover.a < 0.4) {
-          mover.a += 0.01;
+        if (mover.a < 0.6) {
+          mover.a += 0.02;
         }
         if (mover.position.x > 1000) {
           mover.init(new THREE.Vector3(0, 0, 0));
@@ -55,7 +56,7 @@ var exports = function(){
         var mover = movers[i];
         if (mover.is_active) continue;
         var rad = Util.getRadian(Util.getRandomInt(0, 120) * 3);
-        var range = Math.log(Util.getRandomInt(0, 128)) / Math.log(128) * 120 + 80;
+        var range = Math.log(Util.getRandomInt(0, 128)) / Math.log(128) * 160 + 60;
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
@@ -65,7 +66,7 @@ var exports = function(){
         mover.a = 0;
         mover.size = Util.getRandomInt(10, 60);
         count++;
-        if (count >= 150) break;
+        if (count >= gravity.x * 30) break;
       }
       last_time_activate = Date.now();
     }
@@ -97,6 +98,14 @@ var exports = function(){
     texture.minFilter = THREE.NearestFilter;
     texture.needsUpdate = true;
     return texture;
+  };
+
+  var changeGravity = function() {
+    if (is_touched) {
+      if (gravity.x < 8) gravity.x += 0.02;
+    } else {
+      if (gravity.x > 1) gravity.x -= 0.1;
+    }
   };
 
   Sketch.prototype = {
@@ -138,6 +147,7 @@ var exports = function(){
       movers = [];
     },
     render: function(camera) {
+      changeGravity();
       activateMover();
       updateMover();
       camera.hook(0, 0.004);
@@ -145,6 +155,17 @@ var exports = function(){
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
+    },
+    touchStart: function(vector) {
+      is_touched = true;
+    },
+    touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
+      camera.anchor.z = vector_mouse_move.x * -100;
+      camera.anchor.y = vector_mouse_move.y * 100;
+      //camera.lookAtCenter();
+    },
+    touchEnd: function(vector) {
+      is_touched = false;
     }
   };
 
