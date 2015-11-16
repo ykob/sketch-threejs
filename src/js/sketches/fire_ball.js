@@ -198,6 +198,7 @@ var exports = function(){
     touchEnd: function(vector) {
       is_draged = false;
       points.anchor.set(0, 0, 0);
+      light.anchor.set(0, 0, 0);
     }
   };
 
