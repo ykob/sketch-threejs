@@ -58,16 +58,13 @@ var init = function() {
 };
 
 var buildMenu = function() {
-  var sketch_array = [];
   for (var i = 0; i < sketches.length; i++) {
     var sketch = sketches[i];
     var dom = document.createElement('li');
     dom.setAttribute('data-index', i);
-    sketch_array[i] = sketch;
     dom.innerHTML = '<span>' + sketch.name + '</span>';
     dom.addEventListener('click', function() {
-      var index = this.getAttribute('data-index');
-      switchSketch(sketch_array[index]);
+      switchSketch(sketches[this.getAttribute('data-index')]);
     });
     select_sketch.appendChild(dom);
   }
