@@ -56,7 +56,7 @@ var exports = function(){
         var mover = movers[i];
         if (mover.is_active) continue;
         var rad = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
-        var range = Math.log(Util.getRandomInt(1, 128)) / Math.log(128) * 120 + 60;
+        var range = Math.log(Util.getRandomInt(1, 128)) / Math.log(128) * 160 + 60;
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
@@ -160,8 +160,8 @@ var exports = function(){
       is_touched = true;
     },
     touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
-      camera.anchor.z = vector_mouse_move.x * -100;
-      camera.anchor.y = vector_mouse_move.y * 100;
+      camera.anchor.z = vector_mouse_move.x * -120;
+      camera.anchor.y = vector_mouse_move.y * -120;
       //camera.lookAtCenter();
     },
     touchEnd: function(vector) {
