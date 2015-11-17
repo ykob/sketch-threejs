@@ -83,8 +83,8 @@ var exports = function(){
   };
 
   var movePoints = function(vector) {
-    var x = vector.y * document.body.clientWidth / -3;
-    var z = vector.x * document.body.clientWidth / -3;
+    var x = vector.y * document.body.clientWidth / -2.4;
+    var z = vector.x * document.body.clientHeight / -2.4;
     points.anchor.x = x;
     points.anchor.z = z;
     light.anchor.x = x;
@@ -154,7 +154,7 @@ var exports = function(){
       scene.add(light.obj);
       bg = createBackground();
       scene.add(bg);
-      camera.rad1_base = Util.getRadian(40);
+      camera.rad1_base = Util.getRadian(25);
       camera.rad1 = camera.rad1_base;
       camera.rad2 = Util.getRadian(0);
       camera.setPositionSpherical();
