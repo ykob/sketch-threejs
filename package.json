@@ -1,10 +1,10 @@
 {
-  "name": "demo-template-three.js",
+  "name": "sketch-threejs.js",
   "version": "0.0.1",
-  "description": "demo template of three.js",
+  "description": "it's my personal sketch that is used three.js.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ykob/demo-template-threejs.git"
+    "url": "https://github.com/ykob/sketch-threejs.git"
   },
   "private": true,
   "scripts": {
