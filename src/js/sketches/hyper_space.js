@@ -8,7 +8,7 @@ var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
   var Sketch = function() {};
-  var movers_num = 30000;
+  var movers_num = 60000;
   var movers = [];
   var points = new Points();
   var light = new Light();
@@ -51,12 +51,12 @@ var exports = function(){
   var activateMover = function() {
     var count = 0;
     var now = Date.now();
-    if (now - last_time_activate > 10) {
+    if (now - last_time_activate > gravity.x * 16) {
       for (var i = 0; i < movers.length; i++) {
         var mover = movers[i];
         if (mover.is_active) continue;
-        var rad = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
-        var range = Math.log(Util.getRandomInt(1, 128)) / Math.log(128) * 160 + 60;
+        var rad = Util.getRadian(Util.getRandomInt(0, 120) * 3);
+        var range = Math.log(Util.getRandomInt(3, 128)) / Math.log(128) * 160 + 60;
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
@@ -66,7 +66,7 @@ var exports = function(){
         mover.a = 0;
         mover.size = Util.getRandomInt(5, 60);
         count++;
-        if (count >= Math.pow(gravity.x * 2, 2)) break;
+        if (count >= Math.pow(gravity.x * 3, gravity.x / 2)) break;
       }
       last_time_activate = Date.now();
     }
@@ -150,7 +150,7 @@ var exports = function(){
       changeGravity();
       activateMover();
       updateMover();
-      camera.hook(0, 0.004);
+      camera.hook(0, 0.008);
       camera.applyDragForce(0.1);
       camera.updateVelocity();
       camera.updatePosition();
@@ -160,7 +160,7 @@ var exports = function(){
       is_touched = true;
     },
     touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
-      camera.anchor.z = vector_mouse_move.x * -120;
+      camera.anchor.z = vector_mouse_move.x * 120;
       camera.anchor.y = vector_mouse_move.y * -120;
       //camera.lookAtCenter();
     },
