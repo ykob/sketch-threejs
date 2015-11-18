@@ -8,7 +8,7 @@ var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
   var Sketch = function() {};
-  var movers_num = 60000;
+  var movers_num = 20000;
   var movers = [];
   var points = new Points();
   var light = new Light();
@@ -56,7 +56,7 @@ var exports = function(){
         var mover = movers[i];
         if (mover.is_active) continue;
         var rad = Util.getRadian(Util.getRandomInt(0, 120) * 3);
-        var range = Math.log(Util.getRandomInt(3, 128)) / Math.log(128) * 160 + 60;
+        var range = Math.log(Util.getRandomInt(2, 128)) / Math.log(128) * 160 + 60;
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
@@ -66,7 +66,7 @@ var exports = function(){
         mover.a = 0;
         mover.size = Util.getRandomInt(5, 60);
         count++;
-        if (count >= Math.pow(gravity.x * 3, gravity.x / 2)) break;
+        if (count >= Math.pow(gravity.x * 3, gravity.x * 0.4)) break;
       }
       last_time_activate = Date.now();
     }
@@ -112,7 +112,7 @@ var exports = function(){
     init: function(scene, camera) {
       for (var i = 0; i < movers_num; i++) {
         var mover = new Mover();
-        var h = Util.getRandomInt(90, 210);
+        var h = Util.getRandomInt(60, 210);
         var s = Util.getRandomInt(30, 90);
         var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
