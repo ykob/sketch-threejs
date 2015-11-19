@@ -83,11 +83,11 @@ var exports = function(){
   };
 
   var movePoints = function(vector) {
-    var x = vector.y * document.body.clientWidth / -2.4;
+    var y = vector.y * document.body.clientWidth / 2.4;
     var z = vector.x * document.body.clientHeight / -2.4;
-    points.anchor.x = x;
+    points.anchor.y = y;
     points.anchor.z = z;
-    light.anchor.x = x;
+    light.anchor.y = y;
     light.anchor.z = z;
   }
 
