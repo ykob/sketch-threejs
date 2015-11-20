@@ -5,13 +5,25 @@ var watchify = require('watchify');
 var source = require('vinyl-source-stream');
 var CONFIG = require('../package.json').projectConfig;
 
-var browserifyOpts = {
-  entries: ['./' + CONFIG.SRC + '/js/main.js']
-};
 var reload = browserSync.reload;
+var files = [
+  {
+    entries: ['./' + CONFIG.SRC + '/js/main.js'],
+    source: 'main.js',
+    dest: './js/'
+  },
+  {
+    entries: ['./' + CONFIG.SRC + '/js/only_demo.js'],
+    source: 'only_demo.js',
+    dest: './dst/only_demo/js/'
+  }
+];
 
-var bundler = function(watch) {
+var createBundle = function(watch, options) {
   var b;
+  var browserifyOpts = {
+    entries: options.entries
+  };
 
   if (watch) {
     browserifyOpts.debug = true;
@@ -24,30 +36,36 @@ var bundler = function(watch) {
     b = browserify(browserifyOpts);
   }
 
-  var bundle = function() {
+  var rebundle = function() {
     return b
             .bundle()
             .on('error', function(err) {
               console.log('bundle error: ' + err);
             })
-            .pipe(source('main.js'))
-            .pipe(gulp.dest('./js/'));
+            .pipe(source(options.source))
+            .pipe(gulp.dest(options.dest));
   };
 
   b
-    .on('update', bundle)
+    .on('update', rebundle)
     .on('log', function(message) {
       reload();
       return console.log(message);
     });
 
-  return bundle();
+  rebundle();
+};
+
+var createBundles = function(bundles, watch) {
+  bundles.forEach(function(bundle){
+    createBundle(watch, bundle);
+  });
 };
 
 gulp.task('browserify', function() {
-  return bundler();
+  createBundles(files, false);
 });
 
 gulp.task('watchify', function() {
-  return bundler(true);
+  createBundles(files, true);
 });
