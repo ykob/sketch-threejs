@@ -15,7 +15,7 @@ var files = [
   {
     entries: ['./' + CONFIG.SRC + '/js/only_demo.js'],
     source: 'only_demo.js',
-    dest: './dst/only_demo/js/'
+    dest: './js/'
   }
 ];
 
