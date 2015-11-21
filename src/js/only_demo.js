@@ -15,14 +15,14 @@ var camera = null;
 
 var running = null;
 var sketch = {
-  name: 'hyper space',
-  obj: require('./sketches/hyper_space'),
-  update: '2015.11.12',
-  description: 'add little change about camera angle and particle controles.',
+  name: 'fire ball',
+  obj: require('./sketches/fire_ball.js'),
+  date: '2015.11.12',
+  description: 'test of simple physics and additive blending.',
 };
 
 var sketch_title = document.querySelector('.sketch-title');
-var sketch_update = document.querySelector('.sketch-update');
+var sketch_date = document.querySelector('.sketch-date');
 var sketch_description = document.querySelector('.sketch-description');
 
 var initThree = function() {
@@ -45,7 +45,7 @@ var initThree = function() {
   running = new sketch.obj;
   running.init(scene, camera);
   sketch_title.innerHTML = sketch.name;
-  sketch_update.innerHTML = 'update : ' + sketch.update;
+  sketch_date.innerHTML = 'date : ' + sketch.date;
   sketch_description.innerHTML = sketch.description;
 };
 

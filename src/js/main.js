@@ -20,7 +20,7 @@ var btn_toggle_menu = document.querySelector('.btn-switch-menu');
 var menu = document.querySelector('.menu');
 var select_sketch = document.querySelector('.select-sketch');
 var sketch_title = document.querySelector('.sketch-title');
-var sketch_update = document.querySelector('.sketch-update');
+var sketch_date = document.querySelector('.sketch-date');
 var sketch_description = document.querySelector('.sketch-description');
 
 var initThree = function() {
@@ -43,7 +43,7 @@ var initThree = function() {
   running = new sketches[0].obj;
   running.init(scene, camera);
   sketch_title.innerHTML = sketches[0].name;
-  sketch_update.innerHTML = 'update : ' + sketches[0].update;
+  sketch_date.innerHTML = 'date : ' + sketches[0].date;
   sketch_description.innerHTML = sketches[0].description;
 };
 
@@ -75,7 +75,7 @@ var switchSketch = function(sketch) {
   running = new sketch.obj;
   running.init(scene, camera);
   sketch_title.innerHTML = sketch.name;
-  sketch_update.innerHTML = 'update : ' + sketch.update;
+  sketch_date.innerHTML = 'date : ' + sketch.date;
   sketch_description.innerHTML = sketch.description;
   switchMenu();
 };
