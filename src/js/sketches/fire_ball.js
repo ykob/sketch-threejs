@@ -42,9 +42,9 @@ var exports = function(){
           mover.inactivate();
         }
       }
-      positions[i * 3 + 0] = mover.position.x;
-      positions[i * 3 + 1] = mover.position.y;
-      positions[i * 3 + 2] = mover.position.z;
+      positions[i * 3 + 0] = mover.position.x - points.obj.position.x;
+      positions[i * 3 + 1] = mover.position.y - points.obj.position.x;
+      positions[i * 3 + 2] = mover.position.z - points.obj.position.x;
       opacities[i] = mover.a;
       sizes[i] = mover.size;
     }
