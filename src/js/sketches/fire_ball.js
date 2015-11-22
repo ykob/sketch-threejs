@@ -30,7 +30,7 @@ var exports = function(){
         mover.applyDragForce(0.01);
         mover.updateVelocity();
         mover.updatePosition();
-        mover.position.sub(points.obj.position);
+        mover.position.sub(points.position);
         if (mover.time > 50) {
           mover.size -= 0.7;
           mover.a -= 0.009;
@@ -42,9 +42,9 @@ var exports = function(){
           mover.inactivate();
         }
       }
-      positions[i * 3 + 0] = mover.position.x - points.obj.position.x;
-      positions[i * 3 + 1] = mover.position.y - points.obj.position.x;
-      positions[i * 3 + 2] = mover.position.z - points.obj.position.x;
+      positions[i * 3 + 0] = mover.position.x - points.position.x;
+      positions[i * 3 + 1] = mover.position.y - points.position.x;
+      positions[i * 3 + 2] = mover.position.z - points.position.x;
       opacities[i] = mover.a;
       sizes[i] = mover.size;
     }
@@ -63,7 +63,7 @@ var exports = function(){
         var range = (1- Math.log(Util.getRandomInt(32, 256)) / Math.log(256)) * 12;
         var vector = new THREE.Vector3();
         var force = Util.getSpherical(rad1, rad2, range);
-        vector.add(points.obj.position);
+        vector.add(points.position);
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);

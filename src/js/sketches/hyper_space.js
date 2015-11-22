@@ -60,7 +60,7 @@ var exports = function(){
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
-        vector.add(points.obj.position);
+        vector.add(points.position);
         mover.activate();
         mover.init(vector);
         mover.a = 0;
