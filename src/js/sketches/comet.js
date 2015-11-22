@@ -22,7 +22,7 @@ var exports = function(){
   var last_time_activate = Date.now();
 
   var createCommet = function() {
-    var geometry = new THREE.OctahedronGeometry(50, 2);
+    var geometry = new THREE.OctahedronGeometry(30, 2);
     var material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       shading: THREE.FlatShading
@@ -68,7 +68,7 @@ var exports = function(){
         if (mover.is_active) continue;
         var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-        var range = (1 - Math.log(Util.getRandomInt(1, 32)) / Math.log(64)) * 50;
+        var range = (1 - Math.log(Util.getRandomInt(1, 32)) / Math.log(64)) * 30;
         var vector = Util.getSpherical(rad1, rad2, range);
         var force = Util.getSpherical(rad1, rad2, range / 20);
         vector.add(points.obj.position);
@@ -78,18 +78,17 @@ var exports = function(){
         mover.a = 0.6;
         mover.size = Util.getRandomInt(10, 40);
         count++;
-        if (count >= 50) break;
+        if (count >= 20) break;
       }
       last_time_activate = Date.now();
     }
   };
 
-  var updatePoints = function(camera) {
-    points.hook(0, 0.001);
-    points.updateVelocity();
-    points.updatePosition();
-    commet.position.copy(points.obj.position);
-    point_light.obj.position.copy(points.velocity);
+  var rotatePoints = function() {
+    points.rad1_base += Util.getRadian(0.5);
+    points.rad1 = Util.getRadian(Math.sin(points.rad1_base) * 30);
+    points.rad2 += Util.getRadian(2);
+    return Util.getSpherical(points.rad1, points.rad2, 400);
   };
 
   var createTexture = function() {
@@ -115,7 +114,7 @@ var exports = function(){
   };
 
   Sketch.prototype = {
-    init: function(scene) {
+    init: function(scene, camera) {
       commet = createCommet();
       scene.add(commet);
       for (var i = 0; i < movers_num; i++) {
@@ -143,29 +142,40 @@ var exports = function(){
         sizes: sizes,
         texture: createTexture()
       });
+      points.rad1 = 0;
+      points.rad1_base = 0;
+      points.rad2 = 0;
       hemi_light.init();
       scene.add(hemi_light.obj);
       point_light.init();
       scene.add(point_light.obj);
-      points.applyForce(new THREE.Vector3(10, 10, 10));
+      camera.anchor = new THREE.Vector3(1500, 0, 0);
     },
     remove: function(scene) {
+      commet.geometry.dispose();
+      commet.material.dispose();
+      scene.remove(commet);
       points.geometry.dispose();
       points.material.dispose();
       scene.remove(points.obj);
+      scene.remove(hemi_light.obj);
       scene.remove(point_light.obj);
       movers = [];
     },
     render: function(camera) {
-      updatePoints(camera);
+      points.velocity = rotatePoints();
+      camera.anchor = points.velocity.clone().add(points.velocity.clone().sub(points.obj.position).normalize().multiplyScalar(-300));
+      points.updatePosition();
+      commet.position.copy(points.obj.position);
+      point_light.obj.position.copy(points.velocity);
       activateMover();
       updateMover();
-      camera.hook(0, 0.004);
-      camera.applyDragForce(0.1);
+      camera.hook(0, 0.025);
+      camera.applyDragForce(0.2);
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
-      //camera.obj.lookAt(points.obj.position);
+      camera.obj.lookAt(points.obj.position);
     }
   };
 
