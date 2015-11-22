@@ -6,6 +6,7 @@ var exports = function(){
     this.geometry = new THREE.BufferGeometry();
     this.material = null;
     this.obj = null;
+    this.position = null;
     this.velocity = new THREE.Vector3();
     this.acceleration = new THREE.Vector3();
     this.anchor = new THREE.Vector3();
@@ -31,6 +32,7 @@ var exports = function(){
       this.geometry.addAttribute('size', new THREE.BufferAttribute(param.sizes, 1));
       this.obj = new THREE.Points(this.geometry, this.material);
       param.scene.add(this.obj);
+      this.position = this.obj.position;
     },
     updatePoints: function() {
       this.obj.geometry.attributes.position.needsUpdate = true;
@@ -42,7 +44,7 @@ var exports = function(){
       this.velocity.add(this.acceleration);
     },
     updatePosition: function() {
-      this.obj.position.copy(this.velocity);
+      this.position.copy(this.velocity);
     },
     applyForce: function(vector) {
       this.acceleration.add(vector);
