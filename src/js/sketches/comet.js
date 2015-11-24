@@ -141,8 +141,8 @@ var exports = function(){
       for (var i = 0; i < movers_num; i++) {
         var mover = new Mover();
         var h = Util.getRandomInt(comet_color_h - 60, comet_color_h + 60);
-        var s = Util.getRandomInt(60, 90);
-        var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
+        var s = Util.getRandomInt(40, 70);
+        var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 33%)');
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
         movers.push(mover);
         positions[i * 3 + 0] = mover.position.x;
