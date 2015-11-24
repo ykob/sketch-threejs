@@ -1,6 +1,7 @@
 node_modules
 ignore
 js/main.js
+js/only_demo.js
 css/style.css
 .sass-cache
 *.sublime-*
