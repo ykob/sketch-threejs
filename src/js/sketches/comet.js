@@ -35,8 +35,8 @@ var exports = function(){
         mover.updateVelocity();
         mover.updatePosition();
         if (mover.time > 10) {
-          mover.size += 4;
-          mover.a -= 0.03;
+          mover.size += 2;
+          mover.a -= 0.04;
         }
         if (mover.a <= 0) {
           mover.init(new THREE.Vector3(0, 0, 0));
@@ -71,7 +71,7 @@ var exports = function(){
         mover.init(vector);
         mover.applyForce(force);
         mover.a = 0.8;
-        mover.size = Util.getRandomInt(20, 40);
+        mover.size = Util.getRandomInt(10, 20);
         count++;
         if (count >= 3) break;
       }
@@ -104,11 +104,7 @@ var exports = function(){
 
     canvas.width = 200;
     canvas.height = 200;
-    grad = ctx.createRadialGradient(100, 100, 20, 100, 100, 100);
-    grad.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
-    grad.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
-    ctx.fillStyle = grad;
+    ctx.fillStyle = '#ffffff';
     ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
     ctx.fill();
     
