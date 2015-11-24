@@ -15,10 +15,10 @@ var camera = null;
 
 var running = null;
 var sketch = {
-  name: 'fire ball',
-  obj: require('./sketches/fire_ball.js'),
-  date: '2015.11.12',
-  description: 'test of simple physics and additive blending.',
+  name: 'gallery',
+  obj: require('./sketches/gallery'),
+  date: '2015.11.24',
+  description: '',
 };
 
 var sketch_title = document.querySelector('.sketch-title');

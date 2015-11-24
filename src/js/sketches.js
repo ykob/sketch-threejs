@@ -1,5 +1,11 @@
 module.exports = [
   {
+    name: 'gallery',
+    obj: require('./sketches/gallery'),
+    date: '2015.11.24',
+    description: '',
+  },
+  {
     name: 'comet',
     obj: require('./sketches/comet'),
     date: '2015.11.24',
