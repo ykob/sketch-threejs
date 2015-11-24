@@ -1,27 +1,48 @@
-var exports = {
-  friction: function(acceleration, mu, normal, mass) {
-    var force = acceleration.clone();
+var Util = require('../modules/util');
+
+var exports = function(){
+  var Force = function() {
+    this.position = new THREE.Vector3();
+    this.velocity = new THREE.Vector3();
+    this.acceleration = new THREE.Vector3();
+    this.anchor = new THREE.Vector3();
+    this.mass = 1;
+  };
+  
+  Force.prototype.updatePosition = function() {
+    this.position.copy(this.velocity);
+  };
+  Force.prototype.updateVelocity = function() {
+    this.acceleration.divideScalar(this.mass);
+    this.velocity.add(this.acceleration);
+  };
+  Force.prototype.applyForce = function(vector) {
+    this.acceleration.add(vector);
+  };
+  Force.prototype.applyFriction = function(mu, normal) {
+    var force = this.acceleration.clone();
     if (!normal) normal = 1;
-    if (!mass) mass = 1;
     force.multiplyScalar(-1);
     force.normalize();
     force.multiplyScalar(mu);
-    return force;
-  },
-  drag: function(acceleration, value) {
-    var force = acceleration.clone();
+    this.applyForce(force);
+  };
+  Force.prototype.applyDrag = function(value) {
+    var force = this.acceleration.clone();
     force.multiplyScalar(-1);
     force.normalize();
-    force.multiplyScalar(acceleration.length() * value);
-    return force;
-  },
-  hook: function(velocity, anchor, rest_length, k) {
-    var force = velocity.clone().sub(anchor);
+    force.multiplyScalar(this.acceleration.length() * value);
+    this.applyForce(force);
+  };
+  Force.prototype.applyHook = function(rest_length, k) {
+    var force = this.velocity.clone().sub(this.anchor);
     var distance = force.length() - rest_length;
     force.normalize();
     force.multiplyScalar(-1 * k * distance);
-    return force;
-  }
+    this.applyForce(force);
+  };
+
+  return Force;
 };
 
-module.exports = exports;
+module.exports = exports();

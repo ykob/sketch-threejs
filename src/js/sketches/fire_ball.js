@@ -27,7 +27,7 @@ var exports = function(){
       if (mover.is_active) {
         mover.time++;
         mover.applyForce(gravity);
-        mover.applyDragForce(0.01);
+        mover.applyDrag(0.01);
         mover.updateVelocity();
         mover.updatePosition();
         mover.position.sub(points.position);
@@ -170,18 +170,18 @@ var exports = function(){
       movers = [];
     },
     render: function(camera) {
-      points.hook(0, 0.08);
-      points.applyDragForce(0.2);
+      points.applyHook(0, 0.08);
+      points.applyDrag(0.2);
       points.updateVelocity();
       points.updatePosition();
-      light.hook(0, 0.08);
-      light.applyDragForce(0.2);
+      light.applyHook(0, 0.08);
+      light.applyDrag(0.2);
       light.updateVelocity();
       light.updatePosition();
       activateMover();
       updateMover();
-      camera.hook(0, 0.004);
-      camera.applyDragForce(0.1);
+      camera.applyHook(0, 0.004);
+      camera.applyDrag(0.1);
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();

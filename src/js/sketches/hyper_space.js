@@ -26,7 +26,7 @@ var exports = function(){
       if (mover.is_active) {
         mover.time++;
         mover.applyForce(gravity);
-        mover.applyDragForce(0.1);
+        mover.applyDrag(0.1);
         mover.updateVelocity();
         mover.updatePosition();
         if (mover.a < 0.8) {
@@ -150,8 +150,8 @@ var exports = function(){
       changeGravity();
       activateMover();
       updateMover();
-      camera.hook(0, 0.008);
-      camera.applyDragForce(0.1);
+      camera.applyHook(0, 0.008);
+      camera.applyDrag(0.1);
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();

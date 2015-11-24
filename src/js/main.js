@@ -34,14 +34,15 @@ var initThree = function() {
   renderer.setSize(body_width, body_height);
   canvas.appendChild(renderer.domElement);
   renderer.setClearColor(0x111111, 1.0);
-  
+
   scene = new THREE.Scene();
-  
+
   camera = new Camera();
   camera.init(body_width, body_height);
-  
+
   running = new sketches[0].obj;
   running.init(scene, camera);
+
   sketch_title.innerHTML = sketches[0].name;
   sketch_date.innerHTML = 'date : ' + sketches[0].date;
   sketch_description.innerHTML = sketches[0].description;

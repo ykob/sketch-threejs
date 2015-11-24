@@ -31,7 +31,7 @@ var exports = function(){
       var position = new THREE.Vector3();
       if (mover.is_active) {
         mover.time++;
-        mover.applyDragForce(0.1);
+        mover.applyDrag(0.1);
         mover.updateVelocity();
         mover.updatePosition();
         if (mover.time > 10) {
@@ -45,9 +45,9 @@ var exports = function(){
           mover.inactivate();
         }
       }
-      positions[i * 3 + 0] = mover.position.x - points.obj.position.x;
-      positions[i * 3 + 1] = mover.position.y - points.obj.position.y;
-      positions[i * 3 + 2] = mover.position.z - points.obj.position.z;
+      positions[i * 3 + 0] = mover.position.x - points.position.x;
+      positions[i * 3 + 1] = mover.position.y - points.position.y;
+      positions[i * 3 + 2] = mover.position.z - points.position.z;
       opacities[i] = mover.a;
       sizes[i] = mover.size;
     }
@@ -66,7 +66,7 @@ var exports = function(){
         var range = Util.getRandomInt(1, 30);
         var vector = Util.getSpherical(rad1, rad2, range);
         var force = Util.getSpherical(rad1, rad2, range / 20);
-        vector.add(points.obj.position);
+        vector.add(points.position);
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
@@ -200,23 +200,23 @@ var exports = function(){
       points.velocity = rotatePoints();
       camera.anchor.copy(
         points.velocity.clone().add(
-          points.velocity.clone().sub(points.obj.position)
+          points.velocity.clone().sub(points.position)
           .normalize().multiplyScalar(-400)
         )
       );
       camera.anchor.y += points.position.y * 2;
       points.updatePosition();
-      comet.position.copy(points.obj.position);
+      comet.position.copy(points.position);
       comet_light1.obj.position.copy(points.velocity);
       comet_light2.obj.position.copy(points.velocity);
       activateMover();
       updateMover();
-      camera.hook(0, 0.025);
-      camera.applyDragForce(0.2);
+      camera.applyHook(0, 0.025);
+      camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
-      camera.obj.lookAt(points.obj.position);
+      camera.obj.lookAt(points.position);
       rotateCometColor();
     }
   };
