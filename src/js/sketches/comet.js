@@ -35,10 +35,10 @@ var exports = function(){
         mover.updateVelocity();
         mover.updatePosition();
         if (mover.time > 10) {
-          mover.size += 2;
-          mover.a -= 0.04;
+          mover.size -= 2;
+          //mover.a -= 0.04;
         }
-        if (mover.a <= 0) {
+        if (mover.size <= 0) {
           mover.init(new THREE.Vector3(0, 0, 0));
           mover.time = 0;
           mover.a = 0.0;
@@ -70,10 +70,10 @@ var exports = function(){
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
-        mover.a = 0.8;
-        mover.size = Util.getRandomInt(10, 20);
+        mover.a = 1;
+        mover.size = 25;
         count++;
-        if (count >= 3) break;
+        if (count >= 5) break;
       }
       last_time_activate = Date.now();
     }
@@ -104,7 +104,10 @@ var exports = function(){
 
     canvas.width = 200;
     canvas.height = 200;
-    ctx.fillStyle = '#ffffff';
+    grad = ctx.createRadialGradient(100, 100, 20, 100, 100, 100);
+    grad.addColorStop(0.9, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = grad;
     ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
     ctx.fill();
     
@@ -141,8 +144,8 @@ var exports = function(){
       for (var i = 0; i < movers_num; i++) {
         var mover = new Mover();
         var h = Util.getRandomInt(comet_color_h - 60, comet_color_h + 60);
-        var s = Util.getRandomInt(40, 70);
-        var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 33%)');
+        var s = Util.getRandomInt(60, 80);
+        var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 70%)');
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
         movers.push(mover);
         positions[i * 3 + 0] = mover.position.x;
