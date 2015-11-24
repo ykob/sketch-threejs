@@ -20,7 +20,7 @@ var exports = function(){
       fragmentShader: param.fs,
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending
+      blending: param.blending
     });
     this.geometry.addAttribute('position', new THREE.BufferAttribute(param.positions, 3));
     this.geometry.addAttribute('customColor', new THREE.BufferAttribute(param.colors, 3));

@@ -133,7 +133,8 @@ var exports = function(){
         colors: colors,
         opacities: opacities,
         sizes: sizes,
-        texture: createTexture()
+        texture: createTexture(),
+        blending: THREE.AdditiveBlending
       });
       light.init();
       scene.add(light.obj);

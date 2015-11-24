@@ -160,7 +160,8 @@ var exports = function(){
         colors: colors,
         opacities: opacities,
         sizes: sizes,
-        texture: createTexture()
+        texture: createTexture(),
+        blending: THREE.NormalBlending
       });
       points.rad1 = 0;
       points.rad1_base = 0;
