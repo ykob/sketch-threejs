@@ -30,14 +30,16 @@ Image.prototype.lookAtCenter = function() {
 var exports = function(){
   var Sketch = function() {};
   var images = [];
-  var images_num = 30;
+  var images_num = 300;
 
   var hemi_light = new HemiLight();
 
   var initImages = function(scene) {
     for (var i = 0; i < images_num; i++) {
       var image = null;
-      var vector = Util.getSpherical(0, Util.getRadian((i + 1) / images_num * 360), 40 * images_num);
+      var rad = Util.getRadian(i % 36 * 10);
+      var radius = 1300;
+      var vector = new THREE.Vector3(Math.cos(rad) * radius, i * 4, Math.sin(rad) * radius);
       image = new Image();
       image.init(new THREE.Vector3());
       image.anchor.copy(vector);
@@ -51,7 +53,7 @@ var exports = function(){
       initImages(scene);
       hemi_light.init();
       scene.add(hemi_light.obj);
-      camera.anchor = Util.getSpherical(Util.getRadian(40), Util.getRadian(0), 200 * images_num);
+      camera.anchor = Util.getSpherical(Util.getRadian(40), Util.getRadian(0), 5000);
     },
     remove: function(scene) {
     },
@@ -61,7 +63,11 @@ var exports = function(){
         images[i].applyDrag(0.3);
         images[i].updateVelocity();
         images[i].updatePosition();
-        images[i].lookAtCenter();
+        images[i].obj.lookAt({
+          x: 0,
+          y: images[i].position.y,
+          z: 0
+        });
       }
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
