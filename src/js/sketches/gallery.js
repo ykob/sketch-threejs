@@ -56,7 +56,10 @@ var exports = function(){
       hemi_light.init();
       scene.add(hemi_light.obj);
       camera.anchor.set(0, 0, 0);
-      camera.obj.lookAt(images[0].position);
+      camera.rotate_rad1 = Util.getRadian(-45);
+      camera.rotate_rad1_base = camera.rotate_rad1;
+      camera.rotate_rad2 = Util.getRadian(180);
+      camera.rotate_rad2_base = camera.rotate_rad2;
     },
     remove: function(scene) {
       image_geometry.dispose();
@@ -82,15 +85,21 @@ var exports = function(){
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
+      camera.setRotationSpherical();
     },
     touchStart: function(vector, camera) {
       is_draged = true;
     },
     touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
       if (is_draged) {
-        camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian(vector_mouse_move.y * 180);
-        camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian(vector_mouse_move.x * 180);
-        camera.setRotationSpherical();
+        camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian((vector_mouse_down.y - vector_mouse_move.y) * 180);
+        camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian((vector_mouse_down.x - vector_mouse_move.x) * 180);
+        if (camera.rotate_rad1 < Util.getRadian(-50)) {
+          camera.rotate_rad1 = Util.getRadian(-50);
+        }
+        if (camera.rotate_rad1 > Util.getRadian(50)) {
+          camera.rotate_rad1 = Util.getRadian(50);
+        }
       }
     },
     touchEnd: function(vector, camera) {

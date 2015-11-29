@@ -38,6 +38,7 @@ var exports = function(){
   };
   Camera.prototype.setRotationSpherical = function() {
     var vector = Util.getSpherical(this.rotate_rad1, this.rotate_rad2, 1);
+    vector.add(this.position);
     this.obj.lookAt(vector);
   };
   Camera.prototype.rotate = function() {
