@@ -153,7 +153,7 @@ var transformVector2d = function(vector) {
 var touchStart = function(x, y) {
   vector_mouse_down.set(x, y);
   transformVector2d(vector_mouse_down);
-  if (running.touchStart) running.touchStart(vector_mouse_down);
+  if (running.touchStart) running.touchStart(vector_mouse_down, camera);
 };
 
 var touchMove = function(x, y) {
@@ -164,7 +164,7 @@ var touchMove = function(x, y) {
 
 var touchEnd = function(x, y) {
   vector_mouse_end.copy(vector_mouse_move);
-  if (running.touchEnd) running.touchEnd(vector_mouse_end);
+  if (running.touchEnd) running.touchEnd(vector_mouse_end, camera);
 };
 
 var switchMenu = function() {

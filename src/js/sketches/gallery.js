@@ -7,7 +7,7 @@ var exports = function(){
   var images = [];
   var images_num = 300;
   var hemi_light = new HemiLight();
-
+  var is_draged = false;
   var Image = function() {
     this.obj = null;
     Force.call(this);
@@ -56,6 +56,7 @@ var exports = function(){
       hemi_light.init();
       scene.add(hemi_light.obj);
       camera.anchor.set(0, 0, 0);
+      camera.obj.lookAt(images[0].position);
     },
     remove: function(scene) {
       image_geometry.dispose();
@@ -81,7 +82,23 @@ var exports = function(){
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
-      camera.obj.lookAt(images[0].position);
+    },
+    touchStart: function(vector, camera) {
+      is_draged = true;
+    },
+    touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
+      if (is_draged) {
+        camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian(vector_mouse_move.y * 180);
+        camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian(vector_mouse_move.x * 180);
+        camera.setRotationSpherical();
+      }
+    },
+    touchEnd: function(vector, camera) {
+      if (is_draged) {
+        camera.rotate_rad1_base = camera.rotate_rad1;
+        camera.rotate_rad2_base = camera.rotate_rad2;
+      }
+      is_draged = false;
     }
   };
   return Sketch;

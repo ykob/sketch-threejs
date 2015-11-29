@@ -6,6 +6,10 @@ var exports = function(){
     this.rad1_base = Util.getRadian(10);
     this.rad1 = this.rad1_base;
     this.rad2 = Util.getRadian(0);
+    this.rotate_rad1_base = 0;
+    this.rotate_rad1 = 0;
+    this.rotate_rad2_base = 0;
+    this.rotate_rad2 = 0;
     this.range = 1000;
     this.obj;
     Force.call(this);
@@ -29,8 +33,12 @@ var exports = function(){
     this.obj.updateProjectionMatrix();
   };
   Camera.prototype.setPositionSpherical = function() {
-    var points = Util.getSpherical(this.rad1, this.rad2, this.range);
-    this.anchor.copy(points);
+    var vector = Util.getSpherical(this.rad1, this.rad2, this.range);
+    this.anchor.copy(vector);
+  };
+  Camera.prototype.setRotationSpherical = function() {
+    var vector = Util.getSpherical(this.rotate_rad1, this.rotate_rad2, 1);
+    this.obj.lookAt(vector);
   };
   Camera.prototype.rotate = function() {
     this.rad1_base += Util.getRadian(0.25);
