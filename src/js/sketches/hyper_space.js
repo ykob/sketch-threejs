@@ -147,7 +147,7 @@ var exports = function(){
       scene.remove(light.obj);
       movers = [];
     },
-    render: function(camera) {
+    render: function(scene, camera) {
       changeGravity();
       activateMover();
       updateMover();

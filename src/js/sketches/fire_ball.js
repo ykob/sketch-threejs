@@ -170,7 +170,7 @@ var exports = function(){
       scene.remove(bg);
       movers = [];
     },
-    render: function(camera) {
+    render: function(scene, camera) {
       points.applyHook(0, 0.08);
       points.applyDrag(0.2);
       points.updateVelocity();

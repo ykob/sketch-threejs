@@ -7,7 +7,9 @@ var exports = function(){
   var images = [];
   var images_num = 300;
   var hemi_light = new HemiLight();
+  var raycaster = new THREE.Raycaster();
   var is_draged = false;
+
   var Image = function() {
     this.obj = null;
     Force.call(this);
@@ -69,7 +71,7 @@ var exports = function(){
       scene.remove(hemi_light.obj);
       images = [];
     },
-    render: function(camera) {
+    render: function(scene, camera, vector_mouse_move) {
       for (var i = 0; i < images_num; i++) {
         images[i].applyHook(0, 0.1);
         images[i].applyDrag(0.3);
@@ -86,6 +88,8 @@ var exports = function(){
       camera.updateVelocity();
       camera.updatePosition();
       camera.setRotationSpherical();
+      raycaster.setFromCamera(vector_mouse_move, camera.obj);
+      var intersects = raycaster.intersectObjects(scene.children);
     },
     touchStart: function(vector, camera) {
       is_draged = true;
@@ -101,6 +105,7 @@ var exports = function(){
           camera.rotate_rad1 = Util.getRadian(50);
         }
       }
+      
     },
     touchEnd: function(vector, camera) {
       if (is_draged) {

@@ -83,7 +83,7 @@ var switchSketch = function(sketch) {
 
 var render = function() {
   renderer.clear();
-  running.render(camera);
+  running.render(scene, camera, vector_mouse_move);
   renderer.render(scene, camera.obj);
 };
 

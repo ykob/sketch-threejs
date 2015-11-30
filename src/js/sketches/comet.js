@@ -196,7 +196,7 @@ var exports = function(){
       scene.remove(comet_light2.obj);
       movers = [];
     },
-    render: function(camera) {
+    render: function(scene, camera) {
       points.velocity = rotatePoints();
       camera.anchor.copy(
         points.velocity.clone().add(
