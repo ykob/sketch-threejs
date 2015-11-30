@@ -72,6 +72,16 @@ var exports = function(){
       images = [];
     },
     render: function(scene, camera, vector_mouse_move) {
+      var intersects = null;
+      var picked_id = -1;
+      raycaster.setFromCamera(vector_mouse_move, camera.obj);
+      intersects = raycaster.intersectObjects(scene.children);
+      if (intersects.length > 0 && is_draged == false) {
+        document.body.classList.add('is-pointed');
+        picked_id = intersects[0].object.id;
+      } else {
+        document.body.classList.remove('is-pointed');
+      }
       for (var i = 0; i < images_num; i++) {
         images[i].applyHook(0, 0.1);
         images[i].applyDrag(0.3);
@@ -82,14 +92,17 @@ var exports = function(){
           y: images[i].position.y,
           z: 0
         });
+        if (images[i].obj.id == picked_id && is_draged == false) {
+          images[i].obj.material.color.set(0x222222);
+        } else {
+          images[i].obj.material.color.set(0xffffff);
+        }
       }
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
       camera.setRotationSpherical();
-      raycaster.setFromCamera(vector_mouse_move, camera.obj);
-      var intersects = raycaster.intersectObjects(scene.children);
     },
     touchStart: function(vector, camera) {
       is_draged = true;
@@ -105,7 +118,6 @@ var exports = function(){
           camera.rotate_rad1 = Util.getRadian(50);
         }
       }
-      
     },
     touchEnd: function(vector, camera) {
       if (is_draged) {

@@ -11,7 +11,10 @@ html {
 body {
   height: 100%;
   overflow: hidden;
-  font-family: 'Josefin Sans', sans-serif;;
+  font-family: 'Josefin Sans', sans-serif;
+  &.is-pointed {
+    cursor: pointer;
+  }
 }
 a {
   color: #fff;
