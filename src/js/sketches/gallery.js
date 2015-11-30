@@ -8,10 +8,12 @@ var exports = function(){
   var images_num = 300;
   var hemi_light = new HemiLight();
   var raycaster = new THREE.Raycaster();
+  var is_clicked = false;
   var is_draged = false;
 
   var Image = function() {
     this.obj = null;
+    this.is_entered = false;
     Force.call(this);
   };
   var image_geometry = new THREE.PlaneGeometry(100, 100);
@@ -93,7 +95,11 @@ var exports = function(){
           z: 0
         });
         if (images[i].obj.id == picked_id && is_draged == false) {
-          images[i].obj.material.color.set(0x222222);
+          if (is_clicked == true) {
+            images[i].obj.material.color.set(0xff2222);
+          } else {
+            images[i].obj.material.color.set(0xaaaaaa);
+          }
         } else {
           images[i].obj.material.color.set(0xffffff);
         }
@@ -105,9 +111,13 @@ var exports = function(){
       camera.setRotationSpherical();
     },
     touchStart: function(vector, camera) {
-      is_draged = true;
+      is_clicked = true;
     },
     touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
+      if (is_clicked && vector_mouse_down.clone().sub(vector_mouse_move).length() > 0.01) {
+        is_clicked = false;
+        is_draged = true;
+      }
       if (is_draged) {
         camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian((vector_mouse_down.y - vector_mouse_move.y) * 60);
         camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian((vector_mouse_down.x - vector_mouse_move.x) * 60);
@@ -124,6 +134,7 @@ var exports = function(){
         camera.rotate_rad1_base = camera.rotate_rad1;
         camera.rotate_rad2_base = camera.rotate_rad2;
       }
+      is_clicked = false;
       is_draged = false;
     }
   };
