@@ -92,8 +92,8 @@ var exports = function(){
     },
     touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
       if (is_draged) {
-        camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian((vector_mouse_down.y - vector_mouse_move.y) * 180);
-        camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian((vector_mouse_down.x - vector_mouse_move.x) * 180);
+        camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian((vector_mouse_down.y - vector_mouse_move.y) * 60);
+        camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian((vector_mouse_down.x - vector_mouse_move.x) * 60);
         if (camera.rotate_rad1 < Util.getRadian(-50)) {
           camera.rotate_rad1 = Util.getRadian(-50);
         }
