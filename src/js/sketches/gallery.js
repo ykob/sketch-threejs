@@ -156,8 +156,9 @@ var exports = function(){
       resetPickImage();
       if (get_near) {
         camera.anchor.set(0, 0, 0)
+        picked_index = -1;
         get_near = false;
-      } else if (is_clicked) {
+      } else if (is_clicked && picked_index > -1) {
         getNearImage(camera, images[picked_index]);
       } else if (is_draged) {
         camera.rotate_rad1_base = camera.rotate_rad1;
