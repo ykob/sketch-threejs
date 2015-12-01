@@ -33,13 +33,6 @@ var exports = function(){
     this.anchor = vector.clone();
     this.acceleration.set(0, 0, 0);
   };
-  Image.prototype.lookAtCenter = function() {
-    this.obj.lookAt({
-      x: 0,
-      y: 0,
-      z: 0
-    });
-  };
 
   var initImages = function(scene) {
     for (var i = 0; i < images_num; i++) {
