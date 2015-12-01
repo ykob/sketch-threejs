@@ -157,15 +157,15 @@ var exports = function(){
       camera.updatePosition();
       camera.lookAtCenter();
     },
-    touchStart: function(vector) {
+    touchStart: function(scene, camera, vector) {
       is_touched = true;
     },
-    touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
+    touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
       camera.anchor.z = vector_mouse_move.x * 120;
       camera.anchor.y = vector_mouse_move.y * -120;
       //camera.lookAtCenter();
     },
-    touchEnd: function(vector) {
+    touchEnd: function(scene, camera, vector) {
       is_touched = false;
     }
   };

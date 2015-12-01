@@ -8,6 +8,7 @@ var exports = function(){
   var images_num = 300;
   var hemi_light = new HemiLight();
   var raycaster = new THREE.Raycaster();
+  var picked_id = -1;
   var is_clicked = false;
   var is_draged = false;
 
@@ -54,6 +55,23 @@ var exports = function(){
     }
   };
 
+  var pickObject = function(scene, camera, vector) {
+    var intersects = null;
+    raycaster.setFromCamera(vector, camera.obj);
+    intersects = raycaster.intersectObjects(scene.children);
+    if (intersects.length > 0 && is_draged == false) {
+      document.body.classList.add('is-pointed');
+      picked_id = intersects[0].object.id;
+    } else {
+      resetPickObject();
+    }
+  };
+
+  var resetPickObject = function() {
+    document.body.classList.remove('is-pointed');
+    picked_id = -1;
+  };
+
   Sketch.prototype = {
     init: function(scene, camera) {
       initImages(scene);
@@ -73,17 +91,7 @@ var exports = function(){
       scene.remove(hemi_light.obj);
       images = [];
     },
-    render: function(scene, camera, vector_mouse_move) {
-      var intersects = null;
-      var picked_id = -1;
-      raycaster.setFromCamera(vector_mouse_move, camera.obj);
-      intersects = raycaster.intersectObjects(scene.children);
-      if (intersects.length > 0 && is_draged == false) {
-        document.body.classList.add('is-pointed');
-        picked_id = intersects[0].object.id;
-      } else {
-        document.body.classList.remove('is-pointed');
-      }
+    render: function(scene, camera) {
       for (var i = 0; i < images_num; i++) {
         images[i].applyHook(0, 0.1);
         images[i].applyDrag(0.3);
@@ -110,10 +118,12 @@ var exports = function(){
       camera.updatePosition();
       camera.setRotationSpherical();
     },
-    touchStart: function(vector, camera) {
+    touchStart: function(scene, camera, vector) {
+      pickObject(scene, camera, vector);
       is_clicked = true;
     },
-    touchMove: function(vector_mouse_down, vector_mouse_move, camera) {
+    touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      pickObject(scene, camera, vector_mouse_move);
       if (is_clicked && vector_mouse_down.clone().sub(vector_mouse_move).length() > 0.01) {
         is_clicked = false;
         is_draged = true;
@@ -129,7 +139,8 @@ var exports = function(){
         }
       }
     },
-    touchEnd: function(vector, camera) {
+    touchEnd: function(scene, camera, vector) {
+      resetPickObject();
       if (is_draged) {
         camera.rotate_rad1_base = camera.rotate_rad1;
         camera.rotate_rad2_base = camera.rotate_rad2;

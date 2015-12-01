@@ -111,32 +111,32 @@ var setEvent = function () {
 
   canvas.addEventListener('mousedown', function (event) {
     event.preventDefault();
-    touchStart(event.clientX, event.clientY);
+    touchStart(event.clientX, event.clientY, false);
   });
 
   canvas.addEventListener('mousemove', function (event) {
     event.preventDefault();
-    touchMove(event.clientX, event.clientY);
+    touchMove(event.clientX, event.clientY, false);
   });
 
   canvas.addEventListener('mouseup', function (event) {
     event.preventDefault();
-    touchEnd();
+    touchEnd(event.clientX, event.clientY, false);
   });
 
   canvas.addEventListener('touchstart', function (event) {
     event.preventDefault();
-    touchStart(event.touches[0].clientX, event.touches[0].clientY);
+    touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
   });
 
   canvas.addEventListener('touchmove', function (event) {
     event.preventDefault();
-    touchMove(event.touches[0].clientX, event.touches[0].clientY);
+    touchMove(event.touches[0].clientX, event.touches[0].clientY, true);
   });
 
   canvas.addEventListener('touchend', function (event) {
     event.preventDefault();
-    touchEnd();
+    touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
   });
   
   btn_toggle_menu.addEventListener('click', function(event) {
@@ -150,21 +150,21 @@ var transformVector2d = function(vector) {
   vector.y = - (vector.y / body_height) * 2 + 1;
 };
 
-var touchStart = function(x, y) {
+var touchStart = function(x, y, touch_event) {
   vector_mouse_down.set(x, y);
   transformVector2d(vector_mouse_down);
-  if (running.touchStart) running.touchStart(vector_mouse_down, camera);
+  if (running.touchStart) running.touchStart(scene, camera, vector_mouse_down);
 };
 
-var touchMove = function(x, y) {
+var touchMove = function(x, y, touch_event) {
   vector_mouse_move.set(x, y);
   transformVector2d(vector_mouse_move);
-  if (running.touchMove) running.touchMove(vector_mouse_down, vector_mouse_move, camera);
+  if (running.touchMove) running.touchMove(scene, camera, vector_mouse_down, vector_mouse_move);
 };
 
-var touchEnd = function(x, y) {
+var touchEnd = function(x, y, touch_event) {
   vector_mouse_end.copy(vector_mouse_move);
-  if (running.touchEnd) running.touchEnd(vector_mouse_end, camera);
+  if (running.touchEnd) running.touchEnd(scene, camera, vector_mouse_end);
 };
 
 var switchMenu = function() {
