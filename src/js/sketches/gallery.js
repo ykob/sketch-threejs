@@ -141,7 +141,7 @@ var exports = function(){
         is_clicked = false;
         is_draged = true;
       }
-      if (is_draged) {
+      if (is_draged == true && get_near == false) {
         camera.rotate_rad1 = camera.rotate_rad1_base + Util.getRadian((vector_mouse_down.y - vector_mouse_move.y) * 50);
         camera.rotate_rad2 = camera.rotate_rad2_base + Util.getRadian((vector_mouse_down.x - vector_mouse_move.x) * 50);
         if (camera.rotate_rad1 < Util.getRadian(-50)) {
