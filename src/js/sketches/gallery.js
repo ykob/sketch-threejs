@@ -25,8 +25,10 @@ var exports = function(){
   Image.prototype.constructor = Image;
   Image.prototype.init = function(vector) {
     var image_material = new THREE.MeshPhongMaterial({
-      side: THREE.DoubleSide
+      side: THREE.DoubleSide,
+      map: new THREE.TextureLoader().load('/img/gallery/image0' + Util.getRandomInt(1, 9) + '.jpg')
     });
+
     this.obj = new THREE.Mesh(image_geometry, image_material);
     this.position = this.obj.position;
     this.velocity = vector.clone();
@@ -79,7 +81,7 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       initImages(scene);
-      hemi_light.init();
+      hemi_light.init(0xffffff, 0xffffff);
       scene.add(hemi_light.obj);
       camera.anchor.set(0, 0, 0);
       camera.rotate_rad1 = Util.getRadian(-35);
