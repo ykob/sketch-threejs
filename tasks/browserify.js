@@ -10,23 +10,25 @@ var files = [
   {
     entries: ['./' + CONFIG.SRC + '/js/main.js'],
     source: 'main.js',
-    dest: './js/'
+    dest: './js/',
+    debug: true
   },
   {
     entries: ['./' + CONFIG.SRC + '/js/only_demo.js'],
     source: 'only_demo.js',
-    dest: './js/'
+    dest: './js/',
+    debug: false
   }
 ];
 
 var createBundle = function(watch, options) {
   var b;
   var browserifyOpts = {
-    entries: options.entries
+    entries: options.entries,
+    debug: options.debug
   };
 
   if (watch) {
-    browserifyOpts.debug = true;
     browserifyOpts.cache = {};
     browserifyOpts.packageCache = {};
     browserifyOpts.fullPath = true;
