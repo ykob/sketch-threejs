@@ -1,3 +1,4 @@
+var THREE = require('three');
 var Util = require('./modules/util');
 var debounce = require('./modules/debounce');
 var Camera = require('./modules/camera');
@@ -14,12 +15,8 @@ var scene = null;
 var camera = null;
 
 var running = null;
-var sketch = {
-  name: 'gallery',
-  obj: require('./sketches/gallery'),
-  date: '2015.11.24',
-  description: '',
-};
+var sketches = require('./sketches');
+var sketch = sketches[1];
 
 var sketch_title = document.querySelector('.sketch-title');
 var sketch_date = document.querySelector('.sketch-date');
@@ -41,16 +38,11 @@ var initThree = function() {
   
   camera = new Camera();
   camera.init(body_width, body_height);
-  
-  running = new sketch.obj;
-  running.init(scene, camera);
-  sketch_title.innerHTML = sketch.name;
-  sketch_date.innerHTML = 'date : ' + sketch.date;
-  sketch_description.innerHTML = sketch.description;
 };
 
 var init = function() {
   initThree();
+  startRunSketch(sketch);
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
@@ -58,9 +50,19 @@ var init = function() {
   });
 };
 
+var startRunSketch = function(sketch) {
+  running = new sketch.obj;
+  running.init(scene, camera);
+  sketch_title.innerHTML = sketch.name;
+  sketch_date.innerHTML = (sketch.update.length > 0)
+                          ? 'posted: ' + sketch.posted + ' / update: ' + sketch.update
+                          : 'posted: ' + sketch.posted;
+  sketch_description.innerHTML = sketch.description;
+};
+
 var render = function() {
   renderer.clear();
-  running.render(camera);
+  running.render(scene, camera, vector_mouse_move);
   renderer.render(scene, camera.obj);
 };
 
@@ -88,32 +90,32 @@ var setEvent = function () {
 
   canvas.addEventListener('mousedown', function (event) {
     event.preventDefault();
-    touchStart(event.clientX, event.clientY);
+    touchStart(event.clientX, event.clientY, false);
   });
 
   canvas.addEventListener('mousemove', function (event) {
     event.preventDefault();
-    touchMove(event.clientX, event.clientY);
+    touchMove(event.clientX, event.clientY, false);
   });
 
   canvas.addEventListener('mouseup', function (event) {
     event.preventDefault();
-    touchEnd();
+    touchEnd(event.clientX, event.clientY, false);
   });
 
   canvas.addEventListener('touchstart', function (event) {
     event.preventDefault();
-    touchStart(event.touches[0].clientX, event.touches[0].clientY);
+    touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
   });
 
   canvas.addEventListener('touchmove', function (event) {
     event.preventDefault();
-    touchMove(event.touches[0].clientX, event.touches[0].clientY);
+    touchMove(event.touches[0].clientX, event.touches[0].clientY, true);
   });
 
   canvas.addEventListener('touchend', function (event) {
     event.preventDefault();
-    touchEnd();
+    touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
   });
 };
 
@@ -122,21 +124,21 @@ var transformVector2d = function(vector) {
   vector.y = - (vector.y / body_height) * 2 + 1;
 };
 
-var touchStart = function(x, y) {
+var touchStart = function(x, y, touch_event) {
   vector_mouse_down.set(x, y);
   transformVector2d(vector_mouse_down);
-  if (running.touchStart) running.touchStart(vector_mouse_down);
+  if (running.touchStart) running.touchStart(scene, camera, vector_mouse_down);
 };
 
-var touchMove = function(x, y) {
+var touchMove = function(x, y, touch_event) {
   vector_mouse_move.set(x, y);
   transformVector2d(vector_mouse_move);
-  if (running.touchMove) running.touchMove(vector_mouse_down, vector_mouse_move, camera);
+  if (running.touchMove) running.touchMove(scene, camera, vector_mouse_down, vector_mouse_move);
 };
 
-var touchEnd = function(x, y) {
+var touchEnd = function(x, y, touch_event) {
   vector_mouse_end.copy(vector_mouse_move);
-  if (running.touchEnd) running.touchEnd(vector_mouse_end);
+  if (running.touchEnd) running.touchEnd(scene, camera, vector_mouse_end);
 };
 
 init();

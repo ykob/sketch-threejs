@@ -1,3 +1,4 @@
+var THREE = require('three');
 var Util = require('../modules/util');
 var Force = require('../modules/force');
 

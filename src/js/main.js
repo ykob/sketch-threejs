@@ -1,3 +1,4 @@
+var THREE = require('three');
 var Util = require('./modules/util');
 var debounce = require('./modules/debounce');
 var Camera = require('./modules/camera');
