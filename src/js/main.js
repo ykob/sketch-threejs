@@ -39,18 +39,12 @@ var initThree = function() {
 
   camera = new Camera();
   camera.init(body_width, body_height);
-
-  running = new sketches[0].obj;
-  running.init(scene, camera);
-
-  sketch_title.innerHTML = sketches[0].name;
-  sketch_date.innerHTML = 'date : ' + sketches[0].date;
-  sketch_description.innerHTML = sketches[0].description;
 };
 
 var init = function() {
   buildMenu();
   initThree();
+  startRunSketch(sketches[0]);
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
@@ -71,13 +65,19 @@ var buildMenu = function() {
   }
 };
 
-var switchSketch = function(sketch) {
-  running.remove(scene);
+var startRunSketch = function(sketch) {
   running = new sketch.obj;
   running.init(scene, camera);
   sketch_title.innerHTML = sketch.name;
-  sketch_date.innerHTML = 'date : ' + sketch.date;
+  sketch_date.innerHTML = (sketch.update.length > 0)
+                          ? 'posted: ' + sketch.posted + ' / update: ' + sketch.update
+                          : 'posted: ' + sketch.posted;
   sketch_description.innerHTML = sketch.description;
+};
+
+var switchSketch = function(sketch) {
+  running.remove(scene);
+  startRunSketch(sketch);
   switchMenu();
 };
 
