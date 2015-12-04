@@ -4,7 +4,7 @@ module.exports = [
     obj: require('./sketches/image_data'),
     posted: '201X.XX.XX',
     update: '',
-    description: '',
+    description: 'Points based CanvasRenderingContext2D.getImageData()',
   },
   {
     name: 'gallery',
