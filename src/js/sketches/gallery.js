@@ -1,4 +1,3 @@
-var THREE = require('three');
 var Util = require('../modules/util');
 var HemiLight = require('../modules/hemiLight');
 var Force = require('../modules/force');

@@ -1,4 +1,3 @@
-var THREE = require('three');
 var Util = require('../modules/util');
 var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
