@@ -88,6 +88,7 @@ var exports = function(){
       camera.rotate_rad1_base = camera.rotate_rad1;
       camera.rotate_rad2 = Util.getRadian(180);
       camera.rotate_rad2_base = camera.rotate_rad2;
+      camera.look.anchor.copy(Util.getSpherical(camera.rotate_rad1, camera.rotate_rad2, 1));
     },
     remove: function(scene) {
       image_geometry.dispose();
@@ -125,13 +126,10 @@ var exports = function(){
       if (get_near === false) {
         camera.setRotationSpherical();
       } else {
-        camera.obj.lookAt({
-          x: images[picked_index].obj.position.x,
-          y: images[picked_index].obj.position.y,
-          z: images[picked_index].obj.position.z,
-        });
+        camera.look.anchor.copy(images[picked_index].obj.position);
       }
       camera.updatePosition();
+      camera.updateLook();
     },
     touchStart: function(scene, camera, vector) {
       pickImage(scene, camera, vector);

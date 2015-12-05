@@ -44,7 +44,7 @@ var initThree = function() {
 var init = function() {
   buildMenu();
   initThree();
-  startRunSketch(sketches[0]);
+  startRunSketch(sketches[1]);
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
