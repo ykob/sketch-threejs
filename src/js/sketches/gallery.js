@@ -70,6 +70,7 @@ var exports = function(){
   var getNearImage = function(camera, image) {
     get_near = true;
     camera.anchor.set(Math.cos(image.rad) * 780, image.position.y, Math.sin(image.rad) * 780);
+    camera.look.anchor.copy(image.position);
     resetPickImage();
   };
 
@@ -88,7 +89,6 @@ var exports = function(){
       camera.rotate_rad1_base = camera.rotate_rad1;
       camera.rotate_rad2 = Util.getRadian(180);
       camera.rotate_rad2_base = camera.rotate_rad2;
-      camera.look.anchor.copy(Util.getSpherical(camera.rotate_rad1, camera.rotate_rad2, 1));
     },
     remove: function(scene) {
       image_geometry.dispose();
@@ -123,13 +123,15 @@ var exports = function(){
       camera.applyHook(0, 0.08);
       camera.applyDrag(0.4);
       camera.updateVelocity();
-      if (get_near === false) {
-        camera.setRotationSpherical();
-      } else {
-        camera.look.anchor.copy(images[picked_index].obj.position);
-      }
       camera.updatePosition();
-      camera.updateLook();
+      if (get_near === false) {
+        camera.look.anchor.copy(Util.getSpherical(camera.rotate_rad1, camera.rotate_rad2, 1000));
+      }
+      camera.look.applyHook(0, 0.08);
+      camera.look.applyDrag(0.4);
+      camera.look.updateVelocity();
+      camera.look.updatePosition();
+      camera.obj.lookAt(camera.look.position);
     },
     touchStart: function(scene, camera, vector) {
       pickImage(scene, camera, vector);
@@ -155,7 +157,7 @@ var exports = function(){
     touchEnd: function(scene, camera, vector) {
       resetPickImage();
       if (get_near) {
-        camera.anchor.set(0, 0, 0)
+        camera.anchor.set(0, 0, 0);
         picked_index = -1;
         get_near = false;
       } else if (is_clicked && picked_index > -1) {

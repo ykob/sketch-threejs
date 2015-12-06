@@ -37,30 +37,12 @@ var exports = function(){
     var vector = Util.getSpherical(this.rad1, this.rad2, this.range);
     this.anchor.copy(vector);
   };
-  Camera.prototype.setRotationSpherical = function() {
-    var vector = Util.getSpherical(this.rotate_rad1, this.rotate_rad2, 1);
-    vector.add(this.position);
-    this.look.anchor.copy(vector);
-  };
-  Camera.prototype.rotate = function() {
-    this.rad1_base += Util.getRadian(0.25);
-    this.rad1 = Util.getRadian(Math.sin(this.rad1_base) * 80);
-    this.rad2 += Util.getRadian(0.5);
-    this.reset();
-  };
   Camera.prototype.lookAtCenter = function() {
     this.obj.lookAt({
       x: 0,
       y: 0,
       z: 0
     });
-  };
-  Camera.prototype.updateLook = function() {
-    this.look.applyHook(1, 0.1);
-    this.look.applyDrag(0.4);
-    this.look.updateVelocity();
-    this.look.updatePosition();
-    this.obj.lookAt(this.look.position);
   };
   return Camera;
 };
