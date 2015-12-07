@@ -85,9 +85,9 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       getImageData(scene);
-      camera.rad1_base = Util.getRadian(25);
+      camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
-      camera.rad2 = Util.getRadian(-20);
+      camera.rad2 = Util.getRadian(0);
       camera.setPositionSpherical();
     },
     remove: function(scene) {
@@ -100,6 +100,12 @@ var exports = function(){
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
+
+    },
+    touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      camera.anchor.z = vector_mouse_move.x * 400;
+      camera.anchor.y = vector_mouse_move.y * -400;
+      //camera.lookAtCenter();
     }
   };
 
