@@ -98,6 +98,7 @@ var exports = function(){
       scene.remove(hemi_light.obj);
       images = [];
       get_near = false;
+      document.body.classList.remove('is-pointed');
     },
     render: function(scene, camera) {
       for (var i = 0; i < images_num; i++) {

@@ -180,6 +180,7 @@ var touchEnd = function(x, y, touch_event) {
 var switchMenu = function() {
   btn_toggle_menu.classList.toggle('is-active');
   menu.classList.toggle('is-active');
+  document.body.classList.remove('is-pointed');
 };
 
 init();
