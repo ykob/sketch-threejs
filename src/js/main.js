@@ -42,14 +42,24 @@ var initThree = function() {
 };
 
 var init = function() {
+  var sketch_id = getParameterByName('sketch_id');
+  if (sketch_id == null || sketch_id > sketches.length || sketch_id < 1) sketch_id = sketches.length;
+  console.log
   buildMenu();
   initThree();
-  startRunSketch(sketches[1]);
+  startRunSketch(sketches[sketches.length - sketch_id]);
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
     resizeRenderer();
   });
+};
+
+var getParameterByName = function(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+  var results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
 var buildMenu = function() {
