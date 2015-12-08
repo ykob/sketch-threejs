@@ -165,7 +165,9 @@ var exports = function(){
       camera.anchor.y = vector_mouse_move.y * -120;
       //camera.lookAtCenter();
     },
-    touchEnd: function(scene, camera, vector) {
+    touchEnd: function(scene, camera, vector_mouse_end) {
+      camera.anchor.z = 0;
+      camera.anchor.y = 0;
       is_touched = false;
     }
   };

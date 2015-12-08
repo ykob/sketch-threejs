@@ -148,6 +148,11 @@ var setEvent = function () {
     touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
   });
 
+  window.addEventListener('mouseout', function () {
+    event.preventDefault();
+    touchEnd(0, 0, false);
+  });
+
   btn_toggle_menu.addEventListener('click', function(event) {
     event.preventDefault();
     switchMenu();
@@ -172,7 +177,7 @@ var touchMove = function(x, y, touch_event) {
 };
 
 var touchEnd = function(x, y, touch_event) {
-  vector_mouse_end.copy(vector_mouse_move);
+  vector_mouse_end.set(x, y);
   if (running.touchEnd) running.touchEnd(scene, camera, vector_mouse_end);
 };
 

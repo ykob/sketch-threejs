@@ -111,7 +111,10 @@ var exports = function(){
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
       camera.anchor.z = vector_mouse_move.x * 1000;
       camera.anchor.y = vector_mouse_move.y * -1000;
-      //camera.lookAtCenter();
+    },
+    touchEnd: function(scene, camera, vector_mouse_end) {
+      camera.anchor.z = 0;
+      camera.anchor.y = 0;
     }
   };
 
