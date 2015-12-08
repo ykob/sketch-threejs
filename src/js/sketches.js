@@ -2,7 +2,7 @@ module.exports = [
   {
     name: 'image data',
     obj: require('./sketches/image_data'),
-    posted: '201X.XX.XX',
+    posted: '2015.12.9',
     update: '',
     description: 'Points based CanvasRenderingContext2D.getImageData()',
   },
@@ -10,7 +10,7 @@ module.exports = [
     name: 'gallery',
     obj: require('./sketches/gallery'),
     posted: '2015.12.2',
-    update: '',
+    update: '2015.12.9',
     description: 'image gallery on 3d. tested that picked object and moving camera.',
   },
   {
