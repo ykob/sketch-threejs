@@ -44,7 +44,6 @@ var initThree = function() {
 var init = function() {
   var sketch_id = getParameterByName('sketch_id');
   if (sketch_id == null || sketch_id > sketches.length || sketch_id < 1) sketch_id = sketches.length;
-  console.log
   buildMenu();
   initThree();
   startRunSketch(sketches[sketches.length - sketch_id]);
@@ -86,7 +85,7 @@ var startRunSketch = function(sketch) {
 };
 
 var switchSketch = function(sketch) {
-  running.remove(scene);
+  running.remove(scene, camera);
   startRunSketch(sketch);
   switchMenu();
 };
@@ -148,7 +147,7 @@ var setEvent = function () {
     event.preventDefault();
     touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
   });
-  
+
   btn_toggle_menu.addEventListener('click', function(event) {
     event.preventDefault();
     switchMenu();

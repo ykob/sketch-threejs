@@ -47,7 +47,7 @@ var exports = function(){
                                   + ', 60%, 80%)');
       color.toArray(colors, i * 3);
       opacities[i] = 1;
-      sizes[i] = 6;
+      sizes[i] = 1;
     }
     points.init({
       scene: scene,
@@ -87,13 +87,17 @@ var exports = function(){
         getImageData();
         buildPoints(scene);
       });
+      camera.range = 1400;
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
       camera.rad2 = Util.getRadian(0);
       camera.setPositionSpherical();
     },
-    remove: function(scene) {
-      
+    remove: function(scene, camera) {
+      points.geometry.dispose();
+      points.material.dispose();
+      scene.remove(points.obj);
+      camera.range = 1000;
     },
     render: function(scene, camera) {
       if (created_points) points.updatePoints();
@@ -105,8 +109,8 @@ var exports = function(){
 
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      camera.anchor.z = vector_mouse_move.x * 400;
-      camera.anchor.y = vector_mouse_move.y * -400;
+      camera.anchor.z = vector_mouse_move.x * 1000;
+      camera.anchor.y = vector_mouse_move.y * -1000;
       //camera.lookAtCenter();
     }
   };
