@@ -7,43 +7,43 @@ var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
   var Sketch = function() {};
-  var image_vertices = [];
+  var image = new Image();
+  var vertices = [];
   var length_side = 400;
   var points = new Points();
   var created_points = false;
 
-  var getImageData = function(scene) {
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    var image = new Image(); 
-    canvas.width = length_side;
-    canvas.height = length_side;
+  var loadImage = function(callback) {
     image.src = './img/image_data/elephant.png';
     image.onload = function() {
-      ctx.drawImage(image, 0, 0);
-      pickedDataNotTransparent(scene, ctx.getImageData(0, 0, length_side, length_side));
+      callback();
     };
   };
 
-  var pickedDataNotTransparent = function(scene, image_data) {
+  var getImageData = function() {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = length_side;
+    canvas.height = length_side;
+    ctx.drawImage(image, 0, 0);
+    var image_data = ctx.getImageData(0, 0, length_side, length_side);
     for (var y = 0; y < length_side; y++) {
       for (var x = 0; x < length_side; x++) {
         if(image_data.data[(x + y * length_side) * 4] > 0) {
-          image_vertices.push(0, (y - length_side / 2) * -1, (x - length_side/ 2) * -1);
+          vertices.push(0, (y - length_side / 2) * -1, (x - length_side/ 2) * -1);
         }
       }
     }
-    buildPoints(scene);
   };
 
   var buildPoints = function(scene) {
-    var positions = new Float32Array(image_vertices);
-    var colors = new Float32Array(image_vertices.length);
-    var opacities = new Float32Array(image_vertices.length / 3);
-    var sizes = new Float32Array(image_vertices.length / 3);
-    for (var i = 0; i < image_vertices.length / 3; i++) {
+    var positions = new Float32Array(vertices);
+    var colors = new Float32Array(vertices.length);
+    var opacities = new Float32Array(vertices.length / 3);
+    var sizes = new Float32Array(vertices.length / 3);
+    for (var i = 0; i < vertices.length / 3; i++) {
       var color = new THREE.Color('hsl('
-                                  + (image_vertices[i * 3 + 2] + image_vertices[i * 3 + 1] + length_side) / 5
+                                  + (vertices[i * 3 + 2] + vertices[i * 3 + 1] + length_side) / 5
                                   + ', 60%, 80%)');
       color.toArray(colors, i * 3);
       opacities[i] = 1;
@@ -83,7 +83,10 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      getImageData(scene);
+      loadImage(function() {
+        getImageData();
+        buildPoints(scene);
+      });
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
       camera.rad2 = Util.getRadian(0);
