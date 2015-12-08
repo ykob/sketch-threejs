@@ -47,7 +47,7 @@ var exports = function(){
                                   + ', 60%, 80%)');
       color.toArray(colors, i * 3);
       opacities[i] = 1;
-      sizes[i] = 1;
+      sizes[i] = 6;
     }
     points.init({
       scene: scene,
@@ -58,10 +58,9 @@ var exports = function(){
       opacities: opacities,
       sizes: sizes,
       texture: createTexture(),
-      blending: THREE.AdditiveBlending
+      blending: THREE.NoBlending
     });
     created_points = true;
-    console.log(points);
   };
 
   var createTexture = function() {
