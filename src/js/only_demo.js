@@ -15,11 +15,11 @@ var camera = null;
 
 var running = null;
 var sketch = {
-  name: 'gallery',
-  obj: require('./sketches/gallery'),
-  posted: '2015.12.2',
-  update: '',
-  description: 'image gallery on 3d. tested that picked object and moving camera.',
+    name: 'image data',
+    obj: require('./sketches/image_data'),
+    posted: '2015.12.9',
+    update: '',
+    description: 'Points based CanvasRenderingContext2D.getImageData()',
 };
 
 var sketch_title = document.querySelector('.sketch-title');
