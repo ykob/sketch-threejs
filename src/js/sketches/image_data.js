@@ -33,7 +33,9 @@ var exports = function(){
     ctx.drawImage(image, 0, 0);
     var image_data = ctx.getImageData(0, 0, length_side, length_side);
     for (var y = 0; y < length_side; y++) {
+      if (y % 3 > 0) continue;;
       for (var x = 0; x < length_side; x++) {
+        if (x % 3 > 0) continue;;
         if(image_data.data[(x + y * length_side) * 4] > 0) {
           image_vertices.push(0, (y - length_side / 2) * -1, (x - length_side/ 2) * -1);
         }
@@ -55,7 +57,7 @@ var exports = function(){
       movers.push(mover);
       color.toArray(colors, i * 3);
       opacities[i] = 1;
-      sizes[i] = 1;
+      sizes[i] = 12;
     }
     points.init({
       scene: scene,
@@ -77,7 +79,7 @@ var exports = function(){
       var mover = movers[i];
       var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
       var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-      var scalar = 500;
+      var scalar = 400;
       mover.applyForce(Util.getSpherical(rad1, rad2, scalar));
     }
   };
@@ -86,8 +88,8 @@ var exports = function(){
     for (var i = 0; i < movers.length; i++) {
       var mover = movers[i];
       mover.time++;
-      mover.applyHook(0, 0.0098);
-      mover.applyDrag(0.17);
+      mover.applyHook(0, 0.004);
+      mover.applyDrag(0.115);
       mover.updateVelocity();
       mover.updatePosition();
       mover.position.sub(points.position);
@@ -104,12 +106,16 @@ var exports = function(){
     var grad = null;
     var texture = null;
 
-    canvas.width = 10;
-    canvas.height = 10;
-    ctx.fillStyle = '#ffffff';
-    ctx.rect(0, 0, 10, 10);
+    canvas.width = 200;
+    canvas.height = 200;
+    grad = ctx.createRadialGradient(100, 100, 20, 100, 100, 100);
+    grad.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
+    grad.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = grad;
+    ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
     ctx.fill();
-    
+
     texture = new THREE.Texture(canvas);
     texture.minFilter = THREE.NearestFilter;
     texture.needsUpdate = true;
