@@ -8,7 +8,12 @@ var fs = glslify('../sketches/points.fs');
 var exports = function(){
   var Sketch = function() {};
   var image = new Image();
-  var vertices = [];
+  var image_vertices = [];
+  var movers = [];
+  var positions = null;
+  var colors = null;
+  var opacities = null;
+  var sizes = null;
   var length_side = 400;
   var points = new Points();
   var created_points = false;
@@ -30,21 +35,24 @@ var exports = function(){
     for (var y = 0; y < length_side; y++) {
       for (var x = 0; x < length_side; x++) {
         if(image_data.data[(x + y * length_side) * 4] > 0) {
-          vertices.push(0, (y - length_side / 2) * -1, (x - length_side/ 2) * -1);
+          image_vertices.push(0, (y - length_side / 2) * -1, (x - length_side/ 2) * -1);
         }
       }
     }
   };
 
   var buildPoints = function(scene) {
-    var positions = new Float32Array(vertices);
-    var colors = new Float32Array(vertices.length);
-    var opacities = new Float32Array(vertices.length / 3);
-    var sizes = new Float32Array(vertices.length / 3);
-    for (var i = 0; i < vertices.length / 3; i++) {
-      var color = new THREE.Color('hsl('
-                                  + (vertices[i * 3 + 2] + vertices[i * 3 + 1] + length_side) / 5
+    positions = new Float32Array(image_vertices);
+    colors = new Float32Array(image_vertices.length);
+    opacities = new Float32Array(image_vertices.length / 3);
+    sizes = new Float32Array(image_vertices.length / 3);
+    for (var i = 0; i < image_vertices.length / 3; i++) {
+      var mover = new Mover();
+      var color = new THREE.Color(
+                                  'hsl(' + (image_vertices[i * 3 + 2] + image_vertices[i * 3 + 1] + length_side) / 5
                                   + ', 60%, 80%)');
+      mover.init(new THREE.Vector3(image_vertices[i * 3], image_vertices[i * 3 + 1], image_vertices[i * 3 + 2]));
+      movers.push(mover);
       color.toArray(colors, i * 3);
       opacities[i] = 1;
       sizes[i] = 1;
@@ -58,9 +66,36 @@ var exports = function(){
       opacities: opacities,
       sizes: sizes,
       texture: createTexture(),
-      blending: THREE.NoBlending
+      blending: THREE.NormalBlending
     });
     created_points = true;
+    console.log(points);
+  };
+
+  var applyForceToPoints = function() {
+    for (var i = 0; i < movers.length; i++) {
+      var mover = movers[i];
+      var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
+      var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
+      var scalar = 500;
+      mover.applyForce(Util.getSpherical(rad1, rad2, scalar));
+    }
+  };
+
+  var updateMover =  function() {
+    for (var i = 0; i < movers.length; i++) {
+      var mover = movers[i];
+      mover.time++;
+      mover.applyHook(0, 0.0098);
+      mover.applyDrag(0.17);
+      mover.updateVelocity();
+      mover.updatePosition();
+      mover.position.sub(points.position);
+      positions[i * 3 + 0] = mover.position.x - points.position.x;
+      positions[i * 3 + 1] = mover.position.y - points.position.x;
+      positions[i * 3 + 2] = mover.position.z - points.position.x;
+    }
+    points.updatePoints();
   };
 
   var createTexture = function() {
@@ -97,16 +132,24 @@ var exports = function(){
       points.geometry.dispose();
       points.material.dispose();
       scene.remove(points.obj);
+      image_vertices = [];
+      movers = [];
       camera.range = 1000;
     },
     render: function(scene, camera) {
-      if (created_points) points.updatePoints();
+      if (created_points) {
+        updateMover();
+        points.updatePoints();
+      }
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
 
+    },
+    touchStart: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      applyForceToPoints();
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
       camera.anchor.z = vector_mouse_move.x * 1000;
