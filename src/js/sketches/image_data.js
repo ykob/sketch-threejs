@@ -54,6 +54,7 @@ var exports = function(){
                                   'hsl(' + (image_vertices[i * 3 + 2] + image_vertices[i * 3 + 1] + length_side) / 5
                                   + ', 60%, 80%)');
       mover.init(new THREE.Vector3(image_vertices[i * 3], image_vertices[i * 3 + 1], image_vertices[i * 3 + 2]));
+      mover.is_activate = true;
       movers.push(mover);
       color.toArray(colors, i * 3);
       opacities[i] = 1;
@@ -79,7 +80,8 @@ var exports = function(){
       var mover = movers[i];
       var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
       var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
-      var scalar = 400;
+      var scalar = 50;
+      mover.is_activate = false;
       mover.applyForce(Util.getSpherical(rad1, rad2, scalar));
     }
   };
@@ -88,8 +90,18 @@ var exports = function(){
     for (var i = 0; i < movers.length; i++) {
       var mover = movers[i];
       mover.time++;
-      mover.applyHook(0, 0.004);
-      mover.applyDrag(0.115);
+      // mover.applyHook(0, 0.004);
+      // mover.applyDrag(0.115);
+      if (mover.acceleration.length() < 1) {
+        mover.is_activate = true;
+      }
+      if (mover.is_activate) {
+        mover.applyHook(0, 0.18);
+        mover.applyDrag(0.26);
+      } else {
+        mover.applyDrag(0.035);
+      }
+      
       mover.updateVelocity();
       mover.updatePosition();
       mover.position.sub(points.position);
