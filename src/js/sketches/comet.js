@@ -24,6 +24,8 @@ var exports = function(){
   var comet_color_h = 150;
   var planet = null;
   var last_time_activate = Date.now();
+  var plus_acceleration = 0;
+  var is_touched = false;
 
   var updateMover = function() {
     for (var i = 0; i < movers.length; i++) {
@@ -79,13 +81,13 @@ var exports = function(){
     }
   };
 
-  var rotatePoints = function() {
-    comet.rotation.x += 0.03;
-    comet.rotation.y += 0.01;
-    comet.rotation.z += 0.01;
-    points.rad1_base += Util.getRadian(0.5);
-    points.rad1 = Util.getRadian(Math.sin(points.rad1_base) * 30);
-    points.rad2 += Util.getRadian(1.5);
+  var rotateComet = function() {
+    comet.rotation.x += 0.03 + plus_acceleration / 1000;
+    comet.rotation.y += 0.01 + plus_acceleration / 1000;
+    comet.rotation.z += 0.01 + plus_acceleration / 1000;
+    points.rad1_base += Util.getRadian(0.4);
+    points.rad1 = Util.getRadian(Math.sin(points.rad1_base) * 30 + plus_acceleration / 100);
+    points.rad2 += Util.getRadian(0.8 + plus_acceleration / 100);
     points.rad3 += 0.01;
     return Util.getSpherical(points.rad1, points.rad2, 400);
   };
@@ -133,6 +135,14 @@ var exports = function(){
       shading: THREE.FlatShading
     });
     return new THREE.Mesh(geometry, material);
+  };
+
+  var accelerateComet = function() {
+    if (is_touched && plus_acceleration < 200) {
+      plus_acceleration += 1;
+    } else if(plus_acceleration > 0) {
+      plus_acceleration -= 1;
+    }
   };
 
   Sketch.prototype = {
@@ -197,7 +207,8 @@ var exports = function(){
       movers = [];
     },
     render: function(scene, camera) {
-      points.velocity = rotatePoints();
+      accelerateComet();
+      points.velocity = rotateComet();
       camera.anchor.copy(
         points.velocity.clone().add(
           points.velocity.clone().sub(points.position)
@@ -218,6 +229,14 @@ var exports = function(){
       camera.lookAtCenter();
       camera.obj.lookAt(points.position);
       rotateCometColor();
+    },
+    touchStart: function(scene, camera, vector) {
+      is_touched = true;
+    },
+    touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+    },
+    touchEnd: function(scene, camera, vector_mouse_end) {
+      is_touched = false;
     }
   };
 
