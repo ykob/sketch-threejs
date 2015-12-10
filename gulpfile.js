@@ -16,8 +16,8 @@ gulp.task('serve', function() {
     notify: false,
     startPath: CONFIG.PATH,
     server: {
-      baseDir: './',
-      index: CONFIG.DST + CONFIG.PATH + '/index.html',
+      baseDir: CONFIG.DST,
+      index: 'index.html',
       routes: (
         obj['' + CONFIG.PATH] = '' + CONFIG.DST + CONFIG.PATH + '/',
         obj
