@@ -1,6 +1,6 @@
 var Util = require('../modules/util');
 var HemiLight = require('../modules/hemiLight');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var Sketch = function() {};
@@ -18,10 +18,10 @@ var exports = function(){
     this.rad = 0;
     this.obj = null;
     this.is_entered = false;
-    Force.call(this);
+    Force3.call(this);
   };
   var image_geometry = new THREE.PlaneGeometry(100, 100);
-  Image.prototype = Object.create(Force.prototype);
+  Image.prototype = Object.create(Force3.prototype);
   Image.prototype.constructor = Image;
   Image.prototype.init = function(vector) {
     var image_material = new THREE.MeshPhongMaterial({

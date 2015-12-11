@@ -1,14 +1,14 @@
 var Util = require('../modules/util');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var Mover = function() {
     this.size = 0;
     this.time = 0;
     this.is_active = false;
-    Force.call(this);
+    Force3.call(this);
   };
-  Mover.prototype = Object.create(Force.prototype);
+  Mover.prototype = Object.create(Force3.prototype);
   Mover.prototype.constructor = Mover;
   Mover.prototype.init = function(vector) {
     this.position = vector.clone();

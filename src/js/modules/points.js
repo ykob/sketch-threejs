@@ -1,14 +1,14 @@
 var Util = require('../modules/util');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var Points = function() {
     this.geometry = new THREE.BufferGeometry();
     this.material = null;
     this.obj = null;
-    Force.call(this);
+    Force3.call(this);
   };
-  Points.prototype = Object.create(Force.prototype);
+  Points.prototype = Object.create(Force3.prototype);
   Points.prototype.constructor = Points;
   Points.prototype.init = function(param) {
     this.material = new THREE.ShaderMaterial({

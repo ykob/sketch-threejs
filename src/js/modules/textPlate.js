@@ -1,5 +1,5 @@
 var Util = require('../modules/util');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var TextPlate = function() {
@@ -7,9 +7,9 @@ var exports = function(){
     this.material = null;
     this.obj = null;
     this.texture = null;
-    Force.call(this);
+    Force3.call(this);
   };
-  TextPlate.prototype = Object.create(Force.prototype);
+  TextPlate.prototype = Object.create(Force3.prototype);
   TextPlate.prototype.constructor = TextPlate;
   TextPlate.prototype.init = function() {
     this.createTexture();

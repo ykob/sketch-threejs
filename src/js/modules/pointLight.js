@@ -1,5 +1,5 @@
 var Util = require('../modules/util');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var PointLight = function() {
@@ -11,9 +11,9 @@ var exports = function(){
     this.distance = 2000;
     this.decay = 1;
     this.obj;
-    Force.call(this);
+    Force3.call(this);
   };
-  PointLight.prototype = Object.create(Force.prototype);
+  PointLight.prototype = Object.create(Force3.prototype);
   PointLight.prototype.constructor = PointLight;
   PointLight.prototype.init = function(hex, distance) {
     if (hex) this.hex = hex;

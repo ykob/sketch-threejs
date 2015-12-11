@@ -72,7 +72,6 @@ var exports = function(){
       blending: THREE.NormalBlending
     });
     created_points = true;
-    console.log(points);
   };
 
   var applyForceToPoints = function() {

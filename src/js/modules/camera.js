@@ -1,21 +1,21 @@
 var Util = require('../modules/util');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var Camera = function() {
     this.rad1_base = Util.getRadian(10);
     this.rad1 = this.rad1_base;
     this.rad2 = Util.getRadian(0);
-    this.look = new Force();
+    this.look = new Force3();
     this.rotate_rad1_base = 0;
     this.rotate_rad1 = 0;
     this.rotate_rad2_base = 0;
     this.rotate_rad2 = 0;
     this.range = 1000;
     this.obj;
-    Force.call(this);
+    Force3.call(this);
   };
-  Camera.prototype = Object.create(Force.prototype);
+  Camera.prototype = Object.create(Force3.prototype);
   Camera.prototype.constructor = Camera;
   Camera.prototype.init = function(width, height) {
     this.obj = new THREE.PerspectiveCamera(35, width / height, 1, 10000);

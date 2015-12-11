@@ -1,5 +1,5 @@
 var Util = require('../modules/util');
-var Force = require('../modules/force');
+var Force3 = require('../modules/force3');
 
 var exports = function(){
   var HemiLight = function() {
@@ -10,9 +10,9 @@ var exports = function(){
     this.hex2 = 0x333333;
     this.intensity = 1;
     this.obj;
-    Force.call(this);
+    Force3.call(this);
   };
-  HemiLight.prototype = Object.create(Force.prototype);
+  HemiLight.prototype = Object.create(Force3.prototype);
   HemiLight.prototype.constructor = HemiLight;
   HemiLight.prototype.init = function(hex1, hex2) {
     if (hex1) this.hex1 = hex1;
