@@ -120,11 +120,28 @@ var exports = function(){
   };
 
   var createCommet = function() {
-    var geometry = new THREE.OctahedronGeometry(comet_radius, 2);
+    var base_geometry = new THREE.OctahedronGeometry(comet_radius, 2);
+    var geometry = new THREE.BufferGeometry();
     var material = new THREE.MeshPhongMaterial({
       color: new THREE.Color('hsl(' + comet_color_h + ', 100%, 100%)'),
       shading: THREE.FlatShading
     });
+    var positions = new Float32Array(base_geometry.vertices.length * 3);
+    for (var i = 0; i < base_geometry.vertices.length; i++) {
+      positions[i * 3] = base_geometry.vertices[i].x;
+      positions[i * 3 + 1] = base_geometry.vertices[i].y;
+      positions[i * 3 + 2] = base_geometry.vertices[i].z;
+    }
+    var indices = new Uint32Array(base_geometry.faces.length * 3);
+    for (var j = 0; j < base_geometry.faces.length; j++) {
+      indices[j * 3] = base_geometry.faces[j].a;
+      indices[j * 3 + 1] = base_geometry.faces[j].b;
+      indices[j * 3 + 2] = base_geometry.faces[j].c;
+    }
+    geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.attributes.position.dynamic = true;
+    geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+    geometry.index.dynamic = true;
     return new THREE.Mesh(geometry, material);
   };
 
