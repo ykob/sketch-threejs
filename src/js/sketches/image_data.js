@@ -100,13 +100,14 @@ var exports = function(){
       } else {
         mover.applyDrag(0.035);
       }
-      
       mover.updateVelocity();
       mover.updatePosition();
       mover.position.sub(points.position);
       positions[i * 3 + 0] = mover.position.x - points.position.x;
       positions[i * 3 + 1] = mover.position.y - points.position.x;
       positions[i * 3 + 2] = mover.position.z - points.position.x;
+      mover.size = Util.getRandomInt(12, 60)
+      sizes[i] = mover.size;
     }
     points.updatePoints();
   };
