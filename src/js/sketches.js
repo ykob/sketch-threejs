@@ -3,7 +3,7 @@ module.exports = [
     name: 'image data',
     obj: require('./sketches/image_data'),
     posted: '2015.12.9',
-    update: '',
+    update: '2015.12.12',
     description: 'Points based CanvasRenderingContext2D.getImageData()',
   },
   {
@@ -17,7 +17,7 @@ module.exports = [
     name: 'comet',
     obj: require('./sketches/comet'),
     posted: '2015.11.24',
-    update: '2015.12.2',
+    update: '2015.12.12',
     description: 'camera to track the moving points.',
   },
   {
