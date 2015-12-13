@@ -1,4 +1,5 @@
 var Util = require('../modules/util');
+var Force2 = require('../modules/force2');
 var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
 var HemiLight = require('../modules/hemiLight');
@@ -11,6 +12,7 @@ var exports = function(){
   var Sketch = function() {};
   var movers_num = 10000;
   var movers = [];
+  var mover_activate_count = 2;
   var points = new Points();
   var hemi_light = new HemiLight();
   var comet_light1 = new PointLight();
@@ -21,11 +23,15 @@ var exports = function(){
   var sizes = new Float32Array(movers_num);
   var comet = null;
   var comet_radius = 30;
+  var comet_scale = new Force2();
   var comet_color_h = 150;
   var planet = null;
   var last_time_activate = Date.now();
+  var last_time_plus_activate = Date.now();
+  var last_time_bounce = Date.now();
   var plus_acceleration = 0;
   var is_touched = false;
+  var is_plus_activate = false;
 
   var updateMover = function() {
     for (var i = 0; i < movers.length; i++) {
@@ -75,7 +81,7 @@ var exports = function(){
         mover.a = 1;
         mover.size = 25;
         count++;
-        if (count >= 5) break;
+        if (count >= mover_activate_count) break;
       }
       last_time_activate = Date.now();
     }
@@ -96,6 +102,26 @@ var exports = function(){
     var radius = comet_radius * 0.8;
     comet_light1.obj.position.copy(Util.getSpherical(Util.getRadian(0),  Util.getRadian(0), radius).add(points.position));
     comet_light2.obj.position.copy(Util.getSpherical(Util.getRadian(180), Util.getRadian(0), radius).add(points.position));
+  };
+
+  var bounceComet = function() {
+    if (Date.now() - last_time_bounce > 1000) {
+      comet_scale.applyForce(new THREE.Vector2(0.08, 0));
+      last_time_bounce = Date.now();
+      is_plus_activate = true;
+      last_time_plus_activate = Date.now();
+    }
+    if (is_plus_activate && Date.now() - last_time_plus_activate < 500) {
+      mover_activate_count = 6;
+    } else {
+      mover_activate_count = 1;
+    }
+    comet_scale.applyHook(0, 0.1);
+    comet_scale.applyDrag(0.1);
+    comet_scale.updateVelocity();
+    comet_scale.updatePosition();
+    comet.scale.set(1 + comet_scale.position.x, 1 + comet_scale.position.x, 1 + comet_scale.position.x);
+    console.log(comet_scale.position);
   };
 
   var createTexture = function() {
@@ -246,6 +272,7 @@ var exports = function(){
       camera.lookAtCenter();
       camera.obj.lookAt(points.position);
       rotateCometColor();
+      bounceComet();
     },
     touchStart: function(scene, camera, vector) {
       is_touched = true;
