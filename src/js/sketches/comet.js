@@ -105,8 +105,8 @@ var exports = function(){
   };
 
   var bounceComet = function() {
-    if (Date.now() - last_time_bounce > 1000) {
-      comet_scale.applyForce(new THREE.Vector2(0.08, 0));
+    if (Date.now() - last_time_bounce > 1000 - plus_acceleration * 3) {
+      comet_scale.applyForce(new THREE.Vector2(0.08 + plus_acceleration / 5000, 0));
       last_time_bounce = Date.now();
       is_plus_activate = true;
       last_time_plus_activate = Date.now();
@@ -117,7 +117,7 @@ var exports = function(){
       mover_activate_count = 1;
     }
     comet_scale.applyHook(0, 0.1);
-    comet_scale.applyDrag(0.1);
+    comet_scale.applyDrag(0.12);
     comet_scale.updateVelocity();
     comet_scale.updatePosition();
     comet.scale.set(1 + comet_scale.position.x, 1 + comet_scale.position.x, 1 + comet_scale.position.x);
