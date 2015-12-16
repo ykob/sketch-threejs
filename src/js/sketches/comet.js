@@ -121,7 +121,6 @@ var exports = function(){
     comet_scale.updateVelocity();
     comet_scale.updatePosition();
     comet.scale.set(1 + comet_scale.position.x, 1 + comet_scale.position.x, 1 + comet_scale.position.x);
-    console.log(comet_scale.position);
   };
 
   var createTexture = function() {
