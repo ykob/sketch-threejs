@@ -112,9 +112,9 @@ var exports = function(){
       last_time_plus_activate = Date.now();
     }
     if (is_plus_activate && Date.now() - last_time_plus_activate < 500) {
-      mover_activate_count = 6;
+      mover_activate_count = 6 + Math.floor(plus_acceleration / 40);
     } else {
-      mover_activate_count = 1;
+      mover_activate_count = 1 + Math.floor(plus_acceleration / 40);
     }
     comet_scale.applyHook(0, 0.1);
     comet_scale.applyDrag(0.12);
@@ -138,7 +138,7 @@ var exports = function(){
     ctx.fillStyle = grad;
     ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
     ctx.fill();
-    
+
     texture = new THREE.Texture(canvas);
     texture.minFilter = THREE.NearestFilter;
     texture.needsUpdate = true;
