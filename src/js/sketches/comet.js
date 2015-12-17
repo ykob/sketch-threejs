@@ -197,13 +197,15 @@ var exports = function(){
         var mover = new Mover();
         var h = Util.getRandomInt(comet_color_h - 60, comet_color_h + 60);
         var s = Util.getRandomInt(60, 80);
-        var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 70%)');
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
+        mover.color = new THREE.Color('hsl(' + h + ', ' + s + '%, 70%)');
         movers.push(mover);
         positions[i * 3 + 0] = mover.position.x;
         positions[i * 3 + 1] = mover.position.y;
         positions[i * 3 + 2] = mover.position.z;
-        color.toArray(colors, i * 3);
+        colors[i * 3 + 0] = mover.color.r;
+        colors[i * 3 + 1] = mover.color.g;
+        colors[i * 3 + 2] = mover.color.b;
         opacities[i] = mover.a;
         sizes[i] = mover.size;
       }
