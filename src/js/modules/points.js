@@ -34,6 +34,7 @@ var exports = function(){
     this.obj.geometry.attributes.position.needsUpdate = true;
     this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
     this.obj.geometry.attributes.size.needsUpdate = true;
+    this.obj.geometry.attributes.customColor.needsUpdate = true;
   };
   return Points;
 };
