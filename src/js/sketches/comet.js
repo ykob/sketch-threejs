@@ -56,6 +56,9 @@ var exports = function(){
       positions[i * 3 + 0] = mover.position.x - points.position.x;
       positions[i * 3 + 1] = mover.position.y - points.position.y;
       positions[i * 3 + 2] = mover.position.z - points.position.z;
+      colors[i * 3 + 0] = mover.color.r;
+      colors[i * 3 + 1] = mover.color.g;
+      colors[i * 3 + 2] = mover.color.b;
       opacities[i] = mover.a;
       sizes[i] = mover.size;
     }
@@ -74,9 +77,12 @@ var exports = function(){
         var range = Util.getRandomInt(1, 30);
         var vector = Util.getSpherical(rad1, rad2, range);
         var force = Util.getSpherical(rad1, rad2, range / 20);
+        var h = Util.getRandomInt(comet_color_h - 60, comet_color_h + 60) - plus_acceleration / 1.5;
+        var s = Util.getRandomInt(60, 80);
         vector.add(points.position);
         mover.activate();
         mover.init(vector);
+        mover.color.setHSL(h / 360, s / 100, 0.7);
         mover.applyForce(force);
         mover.a = 1;
         mover.size = 25;
