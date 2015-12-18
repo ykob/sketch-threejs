@@ -24,7 +24,8 @@ var exports = function(){
   var comet = null;
   var comet_radius = 30;
   var comet_scale = new Force2();
-  var comet_color_h = 150;
+  var comet_color_h = 140;
+  var color_diff = 45;
   var planet = null;
   var last_time_activate = Date.now();
   var last_time_plus_activate = Date.now();
@@ -77,7 +78,7 @@ var exports = function(){
         var range = Util.getRandomInt(1, 30);
         var vector = Util.getSpherical(rad1, rad2, range);
         var force = Util.getSpherical(rad1, rad2, range / 20);
-        var h = Util.getRandomInt(comet_color_h - 60, comet_color_h + 60) - plus_acceleration / 1.5;
+        var h = Util.getRandomInt(comet_color_h - color_diff, comet_color_h + color_diff) - plus_acceleration / 1.5;
         var s = Util.getRandomInt(60, 80);
         vector.add(points.position);
         mover.activate();
@@ -201,7 +202,7 @@ var exports = function(){
       scene.add(planet);
       for (var i = 0; i < movers_num; i++) {
         var mover = new Mover();
-        var h = Util.getRandomInt(comet_color_h - 60, comet_color_h + 60);
+        var h = Util.getRandomInt(comet_color_h - color_diff, comet_color_h + color_diff);
         var s = Util.getRandomInt(60, 80);
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
         mover.color = new THREE.Color('hsl(' + h + ', ' + s + '%, 70%)');
@@ -231,13 +232,13 @@ var exports = function(){
       points.rad2 = 0;
       points.rad3 = 0;
       hemi_light.init(
-        new THREE.Color('hsl(' + (comet_color_h - 60) + ', 50%, 60%)').getHex(),
-        new THREE.Color('hsl(' + (comet_color_h + 60) + ', 50%, 60%)').getHex()
+        new THREE.Color('hsl(' + (comet_color_h - color_diff) + ', 50%, 60%)').getHex(),
+        new THREE.Color('hsl(' + (comet_color_h + color_diff) + ', 50%, 60%)').getHex()
       );
       scene.add(hemi_light.obj);
-      comet_light1.init(new THREE.Color('hsl(' + (comet_color_h - 60) + ', 60%, 50%)'));
+      comet_light1.init(new THREE.Color('hsl(' + (comet_color_h - color_diff) + ', 60%, 50%)'));
       scene.add(comet_light1.obj);
-      comet_light2.init(new THREE.Color('hsl(' + (comet_color_h + 60) + ', 60%, 50%)'));
+      comet_light2.init(new THREE.Color('hsl(' + (comet_color_h + color_diff) + ', 60%, 50%)'));
       scene.add(comet_light2.obj);
       camera.anchor = new THREE.Vector3(1500, 0, 0);
     },
@@ -268,8 +269,12 @@ var exports = function(){
       camera.anchor.y += points.position.y * 2;
       points.updatePosition();
       comet.position.copy(points.position);
+      hemi_light.obj.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
+      hemi_light.obj.groundColor.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       comet_light1.obj.position.copy(points.velocity);
+      comet_light1.obj.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       comet_light2.obj.position.copy(points.velocity);
+      comet_light2.obj.color.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       activateMover();
       updateMover();
       camera.applyHook(0, 0.025);
