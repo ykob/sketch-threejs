@@ -11,7 +11,7 @@
     "start": "gulp"
   },
   "engines": {
-    "node": "0.12.x"
+    "node": "4.x.x"
   },
   "author": "Yoichi Kobayashi",
   "license": "MIT",
@@ -21,14 +21,14 @@
     "SRC": "src"
   },
   "devDependencies": {
-    "browser-sync": "^2.9.11",
+    "browser-sync": "^2.10.1",
     "browserify": "^11.2.0",
     "gulp": "^3.9.0",
-    "gulp-ruby-sass": "^2.0.4",
-    "gulp-sequence": "^0.4.1",
+    "gulp-ruby-sass": "^2.0.6",
+    "gulp-sequence": "^0.4.3",
     "require-dir": "^0.3.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.4.0"
+    "watchify": "^3.6.1"
   },
   "dependencies": {
     "glslify": "^2.3.1"
