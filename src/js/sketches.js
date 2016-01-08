@@ -17,7 +17,7 @@ module.exports = [
     name: 'comet',
     obj: require('./sketches/comet'),
     posted: '2015.11.24',
-    update: '2015.12.12',
+    update: '2016.1.8',
     description: 'camera to track the moving points.',
   },
   {
