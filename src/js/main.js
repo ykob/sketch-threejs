@@ -15,7 +15,9 @@ var camera = null;
 
 var running = null;
 var sketches = require('./sketches');
+var sketch_id = 0;
 
+var metas = document.getElementsByTagName('meta');
 var btn_toggle_menu = document.querySelector('.btn-switch-menu');
 var menu = document.querySelector('.menu');
 var select_sketch = document.querySelector('.select-sketch');
@@ -42,8 +44,8 @@ var initThree = function() {
 };
 
 var init = function() {
-  var sketch_id = getParameterByName('sketch_id');
-  if (sketch_id == null || sketch_id > sketches.length || sketch_id < 1) sketch_id = sketches.length;
+  setSketchId();
+  changeMetaData();
   buildMenu();
   initThree();
   startRunSketch(sketches[sketches.length - sketch_id]);
@@ -59,6 +61,29 @@ var getParameterByName = function(name) {
   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
   var results = regex.exec(location.search);
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+};
+
+var setSketchId = function() {
+  sketch_id = getParameterByName('sketch_id');
+  if (sketch_id == null || sketch_id > sketches.length || sketch_id < 1) {
+    sketch_id = sketches.length;
+  }
+};
+
+var changeMetaData = function() {
+  if (getParameterByName('sketch_id')) {
+    for (var i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('property') == 'og:title') {
+        metas[i].content = sketches[sketches.length - sketch_id].name + ' | sketch of three.js';
+      }
+      if (metas[i].getAttribute('property') == 'og:description') {
+        metas[i].content = sketches[sketches.length - sketch_id].description;
+      }
+      if (metas[i].getAttribute('property') == 'og:image') {
+        metas[i].content = 'http://ykob.github.io/sketch-threejs/img/share_' + sketch_id + '.png';
+      }
+    }
+  }
 };
 
 var buildMenu = function() {
