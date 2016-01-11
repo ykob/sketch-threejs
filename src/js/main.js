@@ -73,13 +73,13 @@ var setSketchId = function() {
 var changeMetaData = function() {
   if (getParameterByName('sketch_id')) {
     for (var i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('property') == 'og:title') {
+      if (metas[i].getAttribute('property') == 'og:title' || metas[i].getAttribute('name') == 'twitter:title') {
         metas[i].content = sketches[sketches.length - sketch_id].name + ' | sketch of three.js';
       }
-      if (metas[i].getAttribute('property') == 'og:description') {
+      if (metas[i].getAttribute('property') == 'og:description' || metas[i].getAttribute('name') == 'twitter:description') {
         metas[i].content = sketches[sketches.length - sketch_id].description;
       }
-      if (metas[i].getAttribute('property') == 'og:image') {
+      if (metas[i].getAttribute('property') == 'og:image' || metas[i].getAttribute('name') == 'twitter:image') {
         metas[i].content = 'http://ykob.github.io/sketch-threejs/img/share_' + sketch_id + '.png';
       }
     }
