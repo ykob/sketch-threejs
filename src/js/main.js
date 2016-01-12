@@ -45,7 +45,6 @@ var initThree = function() {
 
 var init = function() {
   setSketchId();
-  changeMetaData();
   buildMenu();
   initThree();
   startRunSketch(sketches[sketches.length - sketch_id]);
@@ -67,22 +66,6 @@ var setSketchId = function() {
   sketch_id = getParameterByName('sketch_id');
   if (sketch_id == null || sketch_id > sketches.length || sketch_id < 1) {
     sketch_id = sketches.length;
-  }
-};
-
-var changeMetaData = function() {
-  if (getParameterByName('sketch_id')) {
-    for (var i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('property') == 'og:title' || metas[i].getAttribute('name') == 'twitter:title') {
-        metas[i].content = sketches[sketches.length - sketch_id].name + ' | sketch of three.js';
-      }
-      if (metas[i].getAttribute('property') == 'og:description' || metas[i].getAttribute('name') == 'twitter:description') {
-        metas[i].content = sketches[sketches.length - sketch_id].description;
-      }
-      if (metas[i].getAttribute('property') == 'og:image' || metas[i].getAttribute('name') == 'twitter:image') {
-        metas[i].content = 'http://ykob.github.io/sketch-threejs/img/share_' + sketch_id + '.png';
-      }
-    }
   }
 };
 
