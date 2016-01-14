@@ -30,9 +30,11 @@ var exports = function(){
   var last_time_activate = Date.now();
   var last_time_plus_activate = Date.now();
   var last_time_bounce = Date.now();
+  var last_time_touch = Date.now();
   var plus_acceleration = 0;
   var is_touched = false;
   var is_plus_activate = false;
+  var track_points = true;
 
   var updateMover = function() {
     for (var i = 0; i < movers.length; i++) {
@@ -260,13 +262,16 @@ var exports = function(){
     render: function(scene, camera) {
       accelerateComet();
       points.velocity = rotateComet();
-      camera.anchor.copy(
-        points.velocity.clone().add(
-          points.velocity.clone().sub(points.position)
-          .normalize().multiplyScalar(-400)
-        )
-      );
-      camera.anchor.y += points.position.y * 2;
+      if (track_points === true) {
+        camera.anchor.copy(
+          points.velocity.clone().add(
+            points.velocity.clone().sub(points.position)
+            .normalize().multiplyScalar(-400)
+          )
+        );
+        camera.anchor.y += points.position.y * 2;
+        camera.look.anchor.copy(points.position);
+      }
       points.updatePosition();
       comet.position.copy(points.position);
       hemi_light.obj.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
@@ -281,18 +286,31 @@ var exports = function(){
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
-      camera.lookAtCenter();
-      camera.obj.lookAt(points.position);
+      camera.look.applyHook(0, 0.2);
+      camera.look.applyDrag(0.4);
+      camera.look.updateVelocity();
+      camera.look.updatePosition();
+      camera.obj.lookAt(camera.look.position);
       rotateCometColor();
       bounceComet();
     },
     touchStart: function(scene, camera, vector) {
       is_touched = true;
+      last_time_touch = Date.now();
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
       is_touched = false;
+      if (Date.now() - last_time_touch < 100) {
+        if (track_points === true) {
+          camera.anchor.set(1200, 1200, 0);
+          camera.look.anchor.set(0, 0, 0);
+          track_points = false;
+        } else {
+          track_points = true;
+        }
+      }
     }
   };
 
