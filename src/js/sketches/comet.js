@@ -104,7 +104,7 @@ var exports = function(){
     points.rad1 = Util.getRadian(Math.sin(points.rad1_base) * 30 + plus_acceleration / 100);
     points.rad2 += Util.getRadian(0.8 + plus_acceleration / 100);
     points.rad3 += 0.01;
-    return Util.getSpherical(points.rad1, points.rad2, 400);
+    return Util.getSpherical(points.rad1, points.rad2, 350);
   };
 
   var rotateCometColor = function() {
