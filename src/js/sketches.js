@@ -1,5 +1,12 @@
 module.exports = [
   {
+    name: 'parabolic',
+    obj: require('./sketches/parabolic'),
+    posted: '2016.x.x',
+    update: '',
+    description: 'xxx',
+  },
+  {
     name: 'image data',
     obj: require('./sketches/image_data'),
     posted: '2015.12.9',
