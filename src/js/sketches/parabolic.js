@@ -1,33 +1,34 @@
 var Util = require('../modules/util');
-var Force2 = require('../modules/force2');
 var glslify = require('glslify');
-var vs = glslify('../sketches/points.vs');
-var fs = glslify('../sketches/points.fs');
+var vs = glslify('../../glsl/wiggle.vs');
+var fs = glslify('../../glsl/wiggle.fs');
 
 var exports = function(){
   var Sketch = function() {};
-  var planet = null;
+  var sphere = null;
 
-  var createPlanet = function() {
-    var geometry = new THREE.OctahedronGeometry(250, 4);
-    var material = new THREE.MeshPhongMaterial({
-      color: 0x222222,
-      shading: THREE.FlatShading
+  var createSphere = function() {
+    var geometry = new THREE.BufferGeometry();
+    geometry.fromGeometry(new THREE.OctahedronGeometry(250, 4));
+    var material = new THREE.ShaderMaterial({
+      vertexShader: vs,
+      fragmentShader: fs,
     });
     return new THREE.Mesh(geometry, material);
   };
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      planet = createPlanet();
-      scene.add(planet);
+      sphere = createSphere();
+      console.log(sphere);
+      scene.add(sphere);
       camera.anchor.set(1200, 1200, 0);
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
-      planet.geometry.dispose();
-      planet.material.dispose();
-      scene.remove(planet);
+      sphere.geometry.dispose();
+      sphere.material.dispose();
+      scene.remove(sphere);
     },
     render: function(scene, camera) {
       camera.applyHook(0, 0.025);
