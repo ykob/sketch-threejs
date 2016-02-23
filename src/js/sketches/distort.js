@@ -12,7 +12,7 @@ var exports = function(){
 
   var createSphere = function() {
     var geometry = new THREE.BufferGeometry();
-    geometry.fromGeometry(new THREE.OctahedronGeometry(250, 4));
+    geometry.fromGeometry(new THREE.OctahedronGeometry(200, 5));
     var material = new THREE.ShaderMaterial({
       uniforms: THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],
@@ -21,13 +21,20 @@ var exports = function(){
             type: 'f',
             value: 0,
           },
+          radius: {
+            type: 'f',
+            value: 1.0
+          },
+          distort: {
+            type: 'f',
+            value: 0.2
+          }
         }
       ]),
       vertexShader: vs,
       fragmentShader: fs,
       lights: true,
     });
-    console.log(material);
     return new THREE.Mesh(geometry, material);
   };
 
@@ -45,7 +52,7 @@ var exports = function(){
       scene.add(sphere);
       bg = createBackground();
       scene.add(bg);
-      light.init(0xffffff, 0x333333);
+      light.init(0xffffff, 0x666666);
       scene.add(light.obj);
       camera.anchor.set(1200, 1200, 0);
       camera.look.anchor.set(0, 0, 0);
@@ -77,6 +84,7 @@ var exports = function(){
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
+
       is_touched = false;
     }
   };
