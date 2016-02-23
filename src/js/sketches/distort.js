@@ -29,7 +29,7 @@ var exports = function(){
           },
           distort: {
             type: 'f',
-            value: 0.2
+            value: 0.4
           }
         }
       ]),
@@ -77,6 +77,7 @@ var exports = function(){
       force.updatePosition();
       sphere.material.uniforms.time.value += 1;
       sphere.material.uniforms.radius.value = force.position.x;
+      sphere.material.uniforms.distort.value = force.position.x / 2 - 0.1;
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
@@ -89,11 +90,9 @@ var exports = function(){
     },
     touchStart: function(scene, camera, vector) {
       if (force.anchor.x < 3) {
-        force.anchor.x += 0.7;
-        sphere.material.uniforms.distort.value += 0.3;
+        force.anchor.x += 0.8;
       } else {
         force.anchor.x = 1.0;
-        sphere.material.uniforms.distort.value = 0.2;
       }
       is_touched = true;
     },

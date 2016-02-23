@@ -14,7 +14,7 @@ uniform vec3 hemisphereLightGroundColor;
 void main() {
   float updateTime = time / 1000.0;
   float noise = snoise3(vec3(position / 400.1 + updateTime * 5.0));
-  vec4 mvPosition = modelViewMatrix * vec4(position * (noise * distort + radius), 1.0);
+  vec4 mvPosition = modelViewMatrix * vec4(position * (noise * pow(distort, 2.0) + radius), 1.0);
   vec3 light = vec3(0.8);
   light += dot(-hemisphereLightDirection, normal) * hemisphereLightSkyColor * 0.25;
 
