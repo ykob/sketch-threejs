@@ -14,9 +14,10 @@ var exports = function(){
   };
   HemiLight.prototype = Object.create(Force3.prototype);
   HemiLight.prototype.constructor = HemiLight;
-  HemiLight.prototype.init = function(hex1, hex2) {
+  HemiLight.prototype.init = function(hex1, hex2, intensity) {
     if (hex1) this.hex1 = hex1;
     if (hex2) this.hex2 = hex2;
+    if (intensity) this.intensity = intensity;
     this.obj = new THREE.HemisphereLight(this.hex1, this.hex2, this.intensity);
     this.position = this.obj.position;
     this.setPositionSpherical();
