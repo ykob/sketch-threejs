@@ -51,6 +51,7 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
+      document.body.className = 'bg-white';
       sphere = createSphere();
       scene.add(sphere);
       bg = createBackground();
@@ -63,6 +64,7 @@ var exports = function(){
       force.velocity.set(1, 0);
     },
     remove: function(scene) {
+      document.body.className = '';
       sphere.geometry.dispose();
       sphere.material.dispose();
       scene.remove(sphere);

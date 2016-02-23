@@ -11,14 +11,49 @@ html {
 body {
   height: 100%;
   overflow: hidden;
+  color: #fff;
   font-family: 'Josefin Sans', sans-serif;
+  transition: 0.5s;
   &.is-pointed {
     cursor: pointer;
+  }
+  &.bg-white {
+    color: #333;
+    a {
+      color: #333;
+      &:hover {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+    .btn-switch-menu {
+      div {
+        &:before, &:after {
+          background-color: #333;
+        }
+      }
+      span {
+        &:before {
+          background-color: #333;
+        }
+      }
+      &.is-active {
+        div {
+          &:before, &:after {
+            background-color: #fff;
+          }
+        }
+        span {
+          &:before {
+            background-color: #fff;
+          }
+        }
+      }
+    }
   }
 }
 a {
   color: #fff;
-  transition: 0.1s;
+  transition: 0.5s;
   &:hover {
     color: rgba(255, 255, 255, 0.5);
   }
@@ -28,7 +63,6 @@ a {
   z-index: 100;
   top: 20px;
   left: 20px;
-  color: #fff;
   .website-title {
     font-size: 1.25em;
   }
@@ -41,7 +75,6 @@ a {
   z-index: 100;
   bottom: 20px;
   left: 20px;
-  color: #fff;
   .sketch-title {
     line-height: 1;
     font-size: 9vmax;
@@ -132,6 +165,7 @@ canvas {
   padding-bottom: 2em;
   background-color: rgba(0, 0, 0, 0.75);
   transition: 0.15s;
+  color: #fff;
   font-size: 110%;
   &.is-active {
     width: 300px;
