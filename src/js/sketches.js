@@ -1,10 +1,10 @@
 module.exports = [
   {
-    name: 'parabolic',
-    obj: require('./sketches/parabolic'),
+    name: 'distort',
+    obj: require('./sketches/distort'),
     posted: '2016.x.x',
     update: '',
-    description: 'xxx',
+    description: 'using the simplex noise, distort the sphere.',
   },
   {
     name: 'image data',

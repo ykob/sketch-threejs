@@ -1,8 +1,8 @@
 var Util = require('../modules/util');
 var HemiLight = require('../modules/hemiLight');
 var glslify = require('glslify');
-var vs = glslify('../../glsl/wiggle.vs');
-var fs = glslify('../../glsl/wiggle.fs');
+var vs = glslify('../../glsl/distort.vs');
+var fs = glslify('../../glsl/distort.fs');
 
 var exports = function(){
   var Sketch = function() {};
@@ -14,22 +14,27 @@ var exports = function(){
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(new THREE.OctahedronGeometry(250, 4));
     var material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: {
-          type: 'f',
-          value: 0,
-        },
-      },
+      uniforms: THREE.UniformsUtils.merge([
+        THREE.UniformsLib['lights'],
+        {
+          time: {
+            type: 'f',
+            value: 0,
+          },
+        }
+      ]),
       vertexShader: vs,
       fragmentShader: fs,
+      lights: true,
     });
+    console.log(material);
     return new THREE.Mesh(geometry, material);
   };
 
   var createBackground = function() {
-    var geometry = new THREE.SphereGeometry(2000);
+    var geometry = new THREE.SphereGeometry(1200);
     var material = new THREE.MeshPhongMaterial({
-      side: THREE.BackSide
+      side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
   };
@@ -40,7 +45,7 @@ var exports = function(){
       scene.add(sphere);
       bg = createBackground();
       scene.add(bg);
-      light.init(0xffffff, 0x000000);
+      light.init(0xffffff, 0x333333);
       scene.add(light.obj);
       camera.anchor.set(1200, 1200, 0);
       camera.look.anchor.set(0, 0, 0);
