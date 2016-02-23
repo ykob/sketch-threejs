@@ -11,6 +11,7 @@ var exports = function(){
   var bg = null;
   var light = new HemiLight();
   var force = new Force2();
+  var time_unit = 1;
 
   var createSphere = function() {
     var geometry = new THREE.BufferGeometry();
@@ -75,7 +76,7 @@ var exports = function(){
       force.applyDrag(0.12);
       force.updateVelocity();
       force.updatePosition();
-      sphere.material.uniforms.time.value += 1;
+      sphere.material.uniforms.time.value += time_unit;
       sphere.material.uniforms.radius.value = force.position.x;
       sphere.material.uniforms.distort.value = force.position.x / 2 - 0.1;
       camera.applyHook(0, 0.025);
@@ -91,8 +92,10 @@ var exports = function(){
     touchStart: function(scene, camera, vector) {
       if (force.anchor.x < 3) {
         force.anchor.x += 0.8;
+        time_unit += 0.4;
       } else {
         force.anchor.x = 1.0;
+        time_unit = 1;
       }
       is_touched = true;
     },
