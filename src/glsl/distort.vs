@@ -18,7 +18,7 @@ void main() {
   vec3 light = vec3(0.8);
   light += dot(-hemisphereLightDirection, normal) * hemisphereLightSkyColor * 0.25;
 
-  vColor = hsv2rgb(vec3(noise * 0.1 + updateTime, 0.5, 1.0)) * light;
+  vColor = hsv2rgb(vec3(noise * distort * 0.4 + updateTime, 0.35, 1.0)) * light;
 
   gl_Position = projectionMatrix * mvPosition;
 }
