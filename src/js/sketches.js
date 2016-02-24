@@ -3,7 +3,7 @@ module.exports = [
     name: 'distort',
     obj: require('./sketches/distort'),
     posted: '2016.2.23',
-    update: '',
+    update: '2016.2.24',
     description: 'using the simplex noise, distort the sphere.',
   },
   {
