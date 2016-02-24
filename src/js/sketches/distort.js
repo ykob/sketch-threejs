@@ -62,6 +62,8 @@ var exports = function(){
       camera.look.anchor.set(0, 0, 0);
       force.anchor.set(1, 0);
       force.velocity.set(1, 0);
+      force.k = 0.045;
+      force.d = 0.16;
     },
     remove: function(scene) {
       document.body.className = '';
@@ -74,8 +76,8 @@ var exports = function(){
       scene.remove(light.obj);
     },
     render: function(scene, camera) {
-      force.applyHook(0, 0.06);
-      force.applyDrag(0.12);
+      force.applyHook(0, force.k);
+      force.applyDrag(force.d);
       force.updateVelocity();
       force.updatePosition();
       sphere.material.uniforms.time.value += time_unit;
@@ -93,9 +95,13 @@ var exports = function(){
     },
     touchStart: function(scene, camera, vector) {
       if (force.anchor.x < 3) {
+        force.k += 0.005;
+        force.d -= 0.02;
         force.anchor.x += 0.8;
         time_unit += 0.4;
       } else {
+        force.k = 0.05;
+        force.d = 0.16;
         force.anchor.x = 1.0;
         time_unit = 1;
       }
