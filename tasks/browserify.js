@@ -13,12 +13,6 @@ var files = [
     dest: './js/',
     debug: true
   },
-  {
-    entries: ['./' + CONFIG.SRC + '/js/only_demo.js'],
-    source: 'only_demo.js',
-    dest: './js/',
-    debug: false
-  }
 ];
 
 var createBundle = function(watch, options) {
