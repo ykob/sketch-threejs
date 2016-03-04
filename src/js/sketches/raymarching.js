@@ -2,12 +2,35 @@ var Util = require('../modules/util');
 var glslify = require('glslify');
 // var vs = glslify('../sketches/points.vs');
 // var fs = glslify('../sketches/points.fs');
+var vs = glslify('../sketches/raymarching.vs');
+var fs = glslify('../sketches/raymarching.fs');
 
 var exports = function(){
   var Sketch = function() {};
+  var plane_geometry = new THREE.PlaneBufferGeometry(2.0, 2.0);
+  var plane_material = new THREE.ShaderMaterial({
+    uniforms: {
+      time: {
+        type: 'f',
+        value: 0
+      },
+      resolution: {
+        type: 'v2',
+        value: new THEREE.Vector2(window.innerWidth, window.innerHeight)
+      },
+      mouse: {
+        type: 'v2',
+        value: null
+      }
+    },
+    vertexShader: vs,
+    fragmentShader: fs,
+  });
+  var plane = new THREE.Mesh(plane_geometry, plane_material);
 
   Sketch.prototype = {
     init: function(scene, camera) {
+      scene.add(plane);
       camera.range = 1400;
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
