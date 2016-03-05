@@ -2,8 +2,8 @@ var Util = require('../modules/util');
 var glslify = require('glslify');
 // var vs = glslify('../sketches/points.vs');
 // var fs = glslify('../sketches/points.fs');
-var vs = glslify('../sketches/raymarching.vs');
-var fs = glslify('../sketches/raymarching.fs');
+var vs = glslify('../../glsl/raymarching.vs');
+var fs = glslify('../../glsl/raymarching.fs');
 
 var exports = function(){
   var Sketch = function() {};
@@ -16,7 +16,7 @@ var exports = function(){
       },
       resolution: {
         type: 'v2',
-        value: new THEREE.Vector2(window.innerWidth, window.innerHeight)
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight)
       },
       mouse: {
         type: 'v2',
