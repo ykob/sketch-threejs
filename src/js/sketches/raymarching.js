@@ -20,7 +20,7 @@ var exports = function(){
       },
       mouse: {
         type: 'v2',
-        value: null
+        value: new THREE.Vector2(0, 0)
       }
     },
     vertexShader: vs,
@@ -54,6 +54,7 @@ var exports = function(){
     touchStart: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      plane_material.uniforms.mouse.value.copy(vector_mouse_move);
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
     }
