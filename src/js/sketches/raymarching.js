@@ -44,6 +44,7 @@ var exports = function(){
       camera.range = 1000;
     },
     render: function(scene, camera) {
+      plane.material.uniforms.time.value++;
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
