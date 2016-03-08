@@ -22,10 +22,16 @@ float getDistanceBox(vec3 p, vec3 size) {
   return length(max(abs(p) - size, 0.0));
 }
 
+float sdCylinder( vec3 p, vec3 c ){
+  return length(p.xz-c.xy)-c.z;
+}
+
 float getDistance(vec3 p) {
-	float d_sphere = getDistanceSphere(p, 1.3);
+  float d_sphere = getDistanceSphere(p, 1.3);
 	float d_box = getDistanceBox(p, vec3(1.0));
-	return max(d_box, -d_sphere);
+	float d1 = max(d_box, -d_sphere);
+  float d_sphere2 = getDistanceSphere(p, 0.4);
+  return min(d1, d_sphere2);
 }
 
 void main() {
