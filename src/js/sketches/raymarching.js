@@ -21,8 +21,16 @@ var exports = function(){
       },
       mouse: {
         type: 'v2',
-        value: new THREE.Vector2(0, 0)
-      }
+        value: new THREE.Vector2()
+      },
+      cPos: {
+        type: 'v3',
+        value: new THREE.Vector3()
+      },
+      cDir: {
+        type: 'v3',
+        value: new THREE.Vector3()
+      },
     },
     vertexShader: vs,
     fragmentShader: fs,
@@ -43,7 +51,9 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
+      plane.material.uniforms.cPos.value = camera.obj.position;
       scene.add(plane);
+
       camera.range = 1400;
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
@@ -63,12 +73,12 @@ var exports = function(){
     },
     render: function(scene, camera) {
       plane.material.uniforms.time.value++;
+      camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
-
     },
     touchStart: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
