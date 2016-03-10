@@ -4,7 +4,6 @@ var glslify = require('glslify');
 // var fs = glslify('../sketches/points.fs');
 var vs = glslify('../../glsl/raymarching.vs');
 var fs = glslify('../../glsl/raymarching.fs');
-var Light = require('../modules/pointLight');
 
 var exports = function(){
   var Sketch = function() {};
@@ -23,14 +22,6 @@ var exports = function(){
         type: 'v2',
         value: new THREE.Vector2()
       },
-      cPos: {
-        type: 'v3',
-        value: new THREE.Vector3()
-      },
-      cDir: {
-        type: 'v3',
-        value: new THREE.Vector3()
-      },
     },
     vertexShader: vs,
     fragmentShader: fs,
@@ -38,20 +29,8 @@ var exports = function(){
   });
   var plane = new THREE.Mesh(plane_geometry, plane_material);
 
-  var light = new Light();
-  var createBackground =  function() {
-    var geometry = new THREE.OctahedronGeometry(1500, 3);
-    var material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      shading: THREE.FlatShading,
-      side: THREE.BackSide
-    });
-    return new THREE.Mesh(geometry, material);
-  };
-
   Sketch.prototype = {
     init: function(scene, camera) {
-      plane.material.uniforms.cPos.value = camera.obj.position;
       scene.add(plane);
 
       camera.range = 1400;
@@ -59,11 +38,6 @@ var exports = function(){
       camera.rad1 = camera.rad1_base;
       camera.rad2 = Util.getRadian(0);
       camera.setPositionSpherical();
-
-      light.init(0xfffffff, 2100);
-      scene.add(light.obj);
-      bg = createBackground();
-      scene.add(bg);
     },
     remove: function(scene, camera) {
       // points.geometry.dispose();
