@@ -14,6 +14,10 @@ vec3 trans(vec3 p){
   return mod(p, 16.0) - 8.0;
 }
 
+float field(vec3 p) {
+  return 1.0 - dot(p, vec3(0.0, 1.0, 0.0));
+}
+
 float getDistanceSphere(vec3 p, float r) {
   return length(p) - r;
 }
@@ -24,7 +28,8 @@ float getDistanceBox(vec3 p, vec3 size) {
 
 float distanceFunc(vec3 p) {
   float d_sphere = getDistanceBox(p, vec3(1.0));
-  return d_sphere;
+  float d_field = field(p);
+  return max(d_sphere, -d_field);
 }
 
 vec3 getNormal(vec3 p) {
@@ -54,7 +59,7 @@ void main() {
   float distance = 0.0; // レイとオブジェクト間の最短距離
   float rLen = 0.0;     // レイに継ぎ足す長さ
   vec3  rPos = cPos;    // レイの先端位置
-  for(int i = 0; i < 64; i++){
+  for(int i = 0; i < 128; i++){
       distance = distanceFunc(rPos);
       rLen += distance;
       rPos = cPos + ray * rLen;
