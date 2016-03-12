@@ -50,7 +50,7 @@ void main() {
   vec3 cDir = vec3(0.0, 0.0, -1.0);
   vec3 cUp  = vec3(0.0, 1.0, 0.0);
   vec3 cSide = cross(cDir, cUp);
-  float targetDepth = 4.0;
+  float targetDepth = 1.8;
 
   // ray
   vec3 ray = normalize(cSide * p.x + cUp * p.y + cDir * targetDepth);
