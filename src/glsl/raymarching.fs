@@ -10,26 +10,26 @@ const float fov = angle * 0.5 * PI / 180.0;
 
 const vec3 lightDir = vec3(-0.577, 0.577, 0.577);
 
-vec3 trans(vec3 p){
-  return mod(p, 16.0) - 8.0;
+vec3 trans(vec3 p) {
+  return mod(p, 4.0) - 2.0;
 }
 
-float field(vec3 p) {
-  return 1.0 - dot(p, vec3(0.0, 1.0, 0.0));
+float dFloor(vec3 p) {
+  return dot(p, vec3(0.0, 1.0, 0.0)) + 1.0;
 }
 
-float getDistanceSphere(vec3 p, float r) {
+float dSphere(vec3 p, float r) {
   return length(p) - r;
 }
 
-float getDistanceBox(vec3 p, vec3 size) {
-  return length(max(abs(trans(p)) - size, 0.0));
+float dBox(vec3 p, vec3 size) {
+  return length(max(abs(p) - size, 0.0));
 }
 
 float distanceFunc(vec3 p) {
-  float d_sphere = getDistanceBox(p, vec3(1.0));
-  float d_field = field(p);
-  return max(d_sphere, -d_field);
+  float d1 = dSphere(trans(p), 0.3);
+  float d2 = dBox(trans(p), vec3(1.0, 0.1, 1.0));
+  return min(d1, d2);
 }
 
 vec3 getNormal(vec3 p) {
