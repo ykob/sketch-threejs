@@ -7,7 +7,9 @@ var vs = glslify('../sketches/points.vs');
 var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
-  var Sketch = function() {};
+  var Sketch = function(scene, camera) {
+    this.init(scene, camera);
+  };
   var movers_num = 10000;
   var movers = [];
   var points = new Points();
@@ -106,13 +108,13 @@ var exports = function(){
     ctx.fillStyle = grad;
     ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
     ctx.fill();
-    
+
     texture = new THREE.Texture(canvas);
     texture.minFilter = THREE.NearestFilter;
     texture.needsUpdate = true;
     return texture;
   };
-  
+
   var createBackground =  function() {
     var geometry = new THREE.OctahedronGeometry(1500, 3);
     var material = new THREE.MeshPhongMaterial({

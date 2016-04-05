@@ -3,7 +3,9 @@ var HemiLight = require('../modules/hemiLight');
 var Force3 = require('../modules/force3');
 
 var exports = function(){
-  var Sketch = function() {};
+  var Sketch = function(scene, camera) {
+    this.init(scene, camera);
+  };
   var images = [];
   var images_num = 300;
   var hemi_light = new HemiLight();
@@ -12,7 +14,7 @@ var exports = function(){
   var picked_index = -1;
   var is_clicked = false;
   var is_draged = false;
-  var get_near = false; 
+  var get_near = false;
 
   var Image = function() {
     this.rad = 0;

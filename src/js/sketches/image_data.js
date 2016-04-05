@@ -6,7 +6,9 @@ var vs = glslify('../sketches/points.vs');
 var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
-  var Sketch = function() {};
+  var Sketch = function(scene, camera) {
+    this.init(scene, camera);
+  };
   var image = new Image();
   var image_vertices = [];
   var movers = [];

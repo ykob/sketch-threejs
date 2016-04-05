@@ -9,7 +9,9 @@ var vs = glslify('../sketches/points.vs');
 var fs = glslify('../sketches/points.fs');
 
 var exports = function(){
-  var Sketch = function() {};
+  var Sketch = function(scene, camera) {
+    this.init(scene, camera);
+  };
   var movers_num = 10000;
   var movers = [];
   var mover_activate_count = 2;

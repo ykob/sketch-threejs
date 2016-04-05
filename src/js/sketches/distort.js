@@ -6,7 +6,9 @@ var vs = glslify('../../glsl/distort.vs');
 var fs = glslify('../../glsl/distort.fs');
 
 var exports = function(){
-  var Sketch = function() {};
+  var Sketch = function(scene, camera) {
+    this.init(scene, camera);
+  };
   var sphere = null;
   var bg = null;
   var light = new HemiLight();

@@ -6,8 +6,10 @@ var vs = glslify('../../glsl/raymarching.vs');
 var fs = glslify('../../glsl/raymarching.fs');
 
 var exports = function(){
-  var Sketch = function() {};
-  var plane_geometry = new THREE.PlaneBufferGeometry(2.0, 2.0);
+  var Sketch = function(scene, camera) {
+    this.init(scene, camera);
+  };
+  var plane_geometry = new THREE.PlaneBufferGeometry(200, 200);
   var plane_material = new THREE.ShaderMaterial({
     uniforms: {
       time: {
@@ -40,13 +42,14 @@ var exports = function(){
       camera.setPositionSpherical();
     },
     remove: function(scene, camera) {
-      // points.geometry.dispose();
-      // points.material.dispose();
-      // scene.remove(points.obj);
+      plane.geometry.dispose();
+      plane.material.dispose();
+      scene.remove(plane);
       camera.range = 1000;
     },
     render: function(scene, camera) {
       plane.material.uniforms.time.value++;
+      plane.lookAt(camera.obj.position);
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
