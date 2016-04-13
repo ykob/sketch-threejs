@@ -9,7 +9,7 @@ var exports = function(){
   var Sketch = function(scene, camera) {
     this.init(scene, camera);
   };
-  var plane_geometry = new THREE.PlaneBufferGeometry(200, 200);
+  var plane_geometry = new THREE.PlaneBufferGeometry(280, 280);
   var plane_material = new THREE.ShaderMaterial({
     uniforms: {
       time: {
@@ -30,7 +30,7 @@ var exports = function(){
     transparent: true
   });
   var plane = new THREE.Mesh(plane_geometry, plane_material);
-
+  
   Sketch.prototype = {
     init: function(scene, camera) {
       scene.add(plane);
