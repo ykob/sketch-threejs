@@ -4,15 +4,11 @@ uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
 
+varying mat4 m_matrix;
+
 // uniform vec3 cPos;
 // uniform vec3 cDir;
 // uniform vec3 cUp;
-
-varying mat4 m_matrix;
-
-const float PI = 3.14159265;
-const float angle = 60.0;
-const float fov = angle * 0.5 * PI / 180.0;
 
 const vec3 lightDir = vec3(0.577, -0.577, 0.577);
 
