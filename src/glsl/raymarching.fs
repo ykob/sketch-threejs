@@ -1,16 +1,9 @@
-precision highp float;
-
 uniform float time;
-uniform vec2 mouse;
 uniform vec2 resolution;
-uniform vec3 cPos;
 
 varying mat4 m_matrix;
 
 // const vec3 cPos = vec3(0.0, 0.0, 10.0);
-const vec3 cDir = vec3(1.0, 0.0, 0.0);
-const vec3 cUp  = vec3(0.0, 1.0, 0.0);
-const vec3 cSide = cross(cDir, cUp);
 const float targetDepth = 3.5;
 const vec3 lightDir = vec3(0.577, -0.577, 0.577);
 
@@ -56,15 +49,19 @@ vec3 getNormal(vec3 p) {
 void main() {
   vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
 
+  vec3 cDir = normalize(cameraPosition * -1.0);
+  vec3 cUp  = vec3(0.0, 1.0, 0.0);
+  vec3 cSide = cross(cDir, cUp);
+
   vec3 ray = normalize(cSide * p.x + cUp * p.y + cDir * targetDepth);
 
   float distance = 0.0;
   float rLen = 0.0;
-  vec3  rPos = cPos;
+  vec3 rPos = cameraPosition;
   for(int i = 0; i < 64; i++){
     distance = distanceFunc(rPos);
     rLen += distance;
-    rPos = cPos + ray * rLen * 0.2;
+    rPos = cameraPosition + ray * rLen * 0.2;
   }
 
   vec3 normal = getNormal(rPos);
@@ -75,6 +72,6 @@ void main() {
       gl_FragColor = vec4(hsv2rgb(vec3(dot(normal, cUp) * 0.1 + time / 200.0, 0.8, dot(normal, cUp) * 0.2 + 0.8)), 1.0);
     }
   } else {
-    gl_FragColor = vec4(1.0);
+    gl_FragColor = vec4(0.0);
   }
 }
