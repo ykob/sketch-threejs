@@ -23,6 +23,7 @@
   "devDependencies": {
     "browser-sync": "^2.10.1",
     "browserify": "^11.2.0",
+    "glsl-inverse": "^1.0.0",
     "gulp": "^3.9.0",
     "gulp-ruby-sass": "^2.0.6",
     "gulp-sequence": "^0.4.3",

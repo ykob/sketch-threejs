@@ -9,7 +9,7 @@ var exports = function(){
   var Sketch = function(scene, camera) {
     this.init(scene, camera);
   };
-  var plane_geometry = new THREE.PlaneBufferGeometry(280, 280);
+  var plane_geometry = new THREE.PlaneBufferGeometry(2.8, 2.8);
   var plane_material = new THREE.ShaderMaterial({
     uniforms: {
       time: {
@@ -20,9 +20,9 @@ var exports = function(){
         type: 'v2',
         value: new THREE.Vector2(window.innerWidth, window.innerHeight)
       },
-      mouse: {
-        type: 'v2',
-        value: new THREE.Vector2()
+      cPos: {
+        type: 'v3',
+        value: new THREE.Vector3()
       },
     },
     vertexShader: vs,
@@ -30,15 +30,16 @@ var exports = function(){
     transparent: true
   });
   var plane = new THREE.Mesh(plane_geometry, plane_material);
-  
+
   Sketch.prototype = {
     init: function(scene, camera) {
+      plane_material.uniforms.cPos.value = camera.obj.position;
       scene.add(plane);
 
-      camera.range = 1400;
+      camera.range = 10;
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
-      camera.rad2 = Util.getRadian(0);
+      camera.rad2 = Util.getRadian(90);
       camera.setPositionSpherical();
     },
     remove: function(scene, camera) {
@@ -60,7 +61,6 @@ var exports = function(){
     touchStart: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      plane_material.uniforms.mouse.value.copy(vector_mouse_move);
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
     }

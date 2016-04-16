@@ -3,12 +3,11 @@ precision highp float;
 uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
+uniform vec3 cPos;
 
 varying mat4 m_matrix;
 
-// uniform vec3 cPos;
-
-const vec3 cPos = vec3(0.0, 0.0, 10.0);
+// const vec3 cPos = vec3(0.0, 0.0, 10.0);
 const vec3 cDir = vec3(0.0, 0.0, -1.0);
 const vec3 cUp  = vec3(0.0, 1.0, 0.0);
 const vec3 cSide = cross(cDir, cUp);
@@ -76,6 +75,6 @@ void main() {
       gl_FragColor = vec4(hsv2rgb(vec3(dot(normal, cUp) * 0.1 + time / 200.0, 0.8, dot(normal, cUp) * 0.2 + 0.8)), 1.0);
     }
   } else {
-    gl_FragColor = vec4(0.0);
+    gl_FragColor = vec4(1.0);
   }
 }
