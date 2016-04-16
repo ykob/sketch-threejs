@@ -9,7 +9,7 @@ var exports = function(){
   var Sketch = function(scene, camera) {
     this.init(scene, camera);
   };
-  var plane_geometry = new THREE.PlaneBufferGeometry(2.8, 2.8);
+  var plane_geometry = new THREE.PlaneBufferGeometry(5.0, 5.0);
   var plane_material = new THREE.ShaderMaterial({
     uniforms: {
       time: {
@@ -36,10 +36,10 @@ var exports = function(){
       plane_material.uniforms.cPos.value = camera.obj.position;
       scene.add(plane);
 
-      camera.range = 10;
+      camera.range = 20;
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
-      camera.rad2 = Util.getRadian(90);
+      camera.rad2 = Util.getRadian(180);
       camera.setPositionSpherical();
     },
     remove: function(scene, camera) {
@@ -51,6 +51,11 @@ var exports = function(){
     render: function(scene, camera) {
       plane.material.uniforms.time.value++;
       plane.lookAt(camera.obj.position);
+      plane.position.set(
+        Math.sin(Util.getRadian(plane.material.uniforms.time.value)) * 4,
+        0,
+        Math.cos(Util.getRadian(plane.material.uniforms.time.value)) * 8
+      );
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);

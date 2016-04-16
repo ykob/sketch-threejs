@@ -8,10 +8,10 @@ uniform vec3 cPos;
 varying mat4 m_matrix;
 
 // const vec3 cPos = vec3(0.0, 0.0, 10.0);
-const vec3 cDir = vec3(0.0, 0.0, -1.0);
+const vec3 cDir = vec3(1.0, 0.0, 0.0);
 const vec3 cUp  = vec3(0.0, 1.0, 0.0);
 const vec3 cSide = cross(cDir, cUp);
-const float targetDepth = 1.8;
+const float targetDepth = 3.5;
 const vec3 lightDir = vec3(0.577, -0.577, 0.577);
 
 #pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
