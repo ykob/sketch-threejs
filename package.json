@@ -21,17 +21,17 @@
     "SRC": "src"
   },
   "devDependencies": {
-    "browser-sync": "^2.10.1",
+    "browser-sync": "^2.12.3",
     "browserify": "^11.2.0",
-    "glsl-inverse": "^1.0.0",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-ruby-sass": "^2.0.6",
-    "gulp-sequence": "^0.4.3",
+    "gulp-sequence": "^0.4.5",
     "require-dir": "^0.3.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.6.1"
+    "watchify": "^3.7.0"
   },
   "dependencies": {
+    "glsl-inverse": "^1.0.0",
     "glsl-noise": "0.0.0",
     "glslify": "^2.3.1"
   }
