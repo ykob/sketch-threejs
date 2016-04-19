@@ -157,7 +157,7 @@ var setEvent = function () {
 
   window.addEventListener('mouseout', function () {
     event.preventDefault();
-    touchEnd(0, 0, false);
+    mouseOut();
   });
 
   btn_toggle_menu.addEventListener('click', function(event) {
@@ -186,6 +186,11 @@ var touchMove = function(x, y, touch_event) {
 var touchEnd = function(x, y, touch_event) {
   vector_mouse_end.set(x, y);
   if (running.touchEnd) running.touchEnd(scene, camera, vector_mouse_end);
+};
+
+var mouseOut = function() {
+  vector_mouse_end.set(0, 0);
+  if (running.mouseOut) running.mouseOut(scene, camera);
 };
 
 var switchMenu = function() {

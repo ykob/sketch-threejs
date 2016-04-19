@@ -176,6 +176,9 @@ var exports = function(){
     touchEnd: function(scene, camera, vector_mouse_end) {
       camera.anchor.z = 0;
       camera.anchor.y = 0;
+    },
+    mouseOut: function(scene, camera) {
+      this.touchEnd(scene, camera)
     }
   };
 

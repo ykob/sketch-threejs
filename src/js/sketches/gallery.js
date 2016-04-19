@@ -171,6 +171,9 @@ var exports = function(){
       }
       is_clicked = false;
       is_draged = false;
+    },
+    mouseOut: function(scene, camera, vector) {
+      this.touchEnd(scene, camera, vector)
     }
   };
   return Sketch;

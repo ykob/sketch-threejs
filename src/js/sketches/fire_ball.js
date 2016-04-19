@@ -202,6 +202,9 @@ var exports = function(){
       is_draged = false;
       points.anchor.set(0, 0, 0);
       light.anchor.set(0, 0, 0);
+    },
+    mouseOut: function(scene, camera) {
+      this.touchEnd(scene, camera)
     }
   };
 

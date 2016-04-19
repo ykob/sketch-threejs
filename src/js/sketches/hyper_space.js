@@ -171,6 +171,9 @@ var exports = function(){
       camera.anchor.z = 0;
       camera.anchor.y = 0;
       is_touched = false;
+    },
+    mouseOut: function(scene, camera) {
+      this.touchEnd(scene, camera)
     }
   };
 

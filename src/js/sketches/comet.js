@@ -313,6 +313,9 @@ var exports = function(){
           track_points = true;
         }
       }
+    },
+    mouseOut: function(scene, camera) {
+      this.touchEnd(scene, camera)
     }
   };
 
