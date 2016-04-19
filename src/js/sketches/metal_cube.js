@@ -1,5 +1,6 @@
 var Util = require('../modules/util');
 var glslify = require('glslify');
+var Force3 = require('../modules/force3');
 var HemiLight = require('../modules/hemiLight');
 // var vs = glslify('../sketches/points.vs');
 // var fs = glslify('../sketches/points.fs');
@@ -12,6 +13,8 @@ var exports = function(){
   };
   var light = new HemiLight();
   var raycaster = new THREE.Raycaster();
+  var cube_force = new Force3();
+  cube_force.mass = 1.4;
 
   var createPlaneForRaymarching = function() {
     var geometry = new THREE.PlaneBufferGeometry(6.0, 6.0);
@@ -24,7 +27,7 @@ var exports = function(){
         resolution: {
           type: 'v2',
           value: new THREE.Vector2(window.innerWidth, window.innerHeight)
-        },
+        }
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -34,18 +37,24 @@ var exports = function(){
     mesh.name = 'MetalCube';
     return mesh;
   };
-  var createBackground = function() {
-    var geometry = new THREE.SphereGeometry(80, 32, 32);
+  var createBackground =  function() {
+    var geometry = new THREE.OctahedronGeometry(100, 3);
     var material = new THREE.MeshPhongMaterial({
-      side: THREE.DoubleSide,
-      // shading: THREE.FlatShading
+      color: 0xffffff,
+      shading: THREE.FlatShading,
+      side: THREE.BackSide
     });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.name = 'Background';
     return mesh;
   };
-  var moveMetalCube = function() {
 
+  var moveMetalCube = function() {
+    cube_force.anchor.copy(Util.getSpherical(
+      Util.getRadian(Util.getRandomInt(-20, 20)),
+      Util.getRadian(Util.getRandomInt(0, 360)),
+      Util.getRandomInt(30, 90) / 10
+    ));
   };
 
   var plane = createPlaneForRaymarching();
@@ -61,7 +70,7 @@ var exports = function(){
       scene.add(light.obj);
 
       camera.range = 24;
-      camera.rad1_base = Util.getRadian(30);
+      camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
       camera.rad2 = Util.getRadian(90);
       camera.setPositionSpherical();
@@ -77,6 +86,11 @@ var exports = function(){
       camera.range = 1000;
     },
     render: function(scene, camera) {
+      cube_force.applyHook(0, 0.2);
+      cube_force.applyDrag(0.1);
+      cube_force.updateVelocity();
+      cube_force.updatePosition();
+      plane.position.copy(cube_force.position);
       plane.material.uniforms.time.value++;
       plane.lookAt(camera.obj.position);
       camera.setPositionSpherical();
@@ -87,13 +101,15 @@ var exports = function(){
       camera.lookAtCenter();
     },
     touchStart: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      raycaster.setFromCamera(vector_mouse_down, camera.obj);
-      var intersects = raycaster.intersectObjects(scene.children)[0];
-      if(intersects && intersects.object.name == 'MetalCube') {
-        console.log('picked Metal Cube!');
-      }
+
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      if (cube_force.acceleration.length() > 0.1) return;
+      raycaster.setFromCamera(vector_mouse_move, camera.obj);
+      var intersects = raycaster.intersectObjects(scene.children)[0];
+      if(intersects && intersects.object.name == 'MetalCube') {
+        moveMetalCube();
+      }
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
     },
