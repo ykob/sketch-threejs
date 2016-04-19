@@ -11,33 +11,44 @@ var exports = function(){
     this.init(scene, camera);
   };
   var light = new HemiLight();
+  var raycaster = new THREE.Raycaster();
 
+  var createPlaneForRaymarching = function() {
+    var geometry = new THREE.PlaneBufferGeometry(6.0, 6.0);
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+        resolution: {
+          type: 'v2',
+          value: new THREE.Vector2(window.innerWidth, window.innerHeight)
+        },
+      },
+      vertexShader: vs,
+      fragmentShader: fs,
+      transparent: true
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'MetalCube';
+    return mesh;
+  };
   var createBackground = function() {
     var geometry = new THREE.SphereGeometry(80, 32, 32);
     var material = new THREE.MeshPhongMaterial({
       side: THREE.DoubleSide,
       // shading: THREE.FlatShading
     });
-    return new THREE.Mesh(geometry, material);
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'Background';
+    return mesh;
+  };
+  var moveMetalCube = function() {
+
   };
 
-  var plane_geometry = new THREE.PlaneBufferGeometry(6.0, 6.0);
-  var plane_material = new THREE.ShaderMaterial({
-    uniforms: {
-      time: {
-        type: 'f',
-        value: 0
-      },
-      resolution: {
-        type: 'v2',
-        value: new THREE.Vector2(window.innerWidth, window.innerHeight)
-      },
-    },
-    vertexShader: vs,
-    fragmentShader: fs,
-    transparent: true
-  });
-  var plane = new THREE.Mesh(plane_geometry, plane_material);
+  var plane = createPlaneForRaymarching();
   var bg = createBackground();
 
   Sketch.prototype = {
@@ -66,7 +77,7 @@ var exports = function(){
       camera.range = 1000;
     },
     render: function(scene, camera) {
-      plane_material.uniforms.time.value++;
+      plane.material.uniforms.time.value++;
       plane.lookAt(camera.obj.position);
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
@@ -76,10 +87,17 @@ var exports = function(){
       camera.lookAtCenter();
     },
     touchStart: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      raycaster.setFromCamera(vector_mouse_down, camera.obj);
+      var intersects = raycaster.intersectObjects(scene.children)[0];
+      if(intersects && intersects.object.name == 'MetalCube') {
+        console.log('picked Metal Cube!');
+      }
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
+    },
+    mouseOut: function(scene, camera) {
     }
   };
 
