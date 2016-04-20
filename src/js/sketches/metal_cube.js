@@ -4,8 +4,8 @@ var Force3 = require('../modules/force3');
 var HemiLight = require('../modules/hemiLight');
 // var vs = glslify('../sketches/points.vs');
 // var fs = glslify('../sketches/points.fs');
-var vs = glslify('../../glsl/raymarching.vs');
-var fs = glslify('../../glsl/raymarching.fs');
+var vs = glslify('../../glsl/metal_cube.vs');
+var fs = glslify('../../glsl/metal_cube.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -15,7 +15,7 @@ var exports = function(){
   var raycaster = new THREE.Raycaster();
   var intersects = null;
   var cube_force = new Force3();
-  var vactor_raycast = new THREE.Vector2();
+  var vactor_raycast = new THREE.Vector2(2, -2);
   cube_force.mass = 1.4;
 
   var createPlaneForRaymarching = function() {
@@ -60,6 +60,7 @@ var exports = function(){
     raycaster.setFromCamera(vector, camera.obj);
     intersects = raycaster.intersectObjects(scene.children)[0];
     if(intersects && intersects.object.name == 'MetalCube') {
+      console.log(vector, intersects);
       cube_force.anchor.copy(Util.getSpherical(
         Util.getRadian(Util.getRandomInt(-20, 20)),
         Util.getRadian(Util.getRandomInt(0, 360)),
