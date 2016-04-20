@@ -86,12 +86,12 @@ var exports = function(){
       camera.range = 1000;
     },
     render: function(scene, camera) {
-      cube_force.applyHook(0, 0.2);
+      cube_force.applyHook(0, 0.12);
       cube_force.applyDrag(0.1);
       cube_force.updateVelocity();
       cube_force.updatePosition();
       plane.position.copy(cube_force.position);
-      plane.material.uniforms.time.value++;
+      plane.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 6);
       plane.lookAt(camera.obj.position);
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
