@@ -1,4 +1,5 @@
 uniform float time;
+uniform float acceleration;
 uniform vec2 resolution;
 
 varying mat4 m_matrix;
@@ -24,9 +25,9 @@ float distanceFunc(vec3 p) {
   vec4 p1 = m_matrix * vec4(p, 1.0);
   float n1 = getNoise(p1.xyz);
   vec3 p2 = getRotate(p1.xyz);
-  float d1 = dBox(p2, vec3(0.8)) - 0.2;
+  float d1 = dBox(p2, vec3(0.8 - acceleration)) - 0.2;
   float d2 = dBox(p2, vec3(1.0)) - n1;
-  float d3 = dBox(p2, vec3(0.5)) - n1;
+  float d3 = dBox(p2, vec3(0.5 + acceleration * 0.4)) - n1;
   return min(max(d1, -d2), d3);
 }
 
@@ -34,7 +35,7 @@ float distanceFuncForFill(vec3 p) {
   vec4 p1 = m_matrix * vec4(p, 1.0);
   float n = getNoise(p1.xyz);
   vec3 p2 = getRotate(p1.xyz);
-  return dBox(p2, vec3(0.5)) - n;
+  return dBox(p2, vec3(0.5 + acceleration * 0.4)) - n;
 }
 
 vec3 getNormal(vec3 p) {

@@ -24,6 +24,10 @@ var exports = function(){
           type: 'f',
           value: 0
         },
+        acceleration: {
+          type: 'f',
+          value: 0
+        },
         resolution: {
           type: 'v2',
           value: new THREE.Vector2(window.innerWidth, window.innerHeight)
@@ -87,11 +91,12 @@ var exports = function(){
     },
     render: function(scene, camera) {
       cube_force.applyHook(0, 0.12);
-      cube_force.applyDrag(0.1);
+      cube_force.applyDrag(0.01);
       cube_force.updateVelocity();
       cube_force.updatePosition();
       plane.position.copy(cube_force.position);
-      plane.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 6);
+      plane.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
+      plane.material.uniforms.acceleration.value = cube_force.acceleration.length();
       plane.lookAt(camera.obj.position);
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
