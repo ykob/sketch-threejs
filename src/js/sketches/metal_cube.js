@@ -6,6 +6,8 @@ var HemiLight = require('../modules/hemiLight');
 // var fs = glslify('../sketches/points.fs');
 var vs = glslify('../../glsl/metal_cube.vs');
 var fs = glslify('../../glsl/metal_cube.fs');
+var vs_bg = glslify('../../glsl/background.vs');
+var fs_bg = glslify('../../glsl/background.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -44,11 +46,28 @@ var exports = function(){
     return mesh;
   };
   var createBackground =  function() {
-    var geometry = new THREE.OctahedronGeometry(100, 3);
-    var material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+    var geometry_base = new THREE.OctahedronGeometry(30, 4);
+    var geometry = new THREE.BufferGeometry();
+    geometry.fromGeometry(geometry_base);
+    var material = new THREE.ShaderMaterial({
+      uniforms: THREE.UniformsUtils.merge([
+        THREE.UniformsLib['lights'],
+        {
+          time: {
+            type: 'f',
+            value: 0,
+          },
+          acceleration: {
+            type: 'f',
+            value: 0
+          },
+        }
+      ]),
+      vertexShader: vs_bg,
+      fragmentShader: fs_bg,
       shading: THREE.FlatShading,
-      side: THREE.BackSide
+      side: THREE.BackSide,
+      lights: true,
     });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.name = 'Background';
@@ -76,7 +95,7 @@ var exports = function(){
       scene.add(plane);
       scene.add(bg);
 
-      light.rad1 = Util.getRadian(90);
+      light.rad1 = Util.getRadian(-45);
       light.init(0x777777, 0x111111);
       scene.add(light.obj);
 
@@ -106,6 +125,7 @@ var exports = function(){
       plane.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
       plane.material.uniforms.acceleration.value = cube_force.acceleration.length();
       plane.lookAt(camera.obj.position);
+      bg.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
