@@ -14,7 +14,7 @@ const vec3 lightDir = vec3(0.577, -0.577, 0.577);
 #pragma glslify: dBox = require(./modules/raymarching/dBox)
 
 float getNoise(vec3 p) {
-  return snoise3(p * 0.4 + time / 100.0);
+  return snoise3(p * (0.4 + acceleration * 0.1) + time / 100.0);
 }
 
 vec3 getRotate(vec3 p) {
@@ -25,7 +25,7 @@ float distanceFunc(vec3 p) {
   vec4 p1 = m_matrix * vec4(p, 1.0);
   float n1 = getNoise(p1.xyz);
   vec3 p2 = getRotate(p1.xyz);
-  float d1 = dBox(p2, vec3(0.8 - acceleration)) - 0.2;
+  float d1 = dBox(p2, vec3(0.8 - min(acceleration, 0.8))) - 0.2;
   float d2 = dBox(p2, vec3(1.0)) - n1;
   float d3 = dBox(p2, vec3(0.5 + acceleration * 0.4)) - n1;
   return min(max(d1, -d2), d3);
