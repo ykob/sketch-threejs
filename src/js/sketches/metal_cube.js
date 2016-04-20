@@ -13,7 +13,9 @@ var exports = function(){
   };
   var light = new HemiLight();
   var raycaster = new THREE.Raycaster();
+  var intersects = null;
   var cube_force = new Force3();
+  var vactor_raycast = new THREE.Vector2();
   cube_force.mass = 1.4;
 
   var createPlaneForRaymarching = function() {
@@ -53,12 +55,17 @@ var exports = function(){
     return mesh;
   };
 
-  var moveMetalCube = function() {
-    cube_force.anchor.copy(Util.getSpherical(
-      Util.getRadian(Util.getRandomInt(-20, 20)),
-      Util.getRadian(Util.getRandomInt(0, 360)),
-      Util.getRandomInt(30, 90) / 10
-    ));
+  var moveMetalCube = function(scene, camera, vector) {
+    if (cube_force.acceleration.length() > 0.1) return;
+    raycaster.setFromCamera(vector, camera.obj);
+    intersects = raycaster.intersectObjects(scene.children)[0];
+    if(intersects && intersects.object.name == 'MetalCube') {
+      cube_force.anchor.copy(Util.getSpherical(
+        Util.getRadian(Util.getRandomInt(-20, 20)),
+        Util.getRadian(Util.getRandomInt(0, 360)),
+        Util.getRandomInt(30, 90) / 10
+      ));
+    }
   };
 
   var plane = createPlaneForRaymarching();
@@ -90,6 +97,7 @@ var exports = function(){
       camera.range = 1000;
     },
     render: function(scene, camera) {
+      moveMetalCube(scene, camera, vactor_raycast);
       cube_force.applyHook(0, 0.12);
       cube_force.applyDrag(0.01);
       cube_force.updateVelocity();
@@ -109,12 +117,7 @@ var exports = function(){
 
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      if (cube_force.acceleration.length() > 0.1) return;
-      raycaster.setFromCamera(vector_mouse_move, camera.obj);
-      var intersects = raycaster.intersectObjects(scene.children)[0];
-      if(intersects && intersects.object.name == 'MetalCube') {
-        moveMetalCube();
-      }
+      vactor_raycast.copy(vector_mouse_move);
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
     },
