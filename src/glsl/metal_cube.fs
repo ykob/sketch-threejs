@@ -1,4 +1,5 @@
 uniform float time;
+uniform float time2;
 uniform float acceleration;
 uniform vec2 resolution;
 
@@ -18,7 +19,7 @@ float getNoise(vec3 p) {
 }
 
 vec3 getRotate(vec3 p) {
-  return rotate(p, radians(time), radians(time * 2.0), radians(time));
+  return rotate(p, radians(time2), radians(time2 * 2.0), radians(time2));
 }
 
 float distanceFunc(vec3 p) {
@@ -68,9 +69,9 @@ void main() {
   vec3 normal = getNormal(rPos);
   if(abs(distance) < 0.5){
     if (distanceFuncForFill(rPos) > 0.5) {
-      gl_FragColor = vec4(hsv2rgb(vec3(dot(normal, cUp) * 0.8 + time / 200.0, 0.2, dot(normal, cUp) * 0.8 + 0.1)), 1.0);
+      gl_FragColor = vec4(hsv2rgb(vec3(dot(normal, cUp) * 0.8 + time / 400.0, 0.2, dot(normal, cUp) * 0.8 + 0.1)), 1.0);
     } else {
-      gl_FragColor = vec4(hsv2rgb(vec3(dot(normal, cUp) * 0.1 + time / 200.0, 0.8, dot(normal, cUp) * 0.2 + 0.8)), 1.0);
+      gl_FragColor = vec4(hsv2rgb(vec3(dot(normal, cUp) * 0.1 + time / 400.0, 0.8, dot(normal, cUp) * 0.2 + 0.8)), 1.0);
     }
   } else {
     gl_FragColor = vec4(0.0);

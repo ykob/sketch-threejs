@@ -28,6 +28,10 @@ var exports = function(){
           type: 'f',
           value: 0
         },
+        time2: {
+          type: 'f',
+          value: 0,
+        },
         acceleration: {
           type: 'f',
           value: 0
@@ -122,10 +126,12 @@ var exports = function(){
       cube_force.updateVelocity();
       cube_force.updatePosition();
       plane.position.copy(cube_force.position);
-      plane.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
+      plane.material.uniforms.time.value++;
+      plane.material.uniforms.time2.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
       plane.material.uniforms.acceleration.value = cube_force.acceleration.length();
       plane.lookAt(camera.obj.position);
-      bg.material.uniforms.time.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
+      bg.material.uniforms.time.value++;
+      bg.material.uniforms.acceleration.value = cube_force.acceleration.length();
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);

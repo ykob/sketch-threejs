@@ -1,4 +1,5 @@
 uniform float time;
+uniform float acceleration;
 uniform vec3 hemisphereLightDirection;
 uniform vec3 hemisphereLightSkyColor;
 uniform vec3 hemisphereLightGroundColor;
