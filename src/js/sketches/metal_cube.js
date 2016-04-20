@@ -15,7 +15,7 @@ var exports = function(){
   var raycaster = new THREE.Raycaster();
   var intersects = null;
   var cube_force = new Force3();
-  var vactor_raycast = new THREE.Vector2(2, -2);
+  var vactor_raycast = null;
   cube_force.mass = 1.4;
 
   var createPlaneForRaymarching = function() {
@@ -56,11 +56,10 @@ var exports = function(){
   };
 
   var moveMetalCube = function(scene, camera, vector) {
-    if (cube_force.acceleration.length() > 0.1) return;
+    if (cube_force.acceleration.length() > 0.1 || !vector) return;
     raycaster.setFromCamera(vector, camera.obj);
     intersects = raycaster.intersectObjects(scene.children)[0];
     if(intersects && intersects.object.name == 'MetalCube') {
-      console.log(vector, intersects);
       cube_force.anchor.copy(Util.getSpherical(
         Util.getRadian(Util.getRandomInt(-20, 20)),
         Util.getRadian(Util.getRandomInt(0, 360)),
@@ -118,7 +117,7 @@ var exports = function(){
 
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      vactor_raycast.copy(vector_mouse_move);
+      vactor_raycast = vector_mouse_move;
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
     },
