@@ -11,16 +11,17 @@ varying mat4 invertMatrix;
 #pragma glslify: rotate = require(./modules/raymarching/rotate)
 
 vec3 getRotate(vec3 p) {
-  return rotate(p, radians(time / 6.0), radians(time / 6.0), radians(time / 6.0));
+  return rotate(p, radians(time / 6.0), radians(time / 7.0), radians(time / 8.0));
 }
 
 void main() {
   float updateTime = time / 400.0;
   float noise = snoise3(vec3(position / 5.1 + updateTime * 0.5));
+  vec3 update_position = getRotate(position + 0.8 * noise);
 
-  vPosition = getRotate(position + 0.6 * noise);
-  vColor = hsv2rgb(vec3(updateTime, 0.4, 1.0));
+  vPosition = update_position;
+  vColor = hsv2rgb(vec3(updateTime + position.y / 400.0, 0.4, 1.0));
   invertMatrix = inverse(modelMatrix);
 
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(getRotate(position + 0.6 * noise), 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(update_position, 1.0);
 }
