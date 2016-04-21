@@ -16,12 +16,13 @@ vec3 getRotate(vec3 p) {
 
 void main() {
   float updateTime = time / 400.0;
-  float noise = snoise3(vec3(position / 5.1 + updateTime * 0.5));
-  vec3 update_position = getRotate(position + 0.8 * noise);
+  vec3 p_rotate = getRotate(position);
+  float noise = snoise3(vec3(p_rotate / 12.1 + updateTime * 0.5));
+  vec3 p_noise = p_rotate + p_rotate * noise / 20.0 * (min(acceleration, 6.0) + 1.0);
 
-  vPosition = update_position;
-  vColor = hsv2rgb(vec3(updateTime + position.y / 400.0, 0.4, 1.0));
+  vPosition = p_noise;
+  vColor = hsv2rgb(vec3(updateTime + position.y / 400.0, 0.05 + min(acceleration / 10.0, 0.25), 1.0));
   invertMatrix = inverse(modelMatrix);
 
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(update_position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(p_noise, 1.0);
 }

@@ -17,6 +17,7 @@ var exports = function(){
   var raycaster = new THREE.Raycaster();
   var intersects = null;
   var cube_force = new Force3();
+  var cube_force2 = new Force3();
   var vactor_raycast = null;
   cube_force.mass = 1.4;
 
@@ -88,6 +89,7 @@ var exports = function(){
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRandomInt(30, 90) / 10
       ));
+      cube_force2.applyForce(new THREE.Vector3(1, 0, 0));
     }
   };
 
@@ -125,13 +127,17 @@ var exports = function(){
       cube_force.applyDrag(0.01);
       cube_force.updateVelocity();
       cube_force.updatePosition();
+      cube_force2.applyHook(0, 0.005);
+      cube_force2.applyDrag(0.2);
+      cube_force2.updateVelocity();
+      cube_force2.updatePosition();
       plane.position.copy(cube_force.position);
       plane.material.uniforms.time.value++;
       plane.material.uniforms.time2.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
       plane.material.uniforms.acceleration.value = cube_force.acceleration.length();
       plane.lookAt(camera.obj.position);
       bg.material.uniforms.time.value++;
-      bg.material.uniforms.acceleration.value = cube_force.acceleration.length();
+      bg.material.uniforms.acceleration.value = cube_force2.position.length();
       camera.setPositionSpherical();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
