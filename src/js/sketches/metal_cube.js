@@ -154,6 +154,9 @@ var exports = function(){
     touchEnd: function(scene, camera, vector_mouse_end) {
     },
     mouseOut: function(scene, camera) {
+    },
+    resizeWindow: function(scene, camera) {
+      plane.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
     }
   };
 

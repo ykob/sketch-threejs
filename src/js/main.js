@@ -114,6 +114,7 @@ var resizeRenderer = function() {
   body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
   camera.resize(body_width, body_height);
+  resizeWindow();
 };
 
 var setEvent = function () {
@@ -198,5 +199,10 @@ var switchMenu = function() {
   menu.classList.toggle('is-active');
   document.body.classList.remove('is-pointed');
 };
+
+var resizeWindow = function() {
+  if (running.resizeWindow) running.resizeWindow(scene, camera);
+};
+
 
 init();
