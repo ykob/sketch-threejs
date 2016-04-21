@@ -2,7 +2,7 @@ module.exports = [
   {
     name: 'metal cube',
     obj: require('./sketches/metal_cube'),
-    posted: '2016.x.xx',
+    posted: '2016.4.21',
     update: '',
     description: 'study of raymarching using three.js.',
   },
