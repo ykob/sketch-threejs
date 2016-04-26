@@ -5,6 +5,8 @@ var HemiLight = require('../modules/hemiLight');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/distort.vs');
 var fs = glslify('../../glsl/distort.fs');
+var vs_pp = glslify('../../glsl/base_posteffect.vs');
+var fs_pp = glslify('../../glsl/distort_posteffect.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -63,11 +65,16 @@ var exports = function(){
   };
 
   var createPlaneForPostProcess = function() {
-    var geometry = new THREE.PlaneGeometry(800, 800);
-    var material = new THREE.MeshLambertMaterial({
-        color: 0xffffff,
-        map: render_target,
-        side: THREE.DoubleSide
+    var geometry = new THREE.PlaneGeometry(2, 2);
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        framebuffer: {
+          type: 't',
+          value: render_target,
+        }
+      },
+      vertexShader: vs_pp,
+      fragmentShader: fs_pp,
     });
     return new THREE.Mesh(geometry, material);
   }
@@ -111,7 +118,6 @@ var exports = function(){
       scene.remove(light.obj);
     },
     render: function(scene, camera, renderer) {
-      plane.lookAt(camera.obj.position);
       force.applyHook(0, force.k);
       force.applyDrag(force.d);
       force.updateVelocity();
@@ -138,7 +144,9 @@ var exports = function(){
       camera.look.updateVelocity();
       camera.look.updatePosition();
       camera.obj.lookAt(camera.look.position);
+
       renderer.render(sub_scene, sub_camera.obj, render_target);
+      // plane.material.uniforms.framebuffer.texture = render_target;
     },
     touchStart: function(scene, camera, vector) {
       if (force.anchor.x < 3) {
