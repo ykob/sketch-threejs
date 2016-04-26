@@ -66,6 +66,7 @@ var exports = function(){
 
   var createPlaneForPostProcess = function() {
     var geometry = new THREE.PlaneGeometry(2, 2);
+
     var material = new THREE.ShaderMaterial({
       uniforms: {
         framebuffer: {
@@ -169,6 +170,9 @@ var exports = function(){
     },
     mouseOut: function(scene, camera) {
       this.touchEnd(scene, camera)
+    },
+    resizeWindow: function(scene, camera) {
+      sub_camera.resize(window.innerWidth, window.innerHeight);
     }
   };
 
