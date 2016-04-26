@@ -65,11 +65,16 @@ var exports = function(){
   };
 
   var createPlaneForPostProcess = function() {
-    var geometry = new THREE.PlaneGeometry(2, 2);
-
+    var geometry_base = new THREE.PlaneGeometry(2, 2);
+    var geometry = new THREE.BufferGeometry();
+    geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
       uniforms: {
-        framebuffer: {
+        resolution: {
+          type: 'v2',
+          value: new THREE.Vector2(window.innerWidth, window.innerHeight)
+        },
+        texture: {
           type: 't',
           value: render_target,
         }
@@ -147,7 +152,6 @@ var exports = function(){
       camera.obj.lookAt(camera.look.position);
 
       renderer.render(sub_scene, sub_camera.obj, render_target);
-      // plane.material.uniforms.framebuffer.texture = render_target;
     },
     touchStart: function(scene, camera, vector) {
       if (force.anchor.x < 3) {
