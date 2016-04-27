@@ -26,7 +26,7 @@ var exports = function(){
     wrapS: THREE.ClampToEdgeWrapping,
     wrapT: THREE.ClampToEdgeWrapping
   })
-  var plane = null;
+  var framebuffer = null;
 
   var createSphere = function() {
     var geometry = new THREE.BufferGeometry();
@@ -93,8 +93,8 @@ var exports = function(){
       sub_scene.add(sphere);
       bg = createBackground();
       sub_scene.add(bg);
-      plane = createPlaneForPostProcess();
-      scene.add(plane);
+      framebuffer = createPlaneForPostProcess();
+      scene.add(framebuffer);
       light.init(0xffffff, 0x666666);
       scene.add(light.obj);
       sub_light.init(0xffffff, 0x666666);
@@ -118,9 +118,9 @@ var exports = function(){
       bg.material.dispose();
       sub_scene.remove(bg);
       sub_scene.remove(sub_light.obj);
-      plane.geometry.dispose();
-      plane.material.dispose();
-      scene.remove(plane);
+      framebuffer.geometry.dispose();
+      framebuffer.material.dispose();
+      scene.remove(framebuffer);
       scene.remove(light.obj);
     },
     render: function(scene, camera, renderer) {
@@ -177,6 +177,7 @@ var exports = function(){
     },
     resizeWindow: function(scene, camera) {
       sub_camera.resize(window.innerWidth, window.innerHeight);
+      framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
     }
   };
 
