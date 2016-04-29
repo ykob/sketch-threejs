@@ -28,7 +28,8 @@ var sketch_description = document.querySelector('.sketch-description');
 var initThree = function() {
   canvas = document.getElementById('canvas');
   renderer = new THREE.WebGLRenderer({
-    antialias: true
+    antialias: true,
+    toneMapping: THREE.NoToneMapping
   });
   if (!renderer) {
     alert('Three.jsの初期化に失敗しました。');

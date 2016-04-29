@@ -1,7 +1,6 @@
 var Util = require('../modules/util');
 var Camera = require('../modules/camera');
 var Force2 = require('../modules/force2');
-var HemiLight = require('../modules/hemiLight');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/distort.vs');
 var fs = glslify('../../glsl/distort.fs');
@@ -14,10 +13,10 @@ var exports = function(){
   };
   var sphere = null;
   var bg = null;
-  var light = new HemiLight();
+  var light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var sub_scene = new THREE.Scene();
   var sub_camera = new Camera();
-  var sub_light = new HemiLight();
+  var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var force = new Force2();
   var time_unit = 1;
   var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {
@@ -32,26 +31,22 @@ var exports = function(){
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(new THREE.OctahedronGeometry(200, 5));
     var material = new THREE.ShaderMaterial({
-      uniforms: THREE.UniformsUtils.merge([
-        THREE.UniformsLib['lights'],
-        {
-          time: {
-            type: 'f',
-            value: 0,
-          },
-          radius: {
-            type: 'f',
-            value: 1.0
-          },
-          distort: {
-            type: 'f',
-            value: 0.4
-          }
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+        radius: {
+          type: 'f',
+          value: 1.0
+        },
+        distort: {
+          type: 'f',
+          value: 0.4
         }
-      ]),
+      },
       vertexShader: vs,
       fragmentShader: fs,
-      lights: true,
     });
     return new THREE.Mesh(geometry, material);
   };
@@ -70,14 +65,22 @@ var exports = function(){
     geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
       uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
         resolution: {
           type: 'v2',
           value: new THREE.Vector2(window.innerWidth, window.innerHeight)
         },
+        acceleration: {
+          type: 'f',
+          value: 0
+        },
         texture: {
           type: 't',
           value: render_target,
-        }
+        },
       },
       vertexShader: vs_pp,
       fragmentShader: fs_pp,
@@ -93,14 +96,13 @@ var exports = function(){
       sub_scene.add(sphere);
       bg = createBackground();
       sub_scene.add(bg);
-      framebuffer = createPlaneForPostProcess();
-      scene.add(framebuffer);
-      light.init(0xffffff, 0x666666);
-      scene.add(light.obj);
-      sub_light.init(0xffffff, 0x666666);
-      sub_scene.add(sub_light.obj);
+      sub_scene.add(sub_light);
       sub_camera.anchor.set(1800, 1800, 0);
       sub_camera.look.anchor.set(0, 0, 0);
+
+      framebuffer = createPlaneForPostProcess();
+      scene.add(framebuffer);
+      scene.add(light);
       camera.anchor.set(1800, 1800, 0);
       camera.look.anchor.set(0, 0, 0);
       force.anchor.set(1, 0);
@@ -128,6 +130,7 @@ var exports = function(){
       force.applyDrag(force.d);
       force.updateVelocity();
       force.updatePosition();
+      // console.log(force.acceleration.length());
       sphere.material.uniforms.time.value += time_unit;
       sphere.material.uniforms.radius.value = force.position.x;
       sphere.material.uniforms.distort.value = force.position.x / 2 - 0.1;
@@ -141,6 +144,8 @@ var exports = function(){
       sub_camera.look.updatePosition();
       sub_camera.obj.lookAt(sub_camera.look.position);
 
+      framebuffer.material.uniforms.time.value += 0.4;
+      framebuffer.material.uniforms.acceleration.value = force.acceleration.length();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();

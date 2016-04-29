@@ -1,9 +1,6 @@
 var Util = require('../modules/util');
 var glslify = require('glslify');
 var Force3 = require('../modules/force3');
-var HemiLight = require('../modules/hemiLight');
-// var vs = glslify('../sketches/points.vs');
-// var fs = glslify('../sketches/points.fs');
 var vs = glslify('../../glsl/metal_cube.vs');
 var fs = glslify('../../glsl/metal_cube.fs');
 var vs_bg = glslify('../../glsl/background.vs');
@@ -13,7 +10,6 @@ var exports = function(){
   var Sketch = function(scene, camera) {
     this.init(scene, camera);
   };
-  var light = new HemiLight();
   var raycaster = new THREE.Raycaster();
   var intersects = null;
   var cube_force = new Force3();
@@ -55,24 +51,20 @@ var exports = function(){
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
-      uniforms: THREE.UniformsUtils.merge([
-        THREE.UniformsLib['lights'],
-        {
-          time: {
-            type: 'f',
-            value: 0,
-          },
-          acceleration: {
-            type: 'f',
-            value: 0
-          },
-        }
-      ]),
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+        acceleration: {
+          type: 'f',
+          value: 0
+        },
+      },
       vertexShader: vs_bg,
       fragmentShader: fs_bg,
       shading: THREE.FlatShading,
-      side: THREE.BackSide,
-      lights: true,
+      side: THREE.BackSide
     });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.name = 'Background';
@@ -101,10 +93,6 @@ var exports = function(){
       scene.add(plane);
       scene.add(bg);
 
-      light.rad1 = Util.getRadian(-45);
-      light.init(0x777777, 0x111111);
-      scene.add(light.obj);
-
       camera.range = 24;
       camera.rad1_base = Util.getRadian(0);
       camera.rad1 = camera.rad1_base;
@@ -118,7 +106,6 @@ var exports = function(){
       bg.geometry.dispose();
       bg.material.dispose();
       scene.remove(bg);
-      scene.remove(light.obj);
       camera.range = 1000;
     },
     render: function(scene, camera) {
