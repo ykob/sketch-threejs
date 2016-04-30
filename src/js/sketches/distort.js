@@ -144,7 +144,7 @@ var exports = function(){
       sub_camera.look.updatePosition();
       sub_camera.obj.lookAt(sub_camera.look.position);
 
-      framebuffer.material.uniforms.time.value += 0.4;
+      framebuffer.material.uniforms.time.value += time_unit;
       framebuffer.material.uniforms.acceleration.value = force.acceleration.length();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
