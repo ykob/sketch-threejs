@@ -9,14 +9,18 @@ varying vec2 vUv;
 
 #pragma glslify: random2 = require(./modules/random2)
 
+vec2 diffUv(float v, float diff) {
+  return vUv + (vec2(v, 0.0) * diff + vec2(v * 2.0, 0.0)) / resolution;
+}
+
 float randomNoise(vec2 p) {
   return (random2(p - vec2(sin(time))) * 2.0 - 1.0) * max(length(acceleration), 0.05);
 }
 
 void main() {
-  float diff = 600.0 * length(acceleration);
-  vec2 uv_g = vUv + vec2(cos(time * 2.0), 0.0) * diff / resolution;
-  vec2 uv_b = vUv + vec2(cos(-time * 2.0), 0.0) * diff / resolution;
+  float diff = 300.0 * length(acceleration);
+  vec2 uv_g = diffUv(1.0, diff);
+  vec2 uv_b = diffUv(-1.0, diff);
   float r = texture2D(texture, vUv).r + randomNoise(vUv);
   float g = texture2D(texture, uv_g).g + randomNoise(uv_g);
   float b = texture2D(texture, uv_b).b + randomNoise(uv_b);
