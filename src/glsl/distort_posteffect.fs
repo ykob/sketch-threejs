@@ -14,9 +14,9 @@ float randomNoise(vec2 p) {
 }
 
 void main() {
-  float diff = 300.0 * length(acceleration);
-  vec2 uv_g = vUv + vec2(cos(time), sin(time)) * diff / resolution;
-  vec2 uv_b = vUv + vec2(cos(-time), sin(-time)) * diff / resolution;
+  float diff = 600.0 * length(acceleration);
+  vec2 uv_g = vUv + vec2(cos(time * 2.0), 0.0) * diff / resolution;
+  vec2 uv_b = vUv + vec2(cos(-time * 2.0), 0.0) * diff / resolution;
   float r = texture2D(texture, vUv).r + randomNoise(vUv);
   float g = texture2D(texture, uv_g).g + randomNoise(uv_g);
   float b = texture2D(texture, uv_b).b + randomNoise(uv_b);
