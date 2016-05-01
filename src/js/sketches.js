@@ -1,5 +1,12 @@
 module.exports = [
   {
+    name: 'hole',
+    obj: require('./sketches/hole'),
+    posted: '2016.5.xx',
+    update: '',
+    description: '',
+  },
+  {
     name: 'metal cube',
     obj: require('./sketches/metal_cube'),
     posted: '2016.4.21',
