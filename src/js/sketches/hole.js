@@ -73,11 +73,6 @@ var exports = function(){
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
-      document.body.className = '';
-
-      sphere.geometry.dispose();
-      sphere.material.dispose();
-      sub_scene.remove(sphere);
       bg.geometry.dispose();
       bg.material.dispose();
       sub_scene.remove(bg);
@@ -121,6 +116,7 @@ var exports = function(){
     mouseOut: function(scene, camera) {
     },
     resizeWindow: function(scene, camera) {
+      render_target.setSize(window.innerWidth, window.innerHeight);
       sub_camera.resize(window.innerWidth, window.innerHeight);
       framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
     }

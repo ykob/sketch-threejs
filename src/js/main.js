@@ -2,8 +2,6 @@ var Util = require('./modules/util');
 var debounce = require('./modules/debounce');
 var Camera = require('./modules/camera');
 
-var body_width = document.body.clientWidth;
-var body_height = document.body.clientHeight;
 var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
 var vector_mouse_end = new THREE.Vector2();
@@ -34,14 +32,14 @@ var initThree = function() {
   if (!renderer) {
     alert('Three.jsの初期化に失敗しました。');
   }
-  renderer.setSize(body_width, body_height);
+  renderer.setSize(window.innerWidth, window.innerHeight);
   canvas.appendChild(renderer.domElement);
   renderer.setClearColor(0x111111, 1.0);
 
   scene = new THREE.Scene();
 
   camera = new Camera();
-  camera.init(body_width, body_height);
+  camera.init(window.innerWidth, window.innerHeight);
 };
 
 var init = function() {
@@ -111,10 +109,8 @@ var renderloop = function() {
 };
 
 var resizeRenderer = function() {
-  body_width  = document.body.clientWidth;
-  body_height = document.body.clientHeight;
-  renderer.setSize(body_width, body_height);
-  camera.resize(body_width, body_height);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.resize(window.innerWidth, window.innerHeight);
   resizeWindow();
 };
 
@@ -169,8 +165,8 @@ var setEvent = function () {
 };
 
 var transformVector2d = function(vector) {
-  vector.x = (vector.x / body_width) * 2 - 1;
-  vector.y = - (vector.y / body_height) * 2 + 1;
+  vector.x = (vector.x / window.innerWidth) * 2 - 1;
+  vector.y = - (vector.y / window.innerHeight) * 2 + 1;
 };
 
 var touchStart = function(x, y, touch_event) {

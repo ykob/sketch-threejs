@@ -181,6 +181,7 @@ var exports = function(){
       this.touchEnd(scene, camera)
     },
     resizeWindow: function(scene, camera) {
+      render_target.setSize(window.innerWidth, window.innerHeight);
       sub_camera.resize(window.innerWidth, window.innerHeight);
       framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
     }
