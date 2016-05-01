@@ -119,11 +119,11 @@ var exports = function(){
       bg.geometry.dispose();
       bg.material.dispose();
       sub_scene.remove(bg);
-      sub_scene.remove(sub_light.obj);
+      sub_scene.remove(sub_light);
       framebuffer.geometry.dispose();
       framebuffer.material.dispose();
       scene.remove(framebuffer);
-      scene.remove(light.obj);
+      scene.remove(light);
     },
     render: function(scene, camera, renderer) {
       force.applyHook(0, force.k);
