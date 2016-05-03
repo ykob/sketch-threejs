@@ -4,7 +4,7 @@ var Force2 = require('../modules/force2');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/distort.vs');
 var fs = glslify('../../glsl/distort.fs');
-var vs_pp = glslify('../../glsl/base_posteffect.vs');
+var vs_pp = glslify('../../glsl/distort_posteffect.vs');
 var fs_pp = glslify('../../glsl/distort_posteffect.fs');
 
 var exports = function(){

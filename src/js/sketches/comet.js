@@ -5,8 +5,8 @@ var Points = require('../modules/points.js');
 var HemiLight = require('../modules/hemiLight');
 var PointLight = require('../modules/pointLight');
 var glslify = require('glslify');
-var vs = glslify('../sketches/points.vs');
-var fs = glslify('../sketches/points.fs');
+var vs = glslify('../../glsl/points.vs');
+var fs = glslify('../../glsl/points.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {

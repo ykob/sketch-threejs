@@ -2,8 +2,8 @@ var Util = require('../modules/util');
 var Mover = require('../modules/mover');
 var glslify = require('glslify');
 var Points = require('../modules/points.js');
-var vs = glslify('../sketches/points.vs');
-var fs = glslify('../sketches/points.fs');
+var vs = glslify('../../glsl/points.vs');
+var fs = glslify('../../glsl/points.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
