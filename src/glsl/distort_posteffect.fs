@@ -19,9 +19,10 @@ float randomNoise(vec2 p) {
 
 void main() {
   float diff = 300.0 * length(acceleration);
+  vec2 uv_r = diffUv(0.0, diff);
   vec2 uv_g = diffUv(1.0, diff);
   vec2 uv_b = diffUv(-1.0, diff);
-  float r = texture2D(texture, vUv).r + randomNoise(vUv);
+  float r = texture2D(texture, uv_r).r + randomNoise(uv_r);
   float g = texture2D(texture, uv_g).g + randomNoise(uv_g);
   float b = texture2D(texture, uv_b).b + randomNoise(uv_b);
   gl_FragColor = vec4(r, g, b, 1.0);
