@@ -119,7 +119,7 @@ var exports = function(){
       sub_scene.add(points);
       sub_scene.add(sub_light);
       sub_camera.init(window.innerWidth, window.innerHeight);
-      sub_camera.anchor.set(1800, 1800, 0);
+      sub_camera.anchor.set(3000, 0, 0);
       sub_camera.look.anchor.set(0, 0, 0);
 
       framebuffer = createPlaneForFramebuffer();
@@ -127,7 +127,7 @@ var exports = function(){
       bg = createBackground();
       scene.add(bg);
       scene.add(light);
-      camera.anchor.set(1800, 1800, 0);
+      camera.anchor.set(3000, 0, 0);
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
