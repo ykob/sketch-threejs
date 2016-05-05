@@ -3,7 +3,7 @@ uniform vec2 resolution;
 uniform sampler2D texture;
 uniform sampler2D texture2;
 
-const float blur = 24.0;
+const float blur = 20.0;
 
 varying vec2 vUv;
 

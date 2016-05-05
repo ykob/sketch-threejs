@@ -5,7 +5,7 @@ uniform vec2 resolution;
 uniform float size;
 
 void main() {
-  float radius = min(resolution.x, resolution.y) * cos(radians(time * 2.0) + radian.z);
+  float radius = max(min(resolution.x, resolution.y), 600.0) * cos(radians(time * 2.0) + radian.z);
   float radian_base = radians(time * 2.0);
   vec3 update_positon = position + vec3(
     cos(radian_base + radian.x) * cos(radian_base + radian.y) * radius,
