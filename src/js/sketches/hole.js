@@ -20,19 +20,14 @@ var exports = function(){
   var sub_scene = new THREE.Scene();
   var sub_camera = new Camera();
   var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
-  var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {
-    magFilter: THREE.NearestFilter,
-    minFilter: THREE.NearestFilter,
-    wrapS: THREE.ClampToEdgeWrapping,
-    wrapT: THREE.ClampToEdgeWrapping
-  })
+  var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var framebuffer = null;
 
   var createPointsForCrossFade = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
     var radians_base = [];
-    for (let i = 0; i < 16 ; i ++) {
+    for (let i = 0; i < 32; i ++) {
       var x = 0;
       var y = 0;
       var z = 0;
@@ -58,7 +53,7 @@ var exports = function(){
         },
         size: {
           type: 'f',
-          value: 32.0
+          value: 30.0
         },
         // texture: {
         //   type: 't',

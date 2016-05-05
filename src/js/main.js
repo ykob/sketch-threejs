@@ -34,7 +34,7 @@ var initThree = function() {
   }
   renderer.setSize(window.innerWidth, window.innerHeight);
   canvas.appendChild(renderer.domElement);
-  renderer.setClearColor(0x111111, 1.0);
+  renderer.setClearColor(0x000000, 1.0);
 
   scene = new THREE.Scene();
 
