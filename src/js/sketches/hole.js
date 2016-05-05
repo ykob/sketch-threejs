@@ -23,6 +23,13 @@ var exports = function(){
   var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var framebuffer = null;
 
+  var createSphereForCrossFade = function() {
+    var geometry = new THREE.SphereGeometry(400, 32, 32);
+    var material = new THREE.MeshBasicMaterial({
+    });
+    return new THREE.Mesh(geometry, material);
+  }
+
   var createPointsForCrossFade = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
@@ -53,7 +60,7 @@ var exports = function(){
         },
         size: {
           type: 'f',
-          value: 30.0
+          value: 28.0
         },
         // texture: {
         //   type: 't',
@@ -110,6 +117,8 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
+      sphere = createSphereForCrossFade();
+      sub_scene.add(sphere);
       points = createPointsForCrossFade();
       sub_scene.add(points);
       sub_scene.add(sub_light);
@@ -126,17 +135,20 @@ var exports = function(){
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
+      sphere.geometry.dispose();
+      sphere.material.dispose();
+      sub_scene.remove(sphere);
       points.geometry.dispose();
       points.material.dispose();
       sub_scene.remove(points);
-      bg.geometry.dispose();
-      bg.material.dispose();
-      sub_scene.remove(bg);
       sub_scene.remove(sub_light);
 
       framebuffer.geometry.dispose();
       framebuffer.material.dispose();
       scene.remove(framebuffer);
+      bg.geometry.dispose();
+      bg.material.dispose();
+      scene.remove(bg);
       scene.remove(light);
     },
     render: function(scene, camera, renderer) {

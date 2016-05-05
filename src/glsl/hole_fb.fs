@@ -3,7 +3,7 @@ uniform vec2 resolution;
 uniform sampler2D texture;
 uniform sampler2D texture2;
 
-const float blur = 10.0;
+const float blur = 24.0;
 
 varying vec2 vUv;
 
@@ -20,5 +20,5 @@ void main() {
   }
   vec4 color2 = color / pow(blur, 2.0);
   vec4 color3 = texture2D(texture2, uv);
-  gl_FragColor = vec4(color3.rgb, length(color2.rgb));
+  gl_FragColor = vec4(color3.rgb, floor(length(color2.rgb)));
 }
