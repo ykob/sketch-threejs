@@ -18,17 +18,14 @@ var exports = function(){
   var light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
 
   var sub_scene = new THREE.Scene();
-  var sub_camera = new Camera();
-  var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
+  var sub_camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
   var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var framebuffer = null;
 
-  var createSphereForCrossFade = function() {
-    var geometry = new THREE.SphereGeometry(400, 32, 32);
-    var material = new THREE.MeshBasicMaterial({
-    });
-    return new THREE.Mesh(geometry, material);
-  }
+  var sub_scene2 = new THREE.Scene();
+  var sub_camera2 = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+  var bg_fb = null;
 
   var createPointsForCrossFade = function() {
     var geometry = new THREE.BufferGeometry();
@@ -80,10 +77,18 @@ var exports = function(){
     var geometry = new THREE.SphereGeometry(1800, 32, 32);
     var material = new THREE.MeshPhongMaterial({
       side: THREE.BackSide,
-      shading: THREE.FlatShading,
     });
     return new THREE.Mesh(geometry, material);
   };
+
+  var createBackgroundInFramebuffer = function() {
+    var geometry = new THREE.SphereGeometry(200, 32, 32);
+    var material = new THREE.MeshBasicMaterial({
+      side: THREE.BackSide,
+      color: 0xff2222,
+    });
+    return new THREE.Mesh(geometry, material);
+  }
 
   var createPlaneForFramebuffer = function() {
     var geometry_base = new THREE.PlaneGeometry(2, 2);
@@ -105,7 +110,7 @@ var exports = function(){
         },
         texture2: {
           type: 't',
-          value: new THREE.TextureLoader().load("img/galaxy.jpg"),
+          value: render_target2,
         },
       },
       vertexShader: vs_fb,
@@ -117,14 +122,17 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      sphere = createSphereForCrossFade();
-      sub_scene.add(sphere);
+      sub_scene2.add(sub_camera2);
+      sub_camera2.position.set(0, 0, 3000);
+      sub_camera.lookAt(0, 0, 0);
+      bg_fb = createBackgroundInFramebuffer();
+      sub_scene2.add(bg_fb);
+
       points = createPointsForCrossFade();
       sub_scene.add(points);
-      sub_scene.add(sub_light);
-      sub_camera.init(window.innerWidth, window.innerHeight);
-      sub_camera.anchor.set(3000, 0, 0);
-      sub_camera.look.anchor.set(0, 0, 0);
+      sub_scene.add(sub_camera);
+      sub_camera.position.set(0, 0, 3000);
+      sub_camera.lookAt(0, 0, 0);
 
       framebuffer = createPlaneForFramebuffer();
       scene.add(framebuffer);
@@ -135,13 +143,13 @@ var exports = function(){
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
-      sphere.geometry.dispose();
-      sphere.material.dispose();
-      sub_scene.remove(sphere);
+      bg_fb.geometry.dispose();
+      bg_fb.material.dispose();
+      sub_scene2.remove(bg_fb);
+
       points.geometry.dispose();
       points.material.dispose();
       sub_scene.remove(points);
-      sub_scene.remove(sub_light);
 
       framebuffer.geometry.dispose();
       framebuffer.material.dispose();
@@ -153,16 +161,6 @@ var exports = function(){
     },
     render: function(scene, camera, renderer) {
       points.material.uniforms.time.value++;
-      sub_camera.applyHook(0, 0.025);
-      sub_camera.applyDrag(0.2);
-      sub_camera.updateVelocity();
-      sub_camera.updatePosition();
-      sub_camera.look.applyHook(0, 0.2);
-      sub_camera.look.applyDrag(0.4);
-      sub_camera.look.updateVelocity();
-      sub_camera.look.updatePosition();
-      sub_camera.obj.lookAt(sub_camera.look.position);
-
       framebuffer.material.uniforms.time.value++;
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
@@ -173,8 +171,8 @@ var exports = function(){
       camera.look.updateVelocity();
       camera.look.updatePosition();
       camera.obj.lookAt(camera.look.position);
-
-      renderer.render(sub_scene, sub_camera.obj, render_target);
+      renderer.render(sub_scene2, sub_camera2, render_target2);
+      renderer.render(sub_scene, sub_camera, render_target);
     },
     touchStart: function(scene, camera, vector) {
     },
@@ -186,7 +184,11 @@ var exports = function(){
     },
     resizeWindow: function(scene, camera) {
       render_target.setSize(window.innerWidth, window.innerHeight);
-      sub_camera.resize(window.innerWidth, window.innerHeight);
+      render_target2.setSize(window.innerWidth, window.innerHeight);
+      sub_camera.aspect = window.innerWidth / window.innerHeight;
+      sub_camera.updateProjectionMatrix();
+      sub_camera2.aspect = window.innerWidth / window.innerHeight;
+      sub_camera2.updateProjectionMatrix();
       points.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
       framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
     }
