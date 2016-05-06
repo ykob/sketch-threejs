@@ -145,12 +145,12 @@ var exports = function(){
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
-      bg_fb.geometry.dispose();
-      bg_fb.material.dispose();
-      sub_scene2.remove(bg_fb);
       obj_fb.geometry.dispose();
       obj_fb.material.dispose();
       sub_scene2.remove(obj_fb);
+      bg_fb.geometry.dispose();
+      bg_fb.material.dispose();
+      sub_scene2.remove(bg_fb);
       sub_scene2.remove(sub_light);
 
       points.geometry.dispose();
