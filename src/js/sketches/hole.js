@@ -15,7 +15,7 @@ var exports = function(){
 
   var points = null;
   var bg = null;
-  var light = new THREE.HemisphereLight(0x666666, 0xf1f1f1, 1);
+  var light = new THREE.HemisphereLight(0xfffffff, 0xfffffff, 1);
 
   var sub_scene = new THREE.Scene();
   var sub_camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
@@ -24,7 +24,7 @@ var exports = function(){
 
   var sub_scene2 = new THREE.Scene();
   var sub_camera2 = new Camera();
-  var sub_light = new THREE.HemisphereLight(0x222222, 0xeefff1, 1);
+  var sub_light = new THREE.HemisphereLight(0x000000, 0x444444, 1);
   var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var bg_fb = null;
   var obj_fb = null;
@@ -72,7 +72,7 @@ var exports = function(){
   };
 
   var createBackground = function() {
-    var geometry = new THREE.SphereGeometry(2400, 32, 32);
+    var geometry = new THREE.SphereGeometry(1000, 32, 32);
     var material = new THREE.MeshPhongMaterial({
       side: THREE.BackSide,
       map: new THREE.TextureLoader().load('img/hole/background.jpg'),
@@ -121,18 +121,18 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
+      document.body.className = 'bg-white';
       sub_camera2.init(window.innerWidth, window.innerHeight);
-      sub_camera2.anchor.set(0, -1000, 1000);
+      sub_camera2.anchor.set(1000, 300, 0);
       sub_camera2.look.anchor.set(0, 0, 0);
       bg_fb = createObjectInFramebuffer(600, 4);
       sub_scene2.add(bg_fb);
-      obj_fb = createObjectInFramebuffer(80, 2);
+      obj_fb = createObjectInFramebuffer(60, 2);
       sub_scene2.add(obj_fb);
       sub_scene2.add(sub_light);
 
       points = createPointsForCrossFade();
       sub_scene.add(points);
-      sub_scene.add(sub_camera);
       sub_camera.position.set(0, 0, 3000);
       sub_camera.lookAt(0, 0, 0);
 
@@ -141,7 +141,7 @@ var exports = function(){
       bg = createBackground();
       scene.add(bg);
       scene.add(light);
-      camera.anchor.set(3000, -2000, 0);
+      camera.anchor.set(1000, -300, 0);
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
@@ -166,15 +166,15 @@ var exports = function(){
       scene.remove(light);
     },
     render: function(scene, camera, renderer) {
-      bg.rotation.y += 0.004;
-      obj_fb.rotation.y += 0.006;
-      bg_fb.rotation.y -= 0.004;
       points.material.uniforms.time.value++;
       framebuffer.material.uniforms.time.value++;
+      bg.rotation.y = points.material.uniforms.time.value / 200;
+      obj_fb.rotation.y = points.material.uniforms.time.value / 200;
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
       camera.updatePosition();
+      camera.look.anchor.y = Math.sin(points.material.uniforms.time.value / 100) * 100;
       camera.look.applyHook(0, 0.2);
       camera.look.applyDrag(0.4);
       camera.look.updateVelocity();
@@ -188,7 +188,7 @@ var exports = function(){
       sub_camera2.look.applyDrag(0.4);
       sub_camera2.look.updateVelocity();
       sub_camera2.look.updatePosition();
-      sub_camera2.obj.lookAt(camera.look.position);
+      sub_camera2.obj.lookAt(sub_camera2.look.position);
       renderer.render(sub_scene2, sub_camera2.obj, render_target2);
       renderer.render(sub_scene, sub_camera, render_target);
     },
