@@ -1,6 +1,7 @@
 var Util = require('../modules/util');
 var Camera = require('../modules/camera');
 var glslify = require('glslify');
+var Force2 = require('../modules/force2');
 // var vs = glslify('../../glsl/hole.vs');
 // var fs = glslify('../../glsl/hole.fs');
 var vs_points = glslify('../../glsl/hole_points.vs');
@@ -28,6 +29,8 @@ var exports = function(){
   var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var bg_fb = null;
   var obj_fb = null;
+
+  var force = new Force2();
 
   var createPointsForCrossFade = function() {
     var geometry = new THREE.BufferGeometry();
@@ -60,6 +63,10 @@ var exports = function(){
         size: {
           type: 'f',
           value: 28.0
+        },
+        force: {
+          type: 'v2',
+          value: force.velocity,
         },
       },
       vertexShader: vs_points,
@@ -122,6 +129,8 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       document.body.className = 'bg-white';
+      force.anchor.set(1, 0);
+
       sub_camera2.init(window.innerWidth, window.innerHeight);
       sub_camera2.anchor.set(1000, 300, 0);
       sub_camera2.look.anchor.set(0, 0, 0);
@@ -170,6 +179,10 @@ var exports = function(){
       framebuffer.material.uniforms.time.value++;
       bg.rotation.y = points.material.uniforms.time.value / 200;
       obj_fb.rotation.y = points.material.uniforms.time.value / 200;
+      force.applyHook(0, 0.025);
+      force.applyDrag(0.2);
+      force.updateVelocity();
+      force.updatePosition();
       camera.applyHook(0, 0.025);
       camera.applyDrag(0.2);
       camera.updateVelocity();
@@ -193,12 +206,15 @@ var exports = function(){
       renderer.render(sub_scene, sub_camera, render_target);
     },
     touchStart: function(scene, camera, vector) {
+      force.anchor.set(2, 50);
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
+      force.anchor.set(1, 0);
     },
     mouseOut: function(scene, camera) {
+      force.anchor.set(1, 0);
     },
     resizeWindow: function(scene, camera) {
       render_target.setSize(window.innerWidth, window.innerHeight);
