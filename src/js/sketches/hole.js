@@ -134,8 +134,6 @@ var exports = function(){
       sub_camera2.init(window.innerWidth, window.innerHeight);
       sub_camera2.anchor.set(1000, 300, 0);
       sub_camera2.look.anchor.set(0, 0, 0);
-      bg_fb = createObjectInFramebuffer(600, 4);
-      sub_scene2.add(bg_fb);
       obj_fb = createObjectInFramebuffer(60, 2);
       sub_scene2.add(obj_fb);
       sub_scene2.add(sub_light);
@@ -154,12 +152,11 @@ var exports = function(){
       camera.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
+      document.body.className = '';
+
       obj_fb.geometry.dispose();
       obj_fb.material.dispose();
       sub_scene2.remove(obj_fb);
-      bg_fb.geometry.dispose();
-      bg_fb.material.dispose();
-      sub_scene2.remove(bg_fb);
       sub_scene2.remove(sub_light);
 
       points.geometry.dispose();
@@ -179,7 +176,7 @@ var exports = function(){
       framebuffer.material.uniforms.time.value++;
       bg.rotation.y = points.material.uniforms.time.value / 200;
       obj_fb.rotation.y = points.material.uniforms.time.value / 200;
-      force.applyHook(0, 0.025);
+      force.applyHook(0, 0.06);
       force.applyDrag(0.2);
       force.updateVelocity();
       force.updatePosition();
@@ -193,7 +190,7 @@ var exports = function(){
       camera.look.updateVelocity();
       camera.look.updatePosition();
       camera.obj.lookAt(camera.look.position);
-      sub_camera2.applyHook(0, 0.025);
+      sub_camera2.applyHook(0, 0.1);
       sub_camera2.applyDrag(0.2);
       sub_camera2.updateVelocity();
       sub_camera2.updatePosition();
@@ -206,15 +203,18 @@ var exports = function(){
       renderer.render(sub_scene, sub_camera, render_target);
     },
     touchStart: function(scene, camera, vector) {
-      force.anchor.set(2, 50);
+      force.anchor.set(2, 40);
+      sub_camera2.anchor.set(600, -300, 0);
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
       force.anchor.set(1, 0);
+      sub_camera2.anchor.set(1000, 300, 0);
     },
     mouseOut: function(scene, camera) {
       force.anchor.set(1, 0);
+      sub_camera2.anchor.set(1000, 300, 0);
     },
     resizeWindow: function(scene, camera) {
       render_target.setSize(window.innerWidth, window.innerHeight);
