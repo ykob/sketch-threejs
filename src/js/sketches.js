@@ -1,5 +1,12 @@
 module.exports = [
   {
+    name: 'gpgpu',
+    obj: require('./sketches/gpgpu'),
+    posted: '2016.5.xx',
+    update: '',
+    description: '',
+  },
+  {
     name: 'hole',
     obj: require('./sketches/hole'),
     posted: '2016.5.10',
