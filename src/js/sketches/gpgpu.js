@@ -5,10 +5,19 @@ var glslify = require('glslify');
 var vs_points = glslify('../../glsl/hole_points.vs');
 var fs_points = glslify('../../glsl/hole_points.fs');
 
-
 var exports = function(){
   var Sketch = function(scene, camera) {
     this.init(scene, camera);
+  };
+
+  var PhysicsRenderer = function() {
+    this.vs = [];
+    this.fs = [];
+  };
+  PhysicsRenderer.prototype = {
+    render: function() {
+
+    }
   };
 
   Sketch.prototype = {
