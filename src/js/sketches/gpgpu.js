@@ -2,23 +2,62 @@ var Util = require('../modules/util');
 var Camera = require('../modules/camera');
 var glslify = require('glslify');
 
-var vs_points = glslify('../../glsl/hole_points.vs');
-var fs_points = glslify('../../glsl/hole_points.fs');
-
 var exports = function(){
   var Sketch = function(scene, camera) {
     this.init(scene, camera);
   };
 
-  var PhysicsRenderer = function() {
-    this.vs = [];
-    this.fs = [];
+  var PhysicsRenderer = function(length) {
+    this.length = Math.pow(length, 2);
+    this.scene = new THREE.Scene();
+    this.mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          time: {
+            type: 'f',
+            value: 0,
+          },
+          velocity: {
+            type: 't',
+            value: null,
+          },
+          acceleration: {
+            type: 't',
+            value: null,
+          },
+        },
+        vertexShader: glslify('../../glsl/gpgpu.vs'),
+        fragmentShader: glslify('../../glsl/gpgpu.vs'),
+      })
+    );
+    this.velocity: [
+      THREE.WebGLRenderTarget(length, length),
+      THREE.WebGLRenderTarget(length, length),
+    ];
+    this.acceleration: [
+      THREE.WebGLRenderTarget(length, length),
+      THREE.WebGLRenderTarget(length, length),
+    ];
+
+    this.scene.add(this.mesh);
   };
   PhysicsRenderer.prototype = {
     render: function() {
+      this.mesh.material.uniforms.velocity.value = this.velocity[0];
+      this.mesh.material.uniforms.acceleration.value = this.acceleration[0];
 
-    }
+    },
+    resize: function(length) {
+      this.length = Math.pow(length, 2);
+      this.velocity[0].setSize(length, length);
+      this.velocity[1].setSize(length, length);
+      this.acceleration[0].setSize(length, length);
+      this.acceleration[1].setSize(length, length);
+    },
   };
+
+  var physics_renderer = new PhysicsRenderer(100);
 
   Sketch.prototype = {
     init: function(scene, camera) {
