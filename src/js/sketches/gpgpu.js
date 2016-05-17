@@ -27,15 +27,15 @@ var exports = function(){
             value: null,
           },
         },
-        vertexShader: glslify('../../glsl/gpgpu.vs'),
-        fragmentShader: glslify('../../glsl/gpgpu.vs'),
+        vertexShader: glslify('../../glsl/physics_renderer.vs'),
+        fragmentShader: glslify('../../glsl/physics_renderer.fs'),
       })
     );
-    this.velocity: [
+    this.velocity = [
       THREE.WebGLRenderTarget(length, length),
       THREE.WebGLRenderTarget(length, length),
     ];
-    this.acceleration: [
+    this.acceleration = [
       THREE.WebGLRenderTarget(length, length),
       THREE.WebGLRenderTarget(length, length),
     ];
