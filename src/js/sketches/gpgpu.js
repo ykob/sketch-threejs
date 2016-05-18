@@ -10,6 +10,7 @@ var exports = function(){
   var PhysicsRenderer = function(length) {
     this.length = Math.pow(length, 2);
     this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
     this.mesh = new THREE.Mesh(
       new THREE.PlaneGeometry(2, 2),
       new THREE.ShaderMaterial({
@@ -43,10 +44,11 @@ var exports = function(){
     this.scene.add(this.mesh);
   };
   PhysicsRenderer.prototype = {
-    render: function() {
+    render: function(renderer) {
       this.mesh.material.uniforms.velocity.value = this.velocity[0];
       this.mesh.material.uniforms.acceleration.value = this.acceleration[0];
-
+      renderer.render(this.scene, this.camera, this.velocity[1]);
+      renderer.render(this.scene, this.camera, this.acceleration[1]);
     },
     resize: function(length) {
       this.length = Math.pow(length, 2);
