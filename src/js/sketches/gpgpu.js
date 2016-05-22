@@ -9,6 +9,27 @@ var exports = function(){
 
   var physics_renderer = new PhysicsRenderer(100);
 
+  var createPoints = function() {
+    var geometry = new THREE.BufferGeometry();
+    var vertices_base = [];
+    var vertices = new Float32Array(vertices_base);
+    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        size: {
+          type: 'f',
+          value: 32.0,
+        },
+      },
+      vertexShader: document.getElementById('points').textContent,
+      fragmentShader: document.getElementById('points').textContent,
+      transparent: true,
+    });
+    return new THREE.Points(geometry, material);
+  }
+
+  var points = new THREE.Points();
+
   Sketch.prototype = {
     init: function(scene, camera) {
       camera.anchor.set(1000, -300, 0);
