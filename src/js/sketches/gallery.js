@@ -32,7 +32,6 @@ var exports = function(){
     });
 
     this.obj = new THREE.Mesh(image_geometry, image_material);
-    this.position = this.obj.position;
     this.velocity = vector.clone();
     this.anchor = vector.clone();
     this.acceleration.set(0, 0, 0);
@@ -50,7 +49,7 @@ var exports = function(){
       image = new Image();
       image.init(new THREE.Vector3());
       image.rad = rad;
-      image.anchor.copy(vector);
+      image.obj.position.copy(vector);
       scene.add(image.obj);
       images.push(image);
     }
@@ -59,7 +58,7 @@ var exports = function(){
   var pickImage = function(scene, camera, vector) {
     if (get_near) return;
     var intersects = null;
-    raycaster.setFromCamera(vector, camera.obj);
+    raycaster.setFromCamera(vector, camera);
     intersects = raycaster.intersectObjects(scene.children);
     if (intersects.length > 0 && is_draged == false) {
       document.body.classList.add('is-pointed');
@@ -71,8 +70,8 @@ var exports = function(){
 
   var getNearImage = function(camera, image) {
     get_near = true;
-    camera.anchor.set(Math.cos(image.rad) * 780, image.position.y, Math.sin(image.rad) * 780);
-    camera.look.anchor.copy(image.position);
+    camera.force.position.anchor.set(Math.cos(image.rad) * 780, image.obj.position.y, Math.sin(image.rad) * 780);
+    camera.force.look.anchor.copy(image.obj.position);
     resetPickImage();
   };
 
@@ -86,7 +85,7 @@ var exports = function(){
       initImages(scene);
       hemi_light.init(0xffffff, 0xffffff);
       scene.add(hemi_light.obj);
-      camera.anchor.set(0, 0, 0);
+      camera.force.position.anchor.set(0, 0, 0);
       camera.rotate_rad1 = Util.getRadian(-35);
       camera.rotate_rad1_base = camera.rotate_rad1;
       camera.rotate_rad2 = Util.getRadian(180);
@@ -107,10 +106,9 @@ var exports = function(){
         images[i].applyHook(0, 0.14);
         images[i].applyDrag(0.4);
         images[i].updateVelocity();
-        images[i].updatePosition();
         images[i].obj.lookAt({
           x: 0,
-          y: images[i].position.y,
+          y: images[i].obj.position.y,
           z: 0
         });
         if (images[i].obj.id == picked_id && is_draged == false && get_near == false) {
@@ -123,18 +121,17 @@ var exports = function(){
           images[i].obj.material.color.set(0xffffff);
         }
       }
-      camera.applyHook(0, 0.08);
-      camera.applyDrag(0.4);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.08);
+      camera.force.position.applyDrag(0.4);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
       if (get_near === false) {
-        camera.look.anchor.copy(Util.getSpherical(camera.rotate_rad1, camera.rotate_rad2, 1000));
+        camera.force.look.anchor.copy(Util.getPolarCoord(camera.rotate_rad1, camera.rotate_rad2, 1000));
       }
-      camera.look.applyHook(0, 0.08);
-      camera.look.applyDrag(0.4);
-      camera.look.updateVelocity();
-      camera.look.updatePosition();
-      camera.obj.lookAt(camera.look.position);
+      camera.force.look.applyHook(0, 0.08);
+      camera.force.look.applyDrag(0.4);
+      camera.force.look.updateVelocity();
+      camera.updateLook();
     },
     touchStart: function(scene, camera, vector) {
       pickImage(scene, camera, vector);
@@ -160,7 +157,7 @@ var exports = function(){
     touchEnd: function(scene, camera, vector) {
       resetPickImage();
       if (get_near) {
-        camera.anchor.set(0, 0, 0);
+        camera.force.position.anchor.set(0, 0, 0);
         picked_index = -1;
         get_near = false;
       } else if (is_clicked && picked_index > -1) {

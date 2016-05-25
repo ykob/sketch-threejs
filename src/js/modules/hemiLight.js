@@ -23,7 +23,7 @@ var exports = function(){
     this.setPositionSpherical();
   };
   HemiLight.prototype.setPositionSpherical = function() {
-    var points = Util.getSpherical(this.rad1, this.rad2, this.range);
+    var points = Util.getPolarCoord(this.rad1, this.rad2, this.range);
     this.position.copy(points);
   };
   return HemiLight;

@@ -32,21 +32,20 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      camera.anchor.set(1000, -300, 0);
-      camera.look.anchor.set(0, 0, 0);
+      camera.force.position.anchor.set(1000, -300, 0);
+      camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
     },
     render: function(scene, camera, renderer) {
-      camera.applyHook(0, 0.025);
-      camera.applyDrag(0.2);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.025);
+      camera.force.position.applyDrag(0.2);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
-      camera.look.applyHook(0, 0.2);
-      camera.look.applyDrag(0.4);
-      camera.look.updateVelocity();
-      camera.look.updatePosition();
-      camera.obj.lookAt(camera.look.position);
+      camera.force.look.applyHook(0, 0.2);
+      camera.force.look.applyDrag(0.4);
+      camera.force.look.updateVelocity();
+      camera.updateLook();
     },
     touchStart: function(scene, camera, vector) {
     },

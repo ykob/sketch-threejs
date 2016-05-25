@@ -83,7 +83,7 @@ var exports = function(){
       var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
       var scalar = Util.getRandomInt(40, 80);
       mover.is_activate = false;
-      mover.applyForce(Util.getSpherical(rad1, rad2, scalar));
+      mover.applyForce(Util.getPolarCoord(rad1, rad2, scalar));
     }
   };
 
@@ -101,11 +101,10 @@ var exports = function(){
         mover.applyDrag(0.035);
       }
       mover.updateVelocity();
-      mover.updatePosition();
-      mover.position.sub(points.position);
-      positions[i * 3 + 0] = mover.position.x - points.position.x;
-      positions[i * 3 + 1] = mover.position.y - points.position.x;
-      positions[i * 3 + 2] = mover.position.z - points.position.x;
+      mover.velocity.sub(points.velocity);
+      positions[i * 3 + 0] = mover.velocity.x - points.velocity.x;
+      positions[i * 3 + 1] = mover.velocity.y - points.velocity.x;
+      positions[i * 3 + 2] = mover.velocity.z - points.velocity.x;
       mover.size = Math.log(Util.getRandomInt(1, 128)) / Math.log(128) * Math.sqrt(document.body.clientWidth);
       sizes[i] = mover.size;
     }
@@ -140,11 +139,7 @@ var exports = function(){
         getImageData();
         buildPoints(scene);
       });
-      camera.range = 1400;
-      camera.rad1_base = Util.getRadian(0);
-      camera.rad1 = camera.rad1_base;
-      camera.rad2 = Util.getRadian(0);
-      camera.setPositionSpherical();
+      camera.setPolarCoord(0, 0, 1400);
     },
     remove: function(scene, camera) {
       points.geometry.dispose();
@@ -159,9 +154,9 @@ var exports = function(){
         updateMover();
         points.updatePoints();
       }
-      camera.applyHook(0, 0.025);
-      camera.applyDrag(0.2);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.025);
+      camera.force.position.applyDrag(0.2);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
 
@@ -170,12 +165,12 @@ var exports = function(){
       applyForceToPoints();
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      camera.anchor.z = vector_mouse_move.x * 1000;
-      camera.anchor.y = vector_mouse_move.y * -1000;
+      camera.force.position.anchor.z = vector_mouse_move.x * 1000;
+      camera.force.position.anchor.y = vector_mouse_move.y * -1000;
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
-      camera.anchor.z = 0;
-      camera.anchor.y = 0;
+      camera.force.position.anchor.z = 0;
+      camera.force.position.anchor.y = 0;
     },
     mouseOut: function(scene, camera) {
       this.touchEnd(scene, camera)

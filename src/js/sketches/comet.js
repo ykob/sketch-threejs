@@ -3,7 +3,7 @@ var Force2 = require('../modules/force2');
 var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
 var HemiLight = require('../modules/hemiLight');
-var PointLight = require('../modules/pointLight');
+var ForcePointLight = require('../modules/force_point_light');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/points.vs');
 var fs = glslify('../../glsl/points.fs');
@@ -17,8 +17,8 @@ var exports = function(){
   var mover_activate_count = 2;
   var points = new Points();
   var hemi_light = new HemiLight();
-  var comet_light1 = new PointLight();
-  var comet_light2 = new PointLight();
+  var comet_light1 = null;
+  var comet_light2 = null;
   var positions = new Float32Array(movers_num * 3);
   var colors = new Float32Array(movers_num * 3);
   var opacities = new Float32Array(movers_num);
@@ -46,7 +46,6 @@ var exports = function(){
         mover.time++;
         mover.applyDrag(0.1);
         mover.updateVelocity();
-        mover.updatePosition();
         if (mover.time > 10) {
           mover.size -= 2;
           //mover.a -= 0.04;
@@ -58,9 +57,9 @@ var exports = function(){
           mover.inactivate();
         }
       }
-      positions[i * 3 + 0] = mover.position.x - points.position.x;
-      positions[i * 3 + 1] = mover.position.y - points.position.y;
-      positions[i * 3 + 2] = mover.position.z - points.position.z;
+      positions[i * 3 + 0] = mover.velocity.x - points.velocity.x;
+      positions[i * 3 + 1] = mover.velocity.y - points.velocity.y;
+      positions[i * 3 + 2] = mover.velocity.z - points.velocity.z;
       colors[i * 3 + 0] = mover.color.r;
       colors[i * 3 + 1] = mover.color.g;
       colors[i * 3 + 2] = mover.color.b;
@@ -80,11 +79,11 @@ var exports = function(){
         var rad1 = Util.getRadian(Util.getRandomInt(0, 360));
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
         var range = Util.getRandomInt(1, 30);
-        var vector = Util.getSpherical(rad1, rad2, range);
-        var force = Util.getSpherical(rad1, rad2, range / 20);
+        var vector = Util.getPolarCoord(rad1, rad2, range);
+        var force = Util.getPolarCoord(rad1, rad2, range / 20);
         var h = Util.getRandomInt(comet_color_h - color_diff, comet_color_h + color_diff) - plus_acceleration / 1.5;
         var s = Util.getRandomInt(60, 80);
-        vector.add(points.position);
+        vector.add(points.velocity);
         mover.activate();
         mover.init(vector);
         mover.color.setHSL(h / 360, s / 100, 0.7);
@@ -106,13 +105,13 @@ var exports = function(){
     points.rad1 = Util.getRadian(Math.sin(points.rad1_base) * 45 + plus_acceleration / 100);
     points.rad2 += Util.getRadian(0.8 + plus_acceleration / 100);
     points.rad3 += 0.01;
-    return Util.getSpherical(points.rad1, points.rad2, 350);
+    return Util.getPolarCoord(points.rad1, points.rad2, 350);
   };
 
   var rotateCometColor = function() {
     var radius = comet_radius * 0.8;
-    comet_light1.obj.position.copy(Util.getSpherical(Util.getRadian(0),  Util.getRadian(0), radius).add(points.position));
-    comet_light2.obj.position.copy(Util.getSpherical(Util.getRadian(180), Util.getRadian(0), radius).add(points.position));
+    comet_light1.position.copy(Util.getPolarCoord(Util.getRadian(0),  Util.getRadian(0), radius).add(points.velocity));
+    comet_light2.position.copy(Util.getPolarCoord(Util.getRadian(180), Util.getRadian(0), radius).add(points.velocity));
   };
 
   var bounceComet = function() {
@@ -130,8 +129,7 @@ var exports = function(){
     comet_scale.applyHook(0, 0.1);
     comet_scale.applyDrag(0.12);
     comet_scale.updateVelocity();
-    comet_scale.updatePosition();
-    comet.scale.set(1 + comet_scale.position.x, 1 + comet_scale.position.x, 1 + comet_scale.position.x);
+    comet.scale.set(1 + comet_scale.velocity.x, 1 + comet_scale.velocity.x, 1 + comet_scale.velocity.x);
   };
 
   var createTexture = function() {
@@ -211,9 +209,9 @@ var exports = function(){
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
         mover.color = new THREE.Color('hsl(' + h + ', ' + s + '%, 70%)');
         movers.push(mover);
-        positions[i * 3 + 0] = mover.position.x;
-        positions[i * 3 + 1] = mover.position.y;
-        positions[i * 3 + 2] = mover.position.z;
+        positions[i * 3 + 0] = mover.velocity.x;
+        positions[i * 3 + 1] = mover.velocity.y;
+        positions[i * 3 + 2] = mover.velocity.z;
         colors[i * 3 + 0] = mover.color.r;
         colors[i * 3 + 1] = mover.color.g;
         colors[i * 3 + 2] = mover.color.b;
@@ -240,10 +238,10 @@ var exports = function(){
         new THREE.Color('hsl(' + (comet_color_h + color_diff) + ', 50%, 60%)').getHex()
       );
       scene.add(hemi_light.obj);
-      comet_light1.init(new THREE.Color('hsl(' + (comet_color_h - color_diff) + ', 60%, 50%)'));
-      scene.add(comet_light1.obj);
-      comet_light2.init(new THREE.Color('hsl(' + (comet_color_h + color_diff) + ', 60%, 50%)'));
-      scene.add(comet_light2.obj);
+      comet_light1 = new ForcePointLight('hsl(' + (comet_color_h - color_diff) + ', 60%, 50%)', 1, 500, 1);
+      scene.add(comet_light1);
+      comet_light2 = new ForcePointLight('hsl(' + (comet_color_h - color_diff) + ', 60%, 50%)', 1, 500, 1);
+      scene.add(comet_light2);
       camera.anchor = new THREE.Vector3(1500, 0, 0);
     },
     remove: function(scene) {
@@ -265,34 +263,32 @@ var exports = function(){
       accelerateComet();
       points.velocity = rotateComet();
       if (track_points === true) {
-        camera.anchor.copy(
+        camera.force.position.anchor.copy(
           points.velocity.clone().add(
-            points.velocity.clone().sub(points.position)
-            .normalize().multiplyScalar(-400)
+            points.velocity.clone().sub(points.obj.position).normalize().multiplyScalar(-400)
           )
         );
-        camera.anchor.y += points.position.y * 2;
-        camera.look.anchor.copy(points.position);
+        camera.force.position.anchor.y += points.velocity.y * 2;
+        camera.force.look.anchor.copy(points.velocity);
       }
-      points.updatePosition();
-      comet.position.copy(points.position);
+      points.updatePoints();
+      comet.position.copy(points.velocity);
       hemi_light.obj.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       hemi_light.obj.groundColor.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
-      comet_light1.obj.position.copy(points.velocity);
-      comet_light1.obj.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
-      comet_light2.obj.position.copy(points.velocity);
-      comet_light2.obj.color.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
+      comet_light1.position.copy(points.velocity);
+      comet_light1.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
+      comet_light2.position.copy(points.velocity);
+      comet_light2.color.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       activateMover();
       updateMover();
-      camera.applyHook(0, 0.025);
-      camera.applyDrag(0.2);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.025);
+      camera.force.position.applyDrag(0.2);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
-      camera.look.applyHook(0, 0.2);
-      camera.look.applyDrag(0.4);
-      camera.look.updateVelocity();
-      camera.look.updatePosition();
-      camera.obj.lookAt(camera.look.position);
+      camera.force.look.applyHook(0, 0.2);
+      camera.force.look.applyDrag(0.4);
+      camera.force.look.updateVelocity();
+      camera.updateLook();
       rotateCometColor();
       bounceComet();
     },
@@ -306,8 +302,8 @@ var exports = function(){
       is_touched = false;
       if (Date.now() - last_time_touch < 100) {
         if (track_points === true) {
-          camera.anchor.set(1200, 1200, 0);
-          camera.look.anchor.set(0, 0, 0);
+          camera.force.position.anchor.set(1200, 1200, 0);
+          camera.force.look.anchor.set(0, 0, 0);
           track_points = false;
         } else {
           track_points = true;

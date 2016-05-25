@@ -1,6 +1,6 @@
 var Util = require('../modules/util');
-var Camera = require('../modules/camera');
 var glslify = require('glslify');
+var ForceCamera = require('../modules/force_camera');
 var Force2 = require('../modules/force2');
 // var vs = glslify('../../glsl/hole.vs');
 // var fs = glslify('../../glsl/hole.fs');
@@ -19,12 +19,12 @@ var exports = function(){
   var light = new THREE.HemisphereLight(0xfffffff, 0xfffffff, 1);
 
   var sub_scene = new THREE.Scene();
-  var sub_camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  var sub_camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
   var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var framebuffer = null;
 
   var sub_scene2 = new THREE.Scene();
-  var sub_camera2 = new Camera();
+  var sub_camera2 = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
   var sub_light = new THREE.HemisphereLight(0x000000, 0x444444, 1);
   var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var bg_fb = null;
@@ -131,9 +131,8 @@ var exports = function(){
       document.body.className = 'bg-white';
       force.anchor.set(1, 0);
 
-      sub_camera2.init(window.innerWidth, window.innerHeight);
-      sub_camera2.anchor.set(1000, 300, 0);
-      sub_camera2.look.anchor.set(0, 0, 0);
+      sub_camera2.force.position.anchor.set(1000, 300, 0);
+      sub_camera2.force.look.anchor.set(0, 0, 0);
       obj_fb = createObjectInFramebuffer(60, 2);
       sub_scene2.add(obj_fb);
       sub_scene2.add(sub_light);
@@ -148,8 +147,8 @@ var exports = function(){
       bg = createBackground();
       scene.add(bg);
       scene.add(light);
-      camera.anchor.set(1000, -300, 0);
-      camera.look.anchor.set(0, 0, 0);
+      camera.force.position.anchor.set(1000, -300, 0);
+      camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
       document.body.className = '';
@@ -179,48 +178,43 @@ var exports = function(){
       force.applyHook(0, 0.06);
       force.applyDrag(0.2);
       force.updateVelocity();
-      force.updatePosition();
-      camera.applyHook(0, 0.025);
-      camera.applyDrag(0.2);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.025);
+      camera.force.position.applyDrag(0.2);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
-      camera.look.anchor.y = Math.sin(points.material.uniforms.time.value / 100) * 100;
-      camera.look.applyHook(0, 0.2);
-      camera.look.applyDrag(0.4);
-      camera.look.updateVelocity();
-      camera.look.updatePosition();
-      camera.obj.lookAt(camera.look.position);
-      sub_camera2.applyHook(0, 0.1);
-      sub_camera2.applyDrag(0.2);
-      sub_camera2.updateVelocity();
+      camera.force.look.anchor.y = Math.sin(points.material.uniforms.time.value / 100) * 100;
+      camera.force.look.applyHook(0, 0.2);
+      camera.force.look.applyDrag(0.4);
+      camera.updateLook();
+      sub_camera2.force.position.applyHook(0, 0.1);
+      sub_camera2.force.position.applyDrag(0.2);
+      sub_camera2.force.position.updateVelocity();
       sub_camera2.updatePosition();
-      sub_camera2.look.applyHook(0, 0.2);
-      sub_camera2.look.applyDrag(0.4);
-      sub_camera2.look.updateVelocity();
-      sub_camera2.look.updatePosition();
-      sub_camera2.obj.lookAt(sub_camera2.look.position);
-      renderer.render(sub_scene2, sub_camera2.obj, render_target2);
+      sub_camera2.force.look.applyHook(0, 0.2);
+      sub_camera2.force.look.applyDrag(0.4);
+      sub_camera2.force.look.updateVelocity();
+      sub_camera2.updateLook();
+      renderer.render(sub_scene2, sub_camera2, render_target2);
       renderer.render(sub_scene, sub_camera, render_target);
     },
     touchStart: function(scene, camera, vector) {
       force.anchor.set(2, 40);
-      sub_camera2.anchor.set(600, -300, 0);
+      sub_camera2.force.position.anchor.set(600, -300, 0);
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
       force.anchor.set(1, 0);
-      sub_camera2.anchor.set(1000, 300, 0);
+      sub_camera2.force.position.anchor.set(1000, 300, 0);
     },
     mouseOut: function(scene, camera) {
       force.anchor.set(1, 0);
-      sub_camera2.anchor.set(1000, 300, 0);
+      sub_camera2.force.position.anchor.set(1000, 300, 0);
     },
     resizeWindow: function(scene, camera) {
       render_target.setSize(window.innerWidth, window.innerHeight);
       render_target2.setSize(window.innerWidth, window.innerHeight);
-      sub_camera.aspect = window.innerWidth / window.innerHeight;
-      sub_camera.updateProjectionMatrix();
+      sub_camera.resize(window.innerWidth, window.innerHeight);
       sub_camera2.resize(window.innerWidth, window.innerHeight);
       points.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
       framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);

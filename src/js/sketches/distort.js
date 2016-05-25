@@ -1,5 +1,5 @@
 var Util = require('../modules/util');
-var Camera = require('../modules/camera');
+var ForceCamera = require('../modules/force_camera');
 var Force2 = require('../modules/force2');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/distort.vs');
@@ -15,7 +15,7 @@ var exports = function(){
   var bg = null;
   var light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var sub_scene = new THREE.Scene();
-  var sub_camera = new Camera();
+  var sub_camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
   var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var force = new Force2();
   var time_unit = 1;
@@ -90,21 +90,20 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      sub_camera.init(window.innerWidth, window.innerHeight);
       document.body.className = 'bg-white';
       sphere = createSphere();
       sub_scene.add(sphere);
       bg = createBackground();
       sub_scene.add(bg);
       sub_scene.add(sub_light);
-      sub_camera.anchor.set(1800, 1800, 0);
-      sub_camera.look.anchor.set(0, 0, 0);
+      sub_camera.force.position.anchor.set(1800, 1800, 0);
+      sub_camera.force.look.anchor.set(0, 0, 0);
 
       framebuffer = createPlaneForPostProcess();
       scene.add(framebuffer);
       scene.add(light);
-      camera.anchor.set(1800, 1800, 0);
-      camera.look.anchor.set(0, 0, 0);
+      camera.force.position.anchor.set(1800, 1800, 0);
+      camera.force.look.anchor.set(0, 0, 0);
       force.anchor.set(1, 0);
       force.anchor.set(1, 0);
       force.velocity.set(1, 0);
@@ -129,34 +128,31 @@ var exports = function(){
       force.applyHook(0, force.k);
       force.applyDrag(force.d);
       force.updateVelocity();
-      force.updatePosition();
       // console.log(force.acceleration.length());
       sphere.material.uniforms.time.value += time_unit;
-      sphere.material.uniforms.radius.value = force.position.x;
-      sphere.material.uniforms.distort.value = force.position.x / 2 - 0.1;
-      sub_camera.applyHook(0, 0.025);
-      sub_camera.applyDrag(0.2);
-      sub_camera.updateVelocity();
+      sphere.material.uniforms.radius.value = force.velocity.x;
+      sphere.material.uniforms.distort.value = force.velocity.x / 2 - 0.1;
+      sub_camera.force.position.applyHook(0, 0.025);
+      sub_camera.force.position.applyDrag(0.2);
+      sub_camera.force.position.updateVelocity();
       sub_camera.updatePosition();
-      sub_camera.look.applyHook(0, 0.2);
-      sub_camera.look.applyDrag(0.4);
-      sub_camera.look.updateVelocity();
-      sub_camera.look.updatePosition();
-      sub_camera.obj.lookAt(sub_camera.look.position);
+      sub_camera.force.look.applyHook(0, 0.2);
+      sub_camera.force.look.applyDrag(0.4);
+      sub_camera.force.look.updateVelocity();
+      sub_camera.updateLook();
 
       framebuffer.material.uniforms.time.value += time_unit;
       framebuffer.material.uniforms.acceleration.value = force.acceleration.length();
-      camera.applyHook(0, 0.025);
-      camera.applyDrag(0.2);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.025);
+      camera.force.position.applyDrag(0.2);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
-      camera.look.applyHook(0, 0.2);
-      camera.look.applyDrag(0.4);
-      camera.look.updateVelocity();
-      camera.look.updatePosition();
-      camera.obj.lookAt(camera.look.position);
+      camera.force.look.applyHook(0, 0.2);
+      camera.force.look.applyDrag(0.4);
+      camera.force.look.updateVelocity();
+      camera.lookAt(camera.force.look.velocity);
 
-      renderer.render(sub_scene, sub_camera.obj, render_target);
+      renderer.render(sub_scene, sub_camera, render_target);
     },
     touchStart: function(scene, camera, vector) {
       if (force.anchor.x < 3) {

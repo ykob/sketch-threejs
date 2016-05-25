@@ -1,7 +1,6 @@
 var Util = require('../modules/util');
 var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
-var Light = require('../modules/pointLight');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/points.vs');
 var fs = glslify('../../glsl/points.fs');
@@ -13,7 +12,6 @@ var exports = function(){
   var movers_num = 20000;
   var movers = [];
   var points = new Points();
-  var light = new Light();
   var positions = new Float32Array(movers_num * 3);
   var colors = new Float32Array(movers_num * 3);
   var opacities = new Float32Array(movers_num);
@@ -30,20 +28,19 @@ var exports = function(){
         mover.applyForce(gravity);
         mover.applyDrag(0.1);
         mover.updateVelocity();
-        mover.updatePosition();
         if (mover.a < 0.8) {
           mover.a += 0.02;
         }
-        if (mover.position.x > 1000) {
+        if (mover.velocity.x > 1000) {
           mover.init(new THREE.Vector3(0, 0, 0));
           mover.time = 0;
           mover.a = 0.0;
           mover.inactivate();
         }
       }
-      positions[i * 3 + 0] = mover.position.x;
-      positions[i * 3 + 1] = mover.position.y;
-      positions[i * 3 + 2] = mover.position.z;
+      positions[i * 3 + 0] = mover.velocity.x;
+      positions[i * 3 + 1] = mover.velocity.y;
+      positions[i * 3 + 2] = mover.velocity.z;
       opacities[i] = mover.a;
       sizes[i] = mover.size;
     }
@@ -62,7 +59,7 @@ var exports = function(){
         var y = Math.sin(rad) * range;
         var z = Math.cos(rad) * range;
         var vector = new THREE.Vector3(-1000, y, z);
-        vector.add(points.position);
+        vector.add(points.velocity);
         mover.activate();
         mover.init(vector);
         mover.a = 0;
@@ -76,8 +73,6 @@ var exports = function(){
 
   var updatePoints = function() {
     points.updateVelocity();
-    points.updatePosition();
-    light.obj.position.copy(points.velocity);
   };
 
   var createTexture = function() {
@@ -86,18 +81,17 @@ var exports = function(){
     var grad = null;
     var texture = null;
 
-    canvas.width = 200;
-    canvas.height = 200;
-    grad = ctx.createRadialGradient(100, 100, 20, 100, 100, 100);
+    canvas.width = 256;
+    canvas.height = 256;
+    grad = ctx.createRadialGradient(128, 128, 20, 128, 128, 128);
     grad.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
     grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
     grad.addColorStop(1.0, 'rgba(255, 255, 255, 0)');
     ctx.fillStyle = grad;
-    ctx.arc(100, 100, 100, 0, Math.PI / 180, true);
+    ctx.arc(128, 128, 128, 0, Math.PI / 180, true);
     ctx.fill();
 
     texture = new THREE.Texture(canvas);
-    texture.minFilter = THREE.NearestFilter;
     texture.needsUpdate = true;
     return texture;
   };
@@ -120,9 +114,9 @@ var exports = function(){
 
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
         movers.push(mover);
-        positions[i * 3 + 0] = mover.position.x;
-        positions[i * 3 + 1] = mover.position.y;
-        positions[i * 3 + 2] = mover.position.z;
+        positions[i * 3 + 0] = mover.velocity.x;
+        positions[i * 3 + 1] = mover.velocity.y;
+        positions[i * 3 + 2] = mover.velocity.z;
         color.toArray(colors, i * 3);
         opacities[i] = mover.a;
         sizes[i] = mover.size;
@@ -138,24 +132,21 @@ var exports = function(){
         texture: createTexture(),
         blending: THREE.AdditiveBlending
       });
-      light.init();
-      scene.add(light.obj);
-      camera.anchor = new THREE.Vector3(800, 0, 0);
+      camera.force.position.anchor.set(800, 0, 0);
     },
     remove: function(scene) {
       points.geometry.dispose();
       points.material.dispose();
       scene.remove(points.obj);
-      scene.remove(light.obj);
       movers = [];
     },
     render: function(scene, camera) {
       changeGravity();
       activateMover();
       updateMover();
-      camera.applyHook(0, 0.008);
-      camera.applyDrag(0.1);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.008);
+      camera.force.position.applyDrag(0.1);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
     },
@@ -163,13 +154,13 @@ var exports = function(){
       is_touched = true;
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
-      camera.anchor.z = vector_mouse_move.x * 120;
-      camera.anchor.y = vector_mouse_move.y * -120;
+      camera.force.position.anchor.z = vector_mouse_move.x * 120;
+      camera.force.position.anchor.y = vector_mouse_move.y * -120;
       //camera.lookAtCenter();
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
-      camera.anchor.z = 0;
-      camera.anchor.y = 0;
+      camera.force.position.anchor.z = 0;
+      camera.force.position.anchor.y = 0;
       is_touched = false;
     },
     mouseOut: function(scene, camera) {
