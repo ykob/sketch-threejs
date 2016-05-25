@@ -14,11 +14,7 @@ var exports = function(){
   ForceCamera.prototype = Object.create(THREE.PerspectiveCamera.prototype);
   ForceCamera.prototype.constructor = ForceCamera;
   ForceCamera.prototype.updatePosition = function() {
-    this.position.set(
-      this.force.position.velocity.x,
-      this.force.position.velocity.y,
-      this.force.position.velocity.z
-    )
+    this.position.copy(this.force.position.velocity);
   };
   ForceCamera.prototype.updateLook = function() {
     this.lookAt({
