@@ -8,7 +8,7 @@ var exports = {
   getRadian: function(degrees) {
     return degrees * Math.PI / 180;
   },
-  getSpherical: function(rad1, rad2, r) {
+  getPolarCoord: function(rad1, rad2, r) {
     var x = Math.cos(rad1) * Math.cos(rad2) * r;
     var z = Math.cos(rad1) * Math.sin(rad2) * r;
     var y = Math.sin(rad1) * r;
