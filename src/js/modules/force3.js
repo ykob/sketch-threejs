@@ -2,16 +2,12 @@ var Util = require('../modules/util');
 
 var exports = function(){
   var Force = function() {
-    this.position = new THREE.Vector3();
     this.velocity = new THREE.Vector3();
     this.acceleration = new THREE.Vector3();
     this.anchor = new THREE.Vector3();
     this.mass = 1;
   };
-  
-  Force.prototype.updatePosition = function() {
-    this.position.copy(this.velocity);
-  };
+
   Force.prototype.updateVelocity = function() {
     this.acceleration.divideScalar(this.mass);
     this.velocity.add(this.acceleration);
