@@ -11,7 +11,6 @@ var exports = function(){
   Mover.prototype = Object.create(Force3.prototype);
   Mover.prototype.constructor = Mover;
   Mover.prototype.init = function(vector) {
-    this.position = vector.clone();
     this.velocity = vector.clone();
     this.anchor = vector.clone();
     this.acceleration.set(0, 0, 0);

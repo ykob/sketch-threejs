@@ -28,9 +28,9 @@ var exports = function(){
     this.geometry.addAttribute('size', new THREE.BufferAttribute(param.sizes, 1));
     this.obj = new THREE.Points(this.geometry, this.material);
     param.scene.add(this.obj);
-    this.position = this.obj.position;
   };
   Points.prototype.updatePoints = function() {
+    this.obj.position.copy(this.velocity);
     this.obj.geometry.attributes.position.needsUpdate = true;
     this.obj.geometry.attributes.vertexOpacity.needsUpdate = true;
     this.obj.geometry.attributes.size.needsUpdate = true;
