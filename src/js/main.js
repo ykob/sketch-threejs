@@ -1,6 +1,6 @@
 var Util = require('./modules/util');
 var debounce = require('./modules/debounce');
-var Camera = require('./modules/camera');
+var ForceCamera = require('./modules/force_camera');
 
 var vector_mouse_down = new THREE.Vector2();
 var vector_mouse_move = new THREE.Vector2();
@@ -38,8 +38,7 @@ var initThree = function() {
 
   scene = new THREE.Scene();
 
-  camera = new Camera();
-  camera.init(window.innerWidth, window.innerHeight);
+  camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
 };
 
 var init = function() {
@@ -99,7 +98,7 @@ var switchSketch = function(sketch) {
 var render = function() {
   renderer.clear();
   running.render(scene, camera, renderer);
-  renderer.render(scene, camera.obj);
+  renderer.render(scene, camera);
 };
 
 var renderloop = function() {
