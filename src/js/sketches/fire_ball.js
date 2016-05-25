@@ -160,7 +160,7 @@ var exports = function(){
       points.geometry.dispose();
       points.material.dispose();
       scene.remove(points.obj);
-      scene.remove(light.obj);
+      scene.remove(light);
       bg.geometry.dispose();
       bg.material.dispose();
       scene.remove(bg);
@@ -174,7 +174,6 @@ var exports = function(){
       light.force.applyDrag(0.2);
       light.force.updateVelocity();
       light.updatePosition();
-
       activateMover();
       updateMover();
       camera.force.position.applyHook(0, 0.004);
