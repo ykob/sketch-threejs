@@ -1,7 +1,7 @@
 var Util = require('../modules/util');
 var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
-var Light = require('../modules/pointLight');
+var ForcePointLight = require('../modules/force_point_light');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/points.vs');
 var fs = glslify('../../glsl/points.fs');
@@ -13,7 +13,7 @@ var exports = function(){
   var movers_num = 10000;
   var movers = [];
   var points = new Points();
-  var light = new Light();
+  var light = new ForcePointLight(0xff6600, 1, 1800, 1);
   var bg = null;
   var positions = new Float32Array(movers_num * 3);
   var colors = new Float32Array(movers_num * 3);
@@ -31,8 +31,6 @@ var exports = function(){
         mover.applyForce(gravity);
         mover.applyDrag(0.01);
         mover.updateVelocity();
-        mover.updatePosition();
-        mover.position.sub(points.position);
         if (mover.time > 50) {
           mover.size -= 0.7;
           mover.a -= 0.009;
@@ -44,9 +42,9 @@ var exports = function(){
           mover.inactivate();
         }
       }
-      positions[i * 3 + 0] = mover.position.x - points.position.x;
-      positions[i * 3 + 1] = mover.position.y - points.position.x;
-      positions[i * 3 + 2] = mover.position.z - points.position.x;
+      positions[i * 3 + 0] = mover.velocity.x - points.velocity.x;
+      positions[i * 3 + 1] = mover.velocity.y - points.velocity.y;
+      positions[i * 3 + 2] = mover.velocity.z - points.velocity.z;
       opacities[i] = mover.a;
       sizes[i] = mover.size;
     }
@@ -64,8 +62,8 @@ var exports = function(){
         var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
         var range = (1- Math.log(Util.getRandomInt(32, 256)) / Math.log(256)) * 12;
         var vector = new THREE.Vector3();
-        var force = Util.getSpherical(rad1, rad2, range);
-        vector.add(points.position);
+        var force = Util.getPolarCoord(rad1, rad2, range);
+        vector.add(points.velocity);
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
@@ -80,17 +78,16 @@ var exports = function(){
 
   var updatePoints =  function() {
     points.updateVelocity();
-    points.updatePosition();
     light.obj.position.copy(points.velocity);
   };
 
   var movePoints = function(vector) {
-    var y = vector.y * document.body.clientHeight / 3;
-    var z = vector.x * document.body.clientWidth / -3;
+    var y = vector.y * window.innerHeight / 3;
+    var z = vector.x * window.innerWidth / -3;
     points.anchor.y = y;
     points.anchor.z = z;
-    light.anchor.y = y;
-    light.anchor.z = z;
+    light.force.anchor.y = y;
+    light.force.anchor.z = z;
   }
 
   var createTexture =  function() {
@@ -135,9 +132,9 @@ var exports = function(){
 
         mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
         movers.push(mover);
-        positions[i * 3 + 0] = mover.position.x;
-        positions[i * 3 + 1] = mover.position.y;
-        positions[i * 3 + 2] = mover.position.z;
+        positions[i * 3 + 0] = mover.velocity.x;
+        positions[i * 3 + 1] = mover.velocity.y;
+        positions[i * 3 + 2] = mover.velocity.z;
         color.toArray(colors, i * 3);
         opacities[i] = mover.a;
         sizes[i] = mover.size;
@@ -153,14 +150,11 @@ var exports = function(){
         texture: createTexture(),
         blending: THREE.AdditiveBlending
       });
-      light.init(0xff6600, 1800);
-      scene.add(light.obj);
+      scene.add(light);
       bg = createBackground();
       scene.add(bg);
-      camera.rad1_base = Util.getRadian(25);
-      camera.rad1 = camera.rad1_base;
-      camera.rad2 = Util.getRadian(0);
-      camera.setPositionSpherical();
+      camera.setPolarCoord(Util.getRadian(25), 0, 1000);
+      light.setPolarCoord(Util.getRadian(25), 0, 200);
     },
     remove: function(scene) {
       points.geometry.dispose();
@@ -176,16 +170,16 @@ var exports = function(){
       points.applyHook(0, 0.08);
       points.applyDrag(0.2);
       points.updateVelocity();
-      points.updatePosition();
-      light.applyHook(0, 0.08);
-      light.applyDrag(0.2);
-      light.updateVelocity();
+      light.force.applyHook(0, 0.08);
+      light.force.applyDrag(0.2);
+      light.force.updateVelocity();
       light.updatePosition();
+
       activateMover();
       updateMover();
-      camera.applyHook(0, 0.004);
-      camera.applyDrag(0.1);
-      camera.updateVelocity();
+      camera.force.position.applyHook(0, 0.004);
+      camera.force.position.applyDrag(0.1);
+      camera.force.position.updateVelocity();
       camera.updatePosition();
       camera.lookAtCenter();
     },
@@ -201,7 +195,7 @@ var exports = function(){
     touchEnd: function(scene, camera, vector) {
       is_draged = false;
       points.anchor.set(0, 0, 0);
-      light.anchor.set(0, 0, 0);
+      light.force.anchor.set(0, 0, 0);
     },
     mouseOut: function(scene, camera) {
       this.touchEnd(scene, camera)
