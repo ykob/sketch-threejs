@@ -2,7 +2,7 @@ var Util = require('../modules/util');
 var Force2 = require('../modules/force2');
 var Mover = require('../modules/mover');
 var Points = require('../modules/points.js');
-var HemiLight = require('../modules/hemiLight');
+var ForceHemisphereLight = require('../modules/force_hemisphere_light');
 var ForcePointLight = require('../modules/force_point_light');
 var glslify = require('glslify');
 var vs = glslify('../../glsl/points.vs');
@@ -16,7 +16,7 @@ var exports = function(){
   var movers = [];
   var mover_activate_count = 2;
   var points = new Points();
-  var hemi_light = new HemiLight();
+  var hemi_light = null;
   var comet_light1 = null;
   var comet_light2 = null;
   var positions = new Float32Array(movers_num * 3);
@@ -233,11 +233,12 @@ var exports = function(){
       points.rad1_base = 0;
       points.rad2 = 0;
       points.rad3 = 0;
-      hemi_light.init(
+      hemi_light = new ForceHemisphereLight(
         new THREE.Color('hsl(' + (comet_color_h - color_diff) + ', 50%, 60%)').getHex(),
-        new THREE.Color('hsl(' + (comet_color_h + color_diff) + ', 50%, 60%)').getHex()
+        new THREE.Color('hsl(' + (comet_color_h + color_diff) + ', 50%, 60%)').getHex(),
+        1
       );
-      scene.add(hemi_light.obj);
+      scene.add(hemi_light);
       comet_light1 = new ForcePointLight('hsl(' + (comet_color_h - color_diff) + ', 60%, 50%)', 1, 500, 1);
       scene.add(comet_light1);
       comet_light2 = new ForcePointLight('hsl(' + (comet_color_h - color_diff) + ', 60%, 50%)', 1, 500, 1);
@@ -254,9 +255,9 @@ var exports = function(){
       points.geometry.dispose();
       points.material.dispose();
       scene.remove(points.obj);
-      scene.remove(hemi_light.obj);
-      scene.remove(comet_light1.obj);
-      scene.remove(comet_light2.obj);
+      scene.remove(hemi_light);
+      scene.remove(comet_light1);
+      scene.remove(comet_light2);
       movers = [];
     },
     render: function(scene, camera) {
@@ -273,8 +274,8 @@ var exports = function(){
       }
       points.updatePoints();
       comet.position.copy(points.velocity);
-      hemi_light.obj.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
-      hemi_light.obj.groundColor.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
+      hemi_light.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
+      hemi_light.groundColor.setHSL((comet_color_h + color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       comet_light1.position.copy(points.velocity);
       comet_light1.color.setHSL((comet_color_h - color_diff - plus_acceleration / 1.5) / 360, 0.5, 0.6);
       comet_light2.position.copy(points.velocity);

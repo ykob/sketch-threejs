@@ -1,6 +1,6 @@
 var Util = require('../modules/util');
-var HemiLight = require('../modules/hemiLight');
 var Force3 = require('../modules/force3');
+var ForceHemisphereLight = require('../modules/force_hemisphere_light');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -8,7 +8,7 @@ var exports = function(){
   };
   var images = [];
   var images_num = 300;
-  var hemi_light = new HemiLight();
+  var light = null;
   var raycaster = new THREE.Raycaster();
   var picked_id = -1;
   var picked_index = -1;
@@ -83,8 +83,8 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       initImages(scene);
-      hemi_light.init(0xffffff, 0xffffff);
-      scene.add(hemi_light.obj);
+      light = new ForceHemisphereLight(0xffffff, 0xffffff, 1);
+      scene.add(light);
       camera.force.position.anchor.set(0, 0, 0);
       camera.rotate_rad1 = Util.getRadian(-35);
       camera.rotate_rad1_base = camera.rotate_rad1;
@@ -96,7 +96,7 @@ var exports = function(){
       for (var i = 0; i < images.length; i++) {
         scene.remove(images[i].obj);
       };
-      scene.remove(hemi_light.obj);
+      scene.remove(light);
       images = [];
       get_near = false;
       document.body.classList.remove('is-pointed');
