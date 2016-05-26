@@ -4,7 +4,6 @@ var Force3 = require('../modules/force3');
 var exports = function(){
   var ForceCamera = function(fov, aspect, near, far) {
     THREE.PerspectiveCamera.call(this, fov, aspect, near, far);
-    console.log();
     this.force = {
       position: new Force3(),
       look: new Force3(),
