@@ -92,7 +92,6 @@ var exports = function(){
     init: function(scene, camera) {
       scene.add(plane);
       scene.add(bg);
-
       camera.setPolarCoord(0, Util.getRadian(90), 24);
     },
     remove: function(scene, camera) {
@@ -102,7 +101,6 @@ var exports = function(){
       bg.geometry.dispose();
       bg.material.dispose();
       scene.remove(bg);
-      camera.range = 1000;
     },
     render: function(scene, camera) {
       moveMetalCube(scene, camera, vactor_raycast);
@@ -116,7 +114,6 @@ var exports = function(){
       plane.material.uniforms.time.value++;
       plane.material.uniforms.time2.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
       plane.material.uniforms.acceleration.value = cube_force.acceleration.length();
-      plane.lookAt(camera.position);
       bg.material.uniforms.time.value++;
       bg.material.uniforms.acceleration.value = cube_force2.velocity.length();
       camera.force.position.applyHook(0, 0.025);

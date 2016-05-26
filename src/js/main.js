@@ -38,7 +38,7 @@ var initThree = function() {
 
   scene = new THREE.Scene();
 
-  camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
 };
 
 var init = function() {
