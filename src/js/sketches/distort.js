@@ -31,22 +31,26 @@ var exports = function(){
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(new THREE.OctahedronGeometry(200, 5));
     var material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: {
-          type: 'f',
-          value: 0,
-        },
-        radius: {
-          type: 'f',
-          value: 1.0
-        },
-        distort: {
-          type: 'f',
-          value: 0.4
+      uniforms: THREE.UniformsUtils.merge([
+        THREE.UniformsLib['lights'],
+        {
+          time: {
+            type: 'f',
+            value: 0,
+          },
+          radius: {
+            type: 'f',
+            value: 1.0
+          },
+          distort: {
+            type: 'f',
+            value: 0.4
+          }
         }
-      },
+      ]),
       vertexShader: vs,
       fragmentShader: fs,
+      lights: true,
     });
     return new THREE.Mesh(geometry, material);
   };
@@ -98,6 +102,7 @@ var exports = function(){
       sub_scene.add(sub_light);
       sub_camera.force.position.anchor.set(1800, 1800, 0);
       sub_camera.force.look.anchor.set(0, 0, 0);
+      console.log(sphere.material.uniforms);
 
       framebuffer = createPlaneForPostProcess();
       scene.add(framebuffer);
