@@ -1,6 +1,6 @@
+var glslify = require('glslify');
 var Util = require('../modules/util');
 var PhysicsRenderer = require('../modules/physics_renderer');
-console.log(PhysicsRenderer);
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -21,8 +21,8 @@ var exports = function(){
           value: 32.0,
         },
       },
-      vertexShader: document.getElementById('points').textContent,
-      fragmentShader: document.getElementById('points').textContent,
+      vertexShader: glslify('../../glsl/gpgpu_points.vs'),
+      fragmentShader: glslify('../../glsl/gpgpu_points.fs'),
       transparent: true,
     });
     return new THREE.Points(geometry, material);
