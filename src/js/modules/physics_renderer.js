@@ -6,13 +6,16 @@ var exports = function(){
     this.acceleration_scene = new THREE.Scene();
     this.velocity_scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
+    this.option = {
+      type: THREE.FloatType,
+    };
     this.acceleration = [
-      new THREE.WebGLRenderTarget(length, length),
-      new THREE.WebGLRenderTarget(length, length),
+      new THREE.WebGLRenderTarget(length, length, this.option),
+      new THREE.WebGLRenderTarget(length, length, this.option),
     ];
     this.velocity = [
-      new THREE.WebGLRenderTarget(length, length),
-      new THREE.WebGLRenderTarget(length, length),
+      new THREE.WebGLRenderTarget(length, length, this.option),
+      new THREE.WebGLRenderTarget(length, length, this.option),
     ];
     this.acceleration_mesh = new THREE.Mesh(
       new THREE.PlaneGeometry(2, 2),

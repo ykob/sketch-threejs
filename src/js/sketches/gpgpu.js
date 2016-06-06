@@ -7,17 +7,23 @@ var exports = function(){
     this.init(scene, camera);
   };
 
-  var length = 1;
+  var length = 1000;
   var physics_renderer = new PhysicsRenderer(length);
 
   var createPoints = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
+    var forces_base = [];
     for (var i = 0; i < Math.pow(length, 2); i++) {
-      vertices_base.push(0, 0, 0);
+      var r = Util.getRandomInt(0, 1000);
+      var rad = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
+      vertices_base.push(Math.cos(rad) * r, 0, Math.sin(rad) * r);
+      forces_base.push(Util.getRandomInt(1, 1000) / 1000)
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var forces = new Float32Array(forces_base);
+    geometry.addAttribute('force', new THREE.BufferAttribute(forces, 1));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         size: {
@@ -40,15 +46,14 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       scene.add(points);
-      camera.force.position.anchor.set(100, 0, 100);
-      camera.force.look.anchor.set(0, 0, 0);
+      camera.force.position.anchor.set(200, 1000, 0);
+      camera.force.look.anchor.set(-200, 10, 0);
     },
     remove: function(scene) {
       scene.remove(points);
     },
     render: function(scene, camera, renderer) {
       physics_renderer.render(renderer);
-      points.material.uniforms.velocity.value = physics_renderer.target;
       camera.force.position.applyHook(0, 0.025);
       camera.force.position.applyDrag(0.2);
       camera.force.position.updateVelocity();
