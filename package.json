@@ -24,7 +24,7 @@
     "browser-sync": "^2.12.3",
     "browserify": "^11.2.0",
     "gulp": "^3.9.1",
-    "gulp-ruby-sass": "^2.0.6",
+    "gulp-sass": "^2.3.1",
     "gulp-sequence": "^0.4.5",
     "require-dir": "^0.3.0",
     "vinyl-source-stream": "^1.1.0",

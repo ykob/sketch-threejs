@@ -11,7 +11,7 @@ reload = browserSync.reload;
 // ローカルサーバ
 gulp.task('serve', function() {
   var obj = {};
-  
+
   return browserSync({
     notify: false,
     startPath: CONFIG.PATH,

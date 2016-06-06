@@ -1,16 +1,11 @@
 var gulp = require('gulp');
-var rubySass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var CONFIG = require('../package.json').projectConfig;
 
-var path = [
-  './' + CONFIG.SRC + '/scss/style.scss'
-];
-
-gulp.task('sass', function() {
-  return rubySass(path, {
-    style: 'compressed'
-  })
-    .pipe(gulp.dest('./css/', {
-      cwd: './'
-    }));
+gulp.task('sass', () => {
+  return gulp.src([
+      './' + CONFIG.SRC + '/scss/style.scss'
+    ])
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./css/'));
 });
