@@ -7,11 +7,15 @@ var exports = function(){
     this.init(scene, camera);
   };
 
-  var physics_renderer = new PhysicsRenderer(100);
+  var length = 1;
+  var physics_renderer = new PhysicsRenderer(length);
 
   var createPoints = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
+    for (var i = 0; i < Math.pow(length, 2); i++) {
+      vertices_base.push(0, 0, 0);
+    }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     var material = new THREE.ShaderMaterial({
@@ -20,6 +24,10 @@ var exports = function(){
           type: 'f',
           value: 32.0,
         },
+        velocity: {
+          type: 't',
+          value: physics_renderer.target
+        }
       },
       vertexShader: glslify('../../glsl/gpgpu_points.vs'),
       fragmentShader: glslify('../../glsl/gpgpu_points.fs'),
@@ -27,17 +35,20 @@ var exports = function(){
     });
     return new THREE.Points(geometry, material);
   }
-
-  var points = new THREE.Points();
+  var points = createPoints();
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      camera.force.position.anchor.set(1000, -300, 0);
+      scene.add(points);
+      camera.force.position.anchor.set(100, 0, 100);
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
+      scene.remove(points);
     },
     render: function(scene, camera, renderer) {
+      physics_renderer.render(renderer);
+      points.material.uniforms.velocity.value = physics_renderer.target;
       camera.force.position.applyHook(0, 0.025);
       camera.force.position.applyDrag(0.2);
       camera.force.position.updateVelocity();
