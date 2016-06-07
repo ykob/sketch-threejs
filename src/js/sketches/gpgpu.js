@@ -26,13 +26,9 @@ var exports = function(){
     geometry.addAttribute('force', new THREE.BufferAttribute(forces, 1));
     var material = new THREE.ShaderMaterial({
       uniforms: {
-        size: {
-          type: 'f',
-          value: 32.0,
-        },
         velocity: {
           type: 't',
-          value: physics_renderer.target
+          value: new THREE.Texture()
         }
       },
       vertexShader: glslify('../../glsl/gpgpu_points.vs'),
@@ -54,6 +50,7 @@ var exports = function(){
     },
     render: function(scene, camera, renderer) {
       physics_renderer.render(renderer);
+      points.material.uniforms.velocity.value = physics_renderer.getCurrentVelocity();
       camera.force.position.applyHook(0, 0.025);
       camera.force.position.applyDrag(0.2);
       camera.force.position.updateVelocity();

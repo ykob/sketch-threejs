@@ -18,16 +18,12 @@ var exports = function(){
       new THREE.WebGLRenderTarget(length, length, this.option),
     ];
     this.acceleration_mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(2, 2),
+      new THREE.PlaneBufferGeometry(2, 2),
       new THREE.ShaderMaterial({
         uniforms: {
-          time: {
-            type: 'f',
-            value: 0,
-          },
           acceleration: {
             type: 't',
-            value: null,
+            value: new THREE.Texture(),
           },
         },
         vertexShader: glslify('../../glsl/physics_renderer_acceleration.vs'),
@@ -35,20 +31,16 @@ var exports = function(){
       })
     );
     this.velocity_mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(2, 2),
+      new THREE.PlaneBufferGeometry(2, 2),
       new THREE.ShaderMaterial({
         uniforms: {
-          time: {
-            type: 'f',
-            value: 0,
-          },
           velocity: {
             type: 't',
-            value: null,
+            value: new THREE.Texture(),
           },
           acceleration: {
             type: 't',
-            value: null,
+            value: new THREE.Texture(),
           },
         },
         vertexShader: glslify('../../glsl/physics_renderer_velocity.vs'),
@@ -56,7 +48,6 @@ var exports = function(){
       })
     );
     this.target_index = 0;
-    this.target = null;
 
     this.acceleration_scene.add(this.camera);
     this.acceleration_scene.add(this.acceleration_mesh);
@@ -70,8 +61,10 @@ var exports = function(){
       this.velocity_mesh.material.uniforms.acceleration.value = this.acceleration[this.target_index];
       this.velocity_mesh.material.uniforms.velocity.value = this.velocity[Math.abs(this.target_index - 1)];
       renderer.render(this.velocity_scene, this.camera, this.velocity[this.target_index]);
-      this.target = this.velocity[this.target_index];
       this.target_index = Math.abs(this.target_index - 1);
+    },
+    getCurrentVelocity: function() {
+      return this.velocity[this.target_index];
     },
     resize: function(length) {
       this.length = Math.pow(length, 2);
