@@ -13,15 +13,22 @@ var exports = function(){
   var createPoints = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
+    var uvs_base = [];
     var forces_base = [];
     for (var i = 0; i < Math.pow(length, 2); i++) {
       var r = Util.getRandomInt(0, 1000);
       var rad = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
       vertices_base.push(Math.cos(rad) * r, 0, Math.sin(rad) * r);
-      forces_base.push(Util.getRandomInt(1, 1000) / 1000)
+      uvs_base.push(
+        i % length * (1 / (length - 1)),
+        Math.floor(i / length) * (1 / (length - 1))
+      );
+      forces_base.push(Util.getRandomInt(1, 1000) / 1000);
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var uvs = new Float32Array(uvs_base);
+    geometry.addAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
     var forces = new Float32Array(forces_base);
     geometry.addAttribute('force', new THREE.BufferAttribute(forces, 1));
     var material = new THREE.ShaderMaterial({
