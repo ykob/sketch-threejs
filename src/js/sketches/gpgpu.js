@@ -3,12 +3,12 @@ var Util = require('../modules/util');
 var PhysicsRenderer = require('../modules/physics_renderer');
 
 var exports = function(){
-  var Sketch = function(scene, camera) {
-    this.init(scene, camera);
+  var Sketch = function(scene, camera, renderer) {
+    this.init(scene, camera, renderer);
   };
 
   var length = 200;
-  var physics_renderer = new PhysicsRenderer(length);
+  var physics_renderer = null;
 
   var createPoints = function() {
     var geometry = new THREE.BufferGeometry();
@@ -47,7 +47,8 @@ var exports = function(){
   var points = createPoints();
 
   Sketch.prototype = {
-    init: function(scene, camera) {
+    init: function(scene, camera, renderer) {
+      physics_renderer = new PhysicsRenderer(renderer, length);
       scene.add(points);
       camera.force.position.anchor.set(1000, 0, 0);
       camera.force.look.anchor.set(0, 0, 0);

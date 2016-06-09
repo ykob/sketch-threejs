@@ -81,7 +81,7 @@ var buildMenu = function() {
 };
 
 var startRunSketch = function(sketch) {
-  running = new sketch.obj(scene, camera);
+  running = new sketch.obj(scene, camera, renderer);
   sketch_title.innerHTML = sketch.name;
   sketch_date.innerHTML = (sketch.update.length > 0)
                           ? 'posted: ' + sketch.posted + ' / update: ' + sketch.update
