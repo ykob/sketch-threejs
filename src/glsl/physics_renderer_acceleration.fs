@@ -17,7 +17,7 @@ vec3 applyHook(vec3 v, vec3 anchor, float rest_length, float k) {
 void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
-  vec3 anchor = vec3(0.0, 100.0, 0.0);
+  vec3 anchor = vec3(0.0, 0.0, 0.0);
   vec3 update_a = a + applyHook(v, anchor, 0.0, 0.1);
   gl_FragColor = vec4(update_a + applyDrag(update_a, 0.1), 1.0);
 }

@@ -1,7 +1,5 @@
-uniform float time;
-
-varying vec2 vUv;
+varying vec3 vVelocity;
 
 void main(void) {
-  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+  gl_FragColor = vec4(vVelocity, 1.0);
 }

@@ -7,30 +7,24 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 200;
+  var length = 10;
   var physics_renderer = null;
 
   var createPoints = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
     var uvs_base = [];
-    var forces_base = [];
     for (var i = 0; i < Math.pow(length, 2); i++) {
-      var r = Util.getRandomInt(0, 1000);
-      var rad = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
-      vertices_base.push(Math.cos(rad) * r, 0, Math.sin(rad) * r);
+      vertices_base.push(0, 0, 0);
       uvs_base.push(
         i % length * (1 / (length - 1)),
         Math.floor(i / length) * (1 / (length - 1))
       );
-      forces_base.push(Util.getRandomInt(1, 1000) / 1000);
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     var uvs = new Float32Array(uvs_base);
     geometry.addAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
-    var forces = new Float32Array(forces_base);
-    geometry.addAttribute('force', new THREE.BufferAttribute(forces, 1));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         velocity: {
@@ -46,9 +40,23 @@ var exports = function(){
   }
   var points = createPoints();
 
+  var createPointsIntVelocity = function() {
+    var vertices = [];
+    for (var i = 0; i < Math.pow(length, 2); i++) {
+      var v = Util.getPolarCoord(
+        Util.getRadian(Util.getRandomInt(0, 360)),
+        Util.getRadian(Util.getRandomInt(0, 360)),
+        200
+      );
+      vertices.push(v.x, v.y, v.z);
+    }
+    return vertices;
+  }
+
   Sketch.prototype = {
     init: function(scene, camera, renderer) {
-      physics_renderer = new PhysicsRenderer(renderer, length);
+      physics_renderer = new PhysicsRenderer(length);
+      physics_renderer.init(renderer, createPointsIntVelocity());
       scene.add(points);
       camera.force.position.anchor.set(1000, 0, 0);
       camera.force.look.anchor.set(0, 0, 0);
