@@ -49,8 +49,8 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       scene.add(points);
-      camera.force.position.anchor.set(200, 0, 0);
-      camera.force.look.anchor.set(-200, 0, 0);
+      camera.force.position.anchor.set(1000, 0, 0);
+      camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
       scene.remove(points);
