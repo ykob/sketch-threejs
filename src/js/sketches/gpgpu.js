@@ -7,7 +7,7 @@ var exports = function(){
     this.init(scene, camera);
   };
 
-  var length = 1000;
+  var length = 200;
   var physics_renderer = new PhysicsRenderer(length);
 
   var createPoints = function() {
@@ -49,8 +49,8 @@ var exports = function(){
   Sketch.prototype = {
     init: function(scene, camera) {
       scene.add(points);
-      camera.force.position.anchor.set(200, 1000, 0);
-      camera.force.look.anchor.set(-200, 10, 0);
+      camera.force.position.anchor.set(200, 0, 0);
+      camera.force.look.anchor.set(-200, 0, 0);
     },
     remove: function(scene) {
       scene.remove(points);
