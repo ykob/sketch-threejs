@@ -2,7 +2,7 @@ var glslify = require('glslify');
 
 var exports = function(){
   var PhysicsRenderer = function(length) {
-    this.length = Math.pow(length, 2);
+    this.length = length;
     this.acceleration_scene = new THREE.Scene();
     this.velocity_scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
@@ -28,7 +28,7 @@ var exports = function(){
     this.target_index = 0;
   };
   PhysicsRenderer.prototype = {
-    init(renderer, velocity_base) {
+    init: function(renderer, velocity_array) {
       var acceleration_init_mesh = new THREE.Mesh(
         new THREE.PlaneBufferGeometry(2, 2),
         new THREE.ShaderMaterial({
@@ -36,36 +36,25 @@ var exports = function(){
           fragmentShader: 'void main(void) {gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);}',
         })
       );
-      var velocity_geometry = new THREE.BufferGeometry();
-      var vertices_base = [];
-      var uvs_base = [];
-      for (var i = 0; i < this.length; i++) {
-        vertices_base.push(
-          i % Math.sqrt(this.length) * (1 / (Math.sqrt(this.length) - 1)) * 2 - 1,
-          Math.floor(i / Math.sqrt(this.length)) * (1 / (Math.sqrt(this.length) - 1)) * 2 - 1,
-          0
-        );
-        uvs_base.push(
-          i % length * (1 / (length - 1)),
-          Math.floor(i / length) * (1 / (length - 1))
-        );
-      }
-      var vertices = new Float32Array(vertices_base);
-      velocity_geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
-      var uvs = new Float32Array(uvs_base);
-      velocity_geometry.addAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-      var velocity = new Float32Array(velocity_base);
-      velocity_geometry.addAttribute('velocity', new THREE.BufferAttribute(velocity, 3));
+      var velocity_init_tex = new THREE.DataTexture(velocity_array, this.length, this.length, THREE.RGBFormat, THREE.FloatType);
+      velocity_init_tex.needsUpdate = true;
       var velocity_init_mesh = new THREE.Mesh(
-        velocity_geometry,
+        new THREE.PlaneBufferGeometry(2, 2),
         new THREE.ShaderMaterial({
-          vertexShader: glslify('../../glsl/physics_renderer_velocity_init.vs'),
+          uniforms: {
+            velocity: {
+              type: 't',
+              value: velocity_init_tex,
+            },
+          },
+          vertexShader: glslify('../../glsl/physics_renderer.vs'),
           fragmentShader: glslify('../../glsl/physics_renderer_velocity_init.fs'),
         })
       );
 
       this.acceleration_scene.add(this.camera);
       this.acceleration_scene.add(acceleration_init_mesh);
+      renderer.render(this.acceleration_scene, this.camera, this.acceleration[0]);
       renderer.render(this.acceleration_scene, this.camera, this.acceleration[1]);
       this.acceleration_scene.remove(acceleration_init_mesh);
       this.acceleration_scene.add(this.acceleration_mesh);
@@ -77,7 +66,7 @@ var exports = function(){
       this.velocity_scene.remove(velocity_init_mesh);
       this.velocity_scene.add(this.velocity_mesh);
     },
-    createMesh(vs, fs) {
+    createMesh: function(vs, fs) {
       return new THREE.Mesh(
         new THREE.PlaneBufferGeometry(2, 2),
         new THREE.ShaderMaterial({
@@ -109,7 +98,7 @@ var exports = function(){
       return this.velocity[Math.abs(this.target_index - 1)];
     },
     resize: function(length) {
-      this.length = Math.pow(length, 2);
+      this.length = length;
       this.velocity[0].setSize(length, length);
       this.velocity[1].setSize(length, length);
       this.acceleration[0].setSize(length, length);

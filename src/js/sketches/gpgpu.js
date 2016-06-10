@@ -7,7 +7,7 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 10;
+  var length = 1000;
   var physics_renderer = null;
 
   var createPoints = function() {
@@ -46,11 +46,11 @@ var exports = function(){
       var v = Util.getPolarCoord(
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRadian(Util.getRandomInt(0, 360)),
-        200
+        Util.getRandomInt(0, 400)
       );
       vertices.push(v.x, v.y, v.z);
     }
-    return vertices;
+    return new Float32Array(vertices);
   }
 
   Sketch.prototype = {
@@ -58,10 +58,12 @@ var exports = function(){
       physics_renderer = new PhysicsRenderer(length);
       physics_renderer.init(renderer, createPointsIntVelocity());
       scene.add(points);
-      camera.force.position.anchor.set(1000, 0, 0);
+      camera.force.position.anchor.set(300, 300, 0);
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
+      points.geometry.dispose();
+      points.material.dispose();
       scene.remove(points);
     },
     render: function(scene, camera, renderer) {
