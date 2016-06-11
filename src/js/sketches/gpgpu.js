@@ -7,7 +7,7 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 1000;
+  var length = 300;
   var physics_renderer = null;
 
   var createPoints = function() {
@@ -46,7 +46,7 @@ var exports = function(){
       var v = Util.getPolarCoord(
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRadian(Util.getRandomInt(0, 360)),
-        Util.getRandomInt(0, 400)
+        Util.getRandomInt(80, 120)
       );
       vertices.push(v.x, v.y, v.z);
     }
