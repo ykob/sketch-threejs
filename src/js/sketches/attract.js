@@ -7,7 +7,7 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 333;
+  var length = 1000;
   var physics_renderer = null;
 
   var createPoints = function() {

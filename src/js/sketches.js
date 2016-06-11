@@ -1,8 +1,8 @@
 module.exports = [
   {
-    name: 'gpgpu',
-    obj: require('./sketches/gpgpu'),
-    posted: '2016.5.xx',
+    name: 'attract',
+    obj: require('./sketches/attract'),
+    posted: '2016.6.xx',
     update: '',
     description: '',
   },
