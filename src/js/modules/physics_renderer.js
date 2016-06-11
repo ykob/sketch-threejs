@@ -71,6 +71,10 @@ var exports = function(){
         new THREE.PlaneBufferGeometry(2, 2),
         new THREE.ShaderMaterial({
           uniforms: {
+            resolution: {
+              type: 'v2',
+              value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+            },
             velocity: {
               type: 't',
               value: null,

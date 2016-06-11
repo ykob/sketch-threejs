@@ -21,7 +21,7 @@ var exports = function(){
         i % length * (1 / (length - 1)),
         Math.floor(i / length) * (1 / (length - 1))
       );
-      colors_base.push(Util.getRandomInt(0, 120) / 360, 0.7, 1);
+      colors_base.push(Util.getRandomInt(0, 90) / 360, 0.8, 1);
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
@@ -50,7 +50,7 @@ var exports = function(){
       var v = Util.getPolarCoord(
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRadian(Util.getRandomInt(0, 360)),
-        Util.getRandomInt(80, 120)
+        100
       );
       vertices.push(v.x, v.y, v.z);
     }
@@ -61,8 +61,12 @@ var exports = function(){
     init: function(scene, camera, renderer) {
       physics_renderer = new PhysicsRenderer(length);
       physics_renderer.init(renderer, createPointsIntVelocity());
+      physics_renderer.acceleration_mesh.material.uniforms.anchor = {
+        type: 'v2',
+        value: new THREE.Vector2(),
+      }
       scene.add(points);
-      camera.force.position.anchor.set(300, 300, 0);
+      camera.force.position.anchor.set(0, 0, 600);
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
@@ -85,10 +89,12 @@ var exports = function(){
     touchStart: function(scene, camera, vector) {
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
+      physics_renderer.acceleration_mesh.material.uniforms.anchor.value.copy(vector_mouse_move);
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
     },
     mouseOut: function(scene, camera) {
+      physics_renderer.acceleration_mesh.material.uniforms.anchor.value.set(0, 0, 0);
     },
     resizeWindow: function(scene, camera) {
     }
