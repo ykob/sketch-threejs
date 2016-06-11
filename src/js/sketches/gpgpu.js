@@ -7,24 +7,28 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 300;
+  var length = 333;
   var physics_renderer = null;
 
   var createPoints = function() {
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
     var uvs_base = [];
+    var colors_base = [];
     for (var i = 0; i < Math.pow(length, 2); i++) {
       vertices_base.push(0, 0, 0);
       uvs_base.push(
         i % length * (1 / (length - 1)),
         Math.floor(i / length) * (1 / (length - 1))
       );
+      colors_base.push(Util.getRandomInt(0, 120) / 360, 0.7, 1);
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     var uvs = new Float32Array(uvs_base);
     geometry.addAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
+    var colors = new Float32Array(colors_base);
+    geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         velocity: {

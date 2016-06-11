@@ -1,3 +1,7 @@
+varying vec3 vColor;
+
+#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+
 void main(void) {
-  gl_FragColor = vec4(vec3(1.0), 0.5);
+  gl_FragColor = vec4(hsv2rgb(vColor), 0.5);
 }
