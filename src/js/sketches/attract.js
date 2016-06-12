@@ -7,7 +7,7 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 1000;
+  var length = 333;
   var physics_renderer = null;
 
   var createPoints = function() {
@@ -39,6 +39,8 @@ var exports = function(){
       vertexShader: glslify('../../glsl/gpgpu_points.vs'),
       fragmentShader: glslify('../../glsl/gpgpu_points.fs'),
       transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
     return new THREE.Points(geometry, material);
   }
@@ -50,7 +52,7 @@ var exports = function(){
       var v = Util.getPolarCoord(
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRadian(Util.getRandomInt(0, 360)),
-        100
+        Util.getRandomInt(10, 20)
       );
       vertices.push(v.x, v.y, v.z);
     }

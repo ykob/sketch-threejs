@@ -16,12 +16,12 @@ vec3 hook(vec3 v, vec3 anchor, float rest_length, float k) {
 }
 
 vec3 attract(vec3 v1, vec3 v2, float m1, float m2, float g) {
-  return g * m1 * m2 / pow(clamp(length(v2 - v1), 20.0, 30.0), 2.0) * normalize(v2 - v1 + PRECISION);
+  return g * m1 * m2 / pow(clamp(length(v2 - v1), 5.0, 30.0), 2.0) * normalize(v2 - v1 + PRECISION);
 }
 
 void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
-  vec3 a2 = a + attract(v, vec3(anchor.x * 200.0, anchor.y * 200.0, 0.0), 10.0, 1.0, 2.0);
+  vec3 a2 = a + attract(v, vec3(anchor.x * 80.0, anchor.y * 80.0, 0.0), 1.0, 1.0, 10.0);
   gl_FragColor = vec4(a2, 1.0);
 }
