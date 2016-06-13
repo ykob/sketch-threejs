@@ -7,7 +7,7 @@ var exports = function(){
     this.init(scene, camera, renderer);
   };
 
-  var length = 333;
+  var length = 1000;
   var physics_renderer = null;
 
   var createPoints = function() {
@@ -31,6 +31,10 @@ var exports = function(){
     geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
     var material = new THREE.ShaderMaterial({
       uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
         velocity: {
           type: 't',
           value: new THREE.Texture()
@@ -78,6 +82,7 @@ var exports = function(){
     },
     render: function(scene, camera, renderer) {
       physics_renderer.render(renderer);
+      points.material.uniforms.time.value++;
       points.material.uniforms.velocity.value = physics_renderer.getCurrentVelocity();
       camera.force.position.applyHook(0, 0.025);
       camera.force.position.applyDrag(0.2);
