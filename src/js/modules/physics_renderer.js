@@ -101,6 +101,9 @@ var exports = function(){
     getCurrentVelocity: function() {
       return this.velocity[Math.abs(this.target_index - 1)];
     },
+    getCurrentAcceleration: function() {
+      return this.acceleration[Math.abs(this.target_index - 1)];
+    },
     resize: function(length) {
       this.length = length;
       this.velocity[0].setSize(length, length);

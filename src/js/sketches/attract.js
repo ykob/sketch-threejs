@@ -38,6 +38,10 @@ var exports = function(){
         velocity: {
           type: 't',
           value: new THREE.Texture()
+        },
+        acceleration: {
+          type: 't',
+          value: new THREE.Texture()
         }
       },
       vertexShader: glslify('../../glsl/gpgpu_points.vs'),
@@ -84,6 +88,7 @@ var exports = function(){
       physics_renderer.render(renderer);
       points.material.uniforms.time.value++;
       points.material.uniforms.velocity.value = physics_renderer.getCurrentVelocity();
+      points.material.uniforms.acceleration.value = physics_renderer.getCurrentAcceleration();
       camera.force.position.applyHook(0, 0.025);
       camera.force.position.applyDrag(0.2);
       camera.force.position.updateVelocity();
