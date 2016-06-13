@@ -2,9 +2,9 @@ module.exports = [
   {
     name: 'attract',
     obj: require('./sketches/attract'),
-    posted: '2016.6.xx',
+    posted: '2016.6.13',
     update: '',
-    description: '',
+    description: 'use fragment shader to perticle moving.',
   },
   {
     name: 'hole',
