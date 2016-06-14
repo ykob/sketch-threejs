@@ -3,7 +3,7 @@ module.exports = [
     name: 'attract',
     obj: require('./sketches/attract'),
     posted: '2016.6.13',
-    update: '',
+    update: '2016.6.14',
     description: 'use fragment shader to perticle moving.',
   },
   {

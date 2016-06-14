@@ -60,7 +60,7 @@ var exports = function(){
       var v = Util.getPolarCoord(
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRadian(Util.getRandomInt(0, 360)),
-        Util.getRandomInt(10, 20)
+        Util.getRandomInt(10, 200)
       );
       vertices.push(v.x, v.y, v.z);
     }
