@@ -82,7 +82,6 @@ var exports = function(){
     var geometry = new THREE.SphereGeometry(1000, 32, 32);
     var material = new THREE.MeshPhongMaterial({
       side: THREE.BackSide,
-      map: new THREE.TextureLoader().load('img/hole/background.jpg'),
     });
     return new THREE.Mesh(geometry, material);
   };
