@@ -6,12 +6,9 @@ varying vec3 vColor;
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 
 void main() {
-  vColor = hsv2rgb(
-    vec3(
-      snoise3(
-        vec3(position.x - time, position.y + time / 2.0, position.z + time) / 800.0
-      ) * 0.2 + time / 100.0, 0.4, 1.0
-    )
+  float noise = snoise3(
+    vec3(position.x - time, position.y + time * 3.0, position.z + time) / 800.0
   );
+  vColor = hsv2rgb(vec3(noise * 0.16 + time / 400.0, 0.5, 1.0));
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }

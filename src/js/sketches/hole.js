@@ -2,12 +2,6 @@ var Util = require('../modules/util');
 var glslify = require('glslify');
 var ForceCamera = require('../modules/force_camera');
 var Force2 = require('../modules/force2');
-// var vs = glslify('../../glsl/hole.vs');
-// var fs = glslify('../../glsl/hole.fs');
-var vs_points = glslify('../../glsl/hole_points.vs');
-var fs_points = glslify('../../glsl/hole_points.fs');
-var vs_fb = glslify('../../glsl/hole_fb.vs');
-var fs_fb = glslify('../../glsl/hole_fb.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -16,7 +10,7 @@ var exports = function(){
 
   var points = null;
   var bg = null;
-  var light = new THREE.HemisphereLight(0xfffffff, 0xfffffff, 1);
+  var light = new THREE.HemisphereLight(0xfffffff, 0xdddddd, 1);
 
   var sub_scene = new THREE.Scene();
   var sub_camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
@@ -25,7 +19,7 @@ var exports = function(){
 
   var sub_scene2 = new THREE.Scene();
   var sub_camera2 = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-  var sub_light = new THREE.HemisphereLight(0x000000, 0x444444, 1);
+  var sub_light = new THREE.HemisphereLight(0xfffffff, 0xcccccc, 1);
   var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var bg_fb = null;
   var obj_fb = null;
@@ -69,8 +63,8 @@ var exports = function(){
           value: force.velocity,
         },
       },
-      vertexShader: vs_points,
-      fragmentShader: fs_points,
+      vertexShader: glslify('../../glsl/hole_points.vs'),
+      fragmentShader: glslify('../../glsl/hole_points.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
@@ -79,8 +73,16 @@ var exports = function(){
   };
 
   var createBackground = function() {
-    var geometry = new THREE.OctahedronGeometry(1000, 3);
-    var material = new THREE.MeshPhongMaterial({
+    var geometry = new THREE.SphereGeometry(1000, 64, 64);
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+      },
+      vertexShader: glslify('../../glsl/hole_bg.vs'),
+      fragmentShader: glslify('../../glsl/hole_bg.fs'),
       side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
@@ -89,13 +91,13 @@ var exports = function(){
   var createObjectInFramebuffer = function(radius, detail) {
     var geometry = new THREE.OctahedronGeometry(radius, detail);
     var material = new THREE.MeshPhongMaterial({
-      shading: THREE.FlatShading,
+      color: 0xffffff,
     });
     return new THREE.Mesh(geometry, material);
   }
 
   var createBackgroundInFramebuffer = function() {
-    var geometry_base = new THREE.SphereGeometry(1000, 128, 128);
+    var geometry_base = new THREE.SphereGeometry(1000, 64, 64);
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
@@ -135,8 +137,8 @@ var exports = function(){
           value: render_target2,
         },
       },
-      vertexShader: vs_fb,
-      fragmentShader: fs_fb,
+      vertexShader: glslify('../../glsl/hole_fb.vs'),
+      fragmentShader: glslify('../../glsl/hole_fb.fs'),
       transparent: true
     });
     return new THREE.Mesh(geometry, material);
@@ -144,13 +146,12 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
-      document.body.className = 'bg-white';
       force.anchor.set(1, 0);
 
       sub_camera2.force.position.anchor.set(1000, 300, 0);
       sub_camera2.force.look.anchor.set(0, 0, 0);
       bg_fb = createBackgroundInFramebuffer();
-      obj_fb = createObjectInFramebuffer(60, 2);
+      obj_fb = createObjectInFramebuffer(60, 4);
       sub_scene2.add(bg_fb);
       sub_scene2.add(obj_fb);
       sub_scene2.add(sub_light);
@@ -165,12 +166,10 @@ var exports = function(){
       bg = createBackground();
       scene.add(bg);
       scene.add(light);
-      camera.force.position.anchor.set(1000, -300, 0);
+      camera.force.position.anchor.set(1000, 300, 0);
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
-      document.body.className = '';
-
       bg_fb.geometry.dispose();
       bg_fb.material.dispose();
       sub_scene2.remove(bg_fb);
@@ -221,7 +220,7 @@ var exports = function(){
     },
     touchStart: function(scene, camera, vector) {
       force.anchor.set(2, 40);
-      sub_camera2.force.position.anchor.set(600, -300, 0);
+      sub_camera2.force.position.anchor.set(600, 300, 0);
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
