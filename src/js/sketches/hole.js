@@ -79,7 +79,7 @@ var exports = function(){
   };
 
   var createBackground = function() {
-    var geometry = new THREE.SphereGeometry(1000, 32, 32);
+    var geometry = new THREE.OctahedronGeometry(1000, 3);
     var material = new THREE.MeshPhongMaterial({
       side: THREE.BackSide,
     });
@@ -89,8 +89,25 @@ var exports = function(){
   var createObjectInFramebuffer = function(radius, detail) {
     var geometry = new THREE.OctahedronGeometry(radius, detail);
     var material = new THREE.MeshPhongMaterial({
-      side: THREE.BackSide,
       shading: THREE.FlatShading,
+    });
+    return new THREE.Mesh(geometry, material);
+  }
+
+  var createBackgroundInFramebuffer = function() {
+    var geometry_base = new THREE.SphereGeometry(1000, 128, 128);
+    var geometry = new THREE.BufferGeometry();
+    geometry.fromGeometry(geometry_base);
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+      },
+      vertexShader: glslify('../../glsl/hole_bg_fb.vs'),
+      fragmentShader: glslify('../../glsl/hole_bg_fb.fs'),
+      side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
   }
@@ -132,7 +149,9 @@ var exports = function(){
 
       sub_camera2.force.position.anchor.set(1000, 300, 0);
       sub_camera2.force.look.anchor.set(0, 0, 0);
+      bg_fb = createBackgroundInFramebuffer();
       obj_fb = createObjectInFramebuffer(60, 2);
+      sub_scene2.add(bg_fb);
       sub_scene2.add(obj_fb);
       sub_scene2.add(sub_light);
 
@@ -152,6 +171,9 @@ var exports = function(){
     remove: function(scene) {
       document.body.className = '';
 
+      bg_fb.geometry.dispose();
+      bg_fb.material.dispose();
+      sub_scene2.remove(bg_fb);
       obj_fb.geometry.dispose();
       obj_fb.material.dispose();
       sub_scene2.remove(obj_fb);
@@ -173,6 +195,7 @@ var exports = function(){
       points.material.uniforms.time.value++;
       framebuffer.material.uniforms.time.value++;
       bg.rotation.y = points.material.uniforms.time.value / 200;
+      bg_fb.material.uniforms.time.value++;
       obj_fb.rotation.y = points.material.uniforms.time.value / 200;
       force.applyHook(0, 0.06);
       force.applyDrag(0.2);

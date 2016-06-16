@@ -1,0 +1,17 @@
+uniform float time;
+
+varying vec3 vColor;
+
+#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+#pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
+
+void main() {
+  vColor = hsv2rgb(
+    vec3(
+      snoise3(
+        vec3(position.x - time, position.y + time / 2.0, position.z + time) / 800.0
+      ) * 0.2 + time / 100.0, 0.4, 1.0
+    )
+  );
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
