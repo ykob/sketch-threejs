@@ -15,13 +15,15 @@ var exports = function(){
     var vertices_base = [];
     var uvs_base = [];
     var colors_base = [];
+    var masses_base = [];
     for (var i = 0; i < Math.pow(length, 2); i++) {
       vertices_base.push(0, 0, 0);
       uvs_base.push(
         i % length * (1 / (length - 1)),
         Math.floor(i / length) * (1 / (length - 1))
       );
-      colors_base.push(Util.getRandomInt(0, 90) / 360, 0.8, 1);
+      colors_base.push(Util.getRandomInt(0, 120) / 360, 0.8, 1);
+      masses_base.push(Util.getRandomInt(1, 100));
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
@@ -29,6 +31,8 @@ var exports = function(){
     geometry.addAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
     var colors = new Float32Array(colors_base);
     geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+    var masses = new Float32Array(masses_base);
+    geometry.addAttribute('mass', new THREE.BufferAttribute(masses, 1));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -76,7 +80,7 @@ var exports = function(){
         value: new THREE.Vector2(),
       }
       scene.add(points);
-      camera.force.position.anchor.set(0, 0, 600);
+      camera.force.position.anchor.set(0, 100, 600);
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
