@@ -163,6 +163,7 @@ var exports = function(){
 
   Sketch.prototype = {
     init: function(scene, camera) {
+      document.body.className = 'bg-white';
       force.anchor.set(1, 0);
 
       sub_camera2.force.position.anchor.set(1000, 300, 0);
@@ -187,6 +188,7 @@ var exports = function(){
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
+      document.body.className = '';
       bg_fb.geometry.dispose();
       bg_fb.material.dispose();
       sub_scene2.remove(bg_fb);
