@@ -7,8 +7,8 @@ varying vec3 vColor;
 
 void main() {
   float noise = snoise3(
-    vec3(position.x - time, position.y + time * 3.0, position.z + time) / 800.0
+    vec3(position.x + sin(time / 20.0) * 100.0, position.y + cos(time / 20.0) * 100.0, position.z + time * 10.0) / 700.0
   );
-  vColor = hsv2rgb(vec3(noise * 0.16 + time / 400.0, 0.5, 1.0));
+  vColor = hsv2rgb(vec3(noise * 0.2 + 0.75, 0.4, noise * 0.1 + 0.9));
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }
