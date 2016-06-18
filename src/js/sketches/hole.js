@@ -22,7 +22,7 @@ var exports = function(){
   var sub_light = new THREE.HemisphereLight(0xfffffff, 0xcccccc, 1);
   var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   var bg_fb = null;
-  var obj_fb = null;
+  var points_fb = null;
 
   var force = new Force2();
 
@@ -88,16 +88,33 @@ var exports = function(){
     return new THREE.Mesh(geometry, material);
   };
 
-  var createObjectInFramebuffer = function(radius, detail) {
-    var geometry = new THREE.OctahedronGeometry(radius, detail);
-    var material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+  var createPointsInFramebuffer = function() {
+    var geometry = new THREE.BufferGeometry();
+    var vertices_base = [];
+    for (var i = 0; i < 2000; i++) {
+      vertices_base.push(
+        Util.getRadian(Util.getRandomInt(0, 120) + 120),
+        Util.getRadian(Util.getRandomInt(0, 3600) / 10),
+        Util.getRandomInt(200, 1000)
+      );
+    }
+    var vertices = new Float32Array(vertices_base);
+    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+      },
+      vertexShader: glslify('../../glsl/hole_points_fb.vs'),
+      fragmentShader: glslify('../../glsl/hole_points_fb.fs'),
     });
-    return new THREE.Mesh(geometry, material);
+    return new THREE.Points(geometry, material);
   }
 
   var createBackgroundInFramebuffer = function() {
-    var geometry_base = new THREE.SphereGeometry(1000, 64, 64);
+    var geometry_base = new THREE.SphereGeometry(1000, 128, 128);
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
@@ -151,9 +168,9 @@ var exports = function(){
       sub_camera2.force.position.anchor.set(1000, 300, 0);
       sub_camera2.force.look.anchor.set(0, 0, 0);
       bg_fb = createBackgroundInFramebuffer();
-      obj_fb = createObjectInFramebuffer(60, 4);
+      points_fb = createPointsInFramebuffer();
       sub_scene2.add(bg_fb);
-      sub_scene2.add(obj_fb);
+      sub_scene2.add(points_fb);
       sub_scene2.add(sub_light);
 
       points = createPointsForCrossFade();
@@ -173,9 +190,9 @@ var exports = function(){
       bg_fb.geometry.dispose();
       bg_fb.material.dispose();
       sub_scene2.remove(bg_fb);
-      obj_fb.geometry.dispose();
-      obj_fb.material.dispose();
-      sub_scene2.remove(obj_fb);
+      points_fb.geometry.dispose();
+      points_fb.material.dispose();
+      sub_scene2.remove(points_fb);
       sub_scene2.remove(sub_light);
 
       points.geometry.dispose();
@@ -195,7 +212,7 @@ var exports = function(){
       framebuffer.material.uniforms.time.value++;
       bg.rotation.y = points.material.uniforms.time.value / 200;
       bg_fb.material.uniforms.time.value++;
-      obj_fb.rotation.y = points.material.uniforms.time.value / 200;
+      points_fb.material.uniforms.time.value++;
       force.applyHook(0, 0.06);
       force.applyDrag(0.2);
       force.updateVelocity();
