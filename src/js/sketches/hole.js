@@ -72,6 +72,22 @@ var exports = function(){
     return new THREE.Points(geometry, material);
   };
 
+  var createObject = function() {
+    var geometry = new THREE.BufferGeometry();
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+      },
+      vertexShader: glslify('../../glsl/hole_bg.vs'),
+      fragmentShader: glslify('../../glsl/hole_bg.fs'),
+      shading: THREE.FlatShading,
+    });
+    return new THREE.Mesh(geometry, material);
+  };
+
   var createBackground = function() {
     var geometry = new THREE.SphereGeometry(1000, 64, 64);
     var material = new THREE.ShaderMaterial({
@@ -111,7 +127,7 @@ var exports = function(){
       fragmentShader: glslify('../../glsl/hole_points_fb.fs'),
     });
     return new THREE.Points(geometry, material);
-  }
+  };
 
   var createBackgroundInFramebuffer = function() {
     var geometry_base = new THREE.SphereGeometry(1000, 128, 128);
@@ -129,7 +145,7 @@ var exports = function(){
       side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
-  }
+  };
 
   var createPlaneForFramebuffer = function() {
     var geometry_base = new THREE.PlaneGeometry(2, 2);
@@ -159,7 +175,7 @@ var exports = function(){
       transparent: true
     });
     return new THREE.Mesh(geometry, material);
-  }
+  };
 
   Sketch.prototype = {
     init: function(scene, camera) {
