@@ -2,7 +2,7 @@ varying vec3 vColor;
 varying vec3 vNormal;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
-#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+#pragma glslify: hsv2rgb = require(../../modules/hsv2rgb)
 
 struct HemisphereLight {
   vec3 direction;

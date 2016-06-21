@@ -2,10 +2,6 @@ var Util = require('../modules/util');
 var ForceCamera = require('../modules/force_camera');
 var Force2 = require('../modules/force2');
 var glslify = require('glslify');
-var vs = glslify('../../glsl/distort.vs');
-var fs = glslify('../../glsl/distort.fs');
-var vs_pp = glslify('../../glsl/distort_posteffect.vs');
-var fs_pp = glslify('../../glsl/distort_posteffect.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -48,8 +44,8 @@ var exports = function(){
           }
         }
       ]),
-      vertexShader: vs,
-      fragmentShader: fs,
+      vertexShader: glslify('../../glsl/sketch/distort/object.vs'),
+      fragmentShader: glslify('../../glsl/sketch/distort/object.fs'),
       lights: true,
     });
     return new THREE.Mesh(geometry, material);
@@ -86,8 +82,8 @@ var exports = function(){
           value: render_target,
         },
       },
-      vertexShader: vs_pp,
-      fragmentShader: fs_pp,
+      vertexShader: glslify('../../glsl/sketch/distort/posteffect.vs'),
+      fragmentShader: glslify('../../glsl/sketch/distort/posteffect.fs'),
     });
     return new THREE.Mesh(geometry, material);
   }

@@ -7,7 +7,7 @@ const float blur = 16.0;
 
 varying vec2 vUv;
 
-#pragma glslify: random2 = require(./modules/random2)
+#pragma glslify: random2 = require(../../modules/random2)
 #pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
 
 vec2 diffUv(float v, float diff) {
