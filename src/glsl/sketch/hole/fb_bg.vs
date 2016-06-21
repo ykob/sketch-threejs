@@ -2,7 +2,7 @@ uniform float time;
 
 varying vec3 vColor;
 
-#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+#pragma glslify: hsv2rgb = require(../../modules/hsv2rgb)
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 
 void main() {

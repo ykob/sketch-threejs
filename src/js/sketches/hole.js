@@ -63,8 +63,8 @@ var exports = function(){
           value: force.velocity,
         },
       },
-      vertexShader: glslify('../../glsl/hole_points.vs'),
-      fragmentShader: glslify('../../glsl/hole_points.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/points.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/points.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
@@ -81,8 +81,8 @@ var exports = function(){
           value: 0,
         },
       },
-      vertexShader: glslify('../../glsl/hole_bg.vs'),
-      fragmentShader: glslify('../../glsl/hole_bg.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/bg.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/bg.fs'),
       shading: THREE.FlatShading,
     });
     return new THREE.Mesh(geometry, material);
@@ -97,8 +97,8 @@ var exports = function(){
           value: 0,
         },
       },
-      vertexShader: glslify('../../glsl/hole_bg.vs'),
-      fragmentShader: glslify('../../glsl/hole_bg.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/bg.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/bg.fs'),
       side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
@@ -123,8 +123,8 @@ var exports = function(){
           value: 0,
         },
       },
-      vertexShader: glslify('../../glsl/hole_points_fb.vs'),
-      fragmentShader: glslify('../../glsl/hole_points_fb.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/fb_points.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/fb_points.fs'),
     });
     return new THREE.Points(geometry, material);
   };
@@ -140,8 +140,8 @@ var exports = function(){
           value: 0,
         },
       },
-      vertexShader: glslify('../../glsl/hole_bg_fb.vs'),
-      fragmentShader: glslify('../../glsl/hole_bg_fb.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/fb_bg.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/fb_bg.fs'),
       side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
@@ -170,8 +170,8 @@ var exports = function(){
           value: render_target2,
         },
       },
-      vertexShader: glslify('../../glsl/hole_fb.vs'),
-      fragmentShader: glslify('../../glsl/hole_fb.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/fb.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/fb.fs'),
       transparent: true
     });
     return new THREE.Mesh(geometry, material);
