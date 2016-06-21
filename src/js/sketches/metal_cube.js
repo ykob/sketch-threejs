@@ -1,10 +1,6 @@
 var Util = require('../modules/util');
 var glslify = require('glslify');
 var Force3 = require('../modules/force3');
-var vs = glslify('../../glsl/metal_cube.vs');
-var fs = glslify('../../glsl/metal_cube.fs');
-var vs_bg = glslify('../../glsl/background.vs');
-var fs_bg = glslify('../../glsl/background.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -38,8 +34,8 @@ var exports = function(){
           value: new THREE.Vector2(window.innerWidth, window.innerHeight)
         }
       },
-      vertexShader: vs,
-      fragmentShader: fs,
+      vertexShader: glslify('../../glsl/sketch/metal_cube/object.vs'),
+      fragmentShader: glslify('../../glsl/sketch/metal_cube/object.fs'),
       transparent: true
     });
     var mesh = new THREE.Mesh(geometry, material);
@@ -61,8 +57,8 @@ var exports = function(){
           value: 0
         },
       },
-      vertexShader: vs_bg,
-      fragmentShader: fs_bg,
+      vertexShader: glslify('../../glsl/sketch/metal_cube/background.vs'),
+      fragmentShader: glslify('../../glsl/sketch/metal_cube/background.fs'),
       shading: THREE.FlatShading,
       side: THREE.BackSide
     });

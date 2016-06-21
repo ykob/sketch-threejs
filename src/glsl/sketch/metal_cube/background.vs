@@ -6,9 +6,9 @@ varying vec3 vColor;
 varying mat4 invertMatrix;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
-#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+#pragma glslify: hsv2rgb = require(../../modules/hsv2rgb)
 #pragma glslify: inverse = require(glsl-inverse);
-#pragma glslify: rotate = require(./modules/raymarching/rotate)
+#pragma glslify: rotate = require(../../modules/raymarching/rotate)
 
 vec3 getRotate(vec3 p) {
   return rotate(p, radians(time / 6.0), radians(time / 7.0), radians(time / 8.0));

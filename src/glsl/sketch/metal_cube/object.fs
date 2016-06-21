@@ -9,10 +9,10 @@ varying mat4 m_matrix;
 const float targetDepth = 3.5;
 const vec3 lightDir = vec3(0.577, -0.577, 0.577);
 
-#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+#pragma glslify: hsv2rgb = require(../../modules/hsv2rgb)
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
-#pragma glslify: rotate = require(./modules/raymarching/rotate)
-#pragma glslify: dBox = require(./modules/raymarching/dBox)
+#pragma glslify: rotate = require(../../modules/raymarching/rotate)
+#pragma glslify: dBox = require(../../modules/raymarching/dBox)
 
 float getNoise(vec3 p) {
   return snoise3(p * (0.4 + acceleration * 0.1) + time / 100.0);
