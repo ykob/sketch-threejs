@@ -18,12 +18,12 @@ var exports = function(){
       new THREE.WebGLRenderTarget(length, length, this.option),
     ];
     this.acceleration_mesh = this.createMesh(
-      glslify('../../glsl/physics_renderer.vs'),
-      glslify('../../glsl/physics_renderer_acceleration.fs')
+      glslify('../../glsl/sketch/common/physics_renderer.vs'),
+      glslify('../../glsl/sketch/common/physics_renderer_acceleration.fs')
     );
     this.velocity_mesh = this.createMesh(
-      glslify('../../glsl/physics_renderer.vs'),
-      glslify('../../glsl/physics_renderer_velocity.fs')
+      glslify('../../glsl/sketch/common/physics_renderer.vs'),
+      glslify('../../glsl/sketch/common/physics_renderer_velocity.fs')
     );
     this.target_index = 0;
   };
@@ -47,8 +47,8 @@ var exports = function(){
               value: velocity_init_tex,
             },
           },
-          vertexShader: glslify('../../glsl/physics_renderer.vs'),
-          fragmentShader: glslify('../../glsl/physics_renderer_velocity_init.fs'),
+          vertexShader: glslify('../../glsl/sketch/common/physics_renderer.vs'),
+          fragmentShader: glslify('../../glsl/sketch/common/physics_renderer_velocity_init.fs'),
         })
       );
 

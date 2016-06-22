@@ -4,7 +4,7 @@ varying float vOpacity;
 
 uniform float time;
 
-#pragma glslify: hsv2rgb = require(./modules/hsv2rgb)
+#pragma glslify: hsv2rgb = require(../../modules/hsv2rgb)
 
 void main(void) {
   vec3 n;

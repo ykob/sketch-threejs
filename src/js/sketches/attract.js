@@ -48,8 +48,8 @@ var exports = function(){
           value: new THREE.Texture()
         }
       },
-      vertexShader: glslify('../../glsl/gpgpu_points.vs'),
-      fragmentShader: glslify('../../glsl/gpgpu_points.fs'),
+      vertexShader: glslify('../../glsl/sketch/attract/points.vs'),
+      fragmentShader: glslify('../../glsl/sketch/attract/points.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
