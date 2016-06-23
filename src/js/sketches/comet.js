@@ -5,8 +5,6 @@ var Points = require('../modules/points.js');
 var ForceHemisphereLight = require('../modules/force_hemisphere_light');
 var ForcePointLight = require('../modules/force_point_light');
 var glslify = require('glslify');
-var vs = glslify('../../glsl/points.vs');
-var fs = glslify('../../glsl/points.fs');
 
 var exports = function(){
   var Sketch = function(scene, camera) {
@@ -220,8 +218,8 @@ var exports = function(){
       }
       points.init({
         scene: scene,
-        vs: vs,
-        fs: fs,
+        vs: glslify('../../glsl/sketch/common/points.vs'),
+        fs: glslify('../../glsl/sketch/common/points.fs'),
         positions: positions,
         colors: colors,
         opacities: opacities,
