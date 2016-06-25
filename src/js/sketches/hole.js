@@ -10,6 +10,7 @@ var exports = function(){
 
   var points = null;
   var bg = null;
+  var obj = null;
   var light = new THREE.HemisphereLight(0xfffffff, 0xdddddd, 1);
 
   var sub_scene = new THREE.Scene();
@@ -73,7 +74,15 @@ var exports = function(){
   };
 
   var createObject = function() {
+    var geometry_base = new THREE.BoxBufferGeometry(2, 2, 2);
+    var attr = geometry_base.attributes;
     var geometry = new THREE.BufferGeometry();
+    var vertices_base = [];
+    for (let i = 0; i < 6; i ++) {
+      Array.prototype.push.apply(vertices_base, attr.position.array);
+    }
+    var vertices = new Float32Array(vertices_base);
+    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -81,8 +90,8 @@ var exports = function(){
           value: 0,
         },
       },
-      vertexShader: glslify('../../glsl/sketch/hole/bg.vs'),
-      fragmentShader: glslify('../../glsl/sketch/hole/bg.fs'),
+      vertexShader: glslify('../../glsl/sketch/hole/object.vs'),
+      fragmentShader: glslify('../../glsl/sketch/hole/object.fs'),
       shading: THREE.FlatShading,
     });
     return new THREE.Mesh(geometry, material);
@@ -198,6 +207,7 @@ var exports = function(){
       framebuffer = createPlaneForFramebuffer();
       scene.add(framebuffer);
       bg = createBackground();
+      obj = createObject();
       scene.add(bg);
       scene.add(light);
       camera.force.position.anchor.set(1000, 300, 0);
