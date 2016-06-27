@@ -74,15 +74,15 @@ var exports = function(){
   };
 
   var createObject = function() {
-    var geometry_base = new THREE.BoxBufferGeometry(2, 2, 2);
-    var attr = geometry_base.attributes;
-    var geometry = new THREE.BufferGeometry();
-    var vertices_base = [];
-    for (let i = 0; i < 6; i ++) {
-      Array.prototype.push.apply(vertices_base, attr.position.array);
-    }
-    var vertices = new Float32Array(vertices_base);
-    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var geometry = new THREE.BoxBufferGeometry(2, 2, 2);
+    // var attr = geometry_base.attributes;
+    // var geometry = new THREE.BufferGeometry();
+    // var vertices_base = [];
+    // for (let i = 0; i < 6; i ++) {
+    //   Array.prototype.push.apply(vertices_base, attr.position.array);
+    // }
+    // var vertices = new Float32Array(vertices_base);
+    // geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -157,7 +157,7 @@ var exports = function(){
   };
 
   var createPlaneForFramebuffer = function() {
-    var geometry_base = new THREE.PlaneGeometry(2, 2);
+    var geometry_base = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight);
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
@@ -209,6 +209,7 @@ var exports = function(){
       bg = createBackground();
       obj = createObject();
       scene.add(bg);
+      scene.add(obj);
       scene.add(light);
       camera.force.position.anchor.set(1000, 300, 0);
       camera.force.look.anchor.set(0, 0, 0);
@@ -237,6 +238,8 @@ var exports = function(){
     },
     render: function(scene, camera, renderer) {
       points.material.uniforms.time.value++;
+      obj.material.uniforms.time.value++;
+      framebuffer.lookAt(camera.position);
       framebuffer.material.uniforms.time.value++;
       bg.rotation.y = points.material.uniforms.time.value / 200;
       bg_fb.material.uniforms.time.value++;
