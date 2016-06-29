@@ -261,12 +261,15 @@ var exports = function(){
     },
     render: function(scene, camera, renderer) {
       points.material.uniforms.time.value++;
-      obj.material.uniforms.time.value++;
       framebuffer.lookAt(camera.position);
       framebuffer.material.uniforms.time.value++;
-      bg.rotation.y = points.material.uniforms.time.value / 200;
+
       bg_fb.material.uniforms.time.value++;
       points_fb.material.uniforms.time.value++;
+
+      bg_wf.rotation.y = points.material.uniforms.time.value / 1000;
+      obj.material.uniforms.time.value++;
+
       force.applyHook(0, 0.06);
       force.applyDrag(0.2);
       force.updateVelocity();
