@@ -10,6 +10,7 @@ var exports = function(){
 
   var points = null;
   var bg = null;
+  var bg_wf = null;
   var obj = null;
   var light = new THREE.DirectionalLight(0xffffff, 1);
 
@@ -102,7 +103,7 @@ var exports = function(){
   };
 
   var createBackground = function() {
-    var geometry = new THREE.SphereGeometry(1000, 64, 64);
+    var geometry = new THREE.SphereGeometry(1200, 64, 64);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -113,6 +114,15 @@ var exports = function(){
       vertexShader: glslify('../../glsl/sketch/hole/bg.vs'),
       fragmentShader: glslify('../../glsl/sketch/hole/bg.fs'),
       side: THREE.BackSide,
+    });
+    return new THREE.Mesh(geometry, material);
+  };
+
+  var createBackgroundWire = function() {
+    var geometry = new THREE.SphereGeometry(1100, 64, 64);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0xdddddd,
+      wireframe: true
     });
     return new THREE.Mesh(geometry, material);
   };
@@ -211,8 +221,10 @@ var exports = function(){
       framebuffer = createPlaneForFramebuffer();
       scene.add(framebuffer);
       bg = createBackground();
-      obj = createObject();
       scene.add(bg);
+      bg_wf = createBackgroundWire();
+      scene.add(bg_wf);
+      obj = createObject();
       scene.add(obj);
       light.position.set(0, 1, 0)
       scene.add(light);
@@ -239,6 +251,12 @@ var exports = function(){
       bg.geometry.dispose();
       bg.material.dispose();
       scene.remove(bg);
+      bg_wf.geometry.dispose();
+      bg_wf.material.dispose();
+      scene.remove(bg_wf);
+      obj.geometry.dispose();
+      obj.material.dispose();
+      scene.remove(obj);
       scene.remove(light);
     },
     render: function(scene, camera, renderer) {
