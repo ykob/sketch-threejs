@@ -75,15 +75,21 @@ var exports = function(){
   };
 
   var createObject = function() {
-    var geometry = new THREE.BoxBufferGeometry(2, 2, 2);
-    // var attr = geometry_base.attributes;
-    // var geometry = new THREE.BufferGeometry();
-    // var vertices_base = [];
-    // for (let i = 0; i < 6; i ++) {
-    //   Array.prototype.push.apply(vertices_base, attr.position.array);
-    // }
-    // var vertices = new Float32Array(vertices_base);
-    // geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var geometry_base = new THREE.BoxBufferGeometry(2, 2, 2);
+    var attr = geometry_base.attributes;
+    var geometry = new THREE.BufferGeometry();
+    var vertices_base = [];
+    var indices_base = [];
+    for (let i = 0; i < 6; i ++) {
+      Array.prototype.push.apply(vertices_base, attr.position.array);
+      geometry_base.index.array.map((item) => {
+        indices_base.push(item + i * attr.position.array.length / 3)
+      });
+    }
+    var vertices = new Float32Array(vertices_base);
+    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var indices = new Uint32Array(indices_base);
+    geometry.setIndex(new THREE.BufferAttribute(indices, 1));
     var material = new THREE.ShaderMaterial({
       uniforms: THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],
