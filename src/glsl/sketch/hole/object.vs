@@ -27,6 +27,8 @@ vec4 move(vec3 position) {
 void main() {
   vec4 update_position = move(position);
   vPosition = position;
-  vInvertMatrix = inverse(rotationMatrix(radians(time), radians(time), radians(time)));
+  vInvertMatrix = inverse(rotationMatrix(
+    radians(time) + radian, radians(time) + radian, radians(time) + radian
+  ));
   gl_Position = projectionMatrix * modelViewMatrix * update_position;
 }
