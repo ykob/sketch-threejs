@@ -79,15 +79,31 @@ var exports = function(){
     var attr = geometry_base.attributes;
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
+    var radius_base = [];
+    var radians_base = [];
     var indices_base = [];
-    for (let i = 0; i < 6; i ++) {
-      Array.prototype.push.apply(vertices_base, attr.position.array);
+    for (let i = 0; i < 20; i ++) {
+      var radius = Util.getRandomInt(300, 1000);
+      var radian = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
+      for (var j = 0; j < attr.position.array.length; j += 3) {
+        vertices_base.push(
+          attr.position.array[j + 0],
+          attr.position.array[j + 1],
+          attr.position.array[j + 2]
+        );
+        radius_base.push(radius);
+        radians_base.push(radian);
+      }
       geometry_base.index.array.map((item) => {
         indices_base.push(item + i * attr.position.array.length / 3)
       });
     }
     var vertices = new Float32Array(vertices_base);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var radius = new Float32Array(radius_base);
+    geometry.addAttribute('radius', new THREE.BufferAttribute(radius, 1));
+    var radians = new Float32Array(radians_base);
+    geometry.addAttribute('radian', new THREE.BufferAttribute(radians, 1));
     var indices = new Uint32Array(indices_base);
     geometry.setIndex(new THREE.BufferAttribute(indices, 1));
     var material = new THREE.ShaderMaterial({

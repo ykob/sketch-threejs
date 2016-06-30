@@ -1,3 +1,6 @@
+attribute float radius;
+attribute float radian;
+
 uniform float time;
 
 varying vec3 vPosition;
@@ -11,9 +14,13 @@ varying mat4 vInvertMatrix;
 vec4 move(vec3 position) {
   vec3 scale = vec3(20.0);
   return translateMatrix(
-    vec3(cos(radians(time)) * 400.0, 0.0, sin(radians(time)) * 400.0)
+    vec3(
+      cos(radians(time) + radian) * radius,
+      sin(radians(time) + radian * 10.0) * radius * 0.3,
+      sin(radians(time) + radian) * radius
+    )
   ) * rotationMatrix(
-    radians(time), radians(time), radians(time)
+    radians(time) + radian, radians(time) + radian, radians(time) + radian
   ) * scaleMatrix(vec3(20.0)) * vec4(position, 1.0);
 }
 
