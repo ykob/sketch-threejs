@@ -25,7 +25,7 @@ void main(void) {
   vec3 a2 = a + normalize(vec3(
     anchor.x * resolution.x / 6.0 + PRECISION,
     0.0,
-    anchor.y * resolution.y / -3.0 + PRECISION
+    anchor.y * resolution.y / -2.0 + PRECISION
   ) - v) / 2.0;
   vec3 a3 = a2 + drag(a2, 0.003);
   gl_FragColor = vec4(a3, 1.0);

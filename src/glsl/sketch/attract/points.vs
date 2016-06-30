@@ -14,6 +14,6 @@ void main(void) {
   vAcceleration = length(texture2D(acceleration, uv2).xyz) * mass;
   vColor = color;
   vOpacity = 0.6 * (300.0 / length(update_position.xyz));
-  gl_PointSize = 3.0 * (300.0 / length(update_position.xyz));
+  gl_PointSize = 2.0 * (300.0 / length(update_position.xyz));
   gl_Position = projectionMatrix * update_position;
 }

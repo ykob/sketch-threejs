@@ -64,9 +64,9 @@ var exports = function(){
       var v = Util.getPolarCoord(
         Util.getRadian(Util.getRandomInt(0, 360)),
         Util.getRadian(Util.getRandomInt(0, 360)),
-        Util.getRandomInt(10, 200)
+        Util.getRandomInt(10, 1000)
       );
-      vertices.push(v.x, v.y, v.z);
+      vertices.push(v.x, v.y / 10.0, v.z);
     }
     return new Float32Array(vertices);
   }
@@ -80,7 +80,7 @@ var exports = function(){
         value: new THREE.Vector2(),
       }
       scene.add(points);
-      camera.force.position.anchor.set(0, 100, 600);
+      camera.force.position.anchor.set(0, 15, 600);
       camera.force.look.anchor.set(0, 0, 0);
     },
     remove: function(scene) {
