@@ -15,14 +15,14 @@ var exports = function(){
   var light = new THREE.DirectionalLight(0xffffff, 1);
 
   var sub_scene = new THREE.Scene();
-  var sub_camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-  var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+  var sub_camera = new ForceCamera(45, 1, 1, 10000);
+  var render_target = new THREE.WebGLRenderTarget(1200, 1200);
   var framebuffer = null;
 
   var sub_scene2 = new THREE.Scene();
-  var sub_camera2 = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  var sub_camera2 = new ForceCamera(45, 1, 1, 10000);
   var sub_light = new THREE.HemisphereLight(0xfffffff, 0xcccccc, 1);
-  var render_target2 = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+  var render_target2 = new THREE.WebGLRenderTarget(1200, 1200);
   var bg_fb = null;
   var points_fb = null;
 
@@ -198,7 +198,7 @@ var exports = function(){
   };
 
   var createPlaneForFramebuffer = function() {
-    var geometry_base = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight);
+    var geometry_base = new THREE.PlaneGeometry(1000, 1000);
     var geometry = new THREE.BufferGeometry();
     geometry.fromGeometry(geometry_base);
     var material = new THREE.ShaderMaterial({
@@ -297,8 +297,8 @@ var exports = function(){
       bg_wf.rotation.y = points.material.uniforms.time.value / 1000;
       obj.material.uniforms.time.value++;
 
-      force.applyHook(0, 0.06);
-      force.applyDrag(0.2);
+      force.applyHook(0, 0.12);
+      force.applyDrag(0.18);
       force.updateVelocity();
       camera.force.position.applyHook(0, 0.025);
       camera.force.position.applyDrag(0.2);
@@ -320,24 +320,17 @@ var exports = function(){
       renderer.render(sub_scene, sub_camera, render_target);
     },
     touchStart: function(scene, camera, vector) {
-      force.anchor.set(2, 40);
-      sub_camera2.force.position.anchor.set(600, 300, 0);
+      force.anchor.set(2, 30);
     },
     touchMove: function(scene, camera, vector_mouse_down, vector_mouse_move) {
     },
     touchEnd: function(scene, camera, vector_mouse_end) {
       force.anchor.set(1, 0);
-      sub_camera2.force.position.anchor.set(1000, 300, 0);
     },
     mouseOut: function(scene, camera) {
       force.anchor.set(1, 0);
-      sub_camera2.force.position.anchor.set(1000, 300, 0);
     },
     resizeWindow: function(scene, camera) {
-      render_target.setSize(window.innerWidth, window.innerHeight);
-      render_target2.setSize(window.innerWidth, window.innerHeight);
-      sub_camera.resize(window.innerWidth, window.innerHeight);
-      sub_camera2.resize(window.innerWidth, window.innerHeight);
       points.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
       framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
     }
