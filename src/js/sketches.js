@@ -3,14 +3,14 @@ module.exports = [
     name: 'attract',
     obj: require('./sketches/attract'),
     posted: '2016.6.13',
-    update: '2016.6.14',
+    update: '2016.7.2',
     description: 'use fragment shader to perticle moving.',
   },
   {
     name: 'hole',
     obj: require('./sketches/hole'),
     posted: '2016.5.10',
-    update: '',
+    update: '2016.7.2',
     description: 'study of Post Effect that used THREE.WebGLRenderTarget.',
   },
   {
