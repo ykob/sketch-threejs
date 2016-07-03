@@ -257,6 +257,8 @@ var exports = function(){
       scene.add(light);
       camera.force.position.anchor.set(1000, 300, 0);
       camera.force.look.anchor.set(0, 0, 0);
+
+      this.resizeWindow();
     },
     remove: function(scene) {
       document.body.className = '';

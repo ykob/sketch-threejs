@@ -89,6 +89,8 @@ var exports = function(){
       scene.add(plane);
       scene.add(bg);
       camera.setPolarCoord(0, Util.getRadian(90), 24);
+
+      this.resizeWindow();
     },
     remove: function(scene, camera) {
       plane.geometry.dispose();

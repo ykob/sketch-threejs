@@ -98,7 +98,6 @@ var exports = function(){
       sub_scene.add(sub_light);
       sub_camera.force.position.anchor.set(1800, 1800, 0);
       sub_camera.force.look.anchor.set(0, 0, 0);
-      console.log(sphere.material.uniforms);
 
       framebuffer = createPlaneForPostProcess();
       scene.add(framebuffer);
@@ -110,6 +109,8 @@ var exports = function(){
       force.velocity.set(1, 0);
       force.k = 0.045;
       force.d = 0.16;
+
+      this.resizeWindow();
     },
     remove: function(scene) {
       document.body.className = '';
