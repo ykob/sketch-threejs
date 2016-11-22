@@ -1,0 +1,12 @@
+block vars
+
+doctype html
+html(lang="ja")
+  head
+    include ../modules/_head.pug
+  body
+    .l-page
+      include ../modules/_l-gh.pug
+      block content
+      include ../modules/_l-gf.pug
+    include ../modules/_script.pug

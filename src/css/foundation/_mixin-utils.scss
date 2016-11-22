@@ -1,0 +1,84 @@
+@mixin fontSize($size: 14) {
+  font-size: $size + px;
+  font-size: $size / 16 * 1rem;
+}
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+@mixin flexFontSize($vw) {
+  @include l-pc-l {
+    font-size: $break-point-pc / 100 * $vw;
+  }
+  @include l-pc-and-tablet {
+    font-size: $vw * 1vw;
+  }
+  @include l-mobile {
+    font-size: $break-point-mobile / 100 * $vw;
+  }
+}
+
+//
+// rwd break points
+// pc-l | pc-s | tablet | mobile
+//
+// ○ | - | - | -
+@mixin l-pc-l {
+  @media all and (min-width: $break-point-pc + 1px) {
+    @content;
+  }
+}
+// - | ○ | - | -
+@mixin l-pc-s {
+  @media all and (min-width: $break-point-tablet + 1px) and (max-width: $break-point-pc) {
+    @content;
+  }
+}
+// - | - | ○ | -
+@mixin l-tablet {
+  @media all and (min-width: $break-point-mobile + 1px) and (max-width: $break-point-tablet) {
+    @content;
+  }
+}
+// - | - | - | ○
+@mixin l-mobile {
+  @media all and (max-width: $break-point-mobile) {
+    @content;
+  }
+}
+// ○ | ○ | - | -
+@mixin l-pc-all {
+  @media all and (min-width: $break-point-tablet + 1px) {
+    @content;
+  }
+}
+// - | ○ | ○ | -
+@mixin l-pc-and-tablet {
+  @media all and (min-width: $break-point-mobile + 1px) and (max-width: $break-point-pc) {
+    @content;
+  }
+}
+@mixin l-tablet-and-mobile {
+// - | - | ○ | ○
+  @media all and (max-width: $break-point-tablet) {
+    @content;
+  }
+}
+// ○ | ○ | ○ | -
+@mixin l-more-than-mobile {
+  @media all and (min-width: $break-point-mobile + 1px) {
+    @content;
+  }
+}
+// - | ○ | ○ | ○
+@mixin l-less-than-pc {
+  @media all and (max-width: $break-point-pc) {
+    @content;
+  }
+}

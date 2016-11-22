@@ -1,0 +1,8 @@
+extends ./layout/_page.pug
+
+block vars
+  -
+    var page = pages.index;
+
+block content
+  canvas(id="canvas-webgl", class="p-canvas-webgl")

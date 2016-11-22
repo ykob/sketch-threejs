@@ -1,38 +1,55 @@
 {
   "name": "sketch-threejs.js",
-  "version": "0.0.1",
-  "description": "it's my personal sketch that is used three.js.",
+  "version": "2.0.0",
+  "description": "it's my personal sketch made with three.js.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ykob/sketch-threejs.git"
+    "url": "https://github.com/ykob/sketch-threejs"
   },
   "private": true,
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "build": "NODE_ENV=production gulp build"
   },
   "engines": {
-    "node": "4.x.x"
-  },
-  "author": "Yoichi Kobayashi",
-  "license": "MIT",
-  "projectConfig": {
-    "PATH": "",
-    "DST": "",
-    "SRC": "src"
+    "node": "4.2.x"
   },
   "devDependencies": {
-    "browser-sync": "^2.12.3",
-    "browserify": "^11.2.0",
+    "babel-core": "^6.18.2",
+    "babel-preset-es2015": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.2",
+    "browserify": "^12.0.2",
+    "del": "^2.2.2",
+    "envify": "^3.4.1",
+    "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
-    "gulp-sass": "^2.3.1",
-    "gulp-sequence": "^0.4.5",
-    "require-dir": "^0.3.0",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-data": "^1.2.1",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^1.5.4",
+    "imagemin-pngquant": "^4.2.2",
+    "licensify": "^2.2.0",
+    "require-dir": "^0.3.1",
+    "run-sequence": "^1.2.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "glsl-convert-color": "git://github.com/ykob/glsl-convert-color.git",
+    "glsl-easings": "^1.0.0",
     "glsl-inverse": "^1.0.0",
+    "glsl-matrix": "git://github.com/ykob/glsl-matrix.git",
     "glsl-noise": "0.0.0",
-    "glslify": "^2.3.1"
+    "glslify": "^5.1.0"
   }
 }

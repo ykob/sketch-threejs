@@ -1,39 +1,47 @@
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var sequence = require('gulp-sequence');
-var requireDir = require('require-dir');
-var CONFIG = require('./package.json').projectConfig;
+const gulp = require('gulp');
+const requireDir = require('require-dir');
+const runSequence = require('run-sequence');
+const browserSync = require('browser-sync');
+const reload = browserSync.reload;
 
-requireDir('./tasks');
+const DIR = require('./gulp/conf').DIR;
 
-reload = browserSync.reload;
+requireDir('./gulp/tasks');
 
-// ローカルサーバ
-gulp.task('serve', function() {
-  var obj = {};
-
-  return browserSync({
-    notify: false,
-    startPath: CONFIG.PATH,
-    server: {
-      baseDir: CONFIG.DST,
-      index: 'index.html',
-      routes: (
-        obj['' + CONFIG.PATH] = '' + CONFIG.DST + CONFIG.PATH + '/',
-        obj
-      )
-    }
-  });
+gulp.task('predefault', cb => {
+  runSequence(
+    'cleanDest',
+    ['pug', 'sass', 'watchify', 'vendorScripts', 'copyToDest'],
+    'serve',
+    cb
+  );
 });
 
-// 'default' タスク実行前に処理しておきたいタスク
-gulp.task('start', sequence([
-  'sass',
-  'watchify'
-], 'serve'));
+gulp.task('default', ['predefault'], () => {
+  gulp.watch(
+    [`./${DIR.SRC}/**/*.pug`],
+    ['pug', reload]
+  );
 
-// 作業開始
-// ファイルの変更監視で対象タスク実行とブラウザのオートリロード
-gulp.task('default', ['start'], function() {
-  gulp.watch(['./' + CONFIG.SRC + '/**/*.{scss,sass}'], ['sass', reload]);
+  gulp.watch(
+    [`./${DIR.SRC}/**/*.{scss,sass}`],
+    ['sass', reload]
+  );
+
+  gulp.watch(
+    [`./${DIR.DEST}/**/*.js`],
+    reload
+  );
+});
+
+gulp.task('build', cb => {
+  runSequence(
+    'cleanBuild',
+    ['pug', 'sass'],
+    'replaceHtml',
+    ['minifyCss', 'browserify', 'vendorScripts', 'imagemin'],
+    'uglify',
+    'copyToBuild',
+    cb
+  );
 });

@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "domain": "http://ykob.github.io/sketch-threejs/",
+    "website_name": "sketch of three.js",
+    "keywords": "Yoichi Kobayashi, WebGL, three.js"
+  },
+  "pages": {
+    "index": {
+      "title": "",
+      "keywords": "",
+      "description": "it's my interactive sketches made with three.js.",
+      "path": "/",
+      "ogp_description": "it's my interactive sketches made with three.js.",
+      "ogp_img": "ogp.jpg"
+    }
+  }
+}
