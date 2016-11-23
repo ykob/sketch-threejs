@@ -39,6 +39,7 @@
     "gulp-uglify": "^1.5.4",
     "imagemin-pngquant": "^4.2.2",
     "licensify": "^2.2.0",
+    "node-sass": "^3.13.0",
     "require-dir": "^0.3.1",
     "run-sequence": "^1.2.2",
     "vinyl-source-stream": "^1.1.0",
