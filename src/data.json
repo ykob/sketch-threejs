@@ -7,11 +7,63 @@
   "pages": {
     "index": {
       "title": "",
-      "keywords": "",
       "description": "it's my interactive sketches made with three.js.",
       "path": "/",
-      "ogp_description": "it's my interactive sketches made with three.js.",
       "ogp_img": "ogp.jpg"
+    },
+    "attract": {
+      "title": "attract",
+      "description": "using frame buffer for perticle moving.",
+      "path": "/attract.html",
+      "ogp_img": "ogp_attract.jpg"
+    },
+    "hole": {
+      "title": "hole",
+      "description": "study of Post Effect with THREE.WebGLRenderTarget.",
+      "path": "/hole.html",
+      "ogp_img": "ogp_hole.jpg"
+    },
+    "metal_cube": {
+      "title": "metal cube",
+      "description": "study of raymarching with three.js.",
+      "path": "/metal_cube.html",
+      "ogp_img": "ogp_metal_cube.jpg"
+    },
+    "distort": {
+      "title": "distort",
+      "description": "using the simplex noise, distort the sphere.",
+      "path": "/distort.html",
+      "ogp_img": "ogp_distort.jpg"
+    },
+    "imagedata": {
+      "title": "image data",
+      "description": "Points based CanvasRenderingContext2D.getImageData()",
+      "path": "/image_data.html",
+      "ogp_img": "ogp_image_data.jpg"
+    },
+    "gallery": {
+      "title": "gallery",
+      "description": "image gallery on 3d. tested that picked object and moving camera.",
+      "path": "/gallery.html",
+      "ogp_img": "ogp_gallery.jpg"
+    },
+    "comet": {
+      "title": "comet",
+      "description": "camera to track the moving points.",
+      "path": "/comet.html",
+      "ogp_img": "ogp_comet.jpg"
+    },
+    "hyper_space": {
+      "title": "hyper space",
+      "description": "add little change about camera angle and particle controles.",
+      "path": "/hyper_space.html",
+      "ogp_img": "ogp_hyper_space.jpg"
+    },
+    "fire_ball": {
+      "title": "fire ball",
+      "description": "test of simple physics and additive blending.",
+      "path": "/fire_ball.html",
+      "ogp_img": "ogp_fire_ball.jpg"
     }
   }
 }
