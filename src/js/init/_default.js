@@ -21,6 +21,15 @@ export default function() {
       resizeWindow();
     })
   }
+  const initDatGui = () => {
+    const gui = new dat.GUI();
+    // const controller = {
+    //   radius: gui.add(sphere, 'radius', 0, 1000).name('Sphere Radius')
+    // }
+    // controller.radius.onChange((value) => {
+    //   sphere.mesh.material.uniforms.radius.value = value;
+    // });
+  }
   const initStats = () => {
     stats.showPanel(0);
     document.body.appendChild(stats.dom);
@@ -43,6 +52,7 @@ export default function() {
     camera.lookAt(new THREE.Vector3());
 
     setEvent();
+    initDatGui();
     initStats();
     resizeWindow();
     renderLoop();
