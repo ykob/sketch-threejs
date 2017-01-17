@@ -1,0 +1,13 @@
+.p-website-outline {
+  position: absolute;
+  z-index: 100;
+  top: 20px;
+  left: 20px;
+  &__title {
+    margin: 0;
+    font-size: 1.25em;
+  }
+  &__description {
+    margin: 0.25em 0 0;
+  }
+}
