@@ -7,7 +7,6 @@ export default function() {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
-  const stats = new Stats();
 
   //
   // process for this sketch.
@@ -26,17 +25,11 @@ export default function() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
-  const initStats = () => {
-    stats.showPanel(0);
-    document.body.appendChild(stats.dom);
-  }
   const render = () => {
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
-    stats.begin();
     render();
-    stats.end();
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
@@ -103,7 +96,6 @@ export default function() {
     camera.lookAt(new THREE.Vector3());
 
     on();
-    initStats();
     resizeWindow();
     renderLoop();
   }

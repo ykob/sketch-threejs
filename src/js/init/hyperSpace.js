@@ -13,7 +13,6 @@ export default function() {
   const scene = new THREE.Scene();
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
-  const stats = new Stats();
 
   //
   // process for this sketch.
@@ -170,9 +169,7 @@ export default function() {
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
-    stats.begin();
     render();
-    stats.end();
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
@@ -247,9 +244,8 @@ export default function() {
     camera.lookAt(new THREE.Vector3());
 
     on();
-    initStats();
-    resizeWindow();
     initSketch();
+    resizeWindow();
     renderLoop();
   }
   init();

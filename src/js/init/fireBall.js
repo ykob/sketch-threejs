@@ -14,7 +14,6 @@ export default function() {
   const scene = new THREE.Scene();
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
-  const stats = new Stats();
 
   //
   // process for this sketch.
@@ -171,10 +170,6 @@ export default function() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
-  const initStats = () => {
-    stats.showPanel(0);
-    document.body.appendChild(stats.dom);
-  }
   const render = () => {
     points.applyHook(0, 0.08);
     points.applyDrag(0.2);
@@ -193,9 +188,7 @@ export default function() {
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
-    stats.begin();
     render();
-    stats.end();
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
@@ -268,14 +261,13 @@ export default function() {
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0x000000, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 
     on();
-    initStats();
-    resizeWindow();
     initSketch();
+    resizeWindow();
     renderLoop();
   }
   init();
