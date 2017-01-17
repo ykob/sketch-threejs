@@ -1,6 +1,6 @@
 {
   "meta": {
-    "domain": "http://ykob.github.io/sketch-threejs/",
+    "domain": "http://ykob.github.io/sketch-threejs",
     "website_name": "sketch of three.js",
     "keywords": "Yoichi Kobayashi, WebGL, three.js"
   },
@@ -9,61 +9,79 @@
       "title": "",
       "description": "it's my interactive sketches made with three.js.",
       "path": "/",
-      "ogp_img": "ogp.jpg"
+      "ogpImg": "ogp.jpg"
     },
     "attract": {
       "title": "attract",
       "description": "using frame buffer for perticle moving.",
-      "path": "/attract.html",
-      "ogp_img": "ogp_attract.jpg"
+      "path": "/sketch/attract.html",
+      "posted": "2016.6.13",
+      "update": "2016.7.2",
+      "ogpImg": "ogp_attract.jpg"
     },
     "hole": {
       "title": "hole",
       "description": "study of Post Effect with THREE.WebGLRenderTarget.",
-      "path": "/hole.html",
-      "ogp_img": "ogp_hole.jpg"
+      "path": "/sketch/hole.html",
+      "posted": "2016.5.10",
+      "update": "2016.7.2",
+      "ogpImg": "ogp_hole.jpg"
     },
-    "metal_cube": {
+    "metalCube": {
       "title": "metal cube",
       "description": "study of raymarching with three.js.",
-      "path": "/metal_cube.html",
-      "ogp_img": "ogp_metal_cube.jpg"
+      "path": "/sketch/metal_cube.html",
+      "posted": "2016.4.21",
+      "update": "",
+      "ogpImg": "ogp_metal_cube.jpg"
     },
     "distort": {
       "title": "distort",
       "description": "using the simplex noise, distort the sphere.",
-      "path": "/distort.html",
-      "ogp_img": "ogp_distort.jpg"
+      "path": "/sketch/distort.html",
+      "posted": "2016.2.23",
+      "update": "2016.5.10",
+      "ogpImg": "ogp_distort.jpg"
     },
-    "imagedata": {
+    "imageData": {
       "title": "image data",
       "description": "Points based CanvasRenderingContext2D.getImageData()",
-      "path": "/image_data.html",
-      "ogp_img": "ogp_image_data.jpg"
+      "path": "/sketch/image_data.html",
+      "posted": "2015.12.9",
+      "update": "2015.12.12",
+      "ogpImg": "ogp_image_data.jpg"
     },
     "gallery": {
       "title": "gallery",
       "description": "image gallery on 3d. tested that picked object and moving camera.",
-      "path": "/gallery.html",
-      "ogp_img": "ogp_gallery.jpg"
+      "path": "/sketch/gallery.html",
+      "posted": "2015.12.2",
+      "update": "2015.12.9",
+      "ogpImg": "ogp_gallery.jpg"
     },
     "comet": {
       "title": "comet",
       "description": "camera to track the moving points.",
-      "path": "/comet.html",
-      "ogp_img": "ogp_comet.jpg"
+      "path": "/sketch/comet.html",
+      "posted": "2015.11.24",
+      "update": "2016.1.8",
+      "ogpImg": "ogp_comet.jpg"
     },
-    "hyper_space": {
+    "hyperSpace": {
       "title": "hyper space",
       "description": "add little change about camera angle and particle controles.",
-      "path": "/hyper_space.html",
-      "ogp_img": "ogp_hyper_space.jpg"
+      "path": "/sketch/hyper_space.html",
+      "posted": "2015.11.12",
+      "update": "",
+      "ogpImg": "ogp_hyper_space.jpg"
     },
-    "fire_ball": {
+    "fireBall": {
       "title": "fire ball",
       "description": "test of simple physics and additive blending.",
-      "path": "/fire_ball.html",
-      "ogp_img": "ogp_fire_ball.jpg"
+      "path": "/sketch/fire_ball.html",
+      "posted": "2015.11.12",
+      "update": "",
+      "ogpImg": "ogp_fire_ball.jpg"
     }
   }
 }
