@@ -5,4 +5,15 @@ block vars
     var page = pages.index;
 
 block content
-  canvas(id="canvas-webgl", class="p-canvas-webgl")
+  .p-sketch-index
+    each item in pages
+      if (item.title !== '')
+        .p-sketch-index-item
+          a(href = `/sketch-threejs${item.path}`).p-sketch-index-item__wrap
+            .p-sketch-index-item__title
+              |#{item.title}
+            .p-sketch-index-item__date
+            |posted: #{item.posted}
+            if (item.update)
+              br
+              |update: #{item.update}
