@@ -1,4 +1,5 @@
 import initCommon from './init/common.js'
+import initCommonSketch from './init/commonSketch.js'
 import initIndex from './init/index.js'
 
 // initialize function for sketches
@@ -12,12 +13,11 @@ import initComet from './init/comet.js'
 import initHyperSpace from './init/hyperSpace.js'
 import initFireBall from './init/fireBall.js'
 
-const { pathname } = window.location;
-
 const init = () => {
+  const path = location.pathname.replace('/sketch-threejs', '');
   initCommon();
-  console.log();
-  switch (pathname.replace('/sketch-threejs', '')) {
+  if (path !== `/`) initCommonSketch();
+  switch (path) {
     case '/': initIndex(); break;
     case '/sketch/attract.html': initAttract(); break;
     case '/sketch/hole.html': initHole(); break;
