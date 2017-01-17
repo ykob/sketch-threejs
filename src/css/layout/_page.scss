@@ -1,0 +1,14 @@
+.l-page {
+  &--white {
+    color: #fff;
+    a {
+      color: #fff;
+    }
+  }
+  &--black {
+    color: #222;
+    a {
+      color: #222;
+    }
+  }
+}

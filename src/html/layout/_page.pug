@@ -5,7 +5,9 @@ html(lang="ja")
   head
     include ../layout/_head.pug
   body
-    .l-page
+    .l-page(
+      class = (page.color == "white") ?  "l-page--white" : "l-page--black"
+    )
       block content
     script(src="/sketch-threejs/js/vendor.js")
     script(src="/sketch-threejs/js/main.js")

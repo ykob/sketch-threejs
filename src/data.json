@@ -9,7 +9,8 @@
       "title": "",
       "description": "it's my interactive sketches made with three.js.",
       "path": "/",
-      "ogpImg": "ogp.jpg"
+      "ogpImg": "ogp.jpg",
+      "color": "white"
     },
     "attract": {
       "title": "attract",
@@ -17,7 +18,8 @@
       "path": "/sketch/attract.html",
       "posted": "2016.6.13",
       "update": "2016.7.2",
-      "ogpImg": "ogp_attract.jpg"
+      "ogpImg": "ogp_attract.jpg",
+      "color": "white"
     },
     "hole": {
       "title": "hole",
@@ -25,7 +27,8 @@
       "path": "/sketch/hole.html",
       "posted": "2016.5.10",
       "update": "2016.7.2",
-      "ogpImg": "ogp_hole.jpg"
+      "ogpImg": "ogp_hole.jpg",
+      "color": "black"
     },
     "metalCube": {
       "title": "metal cube",
@@ -33,7 +36,8 @@
       "path": "/sketch/metal_cube.html",
       "posted": "2016.4.21",
       "update": "",
-      "ogpImg": "ogp_metal_cube.jpg"
+      "ogpImg": "ogp_metal_cube.jpg",
+      "color": "black"
     },
     "distort": {
       "title": "distort",
@@ -41,7 +45,8 @@
       "path": "/sketch/distort.html",
       "posted": "2016.2.23",
       "update": "2016.5.10",
-      "ogpImg": "ogp_distort.jpg"
+      "ogpImg": "ogp_distort.jpg",
+      "color": "black"
     },
     "imageData": {
       "title": "image data",
@@ -49,7 +54,8 @@
       "path": "/sketch/image_data.html",
       "posted": "2015.12.9",
       "update": "2015.12.12",
-      "ogpImg": "ogp_image_data.jpg"
+      "ogpImg": "ogp_image_data.jpg",
+      "color": "white"
     },
     "gallery": {
       "title": "gallery",
@@ -57,7 +63,8 @@
       "path": "/sketch/gallery.html",
       "posted": "2015.12.2",
       "update": "2015.12.9",
-      "ogpImg": "ogp_gallery.jpg"
+      "ogpImg": "ogp_gallery.jpg",
+      "color": "white"
     },
     "comet": {
       "title": "comet",
@@ -65,7 +72,8 @@
       "path": "/sketch/comet.html",
       "posted": "2015.11.24",
       "update": "2016.1.8",
-      "ogpImg": "ogp_comet.jpg"
+      "ogpImg": "ogp_comet.jpg",
+      "color": "white"
     },
     "hyperSpace": {
       "title": "hyper space",
@@ -73,7 +81,8 @@
       "path": "/sketch/hyper_space.html",
       "posted": "2015.11.12",
       "update": "",
-      "ogpImg": "ogp_hyper_space.jpg"
+      "ogpImg": "ogp_hyper_space.jpg",
+      "color": "white"
     },
     "fireBall": {
       "title": "fire ball",
@@ -81,7 +90,8 @@
       "path": "/sketch/fire_ball.html",
       "posted": "2015.11.12",
       "update": "",
-      "ogpImg": "ogp_fire_ball.jpg"
+      "ogpImg": "ogp_fire_ball.jpg",
+      "color": "white"
     }
   }
 }
