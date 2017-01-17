@@ -9,6 +9,16 @@ export default function() {
   const clock = new THREE.Clock();
   const stats = new Stats();
 
+  //
+  // process for this sketch.
+  //
+
+
+
+  //
+  // common process
+  //
+
   const resizeWindow = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -16,26 +26,11 @@ export default function() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
-  const setEvent = () => {
-    window.addEventListener('resize', () => {
-      resizeWindow();
-    })
-  }
-  const initDatGui = () => {
-    const gui = new dat.GUI();
-    // const controller = {
-    //   radius: gui.add(sphere, 'radius', 0, 1000).name('Sphere Radius')
-    // }
-    // controller.radius.onChange((value) => {
-    //   sphere.mesh.material.uniforms.radius.value = value;
-    // });
-  }
   const initStats = () => {
     stats.showPanel(0);
     document.body.appendChild(stats.dom);
   }
   const render = () => {
-    // sphere.render(clock.getDelta());
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -44,6 +39,62 @@ export default function() {
     stats.end();
     requestAnimationFrame(renderLoop);
   }
+  const on = () => {
+    const vectorTouchStart = new THREE.Vector2();
+    const vectorTouchMove = new THREE.Vector2();
+    const vectorTouchEnd = new THREE.Vector2();
+
+    const transformVector2d = (vector) => {
+      vector.x = (vector.x / window.innerWidth) * 2 - 1;
+      vector.y = - (vector.y / window.innerHeight) * 2 + 1;
+    };
+    const touchStart = (x, y, touch_event) => {
+      vectorTouchStart.set(x, y);
+      transformVector2d(vectorTouchStart);
+    };
+    const touchMove = (x, y, touch_event) => {
+      vectorTouchMove.set(x, y);
+      transformVector2d(vectorTouchMove);
+    };
+    const touchEnd = (x, y, touch_event) => {
+      vectorTouchEnd.set(x, y);
+    };
+    const mouseOut = () => {
+      vectorTouchEnd.set(0, 0);
+    };
+
+    window.addEventListener('resize', () => {
+      resizeWindow();
+    })
+    canvas.addEventListener('mousedown', function (event) {
+      event.preventDefault();
+      touchStart(event.clientX, event.clientY, false);
+    });
+    canvas.addEventListener('mousemove', function (event) {
+      event.preventDefault();
+      touchMove(event.clientX, event.clientY, false);
+    });
+    canvas.addEventListener('mouseup', function (event) {
+      event.preventDefault();
+      touchEnd(event.clientX, event.clientY, false);
+    });
+    canvas.addEventListener('touchstart', function (event) {
+      event.preventDefault();
+      touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
+    });
+    canvas.addEventListener('touchmove', function (event) {
+      event.preventDefault();
+      touchMove(event.touches[0].clientX, event.touches[0].clientY, true);
+    });
+    canvas.addEventListener('touchend', function (event) {
+      event.preventDefault();
+      touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
+    });
+    window.addEventListener('mouseout', function () {
+      event.preventDefault();
+      mouseOut();
+    });
+  }
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -51,8 +102,7 @@ export default function() {
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 
-    setEvent();
-    initDatGui();
+    on();
     initStats();
     resizeWindow();
     renderLoop();
