@@ -145,7 +145,6 @@ export default function() {
   //
   // common process
   //
-
   const resizeWindow = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
