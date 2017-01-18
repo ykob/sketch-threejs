@@ -1,23 +1,52 @@
 .p-sketch-index {
+  max-width: $break-point-pc;
+  box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
+  margin-right: auto;
+  margin-left: auto;
+  @include l-pc-all {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+  @include l-tablet {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+  @include l-mobile {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
   &__item {
+    box-sizing: border-box;
     @include l-pc-all {
-      width: 25%;
+      width: 33.3%;
+      margin-bottom: 60px;
+      padding-right: 2.5%;
+      padding-left: 2.5%;
     }
     @include l-tablet {
-      width: 33.3%;
+      width: 50%;
+      margin-bottom: 40px;
+      padding-right: 2.5%;
+      padding-left: 2.5%;
     }
     @include l-mobile {
-      width: 50%;
+      width: 100%;
+      margin-bottom: 30px;
+      padding-right: 10px;
+      padding-left: 10px;
     }
     &-wrap {
       display: block;
     }
     &-title {
-
+      @include fontSize(32);
+      letter-spacing: 0.1em;
     }
     &-date {
-
+      margin-top: 5px;
+      @include fontSize(12);
     }
   }
 }
