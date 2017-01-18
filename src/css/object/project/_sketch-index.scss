@@ -1,0 +1,23 @@
+.p-sketch-index {
+  display: flex;
+  &__item {
+    @include l-pc-all {
+      width: 25%;
+    }
+    @include l-tablet {
+      width: 33.3%;
+    }
+    @include l-mobile {
+      width: 50%;
+    }
+    &-wrap {
+      display: block;
+    }
+    &-title {
+
+    }
+    &-date {
+
+    }
+  }
+}

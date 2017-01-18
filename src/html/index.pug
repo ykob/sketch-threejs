@@ -8,12 +8,13 @@ block content
   .p-sketch-index
     each item in pages
       if (item.title !== '')
-        .p-sketch-index-item
-          a(href = `/sketch-threejs${item.path}`).p-sketch-index-item__wrap
-            .p-sketch-index-item__title
+        .p-sketch-index__item
+          a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
+            .p-sketch-index__item-thumb
+              img(src=`./img/index/thumb_${item.id}.jpg`, alt="")
+            .p-sketch-index__item-title
               |#{item.title}
-            .p-sketch-index-item__date
-            |posted: #{item.posted}
+            .p-sketch-index__item-date
+            |posted: #{item.posted} 
             if (item.update)
-              br
-              |update: #{item.update}
+              |/ update: #{item.update}
