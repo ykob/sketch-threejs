@@ -153,6 +153,7 @@ export default function() {
     const touchMove = (x, y, touch_event) => {
       vectorTouchMove.set(x, y);
       transformVector2d(vectorTouchMove);
+      vactor_raycast = vectorTouchMove;
     };
     const touchEnd = (x, y, touch_event) => {
       vectorTouchEnd.set(x, y);

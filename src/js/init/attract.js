@@ -1,7 +1,8 @@
+import PhysicsRenderer from '../modules/common/PhysicsRenderer';
+
 export default function() {
   const glslify = require('glslify');
   const Util = require('../modules/old/util');
-  const PhysicsRenderer = require('../modules/common/PhysicsRenderer');
   const ForceCamera = require('../modules/old/ForceCamera');
 
   const canvas = document.getElementById('canvas-webgl');
@@ -83,7 +84,7 @@ export default function() {
   const initSketch = () => {
     physics_renderer = new PhysicsRenderer(length);
     physics_renderer.init(renderer, createPointsIntVelocity());
-    physics_renderer.acceleration_mesh.material.uniforms.anchor = {
+    physics_renderer.accelerationMesh.material.uniforms.anchor = {
       type: 'v2',
       value: new THREE.Vector2(),
     }
@@ -137,14 +138,14 @@ export default function() {
     const touchMove = (x, y, touch_event) => {
       vectorTouchMove.set(x, y);
       transformVector2d(vectorTouchMove);
-      physics_renderer.acceleration_mesh.material.uniforms.anchor.value.copy(vectorTouchMove);
+      physics_renderer.accelerationMesh.material.uniforms.anchor.value.copy(vectorTouchMove);
     };
     const touchEnd = (x, y, touch_event) => {
       vectorTouchEnd.set(x, y);
     };
     const mouseOut = () => {
       vectorTouchEnd.set(0, 0);
-      physics_renderer.acceleration_mesh.material.uniforms.anchor.value.set(0, 0, 0);
+      physics_renderer.accelerationMesh.material.uniforms.anchor.value.set(0, 0, 0);
     };
 
     window.addEventListener('resize', () => {
@@ -182,7 +183,7 @@ export default function() {
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0x111111, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 

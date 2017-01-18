@@ -190,7 +190,6 @@ export default function() {
         force.anchor.x = 1.0;
         time_unit = 1;
       }
-      is_touched = true;
     };
     const touchMove = (x, y, touch_event) => {
       vectorTouchMove.set(x, y);
@@ -198,11 +197,9 @@ export default function() {
     };
     const touchEnd = (x, y, touch_event) => {
       vectorTouchEnd.set(x, y);
-      is_touched = false;
     };
     const mouseOut = () => {
       vectorTouchEnd.set(0, 0);
-      is_touched = false;
     };
 
     window.addEventListener('resize', () => {
