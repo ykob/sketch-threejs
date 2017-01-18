@@ -221,11 +221,11 @@ export default function() {
         },
         texture: {
           type: 't',
-          value: render_target,
+          value: render_target.texture,
         },
         texture2: {
           type: 't',
-          value: render_target2,
+          value: render_target2.texture,
         },
       },
       vertexShader: glslify('../../glsl/sketch/hole/fb.vs'),
@@ -377,7 +377,7 @@ export default function() {
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0xeeeeee, 0.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 
