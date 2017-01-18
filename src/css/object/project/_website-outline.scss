@@ -4,10 +4,11 @@
   top: 20px;
   left: 20px;
   &__title {
-    margin: 0;
-    font-size: 1.25em;
+    margin: 0 0 5px;
+    @include fontSize(18);
   }
   &__description {
-    margin: 0.25em 0 0;
+    line-height: 1.25;
+    margin: 0;
   }
 }

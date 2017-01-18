@@ -4,12 +4,12 @@ html {
 body {
   min-height: 100%;
   overflow: hidden;
-  color: $color-text;
-  font-family: "Noto Sans";
+  @include fontSize(14);
+  font-family: 'Homenaje', sans-serif;
+  letter-spacing: 0.15em;
   background-color: #111;
 }
 a {
-  color: $color-text;
   text-decoration: none;
 }
 ::selection {
