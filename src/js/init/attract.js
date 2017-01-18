@@ -1,23 +1,100 @@
 export default function() {
+  const glslify = require('glslify');
+  const Util = require('../modules/old/util');
+  const PhysicsRenderer = require('../modules/common/PhysicsRenderer');
+  const ForceCamera = require('../modules/old/ForceCamera');
+
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   //
   // process for this sketch.
   //
+  var length = 1000;
+  var physics_renderer = null;
 
+  var createPoints = function() {
+    var geometry = new THREE.BufferGeometry();
+    var vertices_base = [];
+    var uvs_base = [];
+    var colors_base = [];
+    var masses_base = [];
+    for (var i = 0; i < Math.pow(length, 2); i++) {
+      vertices_base.push(0, 0, 0);
+      uvs_base.push(
+        i % length * (1 / (length - 1)),
+        Math.floor(i / length) * (1 / (length - 1))
+      );
+      colors_base.push(Util.getRandomInt(0, 120) / 360, 0.8, 1);
+      masses_base.push(Util.getRandomInt(1, 100));
+    }
+    var vertices = new Float32Array(vertices_base);
+    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    var uvs = new Float32Array(uvs_base);
+    geometry.addAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
+    var colors = new Float32Array(colors_base);
+    geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+    var masses = new Float32Array(masses_base);
+    geometry.addAttribute('mass', new THREE.BufferAttribute(masses, 1));
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+        velocity: {
+          type: 't',
+          value: new THREE.Texture()
+        },
+        acceleration: {
+          type: 't',
+          value: new THREE.Texture()
+        }
+      },
+      vertexShader: glslify('../../glsl/sketch/attract/points.vs'),
+      fragmentShader: glslify('../../glsl/sketch/attract/points.fs'),
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    return new THREE.Points(geometry, material);
+  }
+  var points = createPoints();
 
+  var createPointsIntVelocity = function() {
+    var vertices = [];
+    for (var i = 0; i < Math.pow(length, 2); i++) {
+      var v = Util.getPolarCoord(
+        Util.getRadian(Util.getRandomInt(0, 360)),
+        Util.getRadian(Util.getRandomInt(0, 360)),
+        Util.getRandomInt(10, 1000)
+      );
+      vertices.push(v.x, v.y / 10.0, v.z);
+    }
+    return new Float32Array(vertices);
+  }
+
+  const initSketch = () => {
+    physics_renderer = new PhysicsRenderer(length);
+    physics_renderer.init(renderer, createPointsIntVelocity());
+    physics_renderer.acceleration_mesh.material.uniforms.anchor = {
+      type: 'v2',
+      value: new THREE.Vector2(),
+    }
+    scene.add(points);
+    camera.force.position.anchor.set(0, 15, 600);
+    camera.force.look.anchor.set(0, 0, 0);
+  }
 
   //
   // common process
   //
-
   const resizeWindow = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -26,6 +103,18 @@ export default function() {
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
   const render = () => {
+    physics_renderer.render(renderer);
+    points.material.uniforms.time.value++;
+    points.material.uniforms.velocity.value = physics_renderer.getCurrentVelocity();
+    points.material.uniforms.acceleration.value = physics_renderer.getCurrentAcceleration();
+    camera.force.position.applyHook(0, 0.025);
+    camera.force.position.applyDrag(0.2);
+    camera.force.position.updateVelocity();
+    camera.updatePosition();
+    camera.force.look.applyHook(0, 0.2);
+    camera.force.look.applyDrag(0.4);
+    camera.force.look.updateVelocity();
+    camera.updateLook();
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -48,12 +137,14 @@ export default function() {
     const touchMove = (x, y, touch_event) => {
       vectorTouchMove.set(x, y);
       transformVector2d(vectorTouchMove);
+      physics_renderer.acceleration_mesh.material.uniforms.anchor.value.copy(vectorTouchMove);
     };
     const touchEnd = (x, y, touch_event) => {
       vectorTouchEnd.set(x, y);
     };
     const mouseOut = () => {
       vectorTouchEnd.set(0, 0);
+      physics_renderer.acceleration_mesh.material.uniforms.anchor.value.set(0, 0, 0);
     };
 
     window.addEventListener('resize', () => {
@@ -96,6 +187,7 @@ export default function() {
     camera.lookAt(new THREE.Vector3());
 
     on();
+    initSketch();
     resizeWindow();
     renderLoop();
   }

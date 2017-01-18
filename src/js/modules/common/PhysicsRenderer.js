@@ -18,12 +18,12 @@ export default class PhysicsRenderer {
       new THREE.WebGLRenderTarget(length, length, this.option),
     ];
     this.accelerationMesh = this.createMesh(
-      glslify('../../glsl/common/physicsRenderer.vs'),
-      glslify('../../glsl/common/physicsRendererAcceleration.fs')
+      glslify('../../../glsl/common/physicsRenderer.vs'),
+      glslify('../../../glsl/common/physicsRendererAcceleration.fs')
     );
     this.velocityMesh = this.createMesh(
-      glslify('../../glsl/common/physicsRenderer.vs'),
-      glslify('../../glsl/common/physicsRendererVelocity.fs')
+      glslify('../../../glsl/common/physicsRenderer.vs'),
+      glslify('../../../glsl/common/physicsRendererVelocity.fs')
     );
     this.targetIndex = 0;
   }
@@ -46,8 +46,8 @@ export default class PhysicsRenderer {
             value: velocity_init_tex,
           },
         },
-        vertexShader: glslify('../../glsl/sketch/common/physics_renderer.vs'),
-        fragmentShader: glslify('../../glsl/sketch/common/physics_renderer_velocity_init.fs'),
+        vertexShader: glslify('../../../glsl/common/physicsRenderer.vs'),
+        fragmentShader: glslify('../../../glsl/common/physicsRendererVelocityInit.fs'),
       })
     );
 

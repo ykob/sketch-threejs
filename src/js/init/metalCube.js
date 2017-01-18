@@ -1,18 +1,104 @@
 export default function() {
+  const glslify = require('glslify');
+  const Util = require('../modules/old/util');
+  const Force3 = require('../modules/old/Force3');
+  const ForceCamera = require('../modules/old/ForceCamera');
+
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   //
   // process for this sketch.
   //
+  var raycaster = new THREE.Raycaster();
+  var intersects = null;
+  var cube_force = new Force3();
+  var cube_force2 = new Force3();
+  var vactor_raycast = null;
+  cube_force.mass = 1.4;
 
+  var createPlaneForRaymarching = function() {
+    var geometry = new THREE.PlaneBufferGeometry(6.0, 6.0);
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+        time2: {
+          type: 'f',
+          value: 0,
+        },
+        acceleration: {
+          type: 'f',
+          value: 0
+        },
+        resolution: {
+          type: 'v2',
+          value: new THREE.Vector2(window.innerWidth, window.innerHeight)
+        }
+      },
+      vertexShader: glslify('../../glsl/sketch/metal_cube/object.vs'),
+      fragmentShader: glslify('../../glsl/sketch/metal_cube/object.fs'),
+      transparent: true
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'MetalCube';
+    return mesh;
+  };
+  var createBackground =  function() {
+    var geometry_base = new THREE.OctahedronGeometry(30, 4);
+    var geometry = new THREE.BufferGeometry();
+    geometry.fromGeometry(geometry_base);
+    var material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0,
+        },
+        acceleration: {
+          type: 'f',
+          value: 0
+        },
+      },
+      vertexShader: glslify('../../glsl/sketch/metal_cube/background.vs'),
+      fragmentShader: glslify('../../glsl/sketch/metal_cube/background.fs'),
+      shading: THREE.FlatShading,
+      side: THREE.BackSide
+    });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = 'Background';
+    return mesh;
+  };
 
+  var moveMetalCube = function(scene, camera, vector) {
+    if (cube_force.acceleration.length() > 0.1 || !vector) return;
+    raycaster.setFromCamera(vector, camera);
+    intersects = raycaster.intersectObjects(scene.children)[0];
+    if(intersects && intersects.object.name == 'MetalCube') {
+      cube_force.anchor.copy(Util.getPolarCoord(
+        Util.getRadian(Util.getRandomInt(-20, 20)),
+        Util.getRadian(Util.getRandomInt(0, 360)),
+        Util.getRandomInt(30, 90) / 10
+      ));
+      cube_force2.applyForce(new THREE.Vector3(1, 0, 0));
+    }
+  };
+
+  var plane = createPlaneForRaymarching();
+  var bg = createBackground();
+
+  const initSketch = () => {
+    scene.add(plane);
+    scene.add(bg);
+    camera.setPolarCoord(0, Util.getRadian(90), 24);
+  }
 
   //
   // common process
@@ -24,8 +110,27 @@ export default function() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    plane.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
   }
   const render = () => {
+    moveMetalCube(scene, camera, vactor_raycast);
+    cube_force.applyHook(0, 0.12);
+    cube_force.applyDrag(0.01);
+    cube_force.updateVelocity();
+    cube_force2.applyHook(0, 0.005);
+    cube_force2.applyDrag(0.2);
+    cube_force2.updateVelocity();
+    plane.position.copy(cube_force.velocity);
+    plane.material.uniforms.time.value++;
+    plane.material.uniforms.time2.value += 1 + Math.floor(cube_force.acceleration.length() * 4);
+    plane.material.uniforms.acceleration.value = cube_force.acceleration.length();
+    bg.material.uniforms.time.value++;
+    bg.material.uniforms.acceleration.value = cube_force2.velocity.length();
+    camera.force.position.applyHook(0, 0.025);
+    camera.force.position.applyDrag(0.2);
+    camera.force.position.updateVelocity();
+    camera.updatePosition();
+    camera.lookAtCenter();
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -96,6 +201,7 @@ export default function() {
     camera.lookAt(new THREE.Vector3());
 
     on();
+    initSketch();
     resizeWindow();
     renderLoop();
   }
