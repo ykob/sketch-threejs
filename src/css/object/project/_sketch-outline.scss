@@ -1,18 +1,18 @@
 .p-sketch-outline {
   position: absolute;
   z-index: 100;
-  bottom: 40px;
+  bottom: 30px;
   left: 20px;
   &__title {
     line-height: 1;
-    margin: 0;
+    margin: 0 0 0.075em -0.05em;
     @include flexFontSize(11);
     font-weight: 100;
     letter-spacing: 0.05em;
   }
   &__date {
     line-height: 1;
-    margin: 0 0;
+    margin: 0;
   }
   &__description {
     line-height: 1;

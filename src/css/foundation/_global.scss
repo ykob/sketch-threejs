@@ -4,10 +4,15 @@ html {
 body {
   min-height: 100%;
   overflow: hidden;
-  @include fontSize(14);
   font-family: 'Homenaje', sans-serif;
   letter-spacing: 0.15em;
   background-color: #111;
+  @include l-pc-and-tablet {
+    @include fontSize(14);
+  }
+  @include l-mobile {
+    @include fontSize(12);
+  }
 }
 a {
   text-decoration: none;
