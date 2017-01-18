@@ -1,10 +1,6 @@
 .DS_Store
 node_modules
 ignore
-dst/css/**/*
-dst/js/**/*
-dst/**/*.json
-dst/**/*.html
-dst/img/common/sprite.png
-build/**/*
+dst/**/*
+docs/**/*
 .sass-cache
