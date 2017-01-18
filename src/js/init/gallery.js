@@ -38,7 +38,7 @@ export default function() {
   Image.prototype.init = function(vector) {
     var image_material = new THREE.MeshPhongMaterial({
       side: THREE.DoubleSide,
-      map: new THREE.TextureLoader().load('img/gallery/image0' + Util.getRandomInt(1, 9) + '.jpg')
+      map: new THREE.TextureLoader().load('../img/gallery/image0' + Util.getRandomInt(1, 9) + '.jpg')
     });
 
     this.obj = new THREE.Mesh(image_geometry, image_material);
@@ -250,7 +250,7 @@ export default function() {
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0x111111, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 

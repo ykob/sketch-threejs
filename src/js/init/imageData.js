@@ -29,7 +29,7 @@ export default function() {
   var created_points = false;
 
   var loadImage = function(callback) {
-    image.src = './img/image_data/elephant.png';
+    image.src = '../img/image_data/elephant.png';
     image.onload = function() {
       callback();
     };
@@ -241,7 +241,7 @@ export default function() {
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0x111111, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 
