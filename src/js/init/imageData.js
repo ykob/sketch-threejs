@@ -29,7 +29,7 @@ export default function() {
   var created_points = false;
 
   var loadImage = function(callback) {
-    image.src = '../img/image_data/elephant.png';
+    image.src = '../img/sketch/image_data/elephant.png';
     image.onload = function() {
       callback();
     };

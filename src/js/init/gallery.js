@@ -38,7 +38,7 @@ export default function() {
   Image.prototype.init = function(vector) {
     var image_material = new THREE.MeshPhongMaterial({
       side: THREE.DoubleSide,
-      map: new THREE.TextureLoader().load('../img/gallery/image0' + Util.getRandomInt(1, 9) + '.jpg')
+      map: new THREE.TextureLoader().load('../img/sketch/gallery/image0' + Util.getRandomInt(1, 9) + '.jpg')
     });
 
     this.obj = new THREE.Mesh(image_geometry, image_material);
