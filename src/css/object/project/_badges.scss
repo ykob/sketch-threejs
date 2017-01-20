@@ -1,0 +1,12 @@
+.p-badges {
+  position: absolute;
+  z-index: 100;
+  bottom: 20px;
+  right: 20px;
+  @include l-mobile {
+    width: 90px;
+  }
+  img {
+    width: 100%;
+  }
+}
