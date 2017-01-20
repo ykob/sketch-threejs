@@ -13,7 +13,10 @@ import initComet from './init/comet.js'
 import initHyperSpace from './init/hyperSpace.js'
 import initFireBall from './init/fireBall.js'
 
+import ConsoleSignature from './modules/ConsoleSignature.js';
+
 const init = () => {
+  const consoleSignature = new ConsoleSignature();
   const path = location.pathname.replace('/sketch-threejs', '');
   initCommon();
   if (path !== `/`) initCommonSketch();
