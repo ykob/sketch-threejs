@@ -13,7 +13,7 @@ import initComet from './init/comet.js'
 import initHyperSpace from './init/hyperSpace.js'
 import initFireBall from './init/fireBall.js'
 
-import ConsoleSignature from './modules/ConsoleSignature.js';
+import ConsoleSignature from './modules/common/ConsoleSignature.js';
 
 const init = () => {
   const consoleSignature = new ConsoleSignature();
