@@ -1,0 +1,15 @@
+.p-sketch-index#index-wrap
+  .p-sketch-index__contents#index-contents
+    each item in pages
+      if (item.title !== '')
+        .p-sketch-index__item.js-index-scroll-item
+          a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
+            .p-sketch-index__item-thumb
+              img(src=`/sketch-threejs/img/common/ogp_${item.id}.jpg`, alt="")
+            .p-sketch-index__item-title
+              |#{item.title}
+            .p-sketch-index__item-date
+              |posted: #{item.posted} 
+              if (item.update)
+                |/ update: #{item.update}
+  .p-sketch-index__scroll#index-scroll

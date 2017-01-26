@@ -6,6 +6,7 @@ const debounce = require('js-util/debounce');
 export default class IndexScroller {
   constructor() {
     this.elm = {
+      wrap: document.getElementById('index-wrap'),
       contents: document.getElementById('index-contents'),
       scroll: document.getElementById('index-scroll'),
       items: document.getElementsByClassName('js-index-scroll-item'),
@@ -14,11 +15,9 @@ export default class IndexScroller {
     this.offsetTop = window.pageYOffset * -1;
     this.isAnimate = false;
 
-    setTimeout(() => {
-      this.init();
-      this.start();
-      this.on();
-    }, 100)
+    this.init();
+    this.on();
+    // this.open();
   }
   init() {
     this.elm.scroll.style.height = `${this.elm.contents.clientHeight}px`;
@@ -28,7 +27,7 @@ export default class IndexScroller {
         velocity: [0, 0, 0],
         acceleration: [0, 0, 0],
         anchor: [0, 0, 0],
-        mass: Math.random() * 0.05 + 1.1
+        mass: Math.random() * 0.05 + 1.1,
       };
     }
   }
@@ -41,9 +40,22 @@ export default class IndexScroller {
   resize() {
     this.init();
   }
-  start() {
+  open() {
+    this.init();
     this.isAnimate = true;
     this.renderLoop();
+    document.body.classList.add(`is-opened-index`);
+    this.elm.wrap.classList.add(`is-opened`);
+    for (var i = 0; i < this.elm.items.length; i++) {
+      const index = i;
+      setTimeout(() => {
+        this.elm.items[index].classList.add(`is-opened`);
+      }, 40 * index)
+    }
+  }
+  close() {
+    this.isAnimate = false;
+    document.body.classList.remove(`is-opened-index`);
   }
   render() {
     for (var i = 0; i < this.elm.items.length; i++) {

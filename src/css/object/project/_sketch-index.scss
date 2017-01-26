@@ -70,4 +70,19 @@
       @include fontSize(12);
     }
   }
+  //
+  // Interaction
+  //
+  pointer-events: none;
+  &.is-opened {
+    pointer-events: auto;
+  }
+  &__item {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.6s;
+    &.is-opened {
+      opacity: 1;
+    }
+  }
 }
