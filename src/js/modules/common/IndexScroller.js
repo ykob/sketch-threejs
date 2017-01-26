@@ -27,7 +27,7 @@ export default class IndexScroller {
         velocity: [0, 0, 0],
         acceleration: [0, 0, 0],
         anchor: [0, 0, 0],
-        mass: Math.random() * 0.05 + 1.1,
+        mass: i * 0.05 + 1.2,
       };
     }
     setTimeout(() => {
@@ -69,10 +69,9 @@ export default class IndexScroller {
         glMatrix.vec3.length(item.acceleration) < 0.01
         && Math.abs(item.velocity[1] - item.anchor[1]) < 0.01
       ) continue;
-      force3.applyHook(item.velocity, item.acceleration, item.anchor, 0, 0.045);
-      glMatrix.vec3.divide(item.acceleration, item.acceleration, [1, item.mass, 1]);
-      force3.applyDrag(item.acceleration, 0.16);
-      force3.updateVelocity(item.velocity, item.acceleration, 1);
+      force3.applyHook(item.velocity, item.acceleration, item.anchor, 0, 0.3);
+      force3.applyDrag(item.acceleration, 0.7);
+      force3.updateVelocity(item.velocity, item.acceleration, item.mass);
       this.elm.items[i].style.transform = `translate3D(0, ${item.velocity[1]}px, 0)`;
     }
   }
