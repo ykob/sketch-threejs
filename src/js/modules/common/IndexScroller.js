@@ -15,9 +15,8 @@ export default class IndexScroller {
     this.offsetTop = window.pageYOffset * -1;
     this.isAnimate = false;
 
-    this.init();
     this.on();
-    // this.open();
+    this.open();
   }
   init() {
     this.elm.scroll.style.height = `${this.elm.contents.clientHeight}px`;
@@ -30,6 +29,11 @@ export default class IndexScroller {
         mass: Math.random() * 0.05 + 1.1,
       };
     }
+    setTimeout(() => {
+      if (this.elm.scroll.clientHeight != this.elm.contents.clientHeight) {
+        this.elm.scroll.style.height = `${this.elm.contents.clientHeight}px`;
+      }
+    }, 500);
   }
   scroll() {
     this.offsetTop = window.pageYOffset * -1;

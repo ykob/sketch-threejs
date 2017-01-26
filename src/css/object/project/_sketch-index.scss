@@ -10,20 +10,20 @@
     margin-right: auto;
     margin-left: auto;
     @include l-pc-all {
-      padding-top: 7.5%;
-      padding-bottom: 7.5%;
+      padding-top: 100px;
+      padding-bottom: 50px;
       padding-right: 5%;
       padding-left: 5%;
     }
     @include l-tablet {
-      padding-top: 7.5%;
-      padding-bottom: 7.5%;
+      padding-top: 100px;
+      padding-bottom: 50px;
       padding-right: 5%;
       padding-left: 5%;
     }
     @include l-mobile {
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding-top: 70px;
+      padding-bottom: 40px;
       padding-right: 10px;
       padding-left: 10px;
     }
@@ -68,6 +68,40 @@
     &-date {
       margin-top: 5px;
       @include fontSize(12);
+    }
+  }
+  &__hamburger {
+    cursor: pointer;
+    position: fixed;
+    z-index: 100;
+    pointer-events: auto;
+    @include l-pc-all {
+      width: 50px;
+      height: 50px;
+      top: 25px; right: 40px;
+    }
+    @include l-tablet {
+      width: 50px;
+      height: 50px;
+      top: 25px; right: 40px;
+    }
+    @include l-mobile {
+      width: 40px;
+      height: 40px;
+      top: 15px; right: 20px;
+    }
+    &-line {
+      height: 1px;
+      position: absolute;
+      top: 50%; right: 0; left: 0;
+      margin-top: -1px;
+      background-color: #fff;
+      &--top {
+        transform: translateY(-7px);
+      }
+      &--bottom {
+        transform: translateY(7px);
+      }
     }
   }
   //
