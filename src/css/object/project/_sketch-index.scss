@@ -6,7 +6,7 @@
     flex-wrap: wrap;
     position: fixed;
     top: 0; right: 0; left: 0;
-    z-index: 10;
+    z-index: 100000;
     margin-right: auto;
     margin-left: auto;
     @include l-pc-all {
@@ -73,7 +73,7 @@
   &__hamburger {
     cursor: pointer;
     position: fixed;
-    z-index: 100;
+    z-index: 100001;
     pointer-events: auto;
     @include l-pc-all {
       width: 50px;
@@ -90,17 +90,22 @@
       height: 40px;
       top: 15px; right: 20px;
     }
+    &--black & {
+      &-line {
+        background-color: #222;
+      }
+    }
     &-line {
-      height: 1px;
+      height: 2px;
       position: absolute;
       top: 50%; right: 0; left: 0;
       margin-top: -1px;
       background-color: #fff;
       &--top {
-        transform: translateY(-7px);
+        transform: translateY(-7px) scaleX(1);
       }
       &--bottom {
-        transform: translateY(7px);
+        transform: translateY(7px) scaleX(1);
       }
     }
   }
@@ -114,9 +119,44 @@
   &__item {
     opacity: 0;
     transition-property: opacity;
-    transition-duration: 0.6s;
+    transition-duration: 0.2s;
     &.is-opened {
       opacity: 1;
+      transition-duration: 0.4s;
+    }
+  }
+  &__hamburger {
+    &-line {
+      transition-duration: 0.3s;
+      transition-timing-function: $easeInOutQuint;
+      &--top {
+        transform-origin: left center;
+        transition-delay: 0.1s;
+      }
+      &--bottom {
+        transform-origin: right center;
+        transition-delay: 0.1s;
+      }
+    }
+    &.is-opened & {
+      &-line {
+        &--top {
+          transform: translateY(-7px) scaleX(0);
+          transition-delay: 0s;
+        }
+        &--bottom {
+          transform: translateY(7px) scaleX(0);
+          transition-delay: 0s;
+        }
+        &--cross1 {
+          transform: rotate(-45deg) scale(0.8);
+          transition-delay: 0.1s;
+        }
+        &--cross2 {
+          transform: rotate(-135deg) scale(0.8);
+          transition-delay: 0.1s;
+        }
+      }
     }
   }
 }

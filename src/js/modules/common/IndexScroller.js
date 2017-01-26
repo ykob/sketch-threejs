@@ -1,3 +1,4 @@
+import buildVueIndex from './buildVueIndex';
 import force3 from './force3';
 
 const glMatrix = require('gl-matrix');
@@ -6,8 +7,9 @@ const isSmartphone = require('js-util/isSmartphone');
 
 export default class IndexScroller {
   constructor() {
+    this.vm = buildVueIndex(this);
     this.elm = {
-      wrap: document.getElementById('index-wrap'),
+      wrap: document.getElementById('index'),
       contents: document.getElementById('index-contents'),
       scroll: document.getElementById('index-scroll'),
       items: document.getElementsByClassName('js-index-scroll-item'),
@@ -17,7 +19,7 @@ export default class IndexScroller {
     this.isAnimate = false;
 
     this.on();
-    this.open();
+    //this.open();
   }
   init() {
     this.elm.scroll.style.height = `${this.elm.contents.clientHeight}px`;
@@ -29,6 +31,7 @@ export default class IndexScroller {
         anchor: [0, 0, 0],
         mass: i * 0.05 + 1.2,
       };
+      this.elm.items[i].style.transform = `translate3D(0, ${this.items[i].velocity[1]}px, 0)`;
     }
     setTimeout(() => {
       if (this.elm.scroll.clientHeight != this.elm.contents.clientHeight) {
@@ -48,17 +51,11 @@ export default class IndexScroller {
   open() {
     this.init();
     this.isAnimate = true;
-    this.renderLoop();
     document.body.classList.add(`is-opened-index`);
-    this.elm.wrap.classList.add(`is-opened`);
-    for (var i = 0; i < this.elm.items.length; i++) {
-      const index = i;
-      setTimeout(() => {
-        this.elm.items[index].classList.add(`is-opened`);
-      }, 40 * index)
-    }
+    this.renderLoop();
   }
   close() {
+    this.elm.scroll.style.height = 0;
     this.isAnimate = false;
     document.body.classList.remove(`is-opened-index`);
   }

@@ -1,8 +1,13 @@
-.p-sketch-index#index-wrap
+.p-sketch-index#index(
+  :class = `{ "is-opened" : isOpened }`
+)
   .p-sketch-index__contents#index-contents
     each item in pages
       if (item.title !== '')
-        .p-sketch-index__item.js-index-scroll-item
+        .p-sketch-index__item(
+          class = 'js-index-scroll-item',
+          :class = `{ "is-opened" : isOpened }`
+        )
           a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
             .p-sketch-index__item-thumb
               img(src=`/sketch-threejs/img/common/ogp_${item.id}.jpg`, alt="")
@@ -13,9 +18,12 @@
               if (item.update)
                 |/ update: #{item.update}
   .p-sketch-index__scroll#index-scroll
-  .p-sketch-index__hamburger
+  .p-sketch-index__hamburger(
+    @click = 'toggle',
+    class = (page.color == 'white') ?  'p-sketch-index__hamburger--white' : 'p-sketch-index__hamburger--black',
+    :class = `{ "is-opened" : isOpened }`
+  )
     .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--top
-    .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--middle
     .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--bottom
     .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--cross1
     .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--cross2
