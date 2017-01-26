@@ -1,6 +1,7 @@
 import force3 from './force3';
 
 const glMatrix = require('gl-matrix');
+const debounce = require('js-util/debounce');
 
 export default class IndexScroller {
   constructor() {
@@ -13,9 +14,11 @@ export default class IndexScroller {
     this.offsetTop = window.pageYOffset * -1;
     this.isAnimate = false;
 
-    this.init();
-    this.start();
-    this.on();
+    setTimeout(() => {
+      this.init();
+      this.start();
+      this.on();
+    }, 100)
   }
   init() {
     this.elm.scroll.style.height = `${this.elm.contents.clientHeight}px`;
@@ -65,11 +68,11 @@ export default class IndexScroller {
     }
   }
   on() {
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', debounce((event) => {
       this.scroll();
-    });
-    window.addEventListener('resize', () => {
+    }, 10));
+    window.addEventListener('resize', debounce((event) => {
       this.resize();
-    });
+    }, 100));
   }
 }
