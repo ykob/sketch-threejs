@@ -2,6 +2,7 @@ import force3 from './force3';
 
 const glMatrix = require('gl-matrix');
 const debounce = require('js-util/debounce');
+const isSmartphone = require('js-util/isSmartphone');
 
 export default class IndexScroller {
   constructor() {
@@ -87,8 +88,14 @@ export default class IndexScroller {
     window.addEventListener('scroll', debounce((event) => {
       this.scroll();
     }, 10));
-    window.addEventListener('resize', debounce((event) => {
-      this.resize();
-    }, 100));
+    if (isSmartphone()) {
+      window.addEventListener('orientationchange', (event) => {
+        this.resize();
+      });
+    } else {
+      window.addEventListener('resize', debounce((event) => {
+        this.resize();
+      }, 100));
+    }
   }
 }
