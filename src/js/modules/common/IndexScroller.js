@@ -40,6 +40,7 @@ export default class IndexScroller {
     }, 500);
   }
   scroll() {
+    if (!this.vm.isOpened) return;
     this.offsetTop = window.pageYOffset * -1;
     for (var i = 0; i < this.elm.items.length; i++) {
       this.items[i].anchor[1] = this.offsetTop;
