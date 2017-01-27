@@ -47,6 +47,7 @@ export default class IndexScroller {
     }
   }
   resize() {
+    if (!this.vm.isOpened) return;
     this.init();
   }
   open() {

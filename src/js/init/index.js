@@ -1,6 +1,8 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import IndexScroller from '../modules/common/IndexScroller';
 
+const debounce = require('js-util/debounce');
+
 export default function() {
   const indexScroller = new IndexScroller();
 
@@ -28,9 +30,9 @@ export default function() {
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    });
+    }), 1000);
   }
 
   const init = () => {

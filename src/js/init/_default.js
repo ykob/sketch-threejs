@@ -1,5 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 
+const debounce = require('js-util/debounce');
+
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
@@ -46,9 +48,9 @@ export default function() {
   const mouseOut = () => {
   };
   const on = () => {
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    })
+    }), 1000);
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       vectorTouchStart.set(event.clientX, event.clientY);

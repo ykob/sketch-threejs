@@ -1,5 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 
+const debounce = require('js-util/debounce');
+
 export default function() {
   var Util = require('../modules/old/util');
   var Force3 = require('../modules/old/Force3');
@@ -213,9 +215,9 @@ export default function() {
       is_draged = false;
     };
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    })
+    }), 1000);
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       touchStart(event.clientX, event.clientY, false);

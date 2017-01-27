@@ -1,5 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 
+const debounce = require('js-util/debounce');
+
 export default function() {
   const glslify = require('glslify');
   const Util = require('../modules/old/util');
@@ -160,9 +162,9 @@ export default function() {
       vectorTouchEnd.set(0, 0);
     };
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    })
+    }), 1000);
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       touchStart(event.clientX, event.clientY, false);

@@ -1,5 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 
+const debounce = require('js-util/debounce');
+
 export default function() {
   const glslify = require('glslify');
   const util = require('../modules/old/util');
@@ -223,9 +225,9 @@ export default function() {
       light.force.anchor.set(0, 0, 0);
     };
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    })
+    }), 1000);
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       touchStart(event.clientX, event.clientY, false);

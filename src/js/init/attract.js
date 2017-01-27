@@ -1,6 +1,8 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import PhysicsRenderer from '../modules/common/PhysicsRenderer';
 
+const debounce = require('js-util/debounce');
+
 export default function() {
   const glslify = require('glslify');
   const Util = require('../modules/old/util');
@@ -145,9 +147,9 @@ export default function() {
       physics_renderer.accelerationMesh.material.uniforms.anchor.value.set(0, 0, 0);
     };
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    })
+    }), 1000);
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       touchStart(event.clientX, event.clientY, false);
