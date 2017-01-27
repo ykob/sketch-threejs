@@ -27,59 +27,8 @@ export default function() {
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
-    const vectorTouchStart = new THREE.Vector2();
-    const vectorTouchMove = new THREE.Vector2();
-    const vectorTouchEnd = new THREE.Vector2();
-
-    const transformVector2d = (vector) => {
-      vector.x = (vector.x / document.body.clientWidth) * 2 - 1;
-      vector.y = - (vector.y / window.innerHeight) * 2 + 1;
-    };
-    const touchStart = (x, y, touch_event) => {
-      vectorTouchStart.set(x, y);
-      transformVector2d(vectorTouchStart);
-    };
-    const touchMove = (x, y, touch_event) => {
-      vectorTouchMove.set(x, y);
-      transformVector2d(vectorTouchMove);
-    };
-    const touchEnd = (x, y, touch_event) => {
-      vectorTouchEnd.set(x, y);
-    };
-    const mouseOut = () => {
-      vectorTouchEnd.set(0, 0);
-    };
-
     window.addEventListener('resize', () => {
       resizeWindow();
-    })
-    canvas.addEventListener('mousedown', function (event) {
-      event.preventDefault();
-      touchStart(event.clientX, event.clientY, false);
-    });
-    canvas.addEventListener('mousemove', function (event) {
-      event.preventDefault();
-      touchMove(event.clientX, event.clientY, false);
-    });
-    canvas.addEventListener('mouseup', function (event) {
-      event.preventDefault();
-      touchEnd(event.clientX, event.clientY, false);
-    });
-    canvas.addEventListener('touchstart', function (event) {
-      event.preventDefault();
-      touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
-    });
-    canvas.addEventListener('touchmove', function (event) {
-      event.preventDefault();
-      touchMove(event.touches[0].clientX, event.touches[0].clientY, true);
-    });
-    canvas.addEventListener('touchend', function (event) {
-      event.preventDefault();
-      touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
-    });
-    window.addEventListener('mouseout', function () {
-      event.preventDefault();
-      mouseOut();
     });
   }
 
