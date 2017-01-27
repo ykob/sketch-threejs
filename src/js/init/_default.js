@@ -1,11 +1,11 @@
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
-    antialias: true,
+    antialias: false,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   //
@@ -18,11 +18,11 @@ export default function() {
   // common process
   //
   const resizeWindow = () => {
-    canvas.width = window.innerWidth;
+    canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
     renderer.render(scene, camera);
@@ -37,7 +37,7 @@ export default function() {
     const vectorTouchEnd = new THREE.Vector2();
 
     const transformVector2d = (vector) => {
-      vector.x = (vector.x / window.innerWidth) * 2 - 1;
+      vector.x = (vector.x / document.body.clientWidth) * 2 - 1;
       vector.y = - (vector.y / window.innerHeight) * 2 + 1;
     };
     const touchStart = (x, y, touch_event) => {
@@ -89,7 +89,7 @@ export default function() {
   }
 
   const init = () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
