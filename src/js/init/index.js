@@ -1,3 +1,4 @@
+import normalizeVector2 from '../modules/common/normalizeVector2';
 import IndexScroller from '../modules/common/IndexScroller';
 
 export default function() {

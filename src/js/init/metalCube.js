@@ -1,3 +1,5 @@
+import normalizeVector2 from '../modules/common/normalizeVector2';
+
 export default function() {
   const glslify = require('glslify');
   const Util = require('../modules/old/util');
@@ -142,17 +144,13 @@ export default function() {
     const vectorTouchMove = new THREE.Vector2();
     const vectorTouchEnd = new THREE.Vector2();
 
-    const transformVector2d = (vector) => {
-      vector.x = (vector.x / window.innerWidth) * 2 - 1;
-      vector.y = - (vector.y / window.innerHeight) * 2 + 1;
-    };
     const touchStart = (x, y, touch_event) => {
       vectorTouchStart.set(x, y);
-      transformVector2d(vectorTouchStart);
+      normalizeVector2(vectorTouchStart);
     };
     const touchMove = (x, y, touch_event) => {
       vectorTouchMove.set(x, y);
-      transformVector2d(vectorTouchMove);
+      normalizeVector2(vectorTouchMove);
       vactor_raycast = vectorTouchMove;
     };
     const touchEnd = (x, y, touch_event) => {

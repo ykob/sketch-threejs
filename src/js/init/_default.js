@@ -1,3 +1,5 @@
+import normalizeVector2 from '../modules/common/normalizeVector2';
+
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
@@ -7,6 +9,10 @@ export default function() {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
+
+  const vectorTouchStart = new THREE.Vector2();
+  const vectorTouchMove = new THREE.Vector2();
+  const vectorTouchEnd = new THREE.Vector2();
 
   //
   // process for this sketch.
@@ -31,59 +37,55 @@ export default function() {
     render();
     requestAnimationFrame(renderLoop);
   }
+  const touchStart = (isTouched) => {
+  };
+  const touchMove = (isTouched) => {
+  };
+  const touchEnd = (isTouched) => {
+  };
+  const mouseOut = () => {
+  };
   const on = () => {
-    const vectorTouchStart = new THREE.Vector2();
-    const vectorTouchMove = new THREE.Vector2();
-    const vectorTouchEnd = new THREE.Vector2();
-
-    const transformVector2d = (vector) => {
-      vector.x = (vector.x / document.body.clientWidth) * 2 - 1;
-      vector.y = - (vector.y / window.innerHeight) * 2 + 1;
-    };
-    const touchStart = (x, y, touch_event) => {
-      vectorTouchStart.set(x, y);
-      transformVector2d(vectorTouchStart);
-    };
-    const touchMove = (x, y, touch_event) => {
-      vectorTouchMove.set(x, y);
-      transformVector2d(vectorTouchMove);
-    };
-    const touchEnd = (x, y, touch_event) => {
-      vectorTouchEnd.set(x, y);
-    };
-    const mouseOut = () => {
-      vectorTouchEnd.set(0, 0);
-    };
-
     window.addEventListener('resize', () => {
       resizeWindow();
     })
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
-      touchStart(event.clientX, event.clientY, false);
+      vectorTouchStart.set(event.clientX, event.clientY);
+      normalizeVector2(vectorTouchStart);
+      touchStart(false);
     });
     canvas.addEventListener('mousemove', function (event) {
       event.preventDefault();
-      touchMove(event.clientX, event.clientY, false);
+      vectorTouchMove.set(x, y);
+      normalizeVector2(vectorTouchMove);
+      touchMove(false);
     });
     canvas.addEventListener('mouseup', function (event) {
       event.preventDefault();
-      touchEnd(event.clientX, event.clientY, false);
+      vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+      touchEnd(false);
     });
     canvas.addEventListener('touchstart', function (event) {
       event.preventDefault();
+      vectorTouchStart.set(event.touches[0].clientX, event.touches[0].clientY);
+      normalizeVector2(vectorTouchStart);
       touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
     });
     canvas.addEventListener('touchmove', function (event) {
       event.preventDefault();
-      touchMove(event.touches[0].clientX, event.touches[0].clientY, true);
+      vectorTouchMove.set(event.touches[0].clientX, event.touches[0].clientY);
+      normalizeVector2(vectorTouchMove);
+      touchMove(true);
     });
     canvas.addEventListener('touchend', function (event) {
       event.preventDefault();
-      touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
+      vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+      touchEnd(true);
     });
     window.addEventListener('mouseout', function () {
       event.preventDefault();
+      vectorTouchEnd.set(0, 0);
       mouseOut();
     });
   }

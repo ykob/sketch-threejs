@@ -1,3 +1,5 @@
+import normalizeVector2 from '../modules/common/normalizeVector2';
+
 export default function() {
   var Util = require('../modules/old/util');
   var Force3 = require('../modules/old/Force3');
@@ -153,19 +155,15 @@ export default function() {
     const vectorTouchMove = new THREE.Vector2();
     const vectorTouchEnd = new THREE.Vector2();
 
-    const transformVector2d = (vector) => {
-      vector.x = (vector.x / window.innerWidth) * 2 - 1;
-      vector.y = - (vector.y / window.innerHeight) * 2 + 1;
-    };
     const touchStart = (x, y, touch_event) => {
       vectorTouchStart.set(x, y);
-      transformVector2d(vectorTouchStart);
+      normalizeVector2(vectorTouchStart);
       pickImage(vectorTouchStart);
       is_clicked = true;
     };
     const touchMove = (x, y, touch_event) => {
       vectorTouchMove.set(x, y);
-      transformVector2d(vectorTouchMove);
+      normalizeVector2(vectorTouchMove);
       pickImage(scene, camera, vectorTouchMove);
       if (is_clicked && vectorTouchStart.clone().sub(vectorTouchMove).length() > 0.01) {
         is_clicked = false;
