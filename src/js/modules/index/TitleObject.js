@@ -32,7 +32,7 @@ export default class TitleObject {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(256, 64),
+      new THREE.PlaneBufferGeometry(256, 64, 40, 10),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../glsl/index/titleObject.vs'),

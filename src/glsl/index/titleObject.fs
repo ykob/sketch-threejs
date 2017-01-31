@@ -5,14 +5,14 @@ uniform sampler2D texture;
 
 varying vec2 vUv;
 
+const float interval = 3.0;
+
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 #pragma glslify: ease = require(glsl-easings/cubic-out)
 
-const float interval = 3.0;
-
 void main() {
-  float now = time / interval;
-  float noise = (snoise3(vec3(vUv.x * 12.0, vUv.y * 3.0, 1.0)) + 1.0) / 2.0;
-  float opacity = smoothstep(0.49, 0.51, (noise - 1.0) + now * 2.0 - (1.0 - now) * vUv.x * 2.0);
+  float now = ease(min(time / interval, 1.0));
+  float noise = (snoise3(vec3(vUv.x * 4.0, vUv.y * 4.0, 1.0)) + 1.0) / 2.0;
+  float opacity = smoothstep(0.4, 0.6, ((noise - 1.0) + now * interval) - vUv.x);
   gl_FragColor = texture2D(texture, vUv) * vec4(vec3(1.0), opacity);
 }
