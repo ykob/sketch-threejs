@@ -2,6 +2,7 @@ import normalizeVector2 from '../modules/common/normalizeVector2';
 import IndexScroller from '../modules/common/IndexScroller';
 import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
+import Ground from '../modules/index/Ground';
 
 const debounce = require('js-util/debounce');
 
@@ -19,6 +20,7 @@ export default function() {
 
   const titleObject = new TitleObject();
   const frameObject = new FrameObject();
+  const ground = new Ground();
 
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
@@ -30,6 +32,7 @@ export default function() {
   const render = () => {
     const time = clock.getDelta();
     titleObject.render(time);
+    ground.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -52,6 +55,7 @@ export default function() {
 
     titleObject.loadTexture(() => {
       scene.add(titleObject.obj);
+      scene.add(ground.obj);
     });
     on();
     resizeWindow();
