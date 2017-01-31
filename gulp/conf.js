@@ -5,7 +5,7 @@ const DIR = module.exports.DIR =  {
   PATH: '/sketch-threejs',
   SRC: 'src',
   DEST: 'dst',
-  BUILD: 'build'
+  BUILD: 'docs'
 };
 
 module.exports.serve = {
