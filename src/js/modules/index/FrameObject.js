@@ -2,7 +2,16 @@ const glslify = require('glslify');
 
 export default class FrameObject {
   constructor() {
-    this.uniforms = null;
+    this.uniforms = {
+      time: {
+        type: 'f',
+        value: 0
+      },
+      resolution: {
+        type: 'v2',
+        value: new THREE.Vector2()
+      },
+    };
     this.obj = this.createObj();
   }
   createObj() {
@@ -17,23 +26,12 @@ export default class FrameObject {
     ]);
     geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-    this.uniforms = {
-      time: {
-        type: 'f',
-        value: 0
-      },
-      resolution: {
-        type: 'v2',
-        value: new THREE.Vector2()
-      },
-    };
     return new THREE.Line(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../glsl/index/frameObject.vs'),
         fragmentShader: glslify('../../../glsl/index/frameObject.fs'),
-        linewidth: 2
       })
     )
   }
