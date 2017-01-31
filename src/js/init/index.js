@@ -1,5 +1,6 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import IndexScroller from '../modules/common/IndexScroller';
+import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
 
 const debounce = require('js-util/debounce');
@@ -16,6 +17,7 @@ export default function() {
   const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
+  const titleObject = new TitleObject();
   const frameObject = new FrameObject();
 
   const resizeWindow = () => {
@@ -26,6 +28,8 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
+    const time = clock.getDelta();
+    titleObject.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -41,11 +45,14 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    camera.position.set(0, 0, 10);
+    camera.position.set(0, 0, 800);
     camera.lookAt(new THREE.Vector3());
 
-    scene.add(frameObject.obj)
+    // scene.add(frameObject.obj);
 
+    titleObject.loadTexture(() => {
+      scene.add(titleObject.obj);
+    });
     on();
     resizeWindow();
     renderLoop();
