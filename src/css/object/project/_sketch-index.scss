@@ -57,8 +57,16 @@
     }
     &-thumb {
       width: 100%;
-      img {
+      position: relative;
+      margin-bottom: 10px;
+      overflow: hidden;
+      background-color: #fff;
+      &--black {
+        background-color: #111;
+      }
+      &-img {
         width: 100%;
+        display: block;
       }
     }
     &-title {
@@ -68,6 +76,15 @@
     &-date {
       margin-top: 5px;
       @include fontSize(12);
+    }
+  }
+  &__bg {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: (100000 - 1);
+    background-color: rgba(0, 0, 0, 0.8);
+    &--black {
+      background-color: rgba(255, 255, 255, 0.8);
     }
   }
   &__hamburger {
@@ -116,13 +133,102 @@
   &.is-opened {
     pointer-events: auto;
   }
+  @keyframes closeIndexThumb {
+    0% {
+      opacity: 1;
+      transform: scale3d(1, 1, 1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale3d(0.9, 0.9, 1);
+    }
+  }
+  @keyframes openIndexThumb {
+    0% {
+      transform: scale3d(0, 0.01, 1);
+    }
+    50% {
+      transform: scale3d(1, 0.01, 1);
+    }
+    100% {
+      transform: scale3d(1, 0.99, 1);
+    }
+  }
   &__item {
+    pointer-events: none;
+    &.is-opened {
+      pointer-events: auto;
+    }
+    &-thumb {
+      opacity: 0;
+      animation-duration: 0.5s;
+      animation-fill-mode: both;
+      animation-timing-function: $easeOutCirc;
+      &.is-opened {
+        opacity: 1;
+        animation-name: openIndexThumb;
+      }
+      &.is-closed {
+        animation-name: closeIndexThumb;
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+        animation-timing-function: $easeOutCirc;
+      }
+    }
+    &-thumb-img {
+      opacity: 0;
+      transition-duration: 1s;
+      &.is-opened {
+        opacity: 1;
+        transition-duration: 2s;
+        transition-timing-function: $easeOutCirc;
+      }
+    }
+    &-title {
+      opacity: 0;
+      &.is-opened {
+        opacity: 1;
+      }
+    }
+    &-date {
+      opacity: 0;
+      &.is-opened {
+        opacity: 1;
+      }
+    }
+    $delayStep: 0.03;
+    $delayArr: 1, 3, 4, 5, 2, 6, 7, 8, 9;
+    @each $value in $delayArr {
+      $key: index($delayArr, $value);
+      &:nth-of-type(9n + #{$key}) & {
+        &-thumb  {
+          &.is-opened {
+            animation-delay: $value * $delayStep * 1s;
+          }
+        }
+        &-thumb-img {
+          &.is-opened {
+            transition-delay: $value * $delayStep + 0.4s;
+          }
+        }
+        &-title     {
+          &.is-opened {
+            transition-delay: $value * $delayStep * 1s;
+          }
+        }
+        &-date      {
+          &.is-opened {
+            transition-delay: $value * $delayStep * 1s;
+          }
+        }
+      }
+    }
+  }
+  &__bg {
     opacity: 0;
-    transition-property: opacity;
-    transition-duration: 0.2s;
+    transition-duration: 0.4s;
     &.is-opened {
       opacity: 1;
-      transition-duration: 0.4s;
     }
   }
   &__hamburger {

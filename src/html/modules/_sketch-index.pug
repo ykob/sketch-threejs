@@ -1,27 +1,44 @@
 .p-sketch-index#index(
-  :class = `{ "is-opened" : isOpened }`
+  :class = `{ "is-opened" : isOpened == 1 }`
 )
   .p-sketch-index__contents#index-contents
     each item in pages
       if (item.title !== '')
         .p-sketch-index__item(
           class = 'js-index-scroll-item',
-          :class = `{ "is-opened" : isOpened }`
+          :class = `{ "is-opened" : isOpened == 1 }`
         )
           a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
-            .p-sketch-index__item-thumb
-              img(src=`/sketch-threejs/img/common/ogp_${item.id}.jpg`, alt="")
-            .p-sketch-index__item-title
+            .p-sketch-index__item-thumb(
+              class = (page.color == "white") ? "p-sketch-index__item-thumb--white" : "p-sketch-index__item-thumb--black",
+              :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`
+            )
+              img(
+                src = `/sketch-threejs/img/common/ogp_${item.id}.jpg`,
+                alt = "",
+                class = 'p-sketch-index__item-thumb-img',
+                :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`
+              )
+
+            .p-sketch-index__item-title(
+              :class = `{ "is-opened" : isOpened == 1 }`
+            )
               |#{item.title}
-            .p-sketch-index__item-date
+            .p-sketch-index__item-date(
+              :class = `{ "is-opened" : isOpened == 1 }`
+            )
               |posted: #{item.posted} 
               if (item.update)
                 |/ update: #{item.update}
   .p-sketch-index__scroll#index-scroll
+  .p-sketch-index__bg(
+    class = (page.color == "white") ? "p-sketch-index__bg--white" : "p-sketch-index__bg--black",
+    :class = `{ "is-opened" : isOpened == 1 }`
+  )
   .p-sketch-index__hamburger(
     @click = 'toggle',
     class = (page.color == 'white') ?  'p-sketch-index__hamburger--white' : 'p-sketch-index__hamburger--black',
-    :class = `{ "is-opened" : isOpened }`
+    :class = `{ "is-opened" : isOpened == 1 }`
   )
     .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--top
     .p-sketch-index__hamburger-line.p-sketch-index__hamburger-line--bottom
