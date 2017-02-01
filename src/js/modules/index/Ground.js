@@ -11,7 +11,7 @@ export default class Ground {
     };
     this.obj = this.createObj();
     this.obj.position.set(0, -200, 0);
-    this.obj.rotation.set(MathEx.radians(90), 0, 0);
+    this.obj.rotation.set(MathEx.radians(-90), 0, 0);
   }
   createObj() {
     return new THREE.Mesh(
