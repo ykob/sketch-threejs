@@ -57,16 +57,19 @@
     }
     &-thumb {
       width: 100%;
+      overflow: hidden;
       position: relative;
       margin-bottom: 10px;
-      overflow: hidden;
+      padding-top: 630 / 1200 * 100%;
       background-color: #fff;
-      &--black {
-        background-color: #111;
-      }
-      &-img {
-        width: 100%;
-        display: block;
+      background-size: cover;
+      &-cover {
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background-color: #fff;
+        &--black {
+          background-color: #111;
+        }
       }
     }
     &-title {
@@ -175,12 +178,12 @@
         animation-timing-function: $easeOutCirc;
       }
     }
-    &-thumb-img {
-      opacity: 0;
-      transition-duration: 1s;
+    &-thumb-cover {
+      opacity: 1;
+      transition-duration: 0.4s;
       &.is-opened {
-        opacity: 1;
-        transition-duration: 2s;
+        opacity: 0;
+        transition-duration: 1s;
         transition-timing-function: $easeOutCirc;
       }
     }
@@ -206,7 +209,7 @@
             animation-delay: $value * $delayStep * 1s;
           }
         }
-        &-thumb-img {
+        &-thumb-cover {
           &.is-opened {
             transition-delay: $value * $delayStep + 0.4s;
           }

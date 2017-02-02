@@ -10,16 +10,13 @@
         )
           a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
             .p-sketch-index__item-thumb(
-              class = (page.color == "white") ? "p-sketch-index__item-thumb--white" : "p-sketch-index__item-thumb--black",
-              :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`
+              :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`,
+              style = `background-image: url(/sketch-threejs/img/common/ogp_${item.id}.jpg)`
             )
-              img(
-                src = `/sketch-threejs/img/common/ogp_${item.id}.jpg`,
-                alt = "",
-                class = 'p-sketch-index__item-thumb-img',
-                :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`
+              .p-sketch-index__item-thumb-cover(
+                class = (page.color == "white") ? "p-sketch-index__item-thumb-cover--white" : "p-sketch-index__item-thumb-cover--black",
+                :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`,
               )
-
             .p-sketch-index__item-title(
               :class = `{ "is-opened" : isOpened == 1 }`
             )
