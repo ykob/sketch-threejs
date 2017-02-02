@@ -27,9 +27,10 @@ export default class SkyOctahedron {
     this.obj.position.set(0, 200, 0);
   }
   createObj() {
-    const geometry = new THREE.OctahedronBufferGeometry(90, 5);
+    const geometry = new THREE.OctahedronBufferGeometry(90, 4);
     const positions = geometry.attributes.position.array;
     const faceNormalsBase = [];
+    const centersBase = [];
     const delaysBase = [];
     for (var i = 0; i < positions.length; i += 9) {
       const n = computeFaceNormal(
@@ -38,12 +39,20 @@ export default class SkyOctahedron {
         [positions[i + 6], positions[i + 7], positions[i + 8]]
       );
       faceNormalsBase.push(n[0], n[1], n[2], n[0], n[1], n[2], n[0], n[1], n[2]);
+      const c = [
+        (positions[i + 0] + positions[i + 3] + positions[i + 6]) / 3,
+        (positions[i + 1] + positions[i + 4] + positions[i + 7]) / 3,
+        (positions[i + 2] + positions[i + 5] + positions[i + 8]) / 3
+      ];
       const delay = Math.random() * 0.5;
+      centersBase.push(c[0], c[1], c[2], c[0], c[1], c[2], c[0], c[1], c[2]);
       delaysBase.push(delay, delay, delay);
     }
     const faceNormals = new Float32Array(faceNormalsBase);
+    const centers = new Float32Array(centersBase);
     const delays = new Float32Array(delaysBase);
     geometry.addAttribute('faceNormal', new THREE.BufferAttribute(faceNormals, 3))
+    geometry.addAttribute('center', new THREE.BufferAttribute(centers, 3))
     geometry.addAttribute('delay', new THREE.BufferAttribute(delays, 1))
     return new THREE.Mesh(
       geometry,
