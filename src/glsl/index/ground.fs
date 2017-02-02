@@ -5,7 +5,7 @@ uniform float time;
 varying vec3 vPosition;
 
 const float duration = 6.0;
-const float delay = 2.0;
+const float delay = 4.0;
 
 void main() {
   float now = min((time - delay) / duration, 1.0);

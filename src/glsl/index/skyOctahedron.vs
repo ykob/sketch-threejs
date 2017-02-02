@@ -1,6 +1,7 @@
 attribute vec3 position;
 attribute vec3 normal;
 attribute vec3 faceNormal;
+attribute float delay;
 
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
@@ -9,16 +10,19 @@ uniform float time;
 varying vec3 vPosition;
 varying float vNow;
 
-const float duration = 1.0;
-const float delay = 2.0;
+const float duration = 2.0;
+const float delayAll = 1.0;
 
 #pragma glslify: ease = require(glsl-easings/exponential-out)
+#pragma glslify: computeTranslateMat = require(glsl-matrix/computeTranslateMat);
+#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
 
 void main() {
-  float now = clamp((time - delay - normalize(faceNormal).x * 0.5 - normalize(faceNormal).y * 0.5) / duration, 0.0, 1.0);
-  float translate = (1.0 - ease(now)) * 2048.0;
-  vec3 updatePosition = position + vec3(faceNormal.x, faceNormal.y * 0.4, faceNormal.z) * translate;
-  vPosition = position;
+  float now = ease(max((time - delayAll - delay - (faceNormal.x + 1.0) / 2.0 - (faceNormal.y + 1.0) / 2.0) / duration, 0.0));
+  mat4 translateMat = computeTranslateMat(vec3(faceNormal.x, faceNormal.y * 0.5, faceNormal.z)  * 4000.0 * (1.0 - now));
+  mat4 rotateMat = computeRotateMat(0.0, radians((1.0 - now) * faceNormal.y * 4320.0), 0.0);
+  vec4 updatePosition = rotateMat * translateMat * vec4(position, 1.0);
+  vPosition = updatePosition.xyz;
   vNow = now;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(updatePosition, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * updatePosition;
 }
