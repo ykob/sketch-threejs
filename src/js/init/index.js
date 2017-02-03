@@ -3,6 +3,7 @@ import IndexScroller from '../modules/common/IndexScroller';
 import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
 import SkyOctahedron from '../modules/index/SkyOctahedron';
+import SkyOctahedronShell from '../modules/index/SkyOctahedronShell';
 import Ground from '../modules/index/Ground';
 
 const debounce = require('js-util/debounce');
@@ -22,6 +23,7 @@ export default function() {
   const titleObject = new TitleObject();
   const frameObject = new FrameObject();
   const skyOctahedron = new SkyOctahedron();
+  const skyOctahedronShell = new SkyOctahedronShell();
   const ground = new Ground();
 
   const resizeWindow = () => {
@@ -35,6 +37,7 @@ export default function() {
     const time = clock.getDelta();
     titleObject.render(time);
     skyOctahedron.render(time);
+    skyOctahedronShell.render(time);
     ground.render(time);
     renderer.render(scene, camera);
   }
@@ -59,6 +62,7 @@ export default function() {
     titleObject.loadTexture(() => {
       scene.add(titleObject.obj);
       scene.add(skyOctahedron.obj);
+      scene.add(skyOctahedronShell.obj);
       scene.add(ground.obj);
     });
     on();
