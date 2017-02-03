@@ -20,6 +20,6 @@ void main() {
   float diff = (dot(normal, light) + 1.0) / 2.0 * 0.2;
   float opacity = smoothstep(0.1, 0.2, vNow);
   vec3 v = normalize(vPosition);
-  vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(0.5 + (v.x + v.y + v.x) / 40.0 + time * 0.1, 0.12, 0.9 + vNoise * 0.05));
+  vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(0.5 + (v.x + v.y + v.x) / 40.0 + time * 0.1, 0.8, 0.4 + sin(time) * 0.05 + vNoise * 0.02));
   gl_FragColor = vec4(rgb + diff, opacity);
 }

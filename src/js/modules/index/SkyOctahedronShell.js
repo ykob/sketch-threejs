@@ -10,10 +10,10 @@ export default class SkyOctahedronShell {
       },
     };
     this.obj = this.createObj();
-    this.obj.position.set(0, 180, 0);
+    this.obj.position.set(0, 210, 0);
   }
   createObj() {
-    const geometry = new THREE.OctahedronBufferGeometry(120, 4);
+    const geometry = new THREE.OctahedronBufferGeometry(150, 4);
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
