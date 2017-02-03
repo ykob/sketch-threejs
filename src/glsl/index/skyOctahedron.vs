@@ -27,10 +27,10 @@ void main() {
   float rotateRadian = radians((time + faceNormal.x + faceNormal.y) * 1440.0);
   mat4 rotateMatSelf = computeRotateMat(rotateRadian, rotateRadian, 0.0);
   float noise = smoothstep(-0.4, 0.4,
-    cnoise3(vec3(position.x * 0.03 - time, position.y * 0.03 - time, position.z * 0.03 + time))
+    cnoise3(vec3(position.x * 0.035 - time, position.y * 0.035 - time, position.z * 0.035 + time))
   ) * 2.0 - 1.0;
   vec3 updatePositionSelf = (rotateMatSelf * vec4(position - center, 1.0)).xyz * (1.0 - now) + position
-    + normalize(position) * noise * 2.0;
+    + normalize(position) * noise ;
   vec4 updatePosition = rotateMat * translateMat * vec4(updatePositionSelf, 1.0);
   vPosition = updatePosition.xyz;
   vNoise = noise;
