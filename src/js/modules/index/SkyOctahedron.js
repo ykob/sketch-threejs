@@ -27,7 +27,7 @@ export default class SkyOctahedron {
     this.obj.position.set(0, 200, 0);
   }
   createObj() {
-    const geometry = new THREE.OctahedronBufferGeometry(90, 4);
+    const geometry = new THREE.OctahedronBufferGeometry(90, 5);
     const positions = geometry.attributes.position.array;
     const faceNormalsBase = [];
     const centersBase = [];
