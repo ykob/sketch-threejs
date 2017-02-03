@@ -3,6 +3,7 @@ precision highp float;
 uniform float time;
 
 varying vec3 vPosition;
+varying float vOpacity;
 
 const float duration = 2.0;
 const float delay = 3.0;
@@ -19,5 +20,5 @@ void main() {
   vec3 v = normalize(vPosition);
   vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(0.5 + (v.x + v.y + v.x) / 40.0 + time * 0.1, 0.4, 1.0));
   if (color < 0.4) discard;
-  gl_FragColor = vec4(rgb * vec3(1.0 - color + 0.8), 0.8);
+  gl_FragColor = vec4(rgb * vec3(1.0 - color + 0.8), 0.4 + vOpacity * 0.5);
 }
