@@ -10,6 +10,7 @@ const float delay = 3.0;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
+#pragma glslify: random = require(glsl-util/random);
 
 void main() {
   float now = clamp((time - delay) / duration, 0.0, 1.0);
@@ -19,6 +20,7 @@ void main() {
   float bright = smoothstep(-0.2, 1.0, (noise1 + noise2 + noise3) * now);
   vec3 v = normalize(vPosition);
   vec3 rgb = (1.0 - now) * vec3(1.0) + convertHsvToRgb(vec3(0.5 + (v.x + v.y + v.x) / 40.0 + time * 0.1, 0.4, 1.0));
+  float whiteNoise = random(vPosition.xy);
   if (bright < 0.4) discard;
-  gl_FragColor = vec4(rgb * vec3(1.0 - bright + 0.8), 0.4 + vOpacity * 0.5 + sin(time * 2.0) * 0.1);
+  gl_FragColor = vec4(rgb * vec3(1.0 - bright + 0.6) + whiteNoise * 0.2, 0.4 + vOpacity * 0.5 + sin(time * 2.0) * 0.1);
 }
