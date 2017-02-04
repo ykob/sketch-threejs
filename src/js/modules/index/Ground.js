@@ -15,7 +15,7 @@ export default class Ground {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2048, 1024, 64, 32),
+      new THREE.PlaneBufferGeometry(1024, 1024, 32, 32),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../glsl/index/ground.vs'),
