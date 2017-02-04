@@ -14,8 +14,10 @@ import initHyperSpace from './init/hyperSpace.js'
 import initFireBall from './init/fireBall.js'
 
 import ConsoleSignature from './modules/common/ConsoleSignature.js';
+import redirectOldSketches from './modules/common/redirectOldSketches.js';
 
 const init = () => {
+  redirectOldSketches();
   const consoleSignature = new ConsoleSignature();
   const path = location.pathname.replace('/sketch-threejs', '');
   initCommon();
