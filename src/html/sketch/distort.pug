@@ -1,12 +1,12 @@
-extends ../layout/_page.pug
+extends ../_layout/_page.pug
 
 block vars
   -
     var page = pages.distort;
 
 block content
-  include ../modules/_website-outline.pug
-  include ../modules/_sketch-outline.pug
+  include ../_modules/_website-outline.pug
+  include ../_modules/_sketch-outline.pug
   canvas(id="canvas-webgl", class="p-canvas-webgl")
   .p-badges
     a(href="http://www.chromeexperiments.com/experiment/distort/", target="_blank")

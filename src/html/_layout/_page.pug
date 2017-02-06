@@ -1,17 +1,17 @@
 block vars
 
-include ../mixin/_common.pug
+include ../_mixin/_common.pug
 
 doctype html
 html(lang="ja")
   head
-    include ../layout/_head.pug
+    include ../_layout/_head.pug
   body
     .l-page(
       class = (page.color == "white") ?  "l-page--white" : "l-page--black"
     )
       block content
-      include ../modules/_sketch-index.pug
+      include ../_modules/_sketch-index.pug
     script(src="/sketch-threejs/js/vendor.js")
     script(src="/sketch-threejs/js/main.js")
     script.
