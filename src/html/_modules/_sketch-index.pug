@@ -18,9 +18,9 @@
                 :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`,
               )
             .p-sketch-index__item-title(
-              :class = `{ "is-opened" : isOpened == 1 }`
+              :class = `{ "is-opened" : isOpened == 1, "is-closed" : isOpened == 0 }`,
             )
-              +splitStr(item.title, 'p-sketch-index__item-title-typo')
+              +splitStr(item.title, 'js-split-str')
             .p-sketch-index__item-date(
               :class = `{ "is-opened" : isOpened == 1 }`
             )

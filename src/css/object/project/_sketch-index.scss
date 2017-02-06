@@ -75,6 +75,9 @@
     &-title {
       @include fontSize(32);
       letter-spacing: 0.1em;
+      .js-split-str {
+        display: inline-block;
+      }
     }
     &-date {
       margin-top: 5px;
@@ -187,14 +190,46 @@
         transition-timing-function: $easeOutCirc;
       }
     }
-    &-title {
-      opacity: 0;
-      &.is-opened {
+    @keyframes closeIndexTitleStr {
+      0% {
         opacity: 1;
+        transform: scale3d(1, 1, 1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale3d(0, 0.5, 1);
+      }
+    }
+    @keyframes openIndexTitleStr {
+      0% {
+        opacity: 0;
+        transform: scale3d(0, 0, 1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+      }
+    }
+    &-title {
+      .js-split-str {
+        opacity: 0;
+        animation-duration: 0.4s;
+        animation-fill-mode: both;
+      }
+      &.is-opened {
+        .js-split-str {
+          animation-name: openIndexTitleStr;
+        }
+      }
+      &.is-closed {
+        .js-split-str {
+          animation-name: closeIndexTitleStr;
+        }
       }
     }
     &-date {
       opacity: 0;
+      transition-duration: 0.4s;
       &.is-opened {
         opacity: 1;
       }
@@ -204,7 +239,7 @@
     @each $value in $delayArr {
       $key: index($delayArr, $value);
       &:nth-of-type(9n + #{$key}) & {
-        &-thumb  {
+        &-thumb {
           &.is-opened {
             animation-delay: $value * $delayStep * 1s;
           }
@@ -214,14 +249,20 @@
             transition-delay: $value * $delayStep + 0.4s;
           }
         }
-        &-title     {
+        &-title {
           &.is-opened {
-            transition-delay: $value * $delayStep * 1s;
+            .js-split-str {
+              @for $i from 1 through 20 {
+                &:nth-of-type(#{$i}) {
+                  animation-delay: $value * $delayStep + $i * 0.03s + 0.2s;
+                }
+              }
+            }
           }
         }
-        &-date      {
+        &-date {
           &.is-opened {
-            transition-delay: $value * $delayStep * 1s;
+            transition-delay: $value * $delayStep + 0.6s;
           }
         }
       }
