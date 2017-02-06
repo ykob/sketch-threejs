@@ -20,7 +20,7 @@
             .p-sketch-index__item-title(
               :class = `{ "is-opened" : isOpened == 1 }`
             )
-              |#{item.title}
+              +splitStr(item.title, 'p-sketch-index__item-title-typo')
             .p-sketch-index__item-date(
               :class = `{ "is-opened" : isOpened == 1 }`
             )
