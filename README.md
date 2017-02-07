@@ -1,4 +1,4 @@
-# ![sketch of three.js](http://ykob.github.io/sketch-threejs/img/share.png)
+# ![sketch of three.js](http://ykob.github.io/sketch-threejs/img/common/ogp_common.jpg)
 
-it's my interactive sketches made with three.js.
+Interactive sketches made with three.js.  
 http://ykob.github.io/sketch-threejs/
