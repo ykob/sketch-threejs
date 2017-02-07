@@ -5,4 +5,9 @@ block vars
     var page = pages.index;
 
 block content
+  .p-introduction
+    |Interactive sketches made with three.js.
+    br
+    |created by 
+    +textLink("http://www.tplh.net/", "yoichi kobayashi.", "_blank")
   canvas(id="canvas-webgl", class="p-canvas-webgl")
