@@ -31,7 +31,7 @@ export default function() {
   const ground = new Ground();
   const postEffect = new PostEffect(renderBack.texture);
 
-  const introRow = document.getElementsByClassName('p-introduction__row');
+  const elemIntro = document.getElementsByClassName('js-transition-intro');
 
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
@@ -61,6 +61,15 @@ export default function() {
       resizeWindow();
     }), 1000);
   }
+  const transitionOnload = () => {
+    for (var i = 0; i < elemIntro.length; i++) {
+      const elm = elemIntro[i];
+      elm.classList.add('is-opened', 'is-animate');
+      elm.addEventListener('transitionend', () => {
+        elm.classList.remove('is-animate');
+      })
+    }
+  }
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
@@ -74,9 +83,7 @@ export default function() {
       sceneBack.add(skyOctahedron.obj);
       sceneBack.add(skyOctahedronShell.obj);
       sceneBack.add(ground.obj);
-      for (var i = 0; i < introRow.length; i++) {
-        introRow[i].classList.add('is-opened');
-      }
+      transitionOnload();
     });
 
     on();
