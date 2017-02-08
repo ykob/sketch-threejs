@@ -26,6 +26,8 @@ export default function() {
   const skyOctahedronShell = new SkyOctahedronShell();
   const ground = new Ground();
 
+  const introRow = document.getElementsByClassName('p-introduction__row');
+
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
@@ -57,14 +59,16 @@ export default function() {
     camera.position.set(0, 0, 800);
     camera.lookAt(new THREE.Vector3());
 
-    // scene.add(frameObject.obj);
-
     titleObject.loadTexture(() => {
       scene.add(titleObject.obj);
       scene.add(skyOctahedron.obj);
       scene.add(skyOctahedronShell.obj);
       scene.add(ground.obj);
+      for (var i = 0; i < introRow.length; i++) {
+        introRow[i].classList.add('is-opened');
+      }
     });
+    
     on();
     resizeWindow();
     renderLoop();

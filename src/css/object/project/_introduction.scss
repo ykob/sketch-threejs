@@ -6,4 +6,19 @@
   color: #fff;
   text-align: center;
   letter-spacing: 0.2em;
+  &__row {
+    opacity: 0;
+    transform: translateY(10px);
+    &.is-opened {
+      opacity: 1;
+      transform: translate(0);
+      transition-duration: 1s;
+      transition-timing-function: $easeOutCubic;
+      @for $i from 0 through 4 {
+        &:nth-of-type(#{$i + 1}) {
+          transition-delay: $i * 0.2s + 6s;
+        }
+      }
+    }
+  }
 }
