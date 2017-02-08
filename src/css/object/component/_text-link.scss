@@ -11,7 +11,12 @@
     display: block;
     position: absolute;
     top: 50%; right: 0; left: 0;
-    background-color: #fff;
+    &--white {
+      background-color: #fff;
+    }
+    &--black {
+      background-color: #222;
+    }
   }
   //
   // Interaction
