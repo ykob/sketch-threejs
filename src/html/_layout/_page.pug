@@ -1,0 +1,24 @@
+block vars
+
+include ../_mixin/_common.pug
+include ../_mixin/_svg.pug
+
+doctype html
+html(lang="ja")
+  head
+    include ../_layout/_head.pug
+  body
+    .l-page(
+      class = (page.color == "white") ?  "l-page--white" : "l-page--black"
+    )
+      block content
+      include ../_modules/_sketch-index.pug
+    script(src="/sketch-threejs/js/vendor.js")
+    script(src="/sketch-threejs/js/main.js")
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-70611485-1', 'auto');
+      ga('send', 'pageview');

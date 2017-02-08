@@ -1,0 +1,9 @@
+.p-sketch-outline
+  h2.p-sketch-outline__title
+    |#{page.title}
+  p.p-sketch-outline__date
+    |posted: #{page.posted} 
+    if (page.update)
+      |/ update: #{page.update}
+  p.p-sketch-outline__description
+    |#{page.description}

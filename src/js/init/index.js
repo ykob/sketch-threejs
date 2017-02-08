@@ -5,6 +5,7 @@ import FrameObject from '../modules/index/FrameObject';
 import SkyOctahedron from '../modules/index/SkyOctahedron';
 import SkyOctahedronShell from '../modules/index/SkyOctahedronShell';
 import Ground from '../modules/index/Ground';
+import PostEffect from '../modules/index/PostEffect';
 
 const debounce = require('js-util/debounce');
 
@@ -16,8 +17,11 @@ export default function() {
     antialias: false,
     canvas: canvas,
   });
+  const renderBack = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const sceneBack = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cameraBack = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   const titleObject = new TitleObject();
@@ -25,13 +29,18 @@ export default function() {
   const skyOctahedron = new SkyOctahedron();
   const skyOctahedronShell = new SkyOctahedronShell();
   const ground = new Ground();
+  const postEffect = new PostEffect(renderBack.texture);
+
+  const elemIntro = document.getElementsByClassName('js-transition-intro');
 
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
-    camera.aspect = document.body.clientWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    cameraBack.aspect = document.body.clientWidth / window.innerHeight;
+    cameraBack.updateProjectionMatrix();
+    renderBack.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setSize(document.body.clientWidth, window.innerHeight);
+    postEffect.resize();
   }
   const render = () => {
     const time = clock.getDelta();
@@ -39,6 +48,8 @@ export default function() {
     skyOctahedron.render(time);
     skyOctahedronShell.render(time);
     ground.render(time);
+    renderer.render(sceneBack, cameraBack, renderBack);
+    postEffect.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -50,21 +61,31 @@ export default function() {
       resizeWindow();
     }), 1000);
   }
+  const transitionOnload = () => {
+    for (var i = 0; i < elemIntro.length; i++) {
+      const elm = elemIntro[i];
+      elm.classList.add('is-opened', 'is-animate');
+      elm.addEventListener('transitionend', () => {
+        elm.classList.remove('is-animate');
+      })
+    }
+  }
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    camera.position.set(0, 0, 800);
-    camera.lookAt(new THREE.Vector3());
+    cameraBack.position.set(0, 0, 800);
+    cameraBack.lookAt(new THREE.Vector3());
 
-    // scene.add(frameObject.obj);
-
+    scene.add(postEffect.obj);
     titleObject.loadTexture(() => {
-      scene.add(titleObject.obj);
-      scene.add(skyOctahedron.obj);
-      scene.add(skyOctahedronShell.obj);
-      scene.add(ground.obj);
+      sceneBack.add(titleObject.obj);
+      sceneBack.add(skyOctahedron.obj);
+      sceneBack.add(skyOctahedronShell.obj);
+      sceneBack.add(ground.obj);
+      transitionOnload();
     });
+
     on();
     resizeWindow();
     renderLoop();

@@ -1,0 +1,62 @@
+.c-text-link {
+  display: inline-block;
+  position: relative;
+  &__label {
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+  }
+  &__bg {
+    height: 2px;
+    display: block;
+    position: absolute;
+    top: 50%; right: 0; left: 0;
+    &--white {
+      background-color: #fff;
+    }
+    &--black {
+      background-color: #222;
+    }
+  }
+  //
+  // Interaction
+  //
+  @keyframes openTextLinkBar {
+    0% {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    100% {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+  @keyframes closeTextLinkBar {
+    0% {
+      transform: scaleX(1);
+      transform-origin: right;
+    }
+    100% {
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+  }
+  &__label {
+    transition-duration: 0.4s;
+    transition-timing-function: $easeOutCirc;
+  }
+  &__bg {
+    transform: scaleX(0);
+    animation-name: closeTextLinkBar;
+    animation-duration: 0.4s;
+    animation-timing-function: $easeOutCirc;
+    animation-fill-mode: both;
+  }
+  &:hover & {
+    &__label {
+    }
+    &__bg {
+      animation-name: openTextLinkBar;
+    }
+  }
+}

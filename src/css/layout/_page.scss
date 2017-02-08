@@ -4,11 +4,17 @@
     a {
       color: #fff;
     }
+    svg {
+      fill: #fff;
+    }
   }
   &--black {
     color: #222;
     a {
       color: #222;
+    }
+    svg {
+      fill: #222;
     }
   }
 }

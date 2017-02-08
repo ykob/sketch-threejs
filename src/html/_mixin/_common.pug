@@ -1,0 +1,16 @@
+mixin splitStr(str, className)
+  -
+    var strArr = str.split('');
+    var html = '';
+    for (var i = 0; i < strArr.length; i++) {
+      html += `<span class="${className}">${(strArr[i] == ' ') ? '&nbsp' : strArr[i] }</span>`;
+    }
+  |!{html}
+
+mixin textLink(href, label, target)
+  a(href = href, target = (target) ? target : '').c-text-link
+    span.c-text-link__label
+      |#{label}
+    span.c-text-link__bg(
+      class = (page.color == "white") ?  "c-text-link__bg--white" : "c-text-link__bg--black"
+    )

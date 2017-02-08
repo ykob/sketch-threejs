@@ -95,5 +95,13 @@ export default class IndexScroller {
         this.resize();
       }, 100));
     }
+    document.onkeydown = (e) => {
+      switch (e.key) {
+        case 'Escape':
+          this.vm.toggle();
+          break;
+        default:
+      }
+    }
   }
 }
