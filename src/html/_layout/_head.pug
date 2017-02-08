@@ -19,7 +19,7 @@ link(rel="stylesheet" href="/sketch-threejs/css/main.css")
 meta(property="og:title", content=titleMerge)
 meta(property="og:site_name", content=meta.website_name)
 meta(property="og:type", content="website")
-meta(property="og:description", content=page.ogpDescription)
+meta(property="og:description", content=page.description)
 meta(property="og:url", content=meta.domain + page.path)
 meta(
   property="og:image",
@@ -28,7 +28,7 @@ meta(
 
 meta(name="twitter:card", content="summary_large_image")
 meta(name="twitter:title", content=titleMerge)
-meta(name="twitter:description", content=page.ogpDescription)
+meta(name="twitter:description", content=page.description)
 meta(
   name="twitter:image",
   content = `${meta.domain}/img/common/ogp_${(page.title == "") ? 'common' : page.id}.jpg`
