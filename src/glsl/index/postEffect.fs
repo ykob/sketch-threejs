@@ -20,14 +20,14 @@ void main() {
   float whiteNoise = random(vUv.xy * time) * 0.1 - 0.1;
 
   // ヴィネット
-  float vignette = smoothstep(0.6, 1.4, length(vUv * 2.0 - 1.0 - vec2(0.0, 0.25)));
-  float vignetteNoise = cnoise3(vec3((vUv * resolution * 0.004), time)) * 0.6;
+  float vignetteMask = smoothstep(0.8, 1.4, length(vUv * 2.0 - 1.0));
   vec3 vignetteColor = convertHsvToRgb(vec3(0.5 + (vUv.x + vUv.y) / 40.0 + time * 0.1, 0.4, 1.0));
+  vec3 vignette = vignetteMask * vignetteColor * 0.1;
 
   // RGBズレ
   float r = texture2D(texture, vUv - vec2(2.0, 0.0) / resolution).r;
   float g = texture2D(texture, vUv).g;
   float b = texture2D(texture, vUv + vec2(2.0, 0.0) / resolution).b;
 
-  gl_FragColor = vec4((vec3(r, g, b) + whiteNoise) + (pow(vignette + vignetteNoise, 3.0) * vignetteColor), 1.0);
+  gl_FragColor = vec4((vec3(r, g, b) + whiteNoise) + vignette, 1.0);
 }
