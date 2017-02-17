@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "particle": {
+      "title": "particle",
+      "id": "particle",
+      "description": "",
+      "path": "/sketch/particle.html",
+      "posted": "2017.x.x",
+      "update": "",
+      "color": "white"
+    },
     "attract": {
       "title": "attract",
       "id": "attract",
