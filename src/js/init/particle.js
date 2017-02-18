@@ -21,6 +21,37 @@ export default function() {
   //
 
 
+  const glslify = require('glslify');
+  class OctahedronPoints {
+    constructor() {
+      this.uniforms = {
+        time: {
+          type: 'f',
+          value: 0
+        },
+      };
+      this.obj = this.createObj();
+    }
+    createObj() {
+      const geometry = new THREE.OctahedronBufferGeometry(400, 4);
+      return new THREE.Points(
+        geometry,
+        new THREE.RawShaderMaterial({
+          uniforms: this.uniforms,
+          vertexShader: glslify('../../glsl/sketch/particle/OctahedronPoints.vs'),
+          fragmentShader: glslify('../../glsl/sketch/particle/octahedronPoints.fs'),
+          shading: THREE.FlatShading,
+          transparent: true,
+          side: THREE.DoubleSide
+        })
+      )
+    }
+    render(time) {
+      this.uniforms.time.value += time;
+    }
+  }
+
+  const points = new OctahedronPoints();
 
   //
   // common process
@@ -94,9 +125,11 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0x111111, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
+
+    scene.add(points.obj);
 
     on();
     resizeWindow();
