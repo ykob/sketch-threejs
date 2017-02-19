@@ -85,7 +85,10 @@ export default function() {
   }
 
   const initSketch = () => {
-    physics_renderer = new PhysicsRenderer(length);
+    physics_renderer = new PhysicsRenderer(
+      length,
+      glslify('../../glsl/common/physicsRendererAcceleration.fs')
+    );
     physics_renderer.init(renderer, createPointsIntVelocity());
     physics_renderer.accelerationMesh.material.uniforms.anchor = {
       type: 'v2',
