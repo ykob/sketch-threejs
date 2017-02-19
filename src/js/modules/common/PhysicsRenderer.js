@@ -1,3 +1,4 @@
+
 const glslify = require('glslify');
 
 export default class PhysicsRenderer {
@@ -28,13 +29,6 @@ export default class PhysicsRenderer {
     this.targetIndex = 0;
   }
   init(renderer, velocityArray) {
-    var accelerationInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
-      new THREE.ShaderMaterial({
-        vertexShader: 'void main(void) {gl_Position = vec4(position, 1.0);}',
-        fragmentShader: 'void main(void) {gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);}',
-      })
-    );
     var velocityInitTex = new THREE.DataTexture(velocityArray, this.length, this.length, THREE.RGBFormat, THREE.FloatType);
     velocityInitTex.needsUpdate = true;
     var velocityInitMesh = new THREE.Mesh(
@@ -51,19 +45,12 @@ export default class PhysicsRenderer {
       })
     );
 
-    this.accelerationScene.add(this.camera);
-    this.accelerationScene.add(accelerationInitMesh);
-    renderer.render(this.accelerationScene, this.camera, this.acceleration[0]);
-    renderer.render(this.accelerationScene, this.camera, this.acceleration[1]);
-    this.accelerationScene.remove(accelerationInitMesh);
-    this.accelerationScene.add(this.accelerationMesh);
-
     this.velocityScene.add(this.camera);
     this.velocityScene.add(velocityInitMesh);
     renderer.render(this.velocityScene, this.camera, this.velocity[0]);
-    renderer.render(this.velocityScene, this.camera, this.velocity[1]);
     this.velocityScene.remove(velocityInitMesh);
     this.velocityScene.add(this.velocityMesh);
+    this.accelerationScene.add(this.accelerationMesh);
   }
   createMesh(vs, fs) {
     return new THREE.Mesh(
@@ -91,19 +78,19 @@ export default class PhysicsRenderer {
   render(renderer) {
     const prevIndex = Math.abs(this.targetIndex - 1);
     const nextIndex = this.targetIndex;
-    this.accelerationMesh.material.uniforms.acceleration.value = this.acceleration[prevIndex];
-    this.accelerationMesh.material.uniforms.velocity.value = this.velocity[nextIndex];
+    this.accelerationMesh.material.uniforms.acceleration.value = this.acceleration[prevIndex].texture;
+    this.accelerationMesh.material.uniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.render(this.accelerationScene, this.camera, this.acceleration[nextIndex]);
-    this.velocityMesh.material.uniforms.acceleration.value = this.acceleration[nextIndex];
-    this.velocityMesh.material.uniforms.velocity.value = this.velocity[nextIndex];
+    this.velocityMesh.material.uniforms.acceleration.value = this.acceleration[nextIndex].texture;
+    this.velocityMesh.material.uniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.render(this.velocityScene, this.camera, this.velocity[prevIndex]);
     this.targetIndex = prevIndex;
   }
   getCurrentVelocity() {
-    return this.velocity[Math.abs(this.targetIndex - 1)];
+    return this.velocity[Math.abs(this.targetIndex - 1)].texture;
   }
   getCurrentAcceleration() {
-    return this.acceleration[Math.abs(this.targetIndex - 1)];
+    return this.acceleration[Math.abs(this.targetIndex - 1)].texture;
   }
   resize(length) {
     this.length = length;
