@@ -2,8 +2,8 @@
 const glslify = require('glslify');
 
 export default class PhysicsRenderer {
-  constructor(length, accelerationShader) {
-    this.length = length;
+  constructor(accelerationShader) {
+    this.length = 0;
     this.accelerationScene = new THREE.Scene();
     this.velocityScene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
@@ -28,10 +28,23 @@ export default class PhysicsRenderer {
     );
     this.targetIndex = 0;
   }
-  init(renderer, velocityArray) {
-    var velocityInitTex = new THREE.DataTexture(velocityArray, this.length, this.length, THREE.RGBFormat, THREE.FloatType);
+  init(renderer, velocityArrayBase) {
+    this.length = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+    const velocityArray = [];
+    for (var i = 0; i < Math.pow(this.length, 2) * 3; i += 3) {
+      if(velocityArrayBase[i]) {
+        velocityArray[i + 0] = velocityArrayBase[i + 0];
+        velocityArray[i + 1] = velocityArrayBase[i + 1];
+        velocityArray[i + 2] = velocityArrayBase[i + 2];
+      } else {
+        velocityArray[i + 0] = 0;
+        velocityArray[i + 1] = 0;
+        velocityArray[i + 2] = 0;
+      }
+    }
+    const velocityInitTex = new THREE.DataTexture(new Float32Array(velocityArray), this.length, this.length, THREE.RGBFormat, THREE.FloatType);
     velocityInitTex.needsUpdate = true;
-    var velocityInitMesh = new THREE.Mesh(
+    const velocityInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.ShaderMaterial({
         uniforms: {
@@ -44,7 +57,10 @@ export default class PhysicsRenderer {
         fragmentShader: glslify('../../../glsl/common/physicsRendererVelocityInit.fs'),
       })
     );
-
+    for (var i = 0; i < 2; i++) {
+      this.acceleration[i].setSize(this.length, this.length);
+      this.velocity[i].setSize(this.length, this.length);
+    }
     this.velocityScene.add(this.camera);
     this.velocityScene.add(velocityInitMesh);
     renderer.render(this.velocityScene, this.camera, this.velocity[0]);
@@ -85,6 +101,16 @@ export default class PhysicsRenderer {
     this.velocityMesh.material.uniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.render(this.velocityScene, this.camera, this.velocity[prevIndex]);
     this.targetIndex = prevIndex;
+  }
+  getBufferAttributeUv() {
+    const uv = [];
+    for (var i = 0; i < Math.pow(this.length, 2); i++) {
+      uv.push(
+        i % this.length * (1 / (this.length - 1)),
+        Math.floor(i / this.length) * (1 / (this.length - 1))
+      );
+    }
+    return new THREE.BufferAttribute(new Float32Array(uv), 2);
   }
   getCurrentVelocity() {
     return this.velocity[Math.abs(this.targetIndex - 1)].texture;

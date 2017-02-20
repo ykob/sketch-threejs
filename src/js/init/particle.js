@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import PhysicsRenderer from '../modules/common/PhysicsRenderer';
 
 const debounce = require('js-util/debounce');
 
@@ -22,6 +23,7 @@ export default function() {
 
 
   const glslify = require('glslify');
+
   class OctahedronPoints {
     constructor() {
       this.uniforms = {
@@ -29,11 +31,27 @@ export default function() {
           type: 'f',
           value: 0
         },
+        velocity: {
+          type: 't',
+          value: null
+        },
+        acceleration: {
+          type: 't',
+          value: null
+        }
       };
+      this.physicsRenderer = null;
       this.obj = this.createObj();
     }
     createObj() {
-      const geometry = new THREE.OctahedronBufferGeometry(400, 4);
+      const geometry = new THREE.OctahedronBufferGeometry(400, 5);
+      this.physicsRenderer = new PhysicsRenderer(
+        glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs')
+      );
+      this.physicsRenderer.init(renderer, geometry.attributes.position.array);
+      this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
+      this.uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
+      geometry.addAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
       return new THREE.Points(
         geometry,
         new THREE.RawShaderMaterial({
@@ -47,6 +65,7 @@ export default function() {
       )
     }
     render(time) {
+      this.physicsRenderer.render(renderer);
       this.uniforms.time.value += time;
     }
   }
@@ -64,6 +83,7 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
+    points.render();
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
