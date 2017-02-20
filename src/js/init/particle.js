@@ -21,7 +21,6 @@ export default function() {
   // process for this sketch.
   //
 
-
   const glslify = require('glslify');
 
   class OctahedronPoints {
@@ -44,7 +43,7 @@ export default function() {
       this.obj = this.createObj();
     }
     createObj() {
-      const geometry = new THREE.OctahedronBufferGeometry(400, 5);
+      const geometry = new THREE.OctahedronBufferGeometry(100, 7);
       this.physicsRenderer = new PhysicsRenderer(
         glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs')
       );
@@ -58,9 +57,6 @@ export default function() {
           uniforms: this.uniforms,
           vertexShader: glslify('../../glsl/sketch/particle/OctahedronPoints.vs'),
           fragmentShader: glslify('../../glsl/sketch/particle/octahedronPoints.fs'),
-          shading: THREE.FlatShading,
-          transparent: true,
-          side: THREE.DoubleSide
         })
       )
     }
@@ -146,7 +142,7 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    camera.position.set(1000, 1000, 1000);
+    camera.position.set(0, 0, 1200);
     camera.lookAt(new THREE.Vector3());
 
     scene.add(points.obj);
