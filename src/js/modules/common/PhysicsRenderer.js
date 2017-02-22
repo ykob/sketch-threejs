@@ -2,7 +2,7 @@
 const glslify = require('glslify');
 
 export default class PhysicsRenderer {
-  constructor(accelerationShader, velocityShader) {
+  constructor(aVertexShader, aFragmentShader, vVertexShader, vFragmentShader) {
     this.length = 0;
     this.accelerationScene = new THREE.Scene();
     this.velocityScene = new THREE.Scene();
@@ -58,13 +58,13 @@ export default class PhysicsRenderer {
     };
     this.accelerationMesh = this.createMesh(
       this.accelerationUniforms,
-      glslify('../../../glsl/common/physicsRenderer.vs'),
-      accelerationShader
+      aVertexShader,
+      aFragmentShader
     );
     this.velocityMesh = this.createMesh(
       this.velocityUniforms,
-      glslify('../../../glsl/common/physicsRenderer.vs'),
-      velocityShader
+      vVertexShader,
+      vFragmentShader
     );
     this.uvs = [];
     this.targetIndex = 0;
@@ -77,8 +77,8 @@ export default class PhysicsRenderer {
         velocityArray[i + 0] = velocityArrayBase[i + 0];
         velocityArray[i + 1] = velocityArrayBase[i + 1];
         velocityArray[i + 2] = velocityArrayBase[i + 2];
-        this.uvs[i / 3 * 2 + 0] = (i / 3) % this.length / (this.length - 1),
-        this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.length) / (this.length - 1)
+        this.uvs[i / 3 * 2 + 0] = (i / 3) % this.length / (this.length - 1);
+        this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.length) / (this.length - 1);
       } else {
         velocityArray[i + 0] = 0;
         velocityArray[i + 1] = 0;

@@ -43,12 +43,21 @@ export default function() {
       this.obj = this.createObj();
     }
     createObj() {
-      const geometry = new THREE.OctahedronBufferGeometry(50, 7);
+      const geometry = new THREE.OctahedronBufferGeometry(400, 7);
+      const verticesBase = geometry.attributes.position.array;
+      const vertices = [];
+      for (var i = 0; i < verticesBase.length; i+= 3) {
+        vertices[i + 0] = verticesBase[i + 0] + (Math.random() * 2 - 1) * 400;
+        vertices[i + 1] = verticesBase[i + 1] + (Math.random() * 2 - 1) * 400;
+        vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 400;
+      }
       this.physicsRenderer = new PhysicsRenderer(
+        glslify('../../glsl/sketch/particle/physicsRendererAcceleration.vs'),
         glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs'),
+        glslify('../../glsl/sketch/particle/physicsRendererVelocity.vs'),
         glslify('../../glsl/sketch/particle/physicsRendererVelocity.fs')
       );
-      this.physicsRenderer.init(renderer, geometry.attributes.position.array);
+      this.physicsRenderer.init(renderer, vertices);
       this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
       this.uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
       geometry.addAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
@@ -58,6 +67,9 @@ export default function() {
           uniforms: this.uniforms,
           vertexShader: glslify('../../glsl/sketch/particle/OctahedronPoints.vs'),
           fragmentShader: glslify('../../glsl/sketch/particle/octahedronPoints.fs'),
+          transparent: true,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending,
         })
       )
     }
