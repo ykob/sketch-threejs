@@ -9,6 +9,7 @@ uniform sampler2D velocity;
 
 void main() {
   vec3 v = texture2D(velocity, uvVelocity).xyz;
-  gl_PointSize = 1.0;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(v, 1.0);
+  vec4 mvPosition = modelViewMatrix * vec4(v, 1.0);
+  gl_PointSize = 1.0 * (1200.0 / length(mvPosition.xyz));
+  gl_Position = projectionMatrix * mvPosition;
 }
