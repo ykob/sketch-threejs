@@ -66,7 +66,6 @@ export default function() {
       this.uniforms.time.value += time;
     }
   }
-
   const points = new OctahedronPoints();
 
   //
@@ -144,7 +143,7 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    camera.position.set(0, 0, 1200);
+    camera.position.set(0, 0, 1000);
     camera.lookAt(new THREE.Vector3());
 
     scene.add(points.obj);

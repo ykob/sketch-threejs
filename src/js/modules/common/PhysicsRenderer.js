@@ -77,6 +77,8 @@ export default class PhysicsRenderer {
         velocityArray[i + 0] = velocityArrayBase[i + 0];
         velocityArray[i + 1] = velocityArrayBase[i + 1];
         velocityArray[i + 2] = velocityArrayBase[i + 2];
+        this.uvs[i / 3 * 2 + 0] = (i / 3) % this.length / (this.length - 1),
+        this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.length) / (this.length - 1)
       } else {
         velocityArray[i + 0] = 0;
         velocityArray[i + 1] = 0;
@@ -85,12 +87,6 @@ export default class PhysicsRenderer {
     }
     const velocityInitTex = new THREE.DataTexture(new Float32Array(velocityArray), this.length, this.length, THREE.RGBFormat, THREE.FloatType);
     velocityInitTex.needsUpdate = true;
-    for (var i = 0; i < Math.pow(this.length, 2) * 2; i += 2) {
-      if(velocityArrayBase[i / 2 * 3] != undefined) {
-        this.uvs[i + 0] = (i / 2) % this.length / (this.length - 1),
-        this.uvs[i + 1] = Math.floor((i / 2) / this.length) / (this.length - 1)
-      }
-    }
     const velocityInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.ShaderMaterial({
