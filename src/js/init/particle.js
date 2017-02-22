@@ -43,7 +43,7 @@ export default function() {
       this.obj = this.createObj();
     }
     createObj() {
-      const geometry = new THREE.OctahedronBufferGeometry(100, 7);
+      const geometry = new THREE.OctahedronBufferGeometry(50, 7);
       this.physicsRenderer = new PhysicsRenderer(
         glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs'),
         glslify('../../glsl/sketch/particle/physicsRendererVelocity.fs')
