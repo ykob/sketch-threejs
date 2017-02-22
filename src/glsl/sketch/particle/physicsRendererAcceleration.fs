@@ -12,8 +12,8 @@ void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
   vec3 d = drag(a, 0.1);
-  float fx = cnoise3(vec3(time * 0.1, v.y / 400.0, v.z / 400.0));
-  float fy = cnoise3(vec3(v.x / 400.0, time * 0.1, v.z / 400.0));
-  float fz = cnoise3(vec3(v.x / 400.0, v.y / 400.0, time * 0.1));
+  float fx = cnoise3(vec3(time * 0.1, v.y / 240.0, v.z / 240.0));
+  float fy = cnoise3(vec3(v.x / 240.0, time * 0.1, v.z / 240.0));
+  float fz = cnoise3(vec3(v.x / 240.0, v.y / 240.0, time * 0.1));
   gl_FragColor = vec4(a + d + vec3(fx, fy, fz), 1.0);
 }
