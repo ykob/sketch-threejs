@@ -2,7 +2,7 @@
 const glslify = require('glslify');
 
 export default class PhysicsRenderer {
-  constructor(accelerationShader) {
+  constructor(accelerationShader, velocityShader) {
     this.length = 0;
     this.accelerationScene = new THREE.Scene();
     this.velocityScene = new THREE.Scene();
@@ -20,13 +20,51 @@ export default class PhysicsRenderer {
       new THREE.WebGLRenderTarget(length, length, this.option),
       new THREE.WebGLRenderTarget(length, length, this.option),
     ];
+    this.accelerationUniforms = {
+      resolution: {
+        type: 'v2',
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+      },
+      velocity: {
+        type: 't',
+        value: null,
+      },
+      acceleration: {
+        type: 't',
+        value: null,
+      },
+      time: {
+        type: 'f',
+        value: 0
+      }
+    };
+    this.velocityUniforms = {
+      resolution: {
+        type: 'v2',
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+      },
+      velocity: {
+        type: 't',
+        value: null,
+      },
+      acceleration: {
+        type: 't',
+        value: null,
+      },
+      time: {
+        type: 'f',
+        value: 0
+      }
+    };
     this.accelerationMesh = this.createMesh(
+      this.accelerationUniforms,
       glslify('../../../glsl/common/physicsRenderer.vs'),
       accelerationShader
     );
     this.velocityMesh = this.createMesh(
+      this.velocityUniforms,
       glslify('../../../glsl/common/physicsRenderer.vs'),
-      glslify('../../../glsl/common/physicsRendererVelocity.fs')
+      velocityShader
     );
     this.uvs = [];
     this.targetIndex = 0;
@@ -78,39 +116,28 @@ export default class PhysicsRenderer {
     this.velocityScene.add(this.velocityMesh);
     this.accelerationScene.add(this.accelerationMesh);
   }
-  createMesh(vs, fs) {
+  createMesh(uniforms, vs, fs) {
     return new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.ShaderMaterial({
-        uniforms: {
-          resolution: {
-            type: 'v2',
-            value: new THREE.Vector2(window.innerWidth, window.innerHeight),
-          },
-          velocity: {
-            type: 't',
-            value: null,
-          },
-          acceleration: {
-            type: 't',
-            value: null,
-          },
-        },
+        uniforms: uniforms,
         vertexShader: vs,
         fragmentShader: fs,
       })
     );
   }
-  render(renderer) {
+  render(renderer, time) {
     const prevIndex = Math.abs(this.targetIndex - 1);
     const nextIndex = this.targetIndex;
-    this.accelerationMesh.material.uniforms.acceleration.value = this.acceleration[prevIndex].texture;
-    this.accelerationMesh.material.uniforms.velocity.value = this.velocity[nextIndex].texture;
+    this.accelerationUniforms.acceleration.value = this.acceleration[prevIndex].texture;
+    this.accelerationUniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.render(this.accelerationScene, this.camera, this.acceleration[nextIndex]);
-    this.velocityMesh.material.uniforms.acceleration.value = this.acceleration[nextIndex].texture;
-    this.velocityMesh.material.uniforms.velocity.value = this.velocity[nextIndex].texture;
+    this.velocityUniforms.acceleration.value = this.acceleration[nextIndex].texture;
+    this.velocityUniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.render(this.velocityScene, this.camera, this.velocity[prevIndex]);
     this.targetIndex = prevIndex;
+    this.accelerationUniforms.time.value += time;
+    this.velocityUniforms.time.value += time;
   }
   getBufferAttributeUv() {
     return new THREE.BufferAttribute(new Float32Array(this.uvs), 2);

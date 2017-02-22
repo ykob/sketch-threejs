@@ -45,7 +45,8 @@ export default function() {
     createObj() {
       const geometry = new THREE.OctahedronBufferGeometry(100, 7);
       this.physicsRenderer = new PhysicsRenderer(
-        glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs')
+        glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs'),
+        glslify('../../glsl/sketch/particle/physicsRendererVelocity.fs')
       );
       this.physicsRenderer.init(renderer, geometry.attributes.position.array);
       this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
@@ -61,7 +62,7 @@ export default function() {
       )
     }
     render(time) {
-      this.physicsRenderer.render(renderer);
+      this.physicsRenderer.render(renderer, time);
       this.uniforms.time.value += time;
     }
   }
@@ -79,7 +80,8 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
-    points.render();
+    const time = clock.getDelta();
+    points.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
