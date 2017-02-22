@@ -6,7 +6,6 @@ uniform mat4 projectionMatrix;
 uniform float time;
 uniform sampler2D velocity;
 
-
 void main() {
   vec3 v = texture2D(velocity, uvVelocity).xyz;
   vec4 mvPosition = modelViewMatrix * vec4(v, 1.0);
