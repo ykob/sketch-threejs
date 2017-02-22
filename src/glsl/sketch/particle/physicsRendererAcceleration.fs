@@ -15,5 +15,6 @@ void main(void) {
   float fx = cnoise3(vec3(time * 0.1, v.y / 300.0, v.z / 300.0));
   float fy = cnoise3(vec3(v.x / 300.0, time * 0.1, v.z / 300.0));
   float fz = cnoise3(vec3(v.x / 300.0, v.y / 300.0, time * 0.1));
-  gl_FragColor = vec4(a + d + vec3(fx, fy, fz), 1.0);
+  vec3 f = vec3(fx, fy, fz);
+  gl_FragColor = vec4(a + d + f, 1.0);
 }
