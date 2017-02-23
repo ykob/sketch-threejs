@@ -16,6 +16,7 @@ export default function() {
   const vectorTouchStart = new THREE.Vector2();
   const vectorTouchMove = new THREE.Vector2();
   const vectorTouchEnd = new THREE.Vector2();
+  let isDrag = false;
 
   //
   // process for this sketch.
@@ -40,10 +41,13 @@ export default function() {
         }
       };
       this.physicsRenderer = null;
+      this.vectorTouchMove = new THREE.Vector2(0, 0);
+      this.vectorTouchMoveDiff = new THREE.Vector2(0, 0);
       this.obj = this.createObj();
     }
     createObj() {
-      const geometry = new THREE.OctahedronBufferGeometry(400, 7);
+      const detail = (window.innerWidth > 768) ? 7 : 6;
+      const geometry = new THREE.OctahedronBufferGeometry(400, detail);
       const verticesBase = geometry.attributes.position.array;
       const vertices = [];
       for (var i = 0; i < verticesBase.length; i+= 3) {
@@ -58,6 +62,12 @@ export default function() {
         glslify('../../glsl/sketch/particle/physicsRendererVelocity.fs')
       );
       this.physicsRenderer.init(renderer, vertices);
+      this.physicsRenderer.mergeAUniforms({
+        vTouchMove: {
+          type: 'v2',
+          value: this.vectorTouchMoveDiff
+        }
+      });
       this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
       this.uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
       geometry.addAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
@@ -76,6 +86,20 @@ export default function() {
     render(time) {
       this.physicsRenderer.render(renderer, time);
       this.uniforms.time.value += time;
+    }
+    touchStart(v) {
+      this.vectorTouchMove.copy(v);
+    }
+    touchMove(v) {
+      this.vectorTouchMoveDiff.set(
+        v.x - this.vectorTouchMove.x,
+        v.y - this.vectorTouchMove.y
+      );
+      this.vectorTouchMove.copy(v);
+    }
+    touchEnd() {
+      this.vectorTouchMove.set(0, 0);
+      this.vectorTouchMoveDiff.set(0, 0);
     }
   }
   const points = new OctahedronPoints();
@@ -100,12 +124,19 @@ export default function() {
     requestAnimationFrame(renderLoop);
   }
   const touchStart = (isTouched) => {
+    isDrag = true;
+    points.touchStart(vectorTouchStart);
   };
   const touchMove = (isTouched) => {
+    if (isDrag) points.touchMove(vectorTouchMove);
   };
   const touchEnd = (isTouched) => {
+    isDrag = false;
+    points.touchEnd();
   };
   const mouseOut = () => {
+    isDrag = false;
+    points.touchEnd();
   };
   const on = () => {
     window.addEventListener('resize', debounce(() => {
@@ -126,6 +157,7 @@ export default function() {
     canvas.addEventListener('mouseup', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.clientX, event.clientY);
+      normalizeVector2(vectorTouchEnd);
       touchEnd(false);
     });
     canvas.addEventListener('touchstart', function (event) {
@@ -142,6 +174,7 @@ export default function() {
     });
     canvas.addEventListener('touchend', function (event) {
       event.preventDefault();
+      normalizeVector2(vectorTouchEnd);
       vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
       touchEnd(true);
     });
