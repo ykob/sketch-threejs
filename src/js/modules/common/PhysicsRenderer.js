@@ -144,6 +144,12 @@ export default class PhysicsRenderer {
   getCurrentAcceleration() {
     return this.acceleration[Math.abs(this.targetIndex - 1)].texture;
   }
+  mergeAUniforms(obj) {
+    this.aUniforms = Object.assign(this.aUniforms, obj);
+  }
+  mergeVUniforms(obj) {
+    this.vUniforms = Object.assign(this.vUniforms, obj);
+  }
   resize(length) {
     this.length = length;
     this.velocity[0].setSize(length, length);
