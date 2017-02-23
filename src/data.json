@@ -17,17 +17,17 @@
       "id": "particle",
       "description": "",
       "path": "/sketch/particle.html",
-      "posted": "2017.x.x",
-      "update": "",
+      "posted": "2017.2.23",
+      "update": "random walk with Classic noise functions.",
       "color": "white"
     },
     "attract": {
       "title": "attract",
       "id": "attract",
-      "description": "using frame buffer for perticle moving.",
+      "description": "perticle moving with gpgpu.",
       "path": "/sketch/attract.html",
       "posted": "2016.6.13",
-      "update": "2016.7.2",
+      "update": "2017.2.23",
       "color": "white"
     },
     "hole": {
@@ -51,7 +51,7 @@
     "distort": {
       "title": "distort",
       "id": "distort",
-      "description": "using the simplex noise, distort the sphere.",
+      "description": "distort the sphere with simplex noise.",
       "path": "/sketch/distort.html",
       "posted": "2016.2.23",
       "update": "2016.5.10",
