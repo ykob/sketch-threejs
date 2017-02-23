@@ -15,10 +15,10 @@
     "particle": {
       "title": "particle",
       "id": "particle",
-      "description": "",
+      "description": "random walk with Classic noise functions.",
       "path": "/sketch/particle.html",
       "posted": "2017.2.23",
-      "update": "random walk with Classic noise functions.",
+      "update": "",
       "color": "white"
     },
     "attract": {
