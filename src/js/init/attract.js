@@ -81,11 +81,16 @@ export default function() {
       );
       vertices.push(v.x, v.y / 10.0, v.z);
     }
-    return new Float32Array(vertices);
+    return vertices;
   }
 
   const initSketch = () => {
-    physics_renderer = new PhysicsRenderer(length);
+    physics_renderer = new PhysicsRenderer(
+      glslify('../../glsl/sketch/attract/physicsRendererAcceleration.vs'),
+      glslify('../../glsl/sketch/attract/physicsRendererAcceleration.fs'),
+      glslify('../../glsl/sketch/attract/physicsRendererVelocity.vs'),
+      glslify('../../glsl/sketch/attract/physicsRendererVelocity.fs')
+    );
     physics_renderer.init(renderer, createPointsIntVelocity());
     physics_renderer.accelerationMesh.material.uniforms.anchor = {
       type: 'v2',
