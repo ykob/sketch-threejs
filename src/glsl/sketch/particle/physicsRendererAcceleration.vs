@@ -1,5 +1,3 @@
-attribute float delay;
-
 varying vec2 vUv;
 
 void main(void) {
