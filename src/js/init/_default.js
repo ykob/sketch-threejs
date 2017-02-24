@@ -16,6 +16,8 @@ export default function() {
   const vectorTouchMove = new THREE.Vector2();
   const vectorTouchEnd = new THREE.Vector2();
 
+  let isDrag = false;
+
   //
   // process for this sketch.
   //
@@ -40,12 +42,16 @@ export default function() {
     requestAnimationFrame(renderLoop);
   }
   const touchStart = (isTouched) => {
+    isDrag = true;
   };
   const touchMove = (isTouched) => {
+    if (isDrag) {}
   };
   const touchEnd = (isTouched) => {
+    isDrag = false;
   };
   const mouseOut = () => {
+    isDrag = false;
   };
   const on = () => {
     window.addEventListener('resize', debounce(() => {
@@ -59,13 +65,14 @@ export default function() {
     });
     canvas.addEventListener('mousemove', function (event) {
       event.preventDefault();
-      vectorTouchMove.set(x, y);
+      vectorTouchMove.set(event.clientX, event.clientY);
       normalizeVector2(vectorTouchMove);
       touchMove(false);
     });
     canvas.addEventListener('mouseup', function (event) {
       event.preventDefault();
-      vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+      vectorTouchEnd.set(event.clientX, event.clientY);
+      normalizeVector2(vectorTouchEnd);
       touchEnd(false);
     });
     canvas.addEventListener('touchstart', function (event) {
@@ -83,6 +90,7 @@ export default function() {
     canvas.addEventListener('touchend', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+      normalizeVector2(vectorTouchEnd);
       touchEnd(true);
     });
     window.addEventListener('mouseout', function () {
