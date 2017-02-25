@@ -82,4 +82,9 @@ export default class Points {
     this.vectorTouchMove.set(0, 0);
     this.vectorTouchMoveDiff.set(0, 0);
   }
+  resize() {
+    if (this.physicsRenderer) {
+      this.physicsRenderer.resize();
+    }
+  }
 }
