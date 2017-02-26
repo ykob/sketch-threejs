@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import PostEffect from '../modules/sketch/particle/PostEffect.js';
 import Points from '../modules/sketch/particle/Points';
 
 const debounce = require('js-util/debounce');
@@ -9,8 +10,11 @@ export default function() {
     antialias: false,
     canvas: canvas,
   });
+  const renderBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const sceneBack = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cameraBack = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -22,6 +26,7 @@ export default function() {
   // process for this sketch.
   //
 
+  const postEffect = new PostEffect(renderBack.texture);
   const points = new Points();
   points.init(renderer);
 
@@ -37,6 +42,7 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
+    renderer.render(sceneBack, cameraBack, renderBack);
     points.render(renderer, time);
     renderer.render(scene, camera);
   }
@@ -109,10 +115,11 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    camera.position.set(0, 0, 1000);
-    camera.lookAt(new THREE.Vector3());
+    cameraBack.position.set(0, 0, 1000);
+    cameraBack.lookAt(new THREE.Vector3());
 
-    scene.add(points.obj);
+    scene.add(postEffect.obj);
+    sceneBack.add(points.obj);
 
     on();
     resizeWindow();
