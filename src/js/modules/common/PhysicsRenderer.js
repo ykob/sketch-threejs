@@ -23,7 +23,7 @@ export default class PhysicsRenderer {
     this.aUniforms = {
       resolution: {
         type: 'v2',
-        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
       },
       velocity: {
         type: 't',
@@ -41,7 +41,7 @@ export default class PhysicsRenderer {
     this.vUniforms = {
       resolution: {
         type: 'v2',
-        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
       },
       velocity: {
         type: 't',
@@ -151,10 +151,7 @@ export default class PhysicsRenderer {
     this.vUniforms = Object.assign(this.vUniforms, obj);
   }
   resize(length) {
-    this.length = length;
-    this.velocity[0].setSize(length, length);
-    this.velocity[1].setSize(length, length);
-    this.acceleration[0].setSize(length, length);
-    this.acceleration[1].setSize(length, length);
+    this.aUniforms.resolution.value.set(document.body.clientWidth, window.clientHeight);
+    this.vUniforms.resolution.value.set(document.body.clientWidth, window.clientHeight);
   }
 }

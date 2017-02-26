@@ -1,5 +1,8 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
-import PhysicsRenderer from '../modules/common/PhysicsRenderer';
+import PostEffectBright from '../modules/sketch/particle/PostEffectBright.js';
+import PostEffectBlur from '../modules/sketch/particle/PostEffectBlur.js';
+import PostEffectBloom from '../modules/sketch/particle/PostEffectBloom.js';
+import Points from '../modules/sketch/particle/Points';
 
 const debounce = require('js-util/debounce');
 
@@ -9,8 +12,13 @@ export default function() {
     antialias: false,
     canvas: canvas,
   });
+  const renderBack1 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
+  const renderBack2 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
+  const renderBack3 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const sceneBack = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cameraBack = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -22,87 +30,12 @@ export default function() {
   // process for this sketch.
   //
 
-  const glslify = require('glslify');
-
-  class OctahedronPoints {
-    constructor() {
-      this.uniforms = {
-        time: {
-          type: 'f',
-          value: 0
-        },
-        velocity: {
-          type: 't',
-          value: null
-        },
-        acceleration: {
-          type: 't',
-          value: null
-        }
-      };
-      this.physicsRenderer = null;
-      this.vectorTouchMove = new THREE.Vector2(0, 0);
-      this.vectorTouchMoveDiff = new THREE.Vector2(0, 0);
-      this.obj = this.createObj();
-    }
-    createObj() {
-      const detail = (window.innerWidth > 768) ? 7 : 6;
-      const geometry = new THREE.OctahedronBufferGeometry(400, detail);
-      const verticesBase = geometry.attributes.position.array;
-      const vertices = [];
-      for (var i = 0; i < verticesBase.length; i+= 3) {
-        vertices[i + 0] = verticesBase[i + 0] + (Math.random() * 2 - 1) * 400;
-        vertices[i + 1] = verticesBase[i + 1] + (Math.random() * 2 - 1) * 400;
-        vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 400;
-      }
-      this.physicsRenderer = new PhysicsRenderer(
-        glslify('../../glsl/sketch/particle/physicsRendererAcceleration.vs'),
-        glslify('../../glsl/sketch/particle/physicsRendererAcceleration.fs'),
-        glslify('../../glsl/sketch/particle/physicsRendererVelocity.vs'),
-        glslify('../../glsl/sketch/particle/physicsRendererVelocity.fs')
-      );
-      this.physicsRenderer.init(renderer, vertices);
-      this.physicsRenderer.mergeAUniforms({
-        vTouchMove: {
-          type: 'v2',
-          value: this.vectorTouchMoveDiff
-        }
-      });
-      this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
-      this.uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
-      geometry.addAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
-      return new THREE.Points(
-        geometry,
-        new THREE.RawShaderMaterial({
-          uniforms: this.uniforms,
-          vertexShader: glslify('../../glsl/sketch/particle/OctahedronPoints.vs'),
-          fragmentShader: glslify('../../glsl/sketch/particle/octahedronPoints.fs'),
-          transparent: true,
-          depthWrite: false,
-          blending: THREE.AdditiveBlending,
-        })
-      )
-    }
-    render(time) {
-      this.physicsRenderer.render(renderer, time);
-      this.uniforms.time.value += time;
-    }
-    touchStart(v) {
-      this.vectorTouchMove.copy(v);
-    }
-    touchMove(v) {
-      this.vectorTouchMoveDiff.set(
-        v.x - this.vectorTouchMove.x,
-        v.y - this.vectorTouchMove.y
-      );
-      this.vectorTouchMove.copy(v);
-    }
-    touchEnd() {
-      this.vectorTouchMove.set(0, 0);
-      this.vectorTouchMoveDiff.set(0, 0);
-    }
-  }
-  const points = new OctahedronPoints();
+  const points = new Points();
+  const postEffectBright = new PostEffectBright(renderBack1.texture);
+  const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0);
+  const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1);
+  const postEffectBloom = new PostEffectBloom(renderBack1.texture, renderBack2.texture);
+  points.init(renderer);
 
   //
   // common process
@@ -112,12 +45,26 @@ export default function() {
     canvas.height = window.innerHeight;
     camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+    renderBack1.setSize(document.body.clientWidth, window.innerHeight);
+    renderBack2.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
     const time = clock.getDelta();
-    points.render(time);
+    points.render(renderer, time);
+    renderer.render(sceneBack, cameraBack, renderBack1);
+    scene.add(postEffectBright.obj);
+    renderer.render(scene, cameraBack, renderBack2);
+    scene.remove(postEffectBright.obj);
+    scene.add(postEffectBlurX.obj);
+    renderer.render(scene, cameraBack, renderBack3);
+    scene.remove(postEffectBlurX.obj);
+    scene.add(postEffectBlurY.obj);
+    renderer.render(scene, cameraBack, renderBack2);
+    scene.remove(postEffectBlurY.obj);
+    scene.add(postEffectBloom.obj);
     renderer.render(scene, camera);
+    scene.remove(postEffectBloom.obj);
   }
   const renderLoop = () => {
     render();
@@ -188,10 +135,10 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    camera.position.set(0, 0, 1000);
-    camera.lookAt(new THREE.Vector3());
+    cameraBack.position.set(0, 0, 1000);
+    cameraBack.lookAt(new THREE.Vector3());
 
-    scene.add(points.obj);
+    sceneBack.add(points.obj);
 
     on();
     resizeWindow();
