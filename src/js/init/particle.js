@@ -1,5 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
-import PostEffect from '../modules/sketch/particle/PostEffect.js';
+import PostEffectBright from '../modules/sketch/particle/PostEffectBright.js';
+import PostEffectBlur from '../modules/sketch/particle/PostEffectBlur.js';
+import PostEffectBloom from '../modules/sketch/particle/PostEffectBloom.js';
 import Points from '../modules/sketch/particle/Points';
 
 const debounce = require('js-util/debounce');
@@ -10,7 +12,9 @@ export default function() {
     antialias: false,
     canvas: canvas,
   });
-  const renderBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+  const renderBack1 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
+  const renderBack2 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
+  const renderBack3 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
   const sceneBack = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -26,8 +30,11 @@ export default function() {
   // process for this sketch.
   //
 
-  const postEffect = new PostEffect(renderBack.texture);
   const points = new Points();
+  const postEffectBright = new PostEffectBright(renderBack1.texture);
+  const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0);
+  const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1);
+  const postEffectBloom = new PostEffectBloom(renderBack1.texture, renderBack2.texture);
   points.init(renderer);
 
   //
@@ -38,13 +45,26 @@ export default function() {
     canvas.height = window.innerHeight;
     camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+    renderBack1.setSize(document.body.clientWidth, window.innerHeight);
+    renderBack2.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
     const time = clock.getDelta();
-    renderer.render(sceneBack, cameraBack, renderBack);
     points.render(renderer, time);
+    renderer.render(sceneBack, cameraBack, renderBack1);
+    scene.add(postEffectBright.obj);
+    renderer.render(scene, cameraBack, renderBack2);
+    scene.remove(postEffectBright.obj);
+    scene.add(postEffectBlurX.obj);
+    renderer.render(scene, cameraBack, renderBack3);
+    scene.remove(postEffectBlurX.obj);
+    scene.add(postEffectBlurY.obj);
+    renderer.render(scene, cameraBack, renderBack2);
+    scene.remove(postEffectBlurY.obj);
+    scene.add(postEffectBloom.obj);
     renderer.render(scene, camera);
+    scene.remove(postEffectBloom.obj);
   }
   const renderLoop = () => {
     render();
@@ -118,7 +138,6 @@ export default function() {
     cameraBack.position.set(0, 0, 1000);
     cameraBack.lookAt(new THREE.Vector3());
 
-    scene.add(postEffect.obj);
     sceneBack.add(points.obj);
 
     on();
