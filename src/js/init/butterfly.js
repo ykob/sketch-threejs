@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import Butterfly from '../modules/sketch/butterfly/Butterfly';
 
 const debounce = require('js-util/debounce');
 
@@ -23,6 +24,7 @@ export default function() {
   //
 
 
+  const butterfly = new Butterfly();
 
   //
   // common process
@@ -35,6 +37,8 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
+    const time = clock.getDelta();
+    butterfly.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -103,8 +107,10 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
+    camera.position.set(100, 100, 100);
     camera.lookAt(new THREE.Vector3());
+
+    scene.add(butterfly.obj);
 
     on();
     resizeWindow();
