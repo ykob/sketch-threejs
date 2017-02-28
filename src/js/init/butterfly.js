@@ -38,7 +38,7 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
-    butterfly.render(time);
+    butterfly.render(renderer, time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -107,10 +107,10 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(100, 100, 100);
+    camera.position.set(200, 200, 200);
     camera.lookAt(new THREE.Vector3());
 
-    butterfly.loadTexture('/img/sketch/butterfly/tex.png', () => {
+    butterfly.loadTexture('/img/sketch/butterfly/tex.png', renderer, () => {
       scene.add(butterfly.obj);
       resizeWindow();
       renderLoop();
