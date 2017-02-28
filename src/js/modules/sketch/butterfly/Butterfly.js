@@ -6,9 +6,22 @@ export default class Butterfly {
       time: {
         type: 'f',
         value: 0
+      },
+      texture: {
+        type: 't',
+        value: null
       }
     }
-    this.obj = this.createObj();
+  }
+  loadTexture(images, callback) {
+    const loader = new THREE.TextureLoader();
+    loader.load(images, (texture) => {
+      texture.magFilter = THREE.NearestFilter;
+      texture.minFilter = THREE.NearestFilter;
+      this.uniforms.texture.value = texture;
+      this.obj = this.createObj();
+      callback();
+    });
   }
   createObj() {
     const geometry = new THREE.PlaneBufferGeometry(20, 20, 2, 2);
@@ -18,7 +31,8 @@ export default class Butterfly {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/butterfly/butterfly.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/butterfly/butterfly.fs'),
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
+        transparent: true
       })
     );
   }

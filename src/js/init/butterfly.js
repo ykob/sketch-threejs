@@ -110,11 +110,12 @@ export default function() {
     camera.position.set(100, 100, 100);
     camera.lookAt(new THREE.Vector3());
 
-    scene.add(butterfly.obj);
-
+    butterfly.loadTexture('/img/sketch/butterfly/tex.png', () => {
+      scene.add(butterfly.obj);
+      resizeWindow();
+      renderLoop();
+    });
     on();
-    resizeWindow();
-    renderLoop();
   }
   init();
 }
