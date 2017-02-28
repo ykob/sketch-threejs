@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "butterfly": {
+      "title": "butterfly",
+      "id": "butterfly",
+      "description": "",
+      "path": "/sketch/butterfly.html",
+      "posted": "2017.x.x",
+      "update": "",
+      "color": "black"
+    },
     "particle": {
       "title": "particle",
       "id": "particle",

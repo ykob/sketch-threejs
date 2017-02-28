@@ -3,6 +3,7 @@ import initCommonSketch from './init/commonSketch.js'
 import initIndex from './init/index.js'
 
 // initialize function for sketches
+import initButterfly from './init/butterfly.js'
 import initParticle from './init/particle.js'
 import initAttract from './init/attract.js'
 import initHole from './init/hole.js'
@@ -25,6 +26,7 @@ const init = () => {
   if (path !== `/`) initCommonSketch();
   switch (path) {
     case '/': initIndex(); break;
+    case '/sketch/butterfly.html': initButterfly(); break;
     case '/sketch/particle.html': initParticle(); break;
     case '/sketch/attract.html': initAttract(); break;
     case '/sketch/hole.html': initHole(); break;
