@@ -3,7 +3,7 @@ const glslify = require('glslify');
 
 export default class PhysicsRenderer {
   constructor(aVertexShader, aFragmentShader, vVertexShader, vFragmentShader) {
-    this.length = 0;
+    this.side = 0;
     this.aScene = new THREE.Scene();
     this.vScene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
@@ -13,12 +13,12 @@ export default class PhysicsRenderer {
       magFilter: THREE.NearestFilter
     };
     this.acceleration = [
-      new THREE.WebGLRenderTarget(length, length, this.option),
-      new THREE.WebGLRenderTarget(length, length, this.option),
+      new THREE.WebGLRenderTarget(0, 0, this.option),
+      new THREE.WebGLRenderTarget(0, 0, this.option),
     ];
     this.velocity = [
-      new THREE.WebGLRenderTarget(length, length, this.option),
-      new THREE.WebGLRenderTarget(length, length, this.option),
+      new THREE.WebGLRenderTarget(0, 0, this.option),
+      new THREE.WebGLRenderTarget(0, 0, this.option),
     ];
     this.aUniforms = {
       resolution: {
@@ -69,23 +69,37 @@ export default class PhysicsRenderer {
     this.uvs = [];
     this.targetIndex = 0;
   }
-  init(renderer, velocityArrayBase) {
-    this.length = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+  init(renderer, velocityArrayBase, attributesBase) {
+    this.side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
     const velocityArray = [];
-    for (var i = 0; i < Math.pow(this.length, 2) * 3; i += 3) {
+    for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
       if(velocityArrayBase[i] != undefined) {
         velocityArray[i + 0] = velocityArrayBase[i + 0];
         velocityArray[i + 1] = velocityArrayBase[i + 1];
         velocityArray[i + 2] = velocityArrayBase[i + 2];
-        this.uvs[i / 3 * 2 + 0] = (i / 3) % this.length / (this.length - 1);
-        this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.length) / (this.length - 1);
+        this.uvs[i / 3 * 2 + 0] = (i / 3) % this.side / (this.side - 1);
+        this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.side) / (this.side - 1);
       } else {
         velocityArray[i + 0] = 0;
         velocityArray[i + 1] = 0;
         velocityArray[i + 2] = 0;
       }
     }
-    const velocityInitTex = new THREE.DataTexture(new Float32Array(velocityArray), this.length, this.length, THREE.RGBFormat, THREE.FloatType);
+    const attributes = {};
+    const attributeKeys = Object.keys(attributesBase);
+    if (attributeKeys.length) {
+      for (var i = 0; i < attributeKeys.length; i++) {
+        const attribute = attributesBase[attributeKeys[i]];
+        for (var j = attribute.array.length; j < velocityArray.length / 3 * attribute.itemSize; j++) {
+          attribute.array.push(0);
+        }
+        this.accelerationMesh.geometry.addAttribute(
+          attributeKeys[i],
+          new THREE.BufferAttribute(new Float32Array(attribute.array), attribute.itemSize)
+        );
+      }
+    }
+    const velocityInitTex = new THREE.DataTexture(new Float32Array(velocityArray), this.side, this.side, THREE.RGBFormat, THREE.FloatType);
     velocityInitTex.needsUpdate = true;
     const velocityInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
@@ -101,8 +115,8 @@ export default class PhysicsRenderer {
       })
     );
     for (var i = 0; i < 2; i++) {
-      this.acceleration[i].setSize(this.length, this.length);
-      this.velocity[i].setSize(this.length, this.length);
+      this.acceleration[i].setSize(this.side, this.side);
+      this.velocity[i].setSize(this.side, this.side);
     }
     this.vScene.add(this.camera);
     this.vScene.add(velocityInitMesh);
