@@ -69,7 +69,7 @@ export default class PhysicsRenderer {
     this.uvs = [];
     this.targetIndex = 0;
   }
-  init(renderer, velocityArrayBase, attributesBase) {
+  init(renderer, velocityArrayBase, aAttributesBase, vAttributesBase) {
     this.side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
     const velocityArray = [];
     for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
@@ -85,18 +85,36 @@ export default class PhysicsRenderer {
         velocityArray[i + 2] = 0;
       }
     }
-    const attributes = {};
-    const attributeKeys = Object.keys(attributesBase);
-    if (attributeKeys.length) {
-      for (var i = 0; i < attributeKeys.length; i++) {
-        const attribute = attributesBase[attributeKeys[i]];
-        for (var j = attribute.array.length; j < velocityArray.length / 3 * attribute.itemSize; j++) {
-          attribute.array.push(0);
+    if (aAttributesBase) {
+      const aAttributes = {};
+      const aAttributeKeys = Object.keys(aAttributesBase);
+      if (aAttributeKeys.length) {
+        for (var i = 0; i < aAttributeKeys.length; i++) {
+          const aAttribute = aAttributesBase[aAttributeKeys[i]];
+          for (var j = aAttribute.array.length; j < velocityArray.length / 3 * aAttribute.itemSize; j++) {
+            aAttribute.array.push(0);
+          }
+          this.accelerationMesh.geometry.addAttribute(
+            aAttributeKeys[i],
+            new THREE.BufferAttribute(new Float32Array(aAttribute.array), aAttribute.itemSize)
+          );
         }
-        this.accelerationMesh.geometry.addAttribute(
-          attributeKeys[i],
-          new THREE.BufferAttribute(new Float32Array(attribute.array), attribute.itemSize)
-        );
+      }
+    }
+    if (vAttributesBase) {
+      const vAttributes = {};
+      const vAttributeKeys = Object.keys(vAttributesBase);
+      if (vAttributeKeys.length) {
+        for (var i = 0; i < vAttributeKeys.length; i++) {
+          const vAttribute = vAttributesBase[vAttributeKeys[i]];
+          for (var j = vAttribute.array.length; j < velocityArray.length / 3 * vAttribute.itemSize; j++) {
+            vAttribute.array.push(0);
+          }
+          this.velocityMesh.geometry.addAttribute(
+            vAttributeKeys[i],
+            new THREE.BufferAttribute(new Float32Array(vAttribute.array), vAttribute.itemSize)
+          );
+        }
       }
     }
     const velocityInitTex = new THREE.DataTexture(new Float32Array(velocityArray), this.side, this.side, THREE.RGBFormat, THREE.FloatType);
