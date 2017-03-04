@@ -5,12 +5,11 @@ uniform float time;
 uniform vec2 vTouchMove;
 
 varying vec2 vUv;
-varying float vMass;
 
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
 #pragma glslify: drag = require(glsl-force/drag)
 
-const float noise = 180.0;
+const float noise = 280.0;
 
 void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
@@ -21,5 +20,5 @@ void main(void) {
   float fz = cnoise3(vec3(v.x / noise, v.y / noise, time * 0.1));
   vec3 f1 = vec3(fx, fy, fz) * 0.2;
   vec3 f2 = vec3(vTouchMove * 16.0 * (resolution / 640.0), 0.0);
-  gl_FragColor = vec4((a + f1 + f2 + d) * vMass, 1.0);
+  gl_FragColor = vec4((a + f1 + f2 + d), 1.0);
 }

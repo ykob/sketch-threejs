@@ -31,13 +31,10 @@ export default class Points {
     const geometry = new THREE.OctahedronBufferGeometry(400, detail);
     const verticesBase = geometry.attributes.position.array;
     const vertices = [];
-    const masses = [];
-    const masses2 = [];
     for (var i = 0; i < verticesBase.length; i+= 3) {
       vertices[i + 0] = verticesBase[i + 0] + (Math.random() * 2 - 1) * 400;
       vertices[i + 1] = verticesBase[i + 1] + (Math.random() * 2 - 1) * 400;
       vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 400;
-      masses[i / 3] = Math.random() * 0.01 + 1;
     }
     this.physicsRenderer = new PhysicsRenderer(
       glslify('../../../../glsl/sketch/particle/physicsRendererAcceleration.vs'),
@@ -45,12 +42,7 @@ export default class Points {
       glslify('../../../../glsl/sketch/particle/physicsRendererVelocity.vs'),
       glslify('../../../../glsl/sketch/particle/physicsRendererVelocity.fs')
     );
-    this.physicsRenderer.init(renderer, vertices, {
-      mass: {
-        array: masses,
-        itemSize: 1
-      }
-    });
+    this.physicsRenderer.init(renderer, vertices);
     this.physicsRenderer.mergeAUniforms({
       vTouchMove: {
         type: 'v2',
