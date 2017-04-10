@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "instancing": {
+      "title": "instancing",
+      "id": "instancing",
+      "description": "study of Instancing with three.js",
+      "path": "/sketch/instancing.html",
+      "posted": "2017.4.xx",
+      "update": "",
+      "color": "white"
+    },
     "particle": {
       "title": "particle",
       "id": "particle",
