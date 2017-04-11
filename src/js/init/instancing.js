@@ -113,7 +113,7 @@ export default function() {
     camera.position.set(1500, -500, 1500);
     camera.lookAt(new THREE.Vector3());
 
-    cubeTexLoader.setPath('/img/sketch/instancing/').load(
+    cubeTexLoader.setPath('../img/sketch/instancing/').load(
       ["cubemap_px.png", "cubemap_nx.png", "cubemap_py.png", "cubemap_ny.png", "cubemap_pz.png", "cubemap_nz.png"],
       (tex) => {
         debris.init(tex);
