@@ -28,13 +28,13 @@ export default class Points {
   }
   createObj(renderer) {
     const detail = (window.innerWidth > 768) ? 7 : 6;
-    const geometry = new THREE.OctahedronBufferGeometry(400, detail);
+    const geometry = new THREE.OctahedronBufferGeometry(700, detail);
     const verticesBase = geometry.attributes.position.array;
     const vertices = [];
     for (var i = 0; i < verticesBase.length; i+= 3) {
-      vertices[i + 0] = verticesBase[i + 0] + (Math.random() * 2 - 1) * 400;
-      vertices[i + 1] = verticesBase[i + 1] + (Math.random() * 2 - 1) * 400;
-      vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 400;
+      vertices[i + 0] = verticesBase[i + 0] + (Math.random() * 2 - 1) * 100;
+      vertices[i + 1] = verticesBase[i + 1] + (Math.random() * 2 - 1) * 100;
+      vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 100;
     }
     this.physicsRenderer = new PhysicsRenderer(
       glslify('../../../../glsl/sketch/particle/physicsRendererAcceleration.vs'),
