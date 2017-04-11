@@ -110,12 +110,13 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1500, 0, 1500);
+    camera.position.set(1500, -500, 1500);
     camera.lookAt(new THREE.Vector3());
 
     cubeTexLoader.setPath('/img/sketch/instancing/').load(
       ["cubemap_px.png", "cubemap_nx.png", "cubemap_py.png", "cubemap_ny.png", "cubemap_pz.png", "cubemap_nz.png"],
       (tex) => {
+        debris.init(tex);
         skybox.init(tex);
         scene.add(debris.obj);
         scene.add(skybox.obj);

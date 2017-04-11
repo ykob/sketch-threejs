@@ -6,8 +6,10 @@ attribute vec3 rotate;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
+uniform mat4 modelMatrix;
 uniform float time;
 
+varying vec3 vPosition;
 varying vec3 vNormal;
 
 #pragma glslify: computeTranslateMat = require(glsl-matrix/computeTranslateMat);
@@ -22,6 +24,7 @@ void main(void) {
     * computeTranslateMat(translate)
     * rotateSelf
     * vec4(position + normalize(position) * offset, 1.0);
-  vNormal = (rotateWorld * rotateSelf * vec4(normal, 1.0)).xyz;
+  vPosition = (modelMatrix * updatePosition).xyz;
+  vNormal = (modelMatrix * rotateWorld * rotateSelf * vec4(normal, 1.0)).xyz;
   gl_Position = projectionMatrix * modelViewMatrix * updatePosition;
 }

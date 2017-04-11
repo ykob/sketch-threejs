@@ -11,7 +11,6 @@ varying vec3 vPosition;
 #pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
 
 void main(void) {
-  mat4 rotateMat = computeRotateMat(sin(time) * 0.2, time, 0.0);
   vPosition = position;
-  gl_Position = projectionMatrix * modelViewMatrix * rotateMat * vec4(position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }
