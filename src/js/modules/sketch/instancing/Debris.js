@@ -44,6 +44,8 @@ export default class Debris {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/instancing/debris.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/instancing/debris.fs'),
+        transparent: true,
+        side: THREE.DoubleSide
       })
     )
   }
