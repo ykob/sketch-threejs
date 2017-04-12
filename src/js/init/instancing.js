@@ -96,7 +96,7 @@ export default function() {
       normalizeVector2(vectorTouchEnd);
       touchEnd(false);
     });
-    document.addEventListener('wheel', function(event) {
+    canvas.addEventListener('wheel', function(event) {
       event.preventDefault();
       wheel(event);
     });
