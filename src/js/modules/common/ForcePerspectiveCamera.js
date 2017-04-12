@@ -3,13 +3,13 @@ import force3 from './force3';
 export default class ForcePerspectiveCamera extends THREE.PerspectiveCamera {
   constructor(fov, aspect, near, far) {
     super(fov, aspect, near, far);
-    this.k = 0.008;
-    this.d = 0.15;
+    this.k = 0.02;
+    this.d = 0.2;
     this.velocity = [0, 0, 0];
     this.acceleration = [0, 0, 0];
     this.anchor = [0, 0, 0];
-    this.lookK = 0.008;
-    this.lookD = 0.15;
+    this.lookK = 0.02;
+    this.lookD = 0.2;
     this.lookVelocity = [0, 0, 0];
     this.lookAcceleration = [0, 0, 0];
     this.lookAnchor = [0, 0, 0];

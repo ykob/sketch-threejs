@@ -1,5 +1,6 @@
-import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
+import CameraController from '../modules/sketch/instancing/CameraController';
 import Debris from '../modules/sketch/instancing/Debris';
 import SkyBox from '../modules/sketch/instancing/SkyBox';
 
@@ -14,6 +15,7 @@ export default function() {
   });
   const scene = new THREE.Scene();
   const camera = new ForcePerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 100000);
+  const cameraController = new CameraController(camera);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -42,7 +44,7 @@ export default function() {
   }
   const render = () => {
     const now = clock.getDelta();
-    camera.render();
+    cameraController.render();
     debris.render(now);
     skybox.render(now);
     renderer.render(scene, camera);
@@ -55,14 +57,23 @@ export default function() {
     isDrag = true;
   };
   const touchMove = (isTouched) => {
-    if (isDrag) {}
+    if (isDrag) {
+      cameraController.rotate(
+        vectorTouchStart.x - vectorTouchMove.x,
+        vectorTouchStart.y - vectorTouchMove.y
+      );
+    }
   };
   const touchEnd = (isTouched) => {
     isDrag = false;
+    cameraController.touchEnd();
   };
   const mouseOut = () => {
     isDrag = false;
   };
+  const wheel = (event) => {
+    cameraController.zoom(event.deltaY);
+  }
   const on = () => {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
@@ -73,17 +84,21 @@ export default function() {
       normalizeVector2(vectorTouchStart);
       touchStart(false);
     });
-    canvas.addEventListener('mousemove', function (event) {
+    document.addEventListener('mousemove', function (event) {
       event.preventDefault();
       vectorTouchMove.set(event.clientX, event.clientY);
       normalizeVector2(vectorTouchMove);
       touchMove(false);
     });
-    canvas.addEventListener('mouseup', function (event) {
+    document.addEventListener('mouseup', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.clientX, event.clientY);
       normalizeVector2(vectorTouchEnd);
       touchEnd(false);
+    });
+    document.addEventListener('wheel', function(event) {
+      event.preventDefault();
+      wheel(event);
     });
     canvas.addEventListener('touchstart', function (event) {
       event.preventDefault();
@@ -103,19 +118,11 @@ export default function() {
       normalizeVector2(vectorTouchEnd);
       touchEnd(true);
     });
-    window.addEventListener('mouseout', function () {
-      event.preventDefault();
-      vectorTouchEnd.set(0, 0);
-      mouseOut();
-    });
   }
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.velocity = [5000, -500, 5000];
-    camera.anchor = [1500, -500, 1500];
-    camera.lookAt(new THREE.Vector3());
 
     cubeTexLoader.setPath('../img/sketch/instancing/').load(
       ["cubemap_px.png", "cubemap_nx.png", "cubemap_py.png", "cubemap_ny.png", "cubemap_pz.png", "cubemap_nz.png"],
