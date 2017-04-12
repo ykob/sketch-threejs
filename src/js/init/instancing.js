@@ -1,3 +1,4 @@
+import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Debris from '../modules/sketch/instancing/Debris';
 import SkyBox from '../modules/sketch/instancing/SkyBox';
@@ -12,7 +13,7 @@ export default function() {
     alpha: true
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 100000);
+  const camera = new ForcePerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 100000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -41,6 +42,7 @@ export default function() {
   }
   const render = () => {
     const now = clock.getDelta();
+    camera.render();
     debris.render(now);
     skybox.render(now);
     renderer.render(scene, camera);
@@ -111,7 +113,8 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1500, -500, 1500);
+    camera.velocity = [5000, -500, 5000];
+    camera.anchor = [1500, -500, 1500];
     camera.lookAt(new THREE.Vector3());
 
     cubeTexLoader.setPath('../img/sketch/instancing/').load(
