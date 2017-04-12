@@ -30,7 +30,7 @@ export default class Debris {
     const offsets = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
     for ( var i = 0, ul = offsets.count; i < ul; i++ ) {
-      const polar = MathEx.polar(Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI, Math.random() * 2500 + 100);
+      const polar = MathEx.polar(Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI, Math.random() * 3000 + 100);
       translate.setXYZ(i, polar[0], polar[1], polar[2]);
       offsets.setXYZ(i, Math.random() * 100);
       rotates.setXYZ(i, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
