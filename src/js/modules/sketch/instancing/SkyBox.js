@@ -20,7 +20,7 @@ export default class SkyBox {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.BoxBufferGeometry(20000, 20000, 20000, 1, 1, 1),
+      new THREE.BoxBufferGeometry(30000, 30000, 30000, 1, 1, 1),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/instancing/skybox.vs'),
