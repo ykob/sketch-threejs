@@ -50,9 +50,6 @@ export default function() {
   const touchEnd = (isTouched) => {
     isDrag = false;
   };
-  const mouseOut = () => {
-    isDrag = false;
-  };
   const on = () => {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
@@ -63,13 +60,13 @@ export default function() {
       normalizeVector2(vectorTouchStart);
       touchStart(false);
     });
-    canvas.addEventListener('mousemove', function (event) {
+    document.addEventListener('mousemove', function (event) {
       event.preventDefault();
       vectorTouchMove.set(event.clientX, event.clientY);
       normalizeVector2(vectorTouchMove);
       touchMove(false);
     });
-    canvas.addEventListener('mouseup', function (event) {
+    document.addEventListener('mouseup', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.clientX, event.clientY);
       normalizeVector2(vectorTouchEnd);
@@ -92,11 +89,6 @@ export default function() {
       vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
       normalizeVector2(vectorTouchEnd);
       touchEnd(true);
-    });
-    window.addEventListener('mouseout', function () {
-      event.preventDefault();
-      vectorTouchEnd.set(0, 0);
-      mouseOut();
     });
   }
 
