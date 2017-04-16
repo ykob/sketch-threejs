@@ -3,6 +3,10 @@ const glslify = require('glslify');
 export default class PostEffect {
   constructor(texture) {
     this.uniforms = {
+      resolution: {
+        type: 'v2',
+        value: new THREE.Vector2(document.body.clientWidth, window.innerHeight)
+      },
       texture: {
         type: 't',
         value: texture,
