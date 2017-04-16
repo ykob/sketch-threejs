@@ -24,4 +24,7 @@ export default class PostEffect {
       })
     );
   }
+  resize() {
+    this.uniforms.resolution.value.set(document.body.clientWidth, window.innerHeight);
+  }
 }

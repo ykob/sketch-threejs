@@ -43,8 +43,9 @@ export default function() {
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
-    camera.aspect = document.body.clientWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    cameraBack.aspect = document.body.clientWidth / window.innerHeight;
+    cameraBack.updateProjectionMatrix();
+    postEffect.resize();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderBack.setSize(document.body.clientWidth, window.innerHeight);
   }
