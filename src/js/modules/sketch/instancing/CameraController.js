@@ -1,3 +1,4 @@
+import glMatrix from 'gl-matrix';
 import MathEx from 'js-util/MathEx';
 
 export default class CameraController {
@@ -8,15 +9,20 @@ export default class CameraController {
     this.radian2 = 0;
     this.radian2Base = 0;
     this.radius = 2500;
+    this.isZoom = false;
   }
   rotate(x, y) {
+    if (this.isZoom === true) this.isZoom = false;
     this.radian1 = MathEx.clamp(this.radian1Base + y, MathEx.radians(-75), MathEx.radians(75));
     this.radian2 = this.radian2Base - x * 2;
   }
   zoom(delta) {
     if (!delta) return;
+    if (this.isZoom === false) this.isZoom = true;
+    const prevRadius = this.radius;
     this.radius -= delta / Math.abs(delta) * 200;
     this.radius = MathEx.clamp(this.radius, 700, 8000);
+    const diff = prevRadius - this.radius;
   }
   touchEnd() {
     this.radian1Base = this.radian1;
@@ -25,5 +31,12 @@ export default class CameraController {
   render() {
     this.camera.anchor = MathEx.polar(this.radian1, this.radian2, this.radius);
     this.camera.render();
+  }
+  computeZoomLength() {
+    if (this.isZoom) {
+      return glMatrix.vec3.length(this.camera.acceleration) * 0.05;
+    } else {
+      return 0;
+    }
   }
 }

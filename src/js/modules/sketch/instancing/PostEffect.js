@@ -10,6 +10,10 @@ export default class PostEffect {
       texture: {
         type: 't',
         value: texture,
+      },
+      strength: {
+        type: 'f',
+        value: 0
       }
     };
     this.obj = this.createObj();

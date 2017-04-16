@@ -2,10 +2,9 @@ precision highp float;
 
 uniform vec2 resolution;
 uniform sampler2D texture;
+uniform float strength;
 
 varying vec2 vUv;
-
-const float strength = 4.0;
 
 float rnd(vec3 scale, float seed){
     return fract(sin(dot(gl_FragCoord.stp + seed, scale)) * 43758.5453 + seed);
