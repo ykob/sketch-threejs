@@ -8,8 +8,6 @@ uniform float time;
 
 varying vec3 vPosition;
 
-#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
-
 void main(void) {
   vPosition = position;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);

@@ -39,6 +39,5 @@ void main(void){
   float blockNoiseMask = noiseX * noiseY;
   vec4 blockNoise = texture2D(texture, 1.0 - vUv) * blockNoiseMask;
 
-  // gl_FragColor = vec4(zoomColor, 1.0);
   gl_FragColor = zoomColor + whiteNoise + blockNoise;
 }
