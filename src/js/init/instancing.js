@@ -3,6 +3,7 @@ import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
 import CameraController from '../modules/sketch/instancing/CameraController';
 import Debris from '../modules/sketch/instancing/Debris';
 import SkyBox from '../modules/sketch/instancing/SkyBox';
+import PostEffect from '../modules/sketch/instancing/PostEffect.js';
 
 const debounce = require('js-util/debounce');
 
@@ -13,9 +14,12 @@ export default function() {
     canvas: canvas,
     alpha: true
   });
+  const renderBack = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
-  const camera = new ForcePerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 100000);
-  const cameraController = new CameraController(camera);
+  const sceneBack = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cameraBack = new ForcePerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 100000);
+  const cameraController = new CameraController(cameraBack);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -31,6 +35,7 @@ export default function() {
   const cubeTexLoader = new THREE.CubeTextureLoader();
   const debris = new Debris();
   const skybox = new SkyBox();
+  const postEffect = new PostEffect(renderBack.texture);
 
   //
   // common process
@@ -38,15 +43,21 @@ export default function() {
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
-    camera.aspect = document.body.clientWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    cameraBack.aspect = document.body.clientWidth / window.innerHeight;
+    cameraBack.updateProjectionMatrix();
+    postEffect.resize();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
+    renderBack.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
     const now = clock.getDelta();
     cameraController.render();
     debris.render(now);
     skybox.render(now);
+    postEffect.render(now);
+    postEffect.uniforms.strengthZoom.value = cameraController.computeZoomLength();
+    postEffect.uniforms.strengthGlitch.value = cameraController.computeAcceleration();
+    renderer.render(sceneBack, cameraBack, renderBack);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -129,8 +140,9 @@ export default function() {
       (tex) => {
         debris.init(tex);
         skybox.init(tex);
-        scene.add(debris.obj);
-        scene.add(skybox.obj);
+        scene.add(postEffect.obj);
+        sceneBack.add(debris.obj);
+        sceneBack.add(skybox.obj);
       }
     );
 
