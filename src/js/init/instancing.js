@@ -54,7 +54,9 @@ export default function() {
     cameraController.render();
     debris.render(now);
     skybox.render(now);
-    postEffect.uniforms.strength.value = cameraController.computeZoomLength();
+    postEffect.render(now);
+    postEffect.uniforms.strengthZoom.value = cameraController.computeZoomLength();
+    postEffect.uniforms.strengthGlitch.value = cameraController.computeAcceleration();
     renderer.render(sceneBack, cameraBack, renderBack);
     renderer.render(scene, camera);
   }

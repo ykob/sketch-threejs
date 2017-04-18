@@ -39,4 +39,7 @@ export default class CameraController {
       return 0;
     }
   }
+  computeAcceleration() {
+    return glMatrix.vec3.length(this.camera.acceleration) * 0.05;
+  }
 }

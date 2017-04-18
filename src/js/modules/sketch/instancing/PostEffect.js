@@ -3,6 +3,10 @@ const glslify = require('glslify');
 export default class PostEffect {
   constructor(texture) {
     this.uniforms = {
+      time: {
+        type: 'f',
+        value: 0
+      },
       resolution: {
         type: 'v2',
         value: new THREE.Vector2(document.body.clientWidth, window.innerHeight)
@@ -11,7 +15,11 @@ export default class PostEffect {
         type: 't',
         value: texture,
       },
-      strength: {
+      strengthZoom: {
+        type: 'f',
+        value: 0
+      },
+      strengthGlitch: {
         type: 'f',
         value: 0
       }
@@ -27,6 +35,9 @@ export default class PostEffect {
         fragmentShader: glslify('../../../../glsl/sketch/instancing/postEffect.fs'),
       })
     );
+  }
+  render(time) {
+    this.uniforms.time.value += time;
   }
   resize() {
     this.uniforms.resolution.value.set(document.body.clientWidth, window.innerHeight);
