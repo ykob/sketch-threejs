@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import PostEffect from '../modules/sketch/glitch/PostEffect.js';
 
 const debounce = require('js-util/debounce');
 
@@ -8,8 +9,11 @@ export default function() {
     antialias: false,
     canvas: canvas,
   });
+  const renderBack1 = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const sceneBack = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cameraBack = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -22,7 +26,7 @@ export default function() {
   // process for this sketch.
   //
 
-
+  const postEffect = new PostEffect(renderBack1.texture);
 
   //
   // common process
@@ -30,11 +34,15 @@ export default function() {
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
-    camera.aspect = document.body.clientWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    cameraBack.aspect = document.body.clientWidth / window.innerHeight;
+    cameraBack.updateProjectionMatrix();
+    postEffect.resize();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
+    const time = clock.getDelta();
+    renderer.render(sceneBack, cameraBack, renderBack1);
+    postEffect.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -94,9 +102,11 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
-    camera.lookAt(new THREE.Vector3());
+    renderer.setClearColor(0x555555, 1.0);
+    cameraBack.position.set(1000, 1000, 1000);
+    cameraBack.lookAt(new THREE.Vector3());
+
+    scene.add(postEffect.obj);
 
     on();
     resizeWindow();
