@@ -12,7 +12,7 @@ varying vec2 vUv;
 void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
-  float noise = length(v) * 0.2 + 30.0;
+  float noise = sqrt(length(v)) * 8.0;
   vec3 d = drag(a, 0.03);
   float fx = cnoise3(vec3(time * 0.1, v.y / noise, v.z / noise));
   float fy = cnoise3(vec3(v.x / noise, time * 0.1, v.z / noise));

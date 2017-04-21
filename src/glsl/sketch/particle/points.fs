@@ -14,5 +14,5 @@ void main() {
   if (n.z < 0.0) discard;
   float aLength = length(vAcceleration);
   vec3 color = convertHsvToRgb(vec3(aLength * 0.08 + time * 0.05, 0.5, 0.8));
-  gl_FragColor = vec4(color, 0.5 * start);
+  gl_FragColor = vec4(color, 0.4 * start);
 }
