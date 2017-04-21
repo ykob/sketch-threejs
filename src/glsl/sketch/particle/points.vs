@@ -14,6 +14,6 @@ void main() {
   vec3 v = texture2D(velocity, uvVelocity).xyz;
   vec4 mvPosition = modelViewMatrix * vec4(v, 1.0);
   vAcceleration = a;
-  gl_PointSize = 1.0 * (1200.0 / length(mvPosition.xyz));
+  gl_PointSize = 1.2 * (1200.0 / length(mvPosition.xyz));
   gl_Position = projectionMatrix * mvPosition;
 }
