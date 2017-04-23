@@ -10,7 +10,7 @@ varying vec2 vUv;
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 
 void main(void){
-  float whiteNoise = (random(gl_FragCoord.xy + time) * 2.0 - 1.0) * 0.5;
+  float whiteNoise = (random(gl_FragCoord.xy + mod(time, 10.0)) * 2.0 - 1.0) * 0.5;
 
   float noiseX = step((snoise3(vec3(0.0, gl_FragCoord.x / 500.0, time * 1000.0)) + 1.0) / 2.0, (sin(time) + 1.0) / 2.0 * 0.15 + 0.15);
   float noiseY = step((snoise3(vec3(0.0, gl_FragCoord.y / 400.0, time * 400.0)) + 1.0) / 2.0, (sin(time) + 1.0) / 2.0 * 0.15 + 0.15);
