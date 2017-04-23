@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import BackgroundImage from '../modules/sketch/glitch/BackgroundImage.js';
 import PostEffect from '../modules/sketch/glitch/PostEffect.js';
 
 const debounce = require('js-util/debounce');
@@ -26,6 +27,7 @@ export default function() {
   // process for this sketch.
   //
 
+  const bgImg = new BackgroundImage();
   const postEffect = new PostEffect(renderBack1.texture);
 
   //
@@ -106,7 +108,10 @@ export default function() {
     cameraBack.position.set(1000, 1000, 1000);
     cameraBack.lookAt(new THREE.Vector3());
 
-    scene.add(postEffect.obj);
+    bgImg.init(() => {
+      sceneBack.add(bgImg.obj);
+      scene.add(postEffect.obj);
+    })
 
     on();
     resizeWindow();
