@@ -17,7 +17,7 @@ void main(void){
   float noiseX = step((snoise3(vec3(0.0, gl_FragCoord.x / 500.0, time * 1000.0)) + 1.0) / 2.0, 0.3);
   float noiseY = step((snoise3(vec3(0.0, gl_FragCoord.y / 400.0, time * 400.0)) + 1.0) / 2.0, 0.3);
   float blockNoiseMask = noiseX * noiseY;
-  vec4 blockNoise = texture2D(texture, 1.0 - vUv) * blockNoiseMask;
+  vec4 blockNoise = texture2D(texture, vUv) * blockNoiseMask;
 
   float waveNoise = (sin(gl_FragCoord.y * 1.4) + 1.0) / 2.0 * 0.3;
 
