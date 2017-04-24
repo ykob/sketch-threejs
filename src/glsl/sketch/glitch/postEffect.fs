@@ -14,6 +14,7 @@ void main(void){
       step(0.9999, sin(vUv.y * 4.0 + time * 2.0)) * 8.0
       // + sin(vUv.y * 12.0 + time * 10.0)
       // + sin(vUv.y * 240.0 + time * 10.0)
+      + pow(snoise3(vec3(0.0, vUv.y * 18.0, time * 100.0)), 2.0) * 10.0
     ) / resolution.x;
   float r = texture2D(texture, vec2(vUv.x + 5.0 / resolution.x + rgbWave * 1.2, vUv.y)).r;
   float g = texture2D(texture, vec2(vUv.x + rgbWave, vUv.y)).g;
