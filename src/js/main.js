@@ -3,6 +3,7 @@ import initCommonSketch from './init/commonSketch.js'
 import initIndex from './init/index.js'
 
 // initialize function for sketches
+import initGlitch from './init/glitch.js'
 import initInstancing from './init/instancing.js'
 import initParticle from './init/particle.js'
 import initAttract from './init/attract.js'
@@ -26,6 +27,7 @@ const init = () => {
   if (path !== `/`) initCommonSketch();
   switch (path) {
     case '/': initIndex(); break;
+    case '/sketch/glitch.html': initGlitch(); break;
     case '/sketch/instancing.html': initInstancing(); break;
     case '/sketch/particle.html': initParticle(); break;
     case '/sketch/attract.html': initAttract(); break;

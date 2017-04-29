@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "glitch": {
+      "title": "glitch",
+      "id": "glitch",
+      "description": "study of some glitch effects.",
+      "path": "/sketch/glitch.html",
+      "posted": "2017.4.30",
+      "update": "",
+      "color": "white"
+    },
     "instancing": {
       "title": "instancing",
       "id": "instancing",
