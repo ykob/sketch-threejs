@@ -11,8 +11,10 @@ varying vec2 vUv;
 
 void main(void){
   float rgbWave = (
-      snoise3(vec3(0.0, vUv.y * 10.0, time * 200.0)) * 8.0
-      * snoise3(vec3(0.0, vUv.y * 40.0, time * 200.0)) * 4.0
+      snoise3(vec3(0.0, vUv.y * 10.0, time * 200.0)) * 4.0
+      * snoise3(vec3(0.0, vUv.y * 40.0, time * 200.0)) * 3.0
+      + step(0.9995, sin(vUv.y * 4.0 + time * 1.6)) * 12.0
+      + step(0.9999, sin(vUv.y * 4.0 + time * 2.0)) * -18.0
     ) / resolution.x;
   float r = texture2D(texture, vec2(vUv.x + 6.0 / resolution.x + rgbWave * 1.2, vUv.y)).r;
   float g = texture2D(texture, vec2(vUv.x + rgbWave, vUv.y)).g;
