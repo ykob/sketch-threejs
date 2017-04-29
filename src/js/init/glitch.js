@@ -38,6 +38,7 @@ export default function() {
     canvas.height = window.innerHeight;
     cameraBack.aspect = document.body.clientWidth / window.innerHeight;
     cameraBack.updateProjectionMatrix();
+    bgImg.resize();
     postEffect.resize();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
