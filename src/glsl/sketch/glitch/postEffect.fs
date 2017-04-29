@@ -11,6 +11,10 @@ varying vec2 vUv;
 
 void main(void){
   float strength = (cos(time * 0.5) + 1.0) / 2.0;
+  vec2 shake = vec2(strength * 10.0 + 1.0) * vec2(
+    random(vec2(time) * 2.0 - 1.0),
+    random(vec2(-time) * 2.0 - 1.0)
+  ) / resolution;
 
   float y = vUv.y * resolution.y;
   float rgbWave = (
@@ -19,9 +23,9 @@ void main(void){
       + step(0.9995, sin(y * 0.005 + time * 1.6)) * 12.0
       + step(0.9999, sin(y * 0.005 + time * 2.0)) * -18.0
     ) / resolution.x;
-  float r = texture2D(texture, vec2(vUv.x + 6.0 / resolution.x + rgbWave, vUv.y)).r;
-  float g = texture2D(texture, vec2(vUv.x + rgbWave, vUv.y)).g;
-  float b = texture2D(texture, vec2(vUv.x - 6.0 / resolution.x + rgbWave, vUv.y)).b;
+  float r = texture2D(texture, vec2(vUv.x + 6.0 / resolution.x + rgbWave, vUv.y) + shake).r;
+  float g = texture2D(texture, vec2(vUv.x + rgbWave, vUv.y) + shake).g;
+  float b = texture2D(texture, vec2(vUv.x - 6.0 / resolution.x + rgbWave, vUv.y) + shake).b;
 
   float whiteNoise = (random(gl_FragCoord.xy + mod(time, 10.0)) * 2.0 - 1.0) * (0.2 + strength * 0.1);
 
