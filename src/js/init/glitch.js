@@ -40,6 +40,7 @@ export default function() {
     cameraBack.updateProjectionMatrix();
     bgImg.resize();
     postEffect.resize();
+    renderBack1.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
