@@ -21,7 +21,7 @@ export default class BackgroundImage {
   init(callback) {
     const loader = new THREE.TextureLoader();
     loader.load(
-      '../../../../img/sketch/glitch/osaka.jpg',
+      '/sketch-threejs/img/sketch/glitch/osaka.jpg',
       (tex) => {
       this.uniforms.texture.value = tex;
       this.obj = this.createObj();
