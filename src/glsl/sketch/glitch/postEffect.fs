@@ -16,17 +16,21 @@ void main(void){
       + step(0.9995, sin(vUv.y * 4.0 + time * 1.6)) * 12.0
       + step(0.9999, sin(vUv.y * 4.0 + time * 2.0)) * -18.0
     ) / resolution.x;
-  float r = texture2D(texture, vec2(vUv.x + 6.0 / resolution.x + rgbWave * 1.2, vUv.y)).r;
+  float r = texture2D(texture, vec2(vUv.x + 6.0 / resolution.x + rgbWave, vUv.y)).r;
   float g = texture2D(texture, vec2(vUv.x + rgbWave, vUv.y)).g;
-  float b = texture2D(texture, vec2(vUv.x - 6.0 / resolution.x + rgbWave * 1.4, vUv.y)).b;
+  float b = texture2D(texture, vec2(vUv.x - 6.0 / resolution.x + rgbWave, vUv.y)).b;
 
   float whiteNoise = (random(gl_FragCoord.xy + mod(time, 10.0)) * 2.0 - 1.0) * 0.3;
 
   float blockNoiseTime = floor(time * 20.0);
   float noiseX = step((snoise3(vec3(0.0, gl_FragCoord.x / 300.0, blockNoiseTime * 200.0)) + 1.0) / 2.0, 0.3);
   float noiseY = step((snoise3(vec3(0.0, gl_FragCoord.y / 300.0, blockNoiseTime * 200.0)) + 1.0) / 2.0, 0.2);
-  float blockNoiseMask = noiseX * noiseY;
-  vec4 blockNoise = texture2D(texture, vUv + sin(blockNoiseTime * 200.0) * 0.2) * blockNoiseMask * 1.5;
+  float blockNoiseMask = noiseX * noiseY * 1.5;
+  float blockNoiseUvX = vUv.x + sin(blockNoiseTime * 200.0) * 0.2 + rgbWave;
+  float bnr = texture2D(texture, vec2(blockNoiseUvX + 6.0 / resolution.x, vUv.y)).r * blockNoiseMask;
+  float bng = texture2D(texture, vec2(blockNoiseUvX, vUv.y)).g * blockNoiseMask;
+  float bnb = texture2D(texture, vec2(blockNoiseUvX - 6.0 / resolution.x, vUv.y)).b * blockNoiseMask;
+  vec4 blockNoise = vec4(bnr, bng, bnb, 1.0);
 
   float waveNoise = (sin(gl_FragCoord.y * 1.4) + 1.0) / 2.0 * 0.3;
 
