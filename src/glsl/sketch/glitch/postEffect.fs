@@ -11,7 +11,7 @@ varying vec2 vUv;
 
 void main(void){
   float strength = (cos(time * 0.5) + 1.0) / 2.0;
-  vec2 shake = vec2(strength * 6.0 + 0.5) * vec2(
+  vec2 shake = vec2(strength * 4.0 + 0.5) * vec2(
     random(vec2(time)) * 2.0 - 1.0,
     random(vec2(time * 2.0)) * 2.0 - 1.0
   ) / resolution;
