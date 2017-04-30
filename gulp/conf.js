@@ -171,11 +171,7 @@ module.exports.imagemin = {
 
 module.exports.clean = {
   dest: {
-    path: [
-      `${DIR.DEST}/**/*.html`,
-      `${DIR.DEST}/css/`,
-      `${DIR.DEST}/js/`
-    ]
+    path: [`${DIR.DEST}`]
   },
   build: {
     path: [`${DIR.BUILD}`]

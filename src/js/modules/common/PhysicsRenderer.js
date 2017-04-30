@@ -43,6 +43,14 @@ export default class PhysicsRenderer {
         type: 'v2',
         value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
       },
+      side: {
+        type: 'f',
+        value: 0
+      },
+      velocityInit: {
+        type: 't',
+        value: null,
+      },
       velocity: {
         type: 't',
         value: null,
@@ -71,6 +79,7 @@ export default class PhysicsRenderer {
   }
   init(renderer, velocityArrayBase, aAttributesBase, vAttributesBase) {
     this.side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+    this.vUniforms.side.value = this.side;
     const velocityArray = [];
     for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
       if(velocityArrayBase[i] != undefined) {
@@ -117,15 +126,15 @@ export default class PhysicsRenderer {
         }
       }
     }
-    const velocityInitTex = new THREE.DataTexture(new Float32Array(velocityArray), this.side, this.side, THREE.RGBFormat, THREE.FloatType);
-    velocityInitTex.needsUpdate = true;
+    this.vUniforms.velocityInit.value = new THREE.DataTexture(new Float32Array(velocityArray), this.side, this.side, THREE.RGBFormat, THREE.FloatType);
+    this.vUniforms.velocityInit.value.needsUpdate = true;
     const velocityInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.ShaderMaterial({
         uniforms: {
           velocity: {
             type: 't',
-            value: velocityInitTex,
+            value: this.vUniforms.velocityInit.value,
           },
         },
         vertexShader: glslify('../../../glsl/common/physicsRenderer.vs'),
