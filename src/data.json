@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "reel": {
+      "title": "reel",
+      "id": "reel",
+      "description": "",
+      "path": "/sketch/reel.html",
+      "posted": "",
+      "update": "",
+      "color": "white"
+    },
     "glitch": {
       "title": "glitch",
       "id": "glitch",
