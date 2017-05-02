@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import WireBox from '../modules/sketch/reel/WireBox.js';
 
 const debounce = require('js-util/debounce');
 
@@ -22,7 +23,7 @@ export default function() {
   // process for this sketch.
   //
 
-
+  const wireBox = new WireBox();
 
   //
   // common process
@@ -95,8 +96,10 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
+    camera.position.set(0, 200, 2000);
     camera.lookAt(new THREE.Vector3());
+
+    scene.add(wireBox.obj);
 
     on();
     resizeWindow();
