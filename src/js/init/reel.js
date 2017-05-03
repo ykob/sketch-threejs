@@ -36,6 +36,7 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
+    wireBox.render();
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -51,6 +52,9 @@ export default function() {
   const touchEnd = (isTouched) => {
     isDrag = false;
   };
+  const wheel = (event) => {
+    wireBox.rotate(event.deltaY);
+  }
   const on = () => {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
@@ -72,6 +76,10 @@ export default function() {
       vectorTouchEnd.set(event.clientX, event.clientY);
       normalizeVector2(vectorTouchEnd);
       touchEnd(false);
+    });
+    canvas.addEventListener('wheel', function(event) {
+      event.preventDefault();
+      wheel(event);
     });
     canvas.addEventListener('touchstart', function (event) {
       event.preventDefault();
