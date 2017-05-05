@@ -61,14 +61,15 @@ export default class WireBox {
     )
   }
   updateRotation() {
-    force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, 0.04);
-    force3.applyDrag(this.acceleration, 0.3);
+    //force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, 0.04);
+    force3.applyDrag(this.acceleration, 0.06);
     force3.updateVelocity(this.velocity, this.acceleration, 1);
     this.uniforms.rotate.value = this.velocity[0];
   }
   rotate(delta) {
     if (!delta) return;
-    this.anchor[0] -= delta / Math.abs(delta) * 2;
+    //this.anchor[0] -= delta / Math.abs(delta) * 2;
+    this.acceleration[0] -= delta / Math.abs(delta) * 0.1;
   }
   render(time) {
     this.uniforms.time.value += time;
