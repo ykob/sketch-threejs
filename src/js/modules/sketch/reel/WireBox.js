@@ -57,6 +57,7 @@ export default class WireBox {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/reel/wireBox.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/reel/wireBox.fs'),
+        transparent: true
       })
     )
   }
