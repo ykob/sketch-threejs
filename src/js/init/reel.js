@@ -104,8 +104,8 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(0, 200, 2000);
-    camera.lookAt(new THREE.Vector3());
+    camera.position.set(0, 150, 1600);
+    camera.lookAt(new THREE.Vector3(0, -150, 0));
 
     scene.add(wireBox.obj);
 
