@@ -4,10 +4,7 @@ const MathEx = require('js-util/MathEx');
 import force3 from '../../common/force3';
 
 export default class Wire {
-  constructor() {
-    this.velocity = [0, 0, 0];
-    this.acceleration = [0, 0, 0];
-    this.anchor = [0, 0, 0];
+  constructor(instances) {
     this.uniforms = {
       time: {
         type: 'f',
@@ -18,7 +15,7 @@ export default class Wire {
         value: 0
       }
     }
-    this.instances = 36;
+    this.instances = instances;
     this.obj = this.createObj();
   }
   createObj() {
@@ -60,20 +57,5 @@ export default class Wire {
         transparent: true
       })
     )
-  }
-  updateRotation() {
-    //force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, 0.04);
-    force3.applyDrag(this.acceleration, 0.06);
-    force3.updateVelocity(this.velocity, this.acceleration, 1);
-    this.uniforms.rotate.value = this.velocity[0];
-  }
-  rotate(delta) {
-    if (!delta) return;
-    //this.anchor[0] -= delta / Math.abs(delta) * 2;
-    this.acceleration[0] -= delta / Math.abs(delta) * 0.1;
-  }
-  render(time) {
-    this.uniforms.time.value += time;
-    this.updateRotation();
   }
 }

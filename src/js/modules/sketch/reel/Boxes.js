@@ -1,0 +1,32 @@
+const glslify = require('glslify');
+const MathEx = require('js-util/MathEx');
+
+import force3 from '../../common/force3';
+import Core from './Core';
+import Wire from './Wire';
+
+export default class Boxes {
+  constructor() {
+    this.velocity = [0, 0, 0];
+    this.acceleration = [0, 0, 0];
+    this.anchor = [0, 0, 0];
+    this.instances = 36;
+    this.core = new Core(this.instances);
+    this.wire = new Wire(this.instances);
+  }
+  updateRotation() {
+    force3.applyDrag(this.acceleration, 0.06);
+    force3.updateVelocity(this.velocity, this.acceleration, 1);
+    this.core.uniforms.rotate.value = this.velocity[0];
+    this.wire.uniforms.rotate.value = this.velocity[0];
+  }
+  rotate(delta) {
+    if (!delta) return;
+    this.acceleration[0] -= delta / Math.abs(delta) * 0.1;
+  }
+  render(time) {
+    this.core.uniforms.time.value += time;
+    this.wire.uniforms.time.value += time;
+    this.updateRotation();
+  }
+}

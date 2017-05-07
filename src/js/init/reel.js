@@ -1,6 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
-import Core from '../modules/sketch/reel/Core.js';
-import Wire from '../modules/sketch/reel/Wire.js';
+import Boxes from '../modules/sketch/reel/Boxes.js';
 
 const debounce = require('js-util/debounce');
 
@@ -24,8 +23,7 @@ export default function() {
   // process for this sketch.
   //
 
-  const core = new Core();
-  const wire = new Wire();
+  const boxes = new Boxes();
 
   //
   // common process
@@ -39,8 +37,7 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
-    core.render(time);
-    wire.render(time);
+    boxes.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -57,8 +54,7 @@ export default function() {
     isDrag = false;
   };
   const wheel = (event) => {
-    core.rotate(event.deltaY);
-    wire.rotate(event.deltaY);
+    boxes.rotate(event.deltaY);
   }
   const on = () => {
     window.addEventListener('resize', debounce(() => {
@@ -112,8 +108,8 @@ export default function() {
     camera.position.set(1700, 150, 0);
     camera.lookAt(new THREE.Vector3(0, -180, 0));
 
-    scene.add(core.obj);
-    scene.add(wire.obj);
+    scene.add(boxes.core.obj);
+    scene.add(boxes.wire.obj);
 
     on();
     resizeWindow();

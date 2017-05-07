@@ -1,13 +1,8 @@
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-import force3 from '../../common/force3';
-
-export default class WireBox {
-  constructor() {
-    this.velocity = [0, 0, 0];
-    this.acceleration = [0, 0, 0];
-    this.anchor = [0, 0, 0];
+export default class Core {
+  constructor(instances) {
     this.uniforms = {
       time: {
         type: 'f',
@@ -18,7 +13,7 @@ export default class WireBox {
         value: 0
       }
     }
-    this.instances = 36;
+    this.instances = instances;
     this.obj = this.createObj();
   }
   createObj() {
@@ -55,18 +50,5 @@ export default class WireBox {
         transparent: true,
       })
     )
-  }
-  updateRotation() {
-    force3.applyDrag(this.acceleration, 0.06);
-    force3.updateVelocity(this.velocity, this.acceleration, 1);
-    this.uniforms.rotate.value = this.velocity[0];
-  }
-  rotate(delta) {
-    if (!delta) return;
-    this.acceleration[0] -= delta / Math.abs(delta) * 0.1;
-  }
-  render(time) {
-    this.uniforms.time.value += time;
-    this.updateRotation();
   }
 }
