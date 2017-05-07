@@ -34,14 +34,17 @@ export default class WireBox {
     const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     const hsv = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
     const noiseDiff = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
+    const speed = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     for (var i = 0; i < this.instances; i++) {
       radian.setXYZ(i, MathEx.radians(i / this.instances * 360));
       hsv.setXYZ(i, i / this.instances, 0.2, 0.9);
       noiseDiff.setXYZ(i, Math.random());
+      speed.setXYZ(i, (Math.random() + 1.0) * 0.5);
     }
     geometry.addAttribute('radian', radian);
     geometry.addAttribute('hsv', hsv);
     geometry.addAttribute('noiseDiff', noiseDiff);
+    geometry.addAttribute('speed', speed);
 
     return new THREE.Mesh(
       geometry,
