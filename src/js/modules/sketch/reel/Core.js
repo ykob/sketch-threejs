@@ -25,19 +25,23 @@ export default class WireBox {
     const geometry = new THREE.InstancedBufferGeometry();
 
     // Setting BufferAttribute
-    const baseGeometry = new THREE.OctahedronBufferGeometry(30, 2);
+    const baseGeometry = new THREE.OctahedronBufferGeometry(30, 4);
     geometry.addAttribute('position', baseGeometry.attributes.position);
+    geometry.addAttribute('normal', baseGeometry.attributes.normal);
     geometry.setIndex(baseGeometry.index);
 
     // Setting InstancedBufferAttribute
     const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     const hsv = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
+    const noiseDiff = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     for (var i = 0; i < this.instances; i++) {
       radian.setXYZ(i, MathEx.radians(i / this.instances * 360));
       hsv.setXYZ(i, i / this.instances, 0.2, 0.9);
+      noiseDiff.setXYZ(i, Math.random());
     }
     geometry.addAttribute('radian', radian);
     geometry.addAttribute('hsv', hsv);
+    geometry.addAttribute('noiseDiff', noiseDiff);
 
     return new THREE.Mesh(
       geometry,
@@ -45,7 +49,7 @@ export default class WireBox {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/reel/core.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/reel/core.fs'),
-        transparent: true
+        transparent: true,
       })
     )
   }

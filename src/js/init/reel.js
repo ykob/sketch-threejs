@@ -7,7 +7,7 @@ const debounce = require('js-util/debounce');
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
-    antialias: false,
+    antialias: true,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
@@ -38,8 +38,9 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
-    core.render();
-    wire.render();
+    const time = clock.getDelta();
+    core.render(time);
+    wire.render(time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
