@@ -3,7 +3,7 @@ const MathEx = require('js-util/MathEx');
 
 import force3 from '../../common/force3';
 
-export default class WireBox {
+export default class Wire {
   constructor() {
     this.velocity = [0, 0, 0];
     this.acceleration = [0, 0, 0];
@@ -55,8 +55,8 @@ export default class WireBox {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('../../../../glsl/sketch/reel/wireBox.vs'),
-        fragmentShader: glslify('../../../../glsl/sketch/reel/wireBox.fs'),
+        vertexShader: glslify('../../../../glsl/sketch/reel/wire.vs'),
+        fragmentShader: glslify('../../../../glsl/sketch/reel/wire.fs'),
         transparent: true
       })
     )

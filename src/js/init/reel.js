@@ -1,6 +1,6 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Core from '../modules/sketch/reel/Core.js';
-import WireBox from '../modules/sketch/reel/WireBox.js';
+import Wire from '../modules/sketch/reel/Wire.js';
 
 const debounce = require('js-util/debounce');
 
@@ -25,7 +25,7 @@ export default function() {
   //
 
   const core = new Core();
-  const wireBox = new WireBox();
+  const wire = new Wire();
 
   //
   // common process
@@ -39,7 +39,7 @@ export default function() {
   }
   const render = () => {
     core.render();
-    wireBox.render();
+    wire.render();
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -57,7 +57,7 @@ export default function() {
   };
   const wheel = (event) => {
     core.rotate(event.deltaY);
-    wireBox.rotate(event.deltaY);
+    wire.rotate(event.deltaY);
   }
   const on = () => {
     window.addEventListener('resize', debounce(() => {
@@ -112,7 +112,7 @@ export default function() {
     camera.lookAt(new THREE.Vector3(0, -180, 0));
 
     scene.add(core.obj);
-    scene.add(wireBox.obj);
+    scene.add(wire.obj);
 
     on();
     resizeWindow();
