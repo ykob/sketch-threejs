@@ -1,4 +1,5 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
+import Core from '../modules/sketch/reel/Core.js';
 import WireBox from '../modules/sketch/reel/WireBox.js';
 
 const debounce = require('js-util/debounce');
@@ -23,6 +24,7 @@ export default function() {
   // process for this sketch.
   //
 
+  const core = new Core();
   const wireBox = new WireBox();
 
   //
@@ -36,6 +38,7 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
   const render = () => {
+    core.render();
     wireBox.render();
     renderer.render(scene, camera);
   }
@@ -53,6 +56,7 @@ export default function() {
     isDrag = false;
   };
   const wheel = (event) => {
+    core.rotate(event.deltaY);
     wireBox.rotate(event.deltaY);
   }
   const on = () => {
@@ -104,9 +108,10 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(0, 150, 1700);
-    camera.lookAt(new THREE.Vector3(0, -100, 0));
+    camera.position.set(1700, 150, 0);
+    camera.lookAt(new THREE.Vector3(0, -180, 0));
 
+    scene.add(core.obj);
     scene.add(wireBox.obj);
 
     on();
