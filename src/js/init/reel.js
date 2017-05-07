@@ -108,7 +108,7 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0xf9f9f9, 1.0);
     camera.position.set(1700, 150, 0);
     camera.lookAt(new THREE.Vector3(0, -180, 0));
 
