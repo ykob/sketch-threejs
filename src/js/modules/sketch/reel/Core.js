@@ -11,6 +11,10 @@ export default class Core {
       rotate: {
         type: 'f',
         value: 0
+      },
+      pickedId: {
+        type: 'f',
+        value: -1
       }
     }
     this.instances = instances;

@@ -16,6 +16,9 @@ body {
   &.is-opened-index {
     overflow: auto;
   }
+  &.is-picked {
+    cursor: pointer;
+  }
 }
 a {
   text-decoration: none;

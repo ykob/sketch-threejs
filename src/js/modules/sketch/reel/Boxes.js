@@ -24,6 +24,15 @@ export default class Boxes {
     if (!delta) return;
     this.acceleration[0] -= delta / Math.abs(delta) * 0.1;
   }
+  picked(id) {
+    this.core.uniforms.pickedId.value = id;
+    this.wire.uniforms.pickedId.value = id;
+    if (id < this.instances && id > -1) {
+      document.body.classList.add('is-picked');
+    } else {
+      document.body.classList.remove('is-picked');
+    }
+  }
   render(time) {
     this.core.uniforms.time.value += time;
     this.wire.uniforms.time.value += time;
