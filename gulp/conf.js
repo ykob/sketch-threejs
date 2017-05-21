@@ -12,7 +12,7 @@ module.exports.serve = {
   dest: {
     //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.DEST,
@@ -25,7 +25,7 @@ module.exports.serve = {
   build: {
     //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.BUILD,

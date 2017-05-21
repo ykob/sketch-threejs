@@ -9,7 +9,7 @@ gulp.task('pug', () => {
       errorHandler: $.notify.onError('<%= error.message %>')
     }))
     .pipe($.data((file) => {
-      return require(`../../${conf.json}`);
+      return { data: require(`../../${conf.json}`) }
     }))
     .pipe($.pug(conf.opts))
     .pipe($.rename(path => {
