@@ -2,7 +2,7 @@
   :class = `{ "is-opened" : isOpened == 1 }`
 )
   .p-sketch-index__contents#index-contents
-    each item in pages
+    each item in data.pages
       if (item.title !== '')
         .p-sketch-index__item(
           class = 'js-index-scroll-item',
