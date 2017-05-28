@@ -15,9 +15,9 @@
     "reel": {
       "title": "reel",
       "id": "reel",
-      "description": "",
+      "description": "pick instance objects and add hover effects.",
       "path": "/sketch/reel.html",
-      "posted": "",
+      "posted": "2017.5.28",
       "update": "",
       "color": "black"
     },
