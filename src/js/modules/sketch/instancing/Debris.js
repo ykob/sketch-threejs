@@ -21,11 +21,16 @@ export default class Debris {
     this.obj = this.createObj();
   }
   createObj() {
+    // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
     const baseGeometry = new THREE.BoxBufferGeometry(10, 10, 10);
+
+    // Add common attributes
     geometry.addAttribute('position', baseGeometry.attributes.position);
     geometry.addAttribute('normal', baseGeometry.attributes.normal);
     geometry.setIndex(baseGeometry.index);
+
+    // Add common attributes
     const translate = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
     const offsets = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
@@ -38,6 +43,8 @@ export default class Debris {
     geometry.addAttribute('translate', translate);
     geometry.addAttribute('offset', offsets);
     geometry.addAttribute('rotate', rotates);
+
+    // Create Object3D
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
