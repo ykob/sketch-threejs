@@ -18,8 +18,8 @@ varying vec3 vColor;
 void main(void) {
   float easeStep = ease(timeHover / 0.3);
   mat4 rotateMatWorld = computeRotateMat(0.0, radian + radians(rotate), 0.0);
-  mat4 scaleMat = computeScaleMat(vec3(1.0, 1.0 + easeStep * 0.25, 1.0));
-  mat4 translateMat = computeTranslateMat(vec3(1000.0, easeStep * 0.25 * 120.0, 0.0));
+  mat4 scaleMat = computeScaleMat(vec3(1.0 + easeStep * 0.2));
+  mat4 translateMat = computeTranslateMat(vec3(1000.0, 0.0, 0.0));
   vec4 updatePosition = rotateMatWorld * translateMat * scaleMat * vec4(position, 1.0);
   vColor = pickedColor;
   gl_Position = projectionMatrix * modelViewMatrix * updatePosition;

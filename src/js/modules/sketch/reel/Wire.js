@@ -5,9 +5,9 @@ import force3 from '../../common/force3';
 
 export default class Wire {
   constructor(instances) {
-    this.size = 80;
+    this.size = 120;
     this.baseGeometry = new THREE.BoxBufferGeometry(
-      this.size, this.size * 3.33, this.size
+      this.size, this.size, this.size
     );
     this.uniforms = {
       time: {
