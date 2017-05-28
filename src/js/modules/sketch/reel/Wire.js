@@ -52,6 +52,7 @@ export default class Wire {
         fragmentShader: glslify('../../../../glsl/sketch/reel/wire.fs'),
         depthWrite: false,
         transparent: true,
+        side: THREE.DoubleSide,
         shading: THREE.FlatShading
       })
     );
