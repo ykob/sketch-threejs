@@ -7,7 +7,7 @@ export default class Wire {
   constructor(instances) {
     this.size = 80;
     this.baseGeometry = new THREE.BoxBufferGeometry(
-      this.size, this.size * 3, this.size
+      this.size, this.size * 3.33, this.size
     );
     this.uniforms = {
       time: {
