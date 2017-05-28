@@ -36,7 +36,7 @@ export default class Core {
     const speed = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     for (var i = 0; i < this.instances; i++) {
       radian.setXYZ(i, MathEx.radians(i / this.instances * 360));
-      hsv.setXYZ(i, i / this.instances, 0.2, 0.9);
+      hsv.setXYZ(i, i / this.instances - 0.25, 0.2, 0.9);
       noiseDiff.setXYZ(i, Math.random());
       speed.setXYZ(i, (Math.random() + 1.0) * 0.5);
     }

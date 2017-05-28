@@ -36,10 +36,13 @@ export default class Wire {
 
     // Setting InstancedBufferAttribute
     const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
+    const hsv = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
     for (var i = 0; i < this.instances; i++) {
       radian.setXYZ(i, MathEx.radians(i / this.instances * 360));
+      hsv.setXYZ(i, i / this.instances - 0.25, 0.2, 1.0);
     }
     geometry.addAttribute('radian', radian);
+    geometry.addAttribute('hsv', hsv);
 
     return new THREE.Mesh(
       geometry,
@@ -49,7 +52,6 @@ export default class Wire {
         fragmentShader: glslify('../../../../glsl/sketch/reel/wire.fs'),
         depthWrite: false,
         transparent: true,
-        side: THREE.DoubleSide,
         shading: THREE.FlatShading
       })
     );
