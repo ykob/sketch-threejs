@@ -37,7 +37,7 @@ export default class Boxes {
   }
   render(time) {
     this.core.uniforms.time.value += time;
-    this.wire.uniforms.time.value += time;
+    this.wire.render(time);
     this.updateRotation();
   }
 }
