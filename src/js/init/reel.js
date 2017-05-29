@@ -27,6 +27,14 @@ export default function() {
   //
 
   const boxes = new Boxes();
+  const floor = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(2500, 2500),
+    new THREE.MeshBasicMaterial({
+      color: 0xffffff
+    })
+  )
+  floor.position.set(0, -200, 0);
+  floor.rotation.set(-90 / 180 * Math.PI, 0, 0);
 
   //
   // common process
@@ -117,6 +125,7 @@ export default function() {
 
     scene.add(boxes.core.obj);
     scene.add(boxes.wire.obj);
+    scene.add(floor);
     scenePicked.add(boxes.wire.objPicked);
 
     on();
