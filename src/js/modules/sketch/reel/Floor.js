@@ -6,20 +6,12 @@ export default class Floor {
       time: {
         type: 'f',
         value: 0
-      },
-      cubeTex: {
-        type: 't',
-        value: null
       }
     };
-    this.obj = null;
-  }
-  init(texture) {
-    this.uniforms.cubeTex.value = texture;
     this.obj = this.createObj();
   }
   createObj() {
-    const geometry = new THREE.BoxBufferGeometry(3000, 3000, 3000)
+    const geometry = new THREE.PlaneBufferGeometry(3000, 3000)
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({

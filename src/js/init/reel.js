@@ -14,7 +14,6 @@ export default function() {
   const scene = new THREE.Scene();
   const scenePicked = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, document.body.clientWidth / window.innerHeight, 1, 10000);
-  const cubeCamera = new THREE.CubeCamera(1, 10000, 1024);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -46,9 +45,6 @@ export default function() {
     const time = clock.getDelta();
     renderer.setClearColor(0xf1f1f1, 1.0);
     boxes.render(time);
-    floor.obj.visible = false;
-    cubeCamera.updateCubeMap(renderer, scene);
-    floor.obj.visible = true;
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -121,12 +117,11 @@ export default function() {
     camera.position.set(0, 180, 1500);
     camera.lookAt(new THREE.Vector3(0, -280, 0));
 
-    floor.init(cubeCamera.renderTarget.texture);
     scene.add(boxes.core.obj);
     scene.add(boxes.wire.obj);
     scene.add(floor.obj);
-    scene.add(cubeCamera);
-    cubeCamera.position.set(0, 0, 0);
+    floor.obj.position.set(0, -200, 0)
+    floor.obj.rotation.set(0.5 * Math.PI, 0, 0)
     scenePicked.add(boxes.wire.objPicked);
 
     on();
