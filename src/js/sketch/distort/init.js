@@ -167,12 +167,10 @@ export default function() {
         force.k += 0.00025;
         force.d -= 0.01;
         force.anchor.x += 0.4;
-        time_unit += 0.05;
       } else {
         force.k = 0.05;
         force.d = 0.16;
         force.anchor.x = 1.0;
-        time_unit = 1;
       }
     };
     const touchMove = (x, y, touch_event) => {
