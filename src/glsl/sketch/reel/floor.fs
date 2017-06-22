@@ -2,9 +2,12 @@ precision highp float;
 
 uniform vec3 cameraPosition;
 uniform float time;
+uniform sampler2D texture;
 
 varying vec3 vPosition;
+varying vec4 vUv;
 
 void main() {
-  gl_FragColor = vec4(0.5);
+  vec4 color = texture2DProj(texture, vUv);
+  gl_FragColor = color;
 }
