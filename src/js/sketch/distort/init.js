@@ -8,7 +8,7 @@ import ForceCamera from '../../old/ForceCamera';
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGL1Renderer({
-    antialias: true,
+    antialias: false,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
@@ -66,7 +66,7 @@ export default function() {
       uniforms: {
         time: {
           type: 'f',
-          value: 0,
+          value: time_unit,
         },
         resolution: {
           type: 'v2',
@@ -135,20 +135,7 @@ export default function() {
     sub_camera.force.look.updateVelocity();
     sub_camera.updateLook();
 
-    framebuffer.material.uniforms.time.value += time_unit;
-    framebuffer.material.uniforms.acceleration.value = force.acceleration.length();
-    camera.force.position.applyHook(0, 0.025);
-    camera.force.position.applyDrag(0.2);
-    camera.force.position.updateVelocity();
-    camera.updatePosition();
-    camera.force.look.applyHook(0, 0.2);
-    camera.force.look.applyDrag(0.4);
-    camera.force.look.updateVelocity();
-    camera.lookAt(camera.force.look.velocity);
-
-    renderer.setRenderTarget(render_target);
-    renderer.render(sub_scene, sub_camera);
-    renderer.setRenderTarget(null);
+    renderer.render(sub_scene, sub_camera, render_target);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -219,7 +206,7 @@ export default function() {
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0xfbfbfb, 0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 
