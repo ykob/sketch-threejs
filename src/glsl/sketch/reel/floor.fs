@@ -1,9 +1,6 @@
 precision highp float;
 
-uniform vec3 cameraPosition;
-uniform float time;
 uniform sampler2D texture;
-uniform vec3 projectorPosition;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -15,5 +12,5 @@ void main() {
   if (all(bvec4(vUv.x >= 0.0, vUv.y >= 0.0, vUv.x <= vUv.z, vUv.y <= vUv.z))) {
     projectorColor = texture2DProj(texture, vUv);
   }
-  gl_FragColor = vec4(1.0) * projectorColor;
+  gl_FragColor = vec4(1.0, 1.0, 1.0, 0.3) * projectorColor;
 }

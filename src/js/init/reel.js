@@ -40,14 +40,14 @@ export default function() {
     camera.updateProjectionMatrix();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderPicked.setSize(document.body.clientWidth, window.innerHeight);
+    floor.resize();
   }
   const render = () => {
     const time = clock.getDelta();
     renderer.setClearColor(0xf1f1f1, 1.0);
     boxes.render(time);
-    renderer.render(scene, floor.projector);
-    floor.render(time);
     renderer.render(scene, camera);
+    floor.render(renderer, scene, time);
   }
   const renderLoop = () => {
     render();
@@ -116,13 +116,15 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    camera.position.set(0, 400, -3000);
+    camera.position.set(0, 300, -3000);
     camera.lookAt(new THREE.Vector3(0, -100, 0));
+    floor.mirrorCamera.position.set(0, -400, -3000);
+    floor.mirrorCamera.lookAt(new THREE.Vector3(0, 200, 0));
 
     scene.add(boxes.core.obj);
     scene.add(boxes.wire.obj);
     scene.add(floor.obj);
-    floor.obj.position.set(0, -100, 0)
+    floor.obj.position.set(0, -80, 0)
     floor.obj.rotation.set(-0.5 * Math.PI, 0, 0)
     scenePicked.add(boxes.wire.objPicked);
 

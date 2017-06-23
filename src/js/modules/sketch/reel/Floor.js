@@ -1,10 +1,10 @@
-import Projector from './Projector.js';
-
 const glslify = require('glslify');
 
 export default class Floor {
   constructor() {
-    this.projector = new Projector();
+    this.mirrorCamera = new THREE.PerspectiveCamera(24, document.body.clientWidth / window.innerHeight, 1, 15000);
+    this.mirrorRender = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
+    this.textureMatrix = new THREE.Matrix4();
     this.uniforms = {
       time: {
         type: 'f',
@@ -12,22 +12,22 @@ export default class Floor {
       },
       texture: {
         type: 't',
-        value: null
+        value: this.mirrorRender.texture
       },
       textureMatrix: {
         type: 'm4',
-        value: this.projector.textureMatrix
+        value: this.textureMatrix
       },
-      projectorPosition: {
+      mirrorPosition: {
         type: 'v3',
-        value: this.projector.position
+        value: this.mirrorCamera.position
       }
     };
+    this.mirrorCamera.up.set(0, -1, 0);
     this.obj = this.createObj();
-
   }
   createObj() {
-    const geometry = new THREE.PlaneBufferGeometry(3000, 3000);
+    const geometry = new THREE.PlaneBufferGeometry(4000, 4000);
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
@@ -38,8 +38,26 @@ export default class Floor {
       })
     )
   }
-  render(time) {
+  updateMirror() {
+  }
+  updateTextureMatrix() {
+    this.textureMatrix.set(
+      0.5, 0.0, 0.0, 0.5,
+      0.0, 0.5, 0.0, 0.5,
+      0.0, 0.0, 1.0, 0.,
+      0.0, 0.0, 0.0, 1.0
+    );
+    this.textureMatrix.multiply(this.mirrorCamera.projectionMatrix);
+    this.textureMatrix.multiply(this.mirrorCamera.matrixWorldInverse);
+  }
+  render(renderer, scene, time) {
     this.uniforms.time.value += time;
-    this.projector.updateTextureMatrix();
+    this.updateTextureMatrix();
+    renderer.render(scene, this.mirrorCamera, this.mirrorRender);
+  }
+  resize() {
+    this.mirrorCamera.aspect = document.body.clientWidth / window.innerHeight;
+    this.mirrorCamera.updateProjectionMatrix();
+    this.mirrorRender.setSize(document.body.clientWidth, window.innerHeight);
   }
 }

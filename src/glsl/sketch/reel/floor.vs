@@ -5,7 +5,6 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
-uniform float time;
 uniform mat4 textureMatrix;
 
 varying vec3 vPosition;
