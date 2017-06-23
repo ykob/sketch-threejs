@@ -13,7 +13,7 @@ export default function() {
   const renderPicked = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
   const scenePicked = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(90, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(24, document.body.clientWidth / window.innerHeight, 1, 15000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -116,15 +116,16 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    camera.position.set(1800, 1000, -1800);
-    camera.lookAt(new THREE.Vector3(0, -300, 0));
+    camera.position.set(5500, 1800, -5500);
+    camera.lookAt(new THREE.Vector3(0, 100, 0));
 
     // scene.add(boxes.core.obj);
     // scene.add(boxes.wire.obj);
     scene.add(floor.obj);
+    scene.add(floor.helper);
     floor.obj.position.set(0, 0, 0)
-    floor.obj.rotation.set(0.5 * Math.PI, 0, 0)
-    scenePicked.add(boxes.wire.objPicked);
+    floor.obj.rotation.set(-0.5 * Math.PI, 0, 0)
+    //scenePicked.add(boxes.wire.objPicked);
 
     on();
     resizeWindow();
