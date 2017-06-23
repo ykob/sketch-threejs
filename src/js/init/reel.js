@@ -116,16 +116,18 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    camera.position.set(0, 300, -3000);
-    camera.lookAt(new THREE.Vector3(0, -100, 0));
+    camera.position.set(0, 400, -3000);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
     floor.mirrorCamera.position.set(0, -400, -3000);
-    floor.mirrorCamera.lookAt(new THREE.Vector3(0, 200, 0));
+    floor.mirrorCamera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    boxes.core.obj.position.set(0, 80, 0);
+    boxes.wire.obj.position.set(0, 80, 0);
+    floor.obj.rotation.set(-0.5 * Math.PI, 0, 0)
 
     scene.add(boxes.core.obj);
     scene.add(boxes.wire.obj);
     scene.add(floor.obj);
-    floor.obj.position.set(0, -80, 0)
-    floor.obj.rotation.set(-0.5 * Math.PI, 0, 0)
     scenePicked.add(boxes.wire.objPicked);
 
     on();
