@@ -46,8 +46,8 @@ export default function() {
     const time = clock.getDelta();
     renderer.setClearColor(0xf1f1f1, 1.0);
     boxes.render(time);
-    renderer.render(scene, camera);
     floor.render(renderer, scene, time);
+    renderer.render(scene, camera);
   }
   const renderLoop = () => {
     render();
