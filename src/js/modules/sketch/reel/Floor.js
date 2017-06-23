@@ -53,7 +53,9 @@ export default class Floor {
   render(renderer, scene, time) {
     this.uniforms.time.value += time;
     this.updateTextureMatrix();
+    this.obj.visible = false;
     renderer.render(scene, this.mirrorCamera, this.mirrorRender);
+    this.obj.visible = true;
   }
   resize() {
     this.mirrorCamera.aspect = document.body.clientWidth / window.innerHeight;
