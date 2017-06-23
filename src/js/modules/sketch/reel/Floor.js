@@ -27,9 +27,8 @@ export default class Floor {
     this.obj = this.createObj();
   }
   createObj() {
-    const geometry = new THREE.PlaneBufferGeometry(4000, 4000);
     return new THREE.Mesh(
-      geometry,
+      new THREE.PlaneBufferGeometry(4000, 4000),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/reel/floor.vs'),
@@ -37,8 +36,6 @@ export default class Floor {
         transparent: true
       })
     )
-  }
-  updateMirror() {
   }
   updateTextureMatrix() {
     this.textureMatrix.set(
