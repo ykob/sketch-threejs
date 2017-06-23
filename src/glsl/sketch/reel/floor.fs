@@ -12,5 +12,5 @@ void main() {
   if (all(bvec4(vUv.x >= 0.0, vUv.y >= 0.0, vUv.x <= vUv.z, vUv.y <= vUv.z))) {
     projectorColor = texture2DProj(texture, vUv);
   }
-  gl_FragColor = vec4(1.0, 1.0, 1.0, 0.3) * projectorColor;
+  gl_FragColor = vec4(1.0, 1.0, 1.0, 0.35) * projectorColor;
 }
