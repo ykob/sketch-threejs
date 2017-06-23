@@ -123,6 +123,7 @@ export default function() {
 
     boxes.core.obj.position.set(0, 80, 0);
     boxes.wire.obj.position.set(0, 80, 0);
+    boxes.wire.objPicked.position.set(0, 80, 0);
     floor.obj.rotation.set(-0.5 * Math.PI, 0, 0)
 
     scene.add(boxes.core.obj);
