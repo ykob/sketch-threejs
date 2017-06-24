@@ -1,6 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Boxes from '../modules/sketch/reel/Boxes.js';
 import Floor from '../modules/sketch/reel/Floor.js';
+import Hill from '../modules/sketch/reel/Hill.js';
 
 const debounce = require('js-util/debounce');
 
@@ -29,6 +30,7 @@ export default function() {
 
   const boxes = new Boxes();
   const floor = new Floor();
+  const hill = new Hill();
 
   //
   // common process
@@ -129,6 +131,7 @@ export default function() {
     scene.add(boxes.core.obj);
     scene.add(boxes.wire.obj);
     scene.add(floor.obj);
+    scene.add(hill.obj);
     scenePicked.add(boxes.wire.objPicked);
 
     on();
