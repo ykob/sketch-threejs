@@ -1,5 +1,7 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Boxes from '../modules/sketch/reel/Boxes.js';
+import Floor from '../modules/sketch/reel/Floor.js';
+import Hill from '../modules/sketch/reel/Hill.js';
 
 const debounce = require('js-util/debounce');
 
@@ -12,7 +14,7 @@ export default function() {
   const renderPicked = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
   const scene = new THREE.Scene();
   const scenePicked = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(24, document.body.clientWidth / window.innerHeight, 1, 15000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -27,6 +29,8 @@ export default function() {
   //
 
   const boxes = new Boxes();
+  const floor = new Floor();
+  const hill = new Hill();
 
   //
   // common process
@@ -38,11 +42,14 @@ export default function() {
     camera.updateProjectionMatrix();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderPicked.setSize(document.body.clientWidth, window.innerHeight);
+    floor.resize();
   }
   const render = () => {
     const time = clock.getDelta();
-    boxes.render(time);
     renderer.setClearColor(0xf1f1f1, 1.0);
+    boxes.render(time);
+    floor.render(renderer, scene, time);
+    hill.render(renderer, scene, time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -112,11 +119,21 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    camera.position.set(0, 180, 1500);
-    camera.lookAt(new THREE.Vector3(0, -280, 0));
+    camera.position.set(0, 400, -3000);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    floor.mirrorCamera.position.set(0, -400, -3000);
+    floor.mirrorCamera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    boxes.core.obj.position.set(0, 80, 0);
+    boxes.wire.obj.position.set(0, 80, 0);
+    boxes.wire.objPicked.position.set(0, 80, 0);
+    floor.obj.rotation.set(-0.5 * Math.PI, 0, 0)
 
     scene.add(boxes.core.obj);
     scene.add(boxes.wire.obj);
+    scene.add(floor.obj);
+    scene.add(hill.obj);
+    scene.add(hill.cubeCamera);
     scenePicked.add(boxes.wire.objPicked);
 
     on();
