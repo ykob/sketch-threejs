@@ -49,6 +49,7 @@ export default function() {
     renderer.setClearColor(0xf1f1f1, 1.0);
     boxes.render(time);
     floor.render(renderer, scene, time);
+    hill.render(renderer, scene, time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -132,6 +133,7 @@ export default function() {
     scene.add(boxes.wire.obj);
     scene.add(floor.obj);
     scene.add(hill.obj);
+    scene.add(hill.cubeCamera);
     scenePicked.add(boxes.wire.objPicked);
 
     on();
