@@ -60,11 +60,16 @@ export default function() {
     isDrag = true;
   };
   const touchMove = (isTouched) => {
-    if (isDrag) {}
-    renderer.setClearColor(0xffffff, 1.0);
-    renderer.render(scenePicked, camera, renderPicked);
-    renderer.readRenderTargetPixels(renderPicked, vectorTouchMove.x, renderPicked.height - vectorTouchMove.y, 1, 1, pixelBuffer);
-    boxes.picked((pixelBuffer[0] << 16) | (pixelBuffer[1] << 8) | (pixelBuffer[2]));
+    if (isDrag) {
+      if (isTouched) {
+        boxes.rotate(vectorTouchMove.x - vectorTouchStart.x);
+      }
+    } else {
+      renderer.setClearColor(0xffffff, 1.0);
+      renderer.render(scenePicked, camera, renderPicked);
+      renderer.readRenderTargetPixels(renderPicked, vectorTouchMove.x, renderPicked.height - vectorTouchMove.y, 1, 1, pixelBuffer);
+      boxes.picked((pixelBuffer[0] << 16) | (pixelBuffer[1] << 8) | (pixelBuffer[2]));
+    }
   };
   const touchEnd = (isTouched) => {
     isDrag = false;
@@ -79,7 +84,6 @@ export default function() {
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       vectorTouchStart.set(event.clientX, event.clientY);
-      normalizeVector2(vectorTouchStart);
       touchStart(false);
     });
     document.addEventListener('mousemove', function (event) {
@@ -90,7 +94,6 @@ export default function() {
     document.addEventListener('mouseup', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.clientX, event.clientY);
-      normalizeVector2(vectorTouchEnd);
       touchEnd(false);
     });
     canvas.addEventListener('wheel', function(event) {
@@ -100,19 +103,16 @@ export default function() {
     canvas.addEventListener('touchstart', function (event) {
       event.preventDefault();
       vectorTouchStart.set(event.touches[0].clientX, event.touches[0].clientY);
-      normalizeVector2(vectorTouchStart);
       touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
     });
-    canvas.addEventListener('touchmove', function (event) {
+    document.addEventListener('touchmove', function (event) {
       event.preventDefault();
       vectorTouchMove.set(event.touches[0].clientX, event.touches[0].clientY);
-      normalizeVector2(vectorTouchMove);
       touchMove(true);
     });
-    canvas.addEventListener('touchend', function (event) {
+    document.addEventListener('touchend', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
-      normalizeVector2(vectorTouchEnd);
       touchEnd(true);
     });
   }
