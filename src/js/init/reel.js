@@ -19,6 +19,7 @@ export default function() {
 
   const vectorTouchStart = new THREE.Vector2();
   const vectorTouchMove = new THREE.Vector2();
+  const vectorTouchMovePrev = new THREE.Vector2();
   const vectorTouchEnd = new THREE.Vector2();
   const pixelBuffer = new Uint8Array(4);
 
@@ -62,7 +63,7 @@ export default function() {
   const touchMove = (isTouched) => {
     if (isDrag) {
       if (isTouched) {
-        boxes.rotate(vectorTouchMove.x - vectorTouchStart.x);
+        boxes.rotate((vectorTouchMove.x - vectorTouchMovePrev.x) * 2);
       }
     } else {
       renderer.setClearColor(0xffffff, 1.0);
@@ -103,12 +104,15 @@ export default function() {
     canvas.addEventListener('touchstart', function (event) {
       event.preventDefault();
       vectorTouchStart.set(event.touches[0].clientX, event.touches[0].clientY);
+      vectorTouchMove.set(event.touches[0].clientX, event.touches[0].clientY);
+      vectorTouchMovePrev.set(event.touches[0].clientX, event.touches[0].clientY);
       touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
     });
     document.addEventListener('touchmove', function (event) {
       event.preventDefault();
       vectorTouchMove.set(event.touches[0].clientX, event.touches[0].clientY);
       touchMove(true);
+      vectorTouchMovePrev.set(event.touches[0].clientX, event.touches[0].clientY);
     });
     document.addEventListener('touchend', function (event) {
       event.preventDefault();
