@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "puddle": {
+      "title": "puddle",
+      "id": "puddle",
+      "description": "",
+      "path": "/sketch/puddle.html",
+      "posted": "2017.x.x",
+      "update": "",
+      "color": "black"
+    },
     "reel": {
       "title": "reel",
       "id": "reel",
