@@ -108,13 +108,13 @@ export default function() {
       vectorTouchMovePrev.set(event.touches[0].clientX, event.touches[0].clientY);
       touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
     });
-    document.addEventListener('touchmove', function (event) {
+    canvas.addEventListener('touchmove', function (event) {
       event.preventDefault();
       vectorTouchMove.set(event.touches[0].clientX, event.touches[0].clientY);
       touchMove(true);
       vectorTouchMovePrev.set(event.touches[0].clientX, event.touches[0].clientY);
     });
-    document.addEventListener('touchend', function (event) {
+    canvas.addEventListener('touchend', function (event) {
       event.preventDefault();
       vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
       touchEnd(true);
