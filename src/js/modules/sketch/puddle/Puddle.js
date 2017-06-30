@@ -5,14 +5,14 @@ export default class Puddle {
     this.uniforms = {
       time: {
         type: 'f',
-        value: 0
-      },
+        value: 0.5
+      }
     };
     this.obj = this.createObj();
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1000, 1000),
+      new THREE.PlaneBufferGeometry(1500, 1500),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/puddle/puddle.vs'),

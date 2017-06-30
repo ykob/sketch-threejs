@@ -8,6 +8,7 @@ export default function() {
   const renderer = new THREE.WebGLRenderer({
     antialias: false,
     canvas: canvas,
+    alpha: true,
   });
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(90, document.body.clientWidth / window.innerHeight, 1, 10000);
