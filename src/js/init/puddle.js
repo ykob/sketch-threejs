@@ -24,7 +24,21 @@ export default function() {
   // process for this sketch.
   //
 
-  const puddle = new Puddle();
+  let indexPuddle = 0;
+  let timeShowPuddle = 0;
+  const puddles = [];
+  const showPuddle = (time) => {
+    timeShowPuddle += time;
+    if (timeShowPuddle > 3) {
+      puddles[indexPuddle].show();
+      indexPuddle = (indexPuddle + 1 >= puddles.length - 1) ? 0 : indexPuddle + 1;
+      timeShowPuddle = 0;
+    }
+  };
+  for (var i = 0; i < 10; i++) {
+    puddles[i] = new Puddle();
+    scene.add(puddles[i].obj);
+  }
 
   //
   // common process
@@ -38,7 +52,10 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
-    puddle.render(time);
+    showPuddle(time);
+    for (var i = 0; i < puddles.length; i++) {
+      puddles[i].render(time);
+    }
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -98,10 +115,9 @@ export default function() {
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0xf1f1f1, 1.0);
     camera.position.set(0, 0, 1000);
     camera.lookAt(new THREE.Vector3());
-    scene.add(puddle.obj);
 
     on();
     resizeWindow();

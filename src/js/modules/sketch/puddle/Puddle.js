@@ -9,6 +9,7 @@ export default class Puddle {
       }
     };
     this.obj = this.createObj();
+    this.obj.visible = false;
   }
   createObj() {
     return new THREE.Mesh(
@@ -21,7 +22,17 @@ export default class Puddle {
       })
     )
   }
+  show(position) {
+    this.obj.visible = true;
+    this.obj.position.set(
+      (Math.random()* 2 - 1) * 1000,
+      (Math.random()* 2 - 1) * 1000,
+      0.0
+    );
+  }
   render(time) {
+    if (!this.obj.visible) return;
     this.uniforms.time.value += time;
+    this.obj.position.z -= 1;
   }
 }
