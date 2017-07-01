@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>hyper space │ sketch of three.js</title>
+    <title>puddle │ sketch of three.js</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <meta name="description" content="add little change about camera angle and particle controles.">
+    <meta name="description" content="drawing puddle with fragment shader only.">
     <meta name="keywords" content="undefined, Yoichi Kobayashi, WebGL, three.js">
     <meta name="theme-color" content="#111111">
     <meta name="msapplication-TileImage" content="/sketch-threejs/img/common/ms_tileimage.png">
@@ -13,23 +13,23 @@
     <link rel="shortcut icon" href="/sketch-threejs/img/common/icon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/sketch-threejs/img/common/app_icon.png">
     <link rel="stylesheet" href="/sketch-threejs/css/main.min.css">
-    <meta property="og:title" content="hyper space │ sketch of three.js">
+    <meta property="og:title" content="puddle │ sketch of three.js">
     <meta property="og:site_name">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="add little change about camera angle and particle controles.">
-    <meta property="og:url" content="http://ykob.github.io/sketch-threejs/sketch/hyper_space.html">
-    <meta property="og:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_hyper_space.jpg">
+    <meta property="og:description" content="drawing puddle with fragment shader only.">
+    <meta property="og:url" content="http://ykob.github.io/sketch-threejs/sketch/puddle.html">
+    <meta property="og:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_puddle.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="hyper space │ sketch of three.js">
-    <meta name="twitter:description" content="add little change about camera angle and particle controles.">
-    <meta name="twitter:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_hyper_space.jpg">
+    <meta name="twitter:title" content="puddle │ sketch of three.js">
+    <meta name="twitter:description" content="drawing puddle with fragment shader only.">
+    <meta name="twitter:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_puddle.jpg">
   </head>
   <body>
-    <div class="l-page l-page--white">
+    <div class="l-page l-page--black">
       <div class="p-website-outline">
-        <h1 class="p-website-outline__title"><a class="c-text-link" href="../" target=""><span class="c-text-link__label">sketch of three.js</span><span class="c-text-link__bg c-text-link__bg--white"></span></a>
+        <h1 class="p-website-outline__title"><a class="c-text-link" href="../" target=""><span class="c-text-link__label">sketch of three.js</span><span class="c-text-link__bg c-text-link__bg--black"></span></a>
         </h1>
-        <p class="p-website-outline__description">created by <a class="c-text-link" href="http://www.tplh.net/" target="_blank"><span class="c-text-link__label">yoichi kobayashi.</span><span class="c-text-link__bg c-text-link__bg--white"></span></a>
+        <p class="p-website-outline__description">created by <a class="c-text-link" href="http://www.tplh.net/" target="_blank"><span class="c-text-link__label">yoichi kobayashi.</span><span class="c-text-link__bg c-text-link__bg--black"></span></a>
         </p>
         <div class="p-website-outline__links"><a class="p-website-outline__link" href="https://github.com/ykob/sketch-threejs/" target="_blank">
             <svg width="24" height="23.411042944785276" viewBox="0 0 32.6 31.8">
@@ -43,17 +43,17 @@
             </svg></a></div>
       </div>
       <div class="p-sketch-outline">
-        <h2 class="p-sketch-outline__title">hyper space</h2>
-        <p class="p-sketch-outline__date">posted: 2015.11.12 
+        <h2 class="p-sketch-outline__title">puddle</h2>
+        <p class="p-sketch-outline__date">posted: 2017.7.2 
         </p>
-        <p class="p-sketch-outline__description">add little change about camera angle and particle controles.</p>
+        <p class="p-sketch-outline__description">drawing puddle with fragment shader only.</p>
       </div>
       <canvas class="p-canvas-webgl" id="canvas-webgl"></canvas>
       <div class="p-sketch-index" id="index" :class="{ &quot;is-opened&quot; : isOpened == 1 }">
         <div class="p-sketch-index__contents" id="index-contents">
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/puddle.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_puddle.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">p</span><span class="js-split-str">u</span><span class="js-split-str">d</span><span class="js-split-str">d</span><span class="js-split-str">l</span><span class="js-split-str">e</span>
               </div>
@@ -61,7 +61,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/reel.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_reel.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">r</span><span class="js-split-str">e</span><span class="js-split-str">e</span><span class="js-split-str">l</span>
               </div>
@@ -69,7 +69,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/glitch.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_glitch.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">g</span><span class="js-split-str">l</span><span class="js-split-str">i</span><span class="js-split-str">t</span><span class="js-split-str">c</span><span class="js-split-str">h</span>
               </div>
@@ -77,7 +77,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/instancing.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_instancing.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">i</span><span class="js-split-str">n</span><span class="js-split-str">s</span><span class="js-split-str">t</span><span class="js-split-str">a</span><span class="js-split-str">n</span><span class="js-split-str">c</span><span class="js-split-str">i</span><span class="js-split-str">n</span><span class="js-split-str">g</span>
               </div>
@@ -85,7 +85,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/particle.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_particle.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">p</span><span class="js-split-str">a</span><span class="js-split-str">r</span><span class="js-split-str">t</span><span class="js-split-str">i</span><span class="js-split-str">c</span><span class="js-split-str">l</span><span class="js-split-str">e</span>
               </div>
@@ -93,7 +93,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/attract.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_attract.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">a</span><span class="js-split-str">t</span><span class="js-split-str">t</span><span class="js-split-str">r</span><span class="js-split-str">a</span><span class="js-split-str">c</span><span class="js-split-str">t</span>
               </div>
@@ -101,7 +101,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/hole.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_hole.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">h</span><span class="js-split-str">o</span><span class="js-split-str">l</span><span class="js-split-str">e</span>
               </div>
@@ -109,7 +109,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/metal_cube.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_metal_cube.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">m</span><span class="js-split-str">e</span><span class="js-split-str">t</span><span class="js-split-str">a</span><span class="js-split-str">l</span><span class="js-split-str">&nbsp</span><span class="js-split-str">c</span><span class="js-split-str">u</span><span class="js-split-str">b</span><span class="js-split-str">e</span>
               </div>
@@ -117,7 +117,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/distort.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_distort.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">d</span><span class="js-split-str">i</span><span class="js-split-str">s</span><span class="js-split-str">t</span><span class="js-split-str">o</span><span class="js-split-str">r</span><span class="js-split-str">t</span>
               </div>
@@ -125,7 +125,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/image_data.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_image_data.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">i</span><span class="js-split-str">m</span><span class="js-split-str">a</span><span class="js-split-str">g</span><span class="js-split-str">e</span><span class="js-split-str">&nbsp</span><span class="js-split-str">d</span><span class="js-split-str">a</span><span class="js-split-str">t</span><span class="js-split-str">a</span>
               </div>
@@ -133,7 +133,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/gallery.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_gallery.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">g</span><span class="js-split-str">a</span><span class="js-split-str">l</span><span class="js-split-str">l</span><span class="js-split-str">e</span><span class="js-split-str">r</span><span class="js-split-str">y</span>
               </div>
@@ -141,7 +141,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/comet.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_comet.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">c</span><span class="js-split-str">o</span><span class="js-split-str">m</span><span class="js-split-str">e</span><span class="js-split-str">t</span>
               </div>
@@ -149,7 +149,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/hyper_space.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_hyper_space.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">h</span><span class="js-split-str">y</span><span class="js-split-str">p</span><span class="js-split-str">e</span><span class="js-split-str">r</span><span class="js-split-str">&nbsp</span><span class="js-split-str">s</span><span class="js-split-str">p</span><span class="js-split-str">a</span><span class="js-split-str">c</span><span class="js-split-str">e</span>
               </div>
@@ -157,7 +157,7 @@
               </div></a></div>
           <div class="p-sketch-index__item js-index-scroll-item" :class="{ &quot;is-opened&quot; : isOpened == 1 }"><a class="p-sketch-index__item-wrap" href="/sketch-threejs/sketch/fire_ball.html">
               <div class="p-sketch-index__item-thumb" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }" style="background-image: url(/sketch-threejs/img/common/ogp_fire_ball.jpg);">
-                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--white" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
+                <div class="p-sketch-index__item-thumb-cover p-sketch-index__item-thumb-cover--black" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"></div>
               </div>
               <div class="p-sketch-index__item-title" :class="{ &quot;is-opened&quot; : isOpened == 1, &quot;is-closed&quot; : isOpened == 0 }"><span class="js-split-str">f</span><span class="js-split-str">i</span><span class="js-split-str">r</span><span class="js-split-str">e</span><span class="js-split-str">&nbsp</span><span class="js-split-str">b</span><span class="js-split-str">a</span><span class="js-split-str">l</span><span class="js-split-str">l</span>
               </div>
@@ -165,8 +165,8 @@
               </div></a></div>
         </div>
         <div class="p-sketch-index__scroll" id="index-scroll"></div>
-        <div class="p-sketch-index__bg p-sketch-index__bg--white" :class="{ &quot;is-opened&quot; : isOpened == 1 }"></div>
-        <div class="p-sketch-index__hamburger p-sketch-index__hamburger--white" @click="toggle" :class="{ &quot;is-opened&quot; : isOpened == 1 }">
+        <div class="p-sketch-index__bg p-sketch-index__bg--black" :class="{ &quot;is-opened&quot; : isOpened == 1 }"></div>
+        <div class="p-sketch-index__hamburger p-sketch-index__hamburger--black" @click="toggle" :class="{ &quot;is-opened&quot; : isOpened == 1 }">
           <div class="p-sketch-index__hamburger-line p-sketch-index__hamburger-line--top"></div>
           <div class="p-sketch-index__hamburger-line p-sketch-index__hamburger-line--bottom"></div>
           <div class="p-sketch-index__hamburger-line p-sketch-index__hamburger-line--cross1"></div>
