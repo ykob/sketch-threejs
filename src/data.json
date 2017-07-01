@@ -15,9 +15,9 @@
     "puddle": {
       "title": "puddle",
       "id": "puddle",
-      "description": "",
+      "description": "drawing puddle with fragment shader only.",
       "path": "/sketch/puddle.html",
-      "posted": "2017.x.x",
+      "posted": "2017.7.2",
       "update": "",
       "color": "black"
     },
