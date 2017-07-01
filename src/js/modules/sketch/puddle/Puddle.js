@@ -5,7 +5,7 @@ export default class Puddle {
     this.uniforms = {
       time: {
         type: 'f',
-        value: 0.5
+        value: 0
       }
     };
     this.obj = this.createObj();
@@ -23,6 +23,7 @@ export default class Puddle {
     )
   }
   show(position) {
+    this.uniforms.time.value = 0;
     this.obj.visible = true;
     this.obj.position.set(
       (Math.random()* 2 - 1) * 1000,

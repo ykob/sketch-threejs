@@ -29,13 +29,13 @@ export default function() {
   const puddles = [];
   const showPuddle = (time) => {
     timeShowPuddle += time;
-    if (timeShowPuddle > 3) {
+    if (timeShowPuddle > 1) {
       puddles[indexPuddle].show();
       indexPuddle = (indexPuddle + 1 >= puddles.length - 1) ? 0 : indexPuddle + 1;
       timeShowPuddle = 0;
     }
   };
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 20; i++) {
     puddles[i] = new Puddle();
     scene.add(puddles[i].obj);
   }
