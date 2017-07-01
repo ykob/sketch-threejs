@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "puddle": {
+      "title": "puddle",
+      "id": "puddle",
+      "description": "drawing puddle with fragment shader only.",
+      "path": "/sketch/puddle.html",
+      "posted": "2017.7.2",
+      "update": "",
+      "color": "black"
+    },
     "reel": {
       "title": "reel",
       "id": "reel",
