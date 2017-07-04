@@ -69,11 +69,17 @@ export default function(id, options={}) {
     sub_camera.force.look.anchor.set(0, 0, 0);
 
     //scene.add(framebuffer);
-    force.anchor.set(1, 0);
-    force.anchor.set(1, 0);
-    force.velocity.set(1, 0);
-    force.k = 0.045;
-    force.d = 0.16;
+    if (interactive) {
+      force.anchor.set(2.2, 0);
+      force.velocity.set(1, 0);
+      force.k = 0.04575;
+      force.d = 0.13;
+    } else {
+      force.anchor.set(1, 0);
+      force.velocity.set(1, 0);
+      force.k = 0.045;
+      force.d = 0.16;
+    }
   }
 
   //
