@@ -6,7 +6,7 @@ import Force2 from '../../old/Force2';
 import ForceCamera from '../../old/ForceCamera';
 
 export default function(id, options={}) {
-  let { interactive = true, width = window.innerWidth, height = window.innerHeight } = options
+  let { interactive = true, width = () => window.innerWidth, height = () => window.innerHeight } = options
   const canvas = document.getElementById(id);
   const renderer = new THREE.WebGL1Renderer({
     antialias: false,
@@ -14,12 +14,19 @@ export default function(id, options={}) {
     alpha: true
   });
 
+  const _width = function() {
+    return typeof width === 'number' ? width : width()
+  }
+  const _height = function() {
+    return typeof height === 'number' ? height : height()
+  }
+
   //
   // process for this sketch.
   //
   var sphere = null;
   var sub_scene = new THREE.Scene();
-  var sub_camera = new ForceCamera(45, width / height, 1, 10000);
+  var sub_camera = new ForceCamera(45, _width() / _height(), 1, 10000);
   var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var force = new Force2();
   var time_unit = 0.6;
@@ -86,10 +93,10 @@ export default function(id, options={}) {
   // common process
   //
   const resizeWindow = () => {
-    canvas.width = width;
-    canvas.height = height;
-    renderer.setSize(width, height);
-    sub_camera.resize(width, height);
+    canvas.width = _width();
+    canvas.height = _height();
+    renderer.setSize(_width(), _height());
+    sub_camera.resize(_width(), _height());
   }
   const render = () => {
     force.applyHook(0, force.k);
@@ -148,6 +155,8 @@ export default function(id, options={}) {
         touchStart(event.clientX, event.clientY, false);
       });
     }
+
+    window.addEventListener('resize', debounce(resizeWindow, 400))
   }
 
   const setAlpha = newAlpha => {
@@ -155,14 +164,8 @@ export default function(id, options={}) {
     sphere.material.uniforms.alpha.value = alpha
   }
 
-  const updateDimensions = ({_width, _height}) => {
-    width = _width
-    height = _height
-    resizeWindow();
-  }
-
   const init = () => {
-    renderer.setSize(width, height);
+    renderer.setSize(_width(), _height());
     renderer.setClearColor(0xfbfbfb, 0.0);
 
     on();
@@ -172,5 +175,5 @@ export default function(id, options={}) {
   }
   init();
 
-  return { setAlpha, updateDimensions }
+  return { setAlpha }
 }
