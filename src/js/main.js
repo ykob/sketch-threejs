@@ -21,28 +21,30 @@ import initFireBall from './init/fireBall.js'
 import ConsoleSignature from './modules/common/ConsoleSignature.js';
 import redirectOldSketches from './modules/common/redirectOldSketches.js';
 
+const page = document.querySelector('.l-page');
+const pageId = page.dataset.id;
+const consoleSignature = new ConsoleSignature();
+
 const init = () => {
   redirectOldSketches();
-  const consoleSignature = new ConsoleSignature();
-  const path = location.pathname.replace('/sketch-threejs', '');
   initCommon();
-  if (path !== `/`) initCommonSketch();
-  switch (path) {
-    case '/': initIndex(); break;
-    case '/sketch/puddle.html': initPuddle(); break;
-    case '/sketch/reel.html': initReel(); break;
-    case '/sketch/glitch.html': initGlitch(); break;
-    case '/sketch/instancing.html': initInstancing(); break;
-    case '/sketch/particle.html': initParticle(); break;
-    case '/sketch/attract.html': initAttract(); break;
-    case '/sketch/hole.html': initHole(); break;
-    case '/sketch/metal_cube.html': initMetalCube(); break;
-    case '/sketch/distort.html': initDistort(); break;
-    case '/sketch/image_data.html': initImageData(); break;
-    case '/sketch/gallery.html': initGallery(); break;
-    case '/sketch/comet.html': initComet(); break;
-    case '/sketch/hyper_space.html': initHyperSpace(); break;
-    case '/sketch/fire_ball.html': initFireBall(); break;
+  if (pageId !== 'index') initCommonSketch();
+  switch (pageId) {
+    case 'index': initIndex(); break;
+    case 'puddle': initPuddle(); break;
+    case 'reel': initReel(); break;
+    case 'glitch': initGlitch(); break;
+    case 'instancing': initInstancing(); break;
+    case 'particle': initParticle(); break;
+    case 'attract': initAttract(); break;
+    case 'hole': initHole(); break;
+    case 'metal_cube': initMetalCube(); break;
+    case 'distort': initDistort(); break;
+    case 'image_data': initImageData(); break;
+    case 'gallery': initGallery(); break;
+    case 'comet': initComet(); break;
+    case 'hyper_space': initHyperSpace(); break;
+    case 'fire_ball': initFireBall(); break;
     default:
   }
 }

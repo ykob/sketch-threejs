@@ -9,7 +9,8 @@ html(lang="ja")
     include ../_layout/_head.pug
   body
     .l-page(
-      class = (page.color == "white") ?  "l-page--white" : "l-page--black"
+      class = (page.color == "white") ?  'l-page--white' : 'l-page--black',
+      data-id = page.id
     )
       block content
       include ../_modules/_sketch-index.pug
