@@ -25,20 +25,20 @@ export default function() {
   //
   // common process
   //
+  const render = () => {
+    renderer.render(scene, camera);
+  };
+  const renderLoop = () => {
+    render();
+    requestAnimationFrame(renderLoop);
+  };
   const resizeWindow = () => {
     canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
     camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
-  }
-  const render = () => {
-    renderer.render(scene, camera);
-  }
-  const renderLoop = () => {
-    render();
-    requestAnimationFrame(renderLoop);
-  }
+  };
   const touchStart = (isTouched) => {
     isDrag = true;
   };
@@ -49,40 +49,38 @@ export default function() {
     isDrag = false;
   };
   const on = () => {
-    window.addEventListener('resize', debounce(() => {
-      resizeWindow();
-    }), 1000);
-    canvas.addEventListener('mousedown', function (event) {
+    window.addEventListener('resize', debounce(resizeWindow), 1000);
+    canvas.addEventListener('mousedown', (event) => {
       event.preventDefault();
       vectorTouchStart.set(event.clientX, event.clientY);
       touchStart(false);
     });
-    document.addEventListener('mousemove', function (event) {
+    document.addEventListener('mousemove', (event) => {
       event.preventDefault();
       vectorTouchMove.set(event.clientX, event.clientY);
       touchMove(false);
     });
-    document.addEventListener('mouseup', function (event) {
+    document.addEventListener('mouseup', (event) => {
       event.preventDefault();
       vectorTouchEnd.set(event.clientX, event.clientY);
       touchEnd(false);
     });
-    canvas.addEventListener('touchstart', function (event) {
+    canvas.addEventListener('touchstart', (event) => {
       event.preventDefault();
       vectorTouchStart.set(event.touches[0].clientX, event.touches[0].clientY);
       touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
     });
-    canvas.addEventListener('touchmove', function (event) {
+    canvas.addEventListener('touchmove', (event) => {
       event.preventDefault();
       vectorTouchMove.set(event.touches[0].clientX, event.touches[0].clientY);
       touchMove(true);
     });
-    canvas.addEventListener('touchend', function (event) {
+    canvas.addEventListener('touchend', (event) => {
       event.preventDefault();
       vectorTouchEnd.set(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
       touchEnd(true);
     });
-  }
+  };
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
