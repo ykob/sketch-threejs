@@ -78,7 +78,7 @@ export default function() {
     canvas.addEventListener('touchstart', (event) => {
       event.preventDefault();
       vectorTouchStart.set(event.touches[0].clientX, event.touches[0].clientY);
-      touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
+      touchStart(true);
     });
     canvas.addEventListener('touchmove', (event) => {
       event.preventDefault();
