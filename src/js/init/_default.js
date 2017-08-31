@@ -36,13 +36,16 @@ export default function() {
     render();
     requestAnimationFrame(renderLoop);
   };
+  const resizeCamera = () => {
+    camera.aspect = resolution.x / resolution.y;
+    camera.updateProjectionMatrix();
+  };
   const resizeWindow = () => {
     resolution.x = document.body.clientWidth;
     resolution.y = window.innerHeight;
     canvas.width = resolution.x;
     canvas.height = resolution.y;
-    camera.aspect = resolution.x / resolution.y;
-    camera.updateProjectionMatrix();
+    resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
   };
   const touchStart = (isTouched) => {
