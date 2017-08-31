@@ -30,6 +30,7 @@ export default function() {
   // common process
   //
   const render = () => {
+    const time = clock.getDelta();
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
