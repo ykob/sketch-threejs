@@ -1,6 +1,7 @@
 import PhysicsRenderer from '../../../modules/common/PhysicsRenderer';
 
 const glslify = require('glslify');
+const SIZE = 100;
 
 export default class Butterfly {
   constructor() {
@@ -9,18 +10,14 @@ export default class Butterfly {
         type: 'f',
         value: 0
       },
+      size: {
+        type: 'f',
+        value: SIZE
+      },
       texture: {
         type: 't',
         value: null
       },
-      velocity: {
-        type: 't',
-        value: null
-      },
-      acceleration: {
-        type: 't',
-        value: null
-      }
     }
     this.physicsRenderer = null;
     this.obj = null;
@@ -36,7 +33,7 @@ export default class Butterfly {
     });
   }
   createObj(renderer) {
-    const geometry = new THREE.PlaneBufferGeometry(200, 200, 24, 24);
+    const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE, 24, 24);
     const mesh = new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
