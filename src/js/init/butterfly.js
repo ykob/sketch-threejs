@@ -23,7 +23,6 @@ export default function() {
   // process for this sketch.
   //
 
-
   const butterfly = new Butterfly();
 
   //

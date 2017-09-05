@@ -36,29 +36,7 @@ export default class Butterfly {
     });
   }
   createObj(renderer) {
-    const geometry = new THREE.PlaneBufferGeometry(20, 20, 2, 2);
-    const vertices = [];
-    for (var i = 0; i < 2 * 3; i+= 3) {
-      vertices[i + 0] = 0;
-      vertices[i + 1] = 0;
-      vertices[i + 2] = 0;
-    }
-    this.physicsRenderer = new PhysicsRenderer(
-      glslify('../../../../glsl/sketch/butterfly/physicsRendererAcceleration.vs'),
-      glslify('../../../../glsl/sketch/butterfly/physicsRendererAcceleration.fs'),
-      glslify('../../../../glsl/sketch/butterfly/physicsRendererVelocity.vs'),
-      glslify('../../../../glsl/sketch/butterfly/physicsRendererVelocity.fs')
-    );
-    this.physicsRenderer.init(renderer, vertices);
-    this.physicsRenderer.mergeAUniforms({
-      vTouchMove: {
-        type: 'v2',
-        value: this.vectorTouchMoveDiff
-      }
-    });
-    this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
-    this.uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
-    geometry.addAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
+    const geometry = new THREE.PlaneBufferGeometry(100, 100, 8, 8);
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
@@ -71,7 +49,6 @@ export default class Butterfly {
     );
   }
   render(renderer, time) {
-    this.physicsRenderer.render(renderer, time);
     this.uniforms.time.value += time;
   }
 }
