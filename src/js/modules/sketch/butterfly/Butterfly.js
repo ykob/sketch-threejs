@@ -36,17 +36,20 @@ export default class Butterfly {
     });
   }
   createObj(renderer) {
-    const geometry = new THREE.PlaneBufferGeometry(100, 100, 8, 8);
-    return new THREE.Mesh(
+    const geometry = new THREE.PlaneBufferGeometry(200, 200, 24, 24);
+    const mesh = new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/butterfly/butterfly.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/butterfly/butterfly.fs'),
+        depthWrite: false,
         side: THREE.DoubleSide,
         transparent: true
       })
     );
+    mesh.rotation.set(-45 * Math.PI / 180, 0, 0);
+    return mesh;
   }
   render(renderer, time) {
     this.uniforms.time.value += time;

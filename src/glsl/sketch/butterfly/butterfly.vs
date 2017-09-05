@@ -14,13 +14,16 @@ varying vec2 vUv;
 
 void main() {
   vec3 v = texture2D(velocity, vec2(0.0)).xyz;
-  float flapTime = radians(sin(time * 20.0) * 45.0);
+  float flapTime = radians(sin(time * 6.0 - abs(position.x) / 100.0 * 2.0) * 24.0);
+  float hovering = cos(time * 2.0) * 10.0;
   vec3 updatePosition = vec3(
     cos(flapTime) * position.x,
-    position.y,
-    sin(flapTime) * abs(position.x)
+    position.y + hovering,
+    sin(flapTime) * abs(position.x) + hovering
   );
+
   mat4 translateMatrix = computeTranslateMat(v);
+
   vec4 mvPosition = modelViewMatrix * translateMatrix * vec4(updatePosition, 1.0);
   vUv = uv;
   gl_Position = projectionMatrix * mvPosition;
