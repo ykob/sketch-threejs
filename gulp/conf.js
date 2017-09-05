@@ -12,7 +12,7 @@ module.exports.serve = {
   dest: {
     //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.DEST,
@@ -25,7 +25,7 @@ module.exports.serve = {
   build: {
     //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.BUILD,
@@ -171,11 +171,7 @@ module.exports.imagemin = {
 
 module.exports.clean = {
   dest: {
-    path: [
-      `${DIR.DEST}/**/*.html`,
-      `${DIR.DEST}/css/`,
-      `${DIR.DEST}/js/`
-    ]
+    path: [`${DIR.DEST}`]
   },
   build: {
     path: [`${DIR.BUILD}`]

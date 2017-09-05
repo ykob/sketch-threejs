@@ -21,13 +21,49 @@
       "update": "",
       "color": "black"
     },
+    "puddle": {
+      "title": "puddle",
+      "id": "puddle",
+      "description": "drawing puddle with fragment shader only.",
+      "path": "/sketch/puddle.html",
+      "posted": "2017.7.2",
+      "update": "",
+      "color": "black"
+    },
+    "reel": {
+      "title": "reel",
+      "id": "reel",
+      "description": "pick instance objects and add hover effects.",
+      "path": "/sketch/reel.html",
+      "posted": "2017.5.28",
+      "update": "2017.6.26",
+      "color": "black"
+    },
+    "glitch": {
+      "title": "glitch",
+      "id": "glitch",
+      "description": "study of some glitch effects.",
+      "path": "/sketch/glitch.html",
+      "posted": "2017.4.30",
+      "update": "2017.5.1",
+      "color": "white"
+    },
+    "instancing": {
+      "title": "instancing",
+      "id": "instancing",
+      "description": "study of Instancing with three.js",
+      "path": "/sketch/instancing.html",
+      "posted": "2017.4.11",
+      "update": "2017.4.18",
+      "color": "white"
+    },
     "particle": {
       "title": "particle",
       "id": "particle",
       "description": "random walk with Classic noise functions.",
       "path": "/sketch/particle.html",
       "posted": "2017.2.23",
-      "update": "2017.2.26",
+      "update": "2017.4.22",
       "color": "white"
     },
     "attract": {
