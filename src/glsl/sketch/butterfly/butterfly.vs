@@ -15,7 +15,7 @@ varying vec2 vUv;
 
 void main() {
   vec3 v = texture2D(velocity, vec2(0.0)).xyz;
-  float flapTime = radians(sin(time * 6.0 - abs(position.x) / 100.0 * 1.6) * 36.0);
+  float flapTime = radians(sin(time * 6.0 - length(position.xy) / 100.0 * 1.2) * 32.0);
   float hovering = cos(time * 2.0) * 12.0;
   vec3 updatePosition = vec3(
     cos(flapTime) * position.x,
