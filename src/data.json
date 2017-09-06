@@ -15,9 +15,9 @@
     "butterfly": {
       "title": "butterfly",
       "id": "butterfly",
-      "description": "",
+      "description": "express butterfly flapping with plane geometry and trigonometric function.",
       "path": "/sketch/butterfly.html",
-      "posted": "2017.x.x",
+      "posted": "2017.9.6",
       "update": "",
       "color": "black"
     },
