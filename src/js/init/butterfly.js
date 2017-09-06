@@ -49,10 +49,10 @@ export default function() {
   const resizeWindow = () => {
     resolution.x = document.body.clientWidth;
     resolution.y = window.innerHeight;
-    canvas.width = document.body.clientWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = resolution.x;
+    canvas.height = resolution.y;
     resizeCamera();
-    renderer.setSize(document.body.clientWidth, window.innerHeight);
+    renderer.setSize(resolution.x, resolution.y);
   }
   const render = () => {
     const time = clock.getDelta();
