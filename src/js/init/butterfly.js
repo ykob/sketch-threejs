@@ -1,6 +1,9 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Butterfly from '../modules/sketch/butterfly/Butterfly';
 import Floor from '../modules/sketch/butterfly/Floor.js';
+import PostEffectBright from '../modules/sketch/butterfly/PostEffectBright.js';
+import PostEffectBlur from '../modules/sketch/butterfly/PostEffectBlur.js';
+import PostEffectBloom from '../modules/sketch/butterfly/PostEffectBloom.js';
 
 const debounce = require('js-util/debounce');
 
@@ -14,17 +17,19 @@ export default function() {
     antialias: false,
     canvas: canvas,
   });
+  const renderBack1 = new THREE.WebGLRenderTarget(0, 0);
+  const renderBack2 = new THREE.WebGLRenderTarget(0, 0);
+  const renderBack3 = new THREE.WebGLRenderTarget(0, 0);
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(30, resolution.x / resolution.y, 1, 15000);
+  const sceneBack = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const cameraBack = new THREE.PerspectiveCamera(30, 1, 1, 15000);
   const clock = new THREE.Clock();
   const loader = new THREE.TextureLoader();
 
   const vectorTouchStart = new THREE.Vector2();
   const vectorTouchMove = new THREE.Vector2();
   const vectorTouchEnd = new THREE.Vector2();
-
-  const CAMERA_SIZE_X = 640;
-  const CAMERA_SIZE_Y = 480;
 
   let isDrag = false;
 
@@ -35,13 +40,17 @@ export default function() {
   const BUTTERFLY_NUM = 7;
   const butterflies = [];
   const floor = new Floor(resolution);
+  const postEffectBright = new PostEffectBright(renderBack1.texture);
+  const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0, 2);
+  const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1, 2);
+  const postEffectBloom = new PostEffectBloom(renderBack1.texture, renderBack2.texture);
 
   //
   // common process
   //
   const resizeCamera = () => {
-    camera.aspect = resolution.x / resolution.y;
-    camera.updateProjectionMatrix();
+    cameraBack.aspect = resolution.x / resolution.y;
+    cameraBack.updateProjectionMatrix();
     floor.resize(resolution);
   };
   const resizeWindow = () => {
@@ -50,15 +59,28 @@ export default function() {
     canvas.width = resolution.x;
     canvas.height = resolution.y;
     resizeCamera();
+    postEffectBlurX.resize(resolution);
+    postEffectBlurY.resize(resolution);
+    renderBack1.setSize(resolution.x, resolution.y);
+    renderBack2.setSize(resolution.x, resolution.y);
+    renderBack3.setSize(resolution.x, resolution.y);
     renderer.setSize(resolution.x, resolution.y);
   }
   const render = () => {
     const time = clock.getDelta();
+
+    // render 3d objects
     for (var i = 0; i < butterflies.length; i++) {
       butterflies[i].render(renderer, time);
     }
-    floor.render(renderer, scene, time);
-    renderer.render(scene, camera);
+    floor.render(renderer, sceneBack, time);
+    renderer.render(sceneBack, cameraBack, renderBack1);
+
+    // render post effects
+    postEffectBright.render(renderer, scene, camera, renderBack2);
+    postEffectBlurX.render(renderer, scene, camera, renderBack3);
+    postEffectBlurY.render(renderer, scene, camera, renderBack2);
+    postEffectBloom.render(renderer, scene, camera);
   }
   const renderLoop = () => {
     render();
@@ -128,26 +150,34 @@ export default function() {
     on();
 
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(300, 600, 600);
+    cameraBack.position.set(300, 600, 600);
     floor.mirrorCamera.position.set(
-      camera.position.x,
-      camera.position.y * -1,
-      camera.position.z
+      cameraBack.position.x,
+      cameraBack.position.y * -1,
+      cameraBack.position.z
     );
-    camera.lookAt(new THREE.Vector3(0, lookAtY, 0));
+    cameraBack.lookAt(new THREE.Vector3(0, lookAtY, 0));
     floor.mirrorCamera.lookAt(new THREE.Vector3(0, -lookAtY, 0));
 
     loader.load('/sketch-threejs/img/sketch/butterfly/tex.png', (texture) => {
       texture.magFilter = THREE.NearestFilter;
       texture.minFilter = THREE.NearestFilter;
 
+      // add 3d objects
       for (var i = 0; i < BUTTERFLY_NUM; i++) {
         butterflies[i] = new Butterfly(i, texture);
         butterflies[i].obj.position.x = ((i + 1) % 3 - 1) * i * 50;
         butterflies[i].obj.position.z = 1800 / BUTTERFLY_NUM * i;
-        scene.add(butterflies[i].obj);
+        sceneBack.add(butterflies[i].obj);
       }
-      scene.add(floor.obj);
+      sceneBack.add(floor.obj);
+
+      // add post effects
+      scene.add(postEffectBright.obj);
+      scene.add(postEffectBlurX.obj);
+      scene.add(postEffectBlurY.obj);
+      scene.add(postEffectBloom.obj);
+
       renderLoop();
     });
   }
