@@ -1,5 +1,3 @@
-import PhysicsRenderer from '../../../modules/common/PhysicsRenderer';
-
 const glslify = require('glslify');
 const SIZE = 240;
 
@@ -23,7 +21,6 @@ export default class Butterfly {
         value: texture
       },
     }
-    this.physicsRenderer = null;
     this.obj = this.createObj();
   }
   createObj() {
