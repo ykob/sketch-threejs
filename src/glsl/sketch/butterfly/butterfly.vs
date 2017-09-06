@@ -1,14 +1,16 @@
 attribute vec3 position;
 attribute vec2 uv;
 
-uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
 uniform float index;
 uniform float time;
 uniform float size;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying float vOpacity;
 
 void main() {
   float flapTime = radians(sin(time * 6.0 - length(position.xy) / size * 2.6 + index * 2.0) * 32.0);
@@ -19,10 +21,9 @@ void main() {
     sin(flapTime) * abs(position.x) + hovering
   );
 
-  vec4 mvPosition = modelViewMatrix * vec4(updatePosition, 1.0);
-
   vPosition = position;
   vUv = uv;
+  vOpacity = (1.0 - smoothstep(0.75, 1.0, abs((modelMatrix * vec4(updatePosition, 1.0)).z) / 900.0)) * 0.85;
 
-  gl_Position = projectionMatrix * mvPosition;
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(updatePosition, 1.0);
 }

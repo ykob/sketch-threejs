@@ -7,6 +7,7 @@ uniform sampler2D texture;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying float vOpacity;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
@@ -18,5 +19,5 @@ void main() {
   vec3 hsv = vec3(1.0 + noise * 0.2 + index * 0.7, 0.4, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
-  gl_FragColor = vec4(rgb, 1.0) * texColor;
+  gl_FragColor = vec4(rgb, vOpacity) * texColor;
 }

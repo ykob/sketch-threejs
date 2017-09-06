@@ -12,13 +12,22 @@
       "path": "/",
       "color": "white"
     },
+    "egg": {
+      "title": "egg",
+      "id": "egg",
+      "description": "drawing inside of egg with only fragment shader.",
+      "path": "/sketch/egg.html",
+      "posted": "2017.9.7",
+      "update": "",
+      "color": "black"
+    },
     "butterfly": {
       "title": "butterfly",
       "id": "butterfly",
       "description": "express butterfly flapping with plane geometry and trigonometric function.",
       "path": "/sketch/butterfly.html",
       "posted": "2017.9.6",
-      "update": "",
+      "update": "2017.9.7",
       "color": "black"
     },
     "puddle": {
