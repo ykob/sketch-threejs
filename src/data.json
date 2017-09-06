@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "egg": {
+      "title": "egg",
+      "id": "egg",
+      "description": "",
+      "path": "/sketch/egg.html",
+      "posted": "2017.x.x",
+      "update": "",
+      "color": "black"
+    },
     "butterfly": {
       "title": "butterfly",
       "id": "butterfly",
