@@ -73,7 +73,7 @@ export default function() {
     for (var i = 0; i < butterflies.length; i++) {
       butterflies[i].render(renderer, time);
     }
-    floor.render(renderer, sceneBack, time);
+    floor.render(renderer, scene, sceneBack, camera, time);
     renderer.render(sceneBack, cameraBack, renderBack1);
 
     // render post effects
@@ -170,7 +170,7 @@ export default function() {
         butterflies[i].obj.position.z = 1800 / BUTTERFLY_NUM * i;
         sceneBack.add(butterflies[i].obj);
       }
-      sceneBack.add(floor.obj);
+      floor.add(scene, sceneBack);
 
       // add post effects
       scene.add(postEffectBright.obj);

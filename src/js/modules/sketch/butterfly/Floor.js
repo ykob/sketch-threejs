@@ -1,3 +1,5 @@
+import PostEffectBlur from './PostEffectBlur.js';
+
 const glslify = require('glslify');
 
 export default class Floor {
@@ -19,8 +21,18 @@ export default class Floor {
         value: this.textureMatrix
       },
     };
+    this.renderBack1 = new THREE.WebGLRenderTarget(resolution.x, resolution.y);
+    this.renderBack2 = new THREE.WebGLRenderTarget(resolution.x, resolution.y);
+    this.postEffectBlurX = new PostEffectBlur(this.renderBack1.texture, 1, 0, 4);
+    this.postEffectBlurY = new PostEffectBlur(this.renderBack2.texture, 0, 1, 4);
+
     this.mirrorCamera.up.set(0, -1, 0);
     this.obj = this.createObj();
+  }
+  add(scene, sceneBack) {
+    sceneBack.add(this.obj);
+    scene.add(this.postEffectBlurX.obj);
+    scene.add(this.postEffectBlurY.obj);
   }
   createObj() {
     const mesh = new THREE.Mesh(
@@ -45,16 +57,22 @@ export default class Floor {
     this.textureMatrix.multiply(this.mirrorCamera.projectionMatrix);
     this.textureMatrix.multiply(this.mirrorCamera.matrixWorldInverse);
   }
-  render(renderer, scene, time) {
+  render(renderer, scene, sceneBack, camera, time) {
     this.uniforms.time.value += time;
     this.updateTextureMatrix();
     this.obj.visible = false;
-    renderer.render(scene, this.mirrorCamera, this.mirrorRender);
+    renderer.render(sceneBack, this.mirrorCamera, this.renderBack1);
     this.obj.visible = true;
+    this.postEffectBlurX.render(renderer, scene, camera, this.renderBack2);
+    this.postEffectBlurY.render(renderer, scene, camera, this.mirrorRender);
   }
   resize(resolution) {
     this.mirrorCamera.aspect = resolution.x / resolution.y;
     this.mirrorCamera.updateProjectionMatrix();
     this.mirrorRender.setSize(resolution.x, resolution.y);
+    this.renderBack1.setSize(resolution.x, resolution.y);
+    this.renderBack2.setSize(resolution.x, resolution.y);
+    this.postEffectBlurX.resize(resolution);
+    this.postEffectBlurY.resize(resolution);
   }
 }
