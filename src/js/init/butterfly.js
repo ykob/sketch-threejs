@@ -1,5 +1,6 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Butterfly from '../modules/sketch/butterfly/Butterfly';
+import Floor from '../modules/sketch/butterfly/Floor.js';
 
 const debounce = require('js-util/debounce');
 
@@ -14,7 +15,7 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(30, resolution.x / resolution.y, 1, 15000);
   const clock = new THREE.Clock();
   const loader = new THREE.TextureLoader();
 
@@ -33,18 +34,15 @@ export default function() {
 
   const BUTTERFLY_NUM = 7;
   const butterflies = [];
+  const floor = new Floor(resolution);
 
   //
   // common process
   //
   const resizeCamera = () => {
-    const x = Math.min((resolution.x / resolution.y) / (CAMERA_SIZE_X / CAMERA_SIZE_Y), 1.0) * CAMERA_SIZE_X;
-    const y = Math.min((resolution.y / resolution.x) / (CAMERA_SIZE_Y / CAMERA_SIZE_X), 1.0) * CAMERA_SIZE_Y;
-    camera.left   = x * -0.5;
-    camera.right  = x *  0.5;
-    camera.top    = y *  0.5;
-    camera.bottom = y * -0.5;
+    camera.aspect = resolution.x / resolution.y;
     camera.updateProjectionMatrix();
+    floor.resize(resolution);
   };
   const resizeWindow = () => {
     resolution.x = document.body.clientWidth;
@@ -59,6 +57,7 @@ export default function() {
     for (var i = 0; i < butterflies.length; i++) {
       butterflies[i].render(renderer, time);
     }
+    floor.render(renderer, scene, time);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -123,12 +122,20 @@ export default function() {
   }
 
   const init = () => {
+    const lookAtY = 100;
+
     resizeWindow();
     on();
 
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(250, 500, 1000);
-    camera.lookAt(new THREE.Vector3());
+    camera.position.set(300, 600, 600);
+    floor.mirrorCamera.position.set(
+      camera.position.x,
+      camera.position.y * -1,
+      camera.position.z
+    );
+    camera.lookAt(new THREE.Vector3(0, lookAtY, 0));
+    floor.mirrorCamera.lookAt(new THREE.Vector3(0, -lookAtY, 0));
 
     loader.load('/sketch-threejs/img/sketch/butterfly/tex.png', (texture) => {
       texture.magFilter = THREE.NearestFilter;
@@ -136,9 +143,11 @@ export default function() {
 
       for (var i = 0; i < BUTTERFLY_NUM; i++) {
         butterflies[i] = new Butterfly(i, texture);
-        butterflies[i].obj.position.set(((i + 1) % 3 - 1) * i * 50, 0, 1800 / BUTTERFLY_NUM * i);
+        butterflies[i].obj.position.x = ((i + 1) % 3 - 1) * i * 50;
+        butterflies[i].obj.position.z = 1800 / BUTTERFLY_NUM * i;
         scene.add(butterflies[i].obj);
       }
+      scene.add(floor.obj);
       renderLoop();
     });
   }
