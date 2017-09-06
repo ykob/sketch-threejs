@@ -13,12 +13,15 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(90, 1, 1, 10000);
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 10000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
   const vectorTouchMove = new THREE.Vector2();
   const vectorTouchEnd = new THREE.Vector2();
+
+  const CAMERA_SIZE_X = 640;
+  const CAMERA_SIZE_Y = 480;
 
   let isDrag = false;
 
@@ -41,7 +44,12 @@ export default function() {
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
-    camera.aspect = resolution.x / resolution.y;
+    const x = Math.min((resolution.x / resolution.y) / (CAMERA_SIZE_X / CAMERA_SIZE_Y), 1.0) * CAMERA_SIZE_X;
+    const y = Math.min((resolution.y / resolution.x) / (CAMERA_SIZE_Y / CAMERA_SIZE_X), 1.0) * CAMERA_SIZE_Y;
+    camera.left   = x * -0.5;
+    camera.right  = x *  0.5;
+    camera.top    = y *  0.5;
+    camera.bottom = y * -0.5;
     camera.updateProjectionMatrix();
   };
   const resizeWindow = () => {
@@ -99,8 +107,8 @@ export default function() {
     on();
     resizeWindow();
 
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(0, 0, 500);
+    renderer.setClearColor(0xfefeee, 1.0);
+    camera.position.set(0, 0, 100);
     camera.lookAt(new THREE.Vector3());
 
     scene.add(egg.obj);

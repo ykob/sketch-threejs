@@ -43,15 +43,17 @@ export default class Egg {
     this.obj = this.createObj();
   }
   createObj() {
-    return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1024, 1024),
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(640, 640),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/egg/egg.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/egg/egg.fs'),
         transparent: true
       })
-    )
+    );
+    mesh.position.set(80, 0, 0);
+    return mesh;
   }
   render(time) {
     if (!this.obj.visible) return;
