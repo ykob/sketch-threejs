@@ -31,7 +31,7 @@ export default function() {
   // process for this sketch.
   //
 
-  const BUTTERFLY_NUM = 3;
+  const BUTTERFLY_NUM = 7;
   const butterflies = [];
 
   //
@@ -135,8 +135,8 @@ export default function() {
       texture.minFilter = THREE.NearestFilter;
 
       for (var i = 0; i < BUTTERFLY_NUM; i++) {
-        butterflies[i] = new Butterfly(texture);
-        butterflies[i].obj.position.set(((i + 1) % 3 - 1) * i * 100, 0, i * 600);
+        butterflies[i] = new Butterfly(i, texture);
+        butterflies[i].obj.position.set(((i + 1) % 3 - 1) * i * 50, 0, 1800 / BUTTERFLY_NUM * i);
         scene.add(butterflies[i].obj);
       }
       renderLoop();

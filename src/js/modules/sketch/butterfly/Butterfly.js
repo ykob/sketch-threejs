@@ -4,8 +4,12 @@ const glslify = require('glslify');
 const SIZE = 240;
 
 export default class Butterfly {
-  constructor(texture) {
+  constructor(i, texture) {
     this.uniforms = {
+      index: {
+        type: 'f',
+        value: i
+      },
       time: {
         type: 'f',
         value: 0
