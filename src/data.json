@@ -15,7 +15,7 @@
     "egg": {
       "title": "egg",
       "id": "egg",
-      "description": "",
+      "description": "drawing inside of egg with only fragment shader.",
       "path": "/sketch/egg.html",
       "posted": "2017.x.x",
       "update": "",
