@@ -13,7 +13,7 @@ varying vec2 vUv;
 varying float vOpacity;
 
 void main() {
-  float flapTime = radians(sin(time * 6.0 - length(position.xy) / size * 2.6 + index * 2.0) * 32.0);
+  float flapTime = radians(sin(time * 4.0 - length(position.xy) / size * 2.6 + index * 2.0) * 40.0 + 30.0);
   float hovering = cos(time * 2.0 + index * 3.0) * size / 16.0;
   vec3 updatePosition = vec3(
     cos(flapTime) * position.x,
