@@ -1,7 +1,7 @@
 import PhysicsRenderer from '../../../modules/common/PhysicsRenderer';
 
 const glslify = require('glslify');
-const SIZE = 100;
+const SIZE = 200;
 
 export default class Butterfly {
   constructor() {
