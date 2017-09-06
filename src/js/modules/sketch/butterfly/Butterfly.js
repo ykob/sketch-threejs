@@ -40,6 +40,6 @@ export default class Butterfly {
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
-    this.obj.position.z = (this.obj.position.z > -800) ? this.obj.position.z - 4 : 800;
+    this.obj.position.z = (this.obj.position.z > -900) ? this.obj.position.z - 4 : 900;
   }
 }
