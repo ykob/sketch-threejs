@@ -1,10 +1,10 @@
 import PhysicsRenderer from '../../../modules/common/PhysicsRenderer';
 
 const glslify = require('glslify');
-const SIZE = 200;
+const SIZE = 240;
 
 export default class Butterfly {
-  constructor() {
+  constructor(texture) {
     this.uniforms = {
       time: {
         type: 'f',
@@ -16,23 +16,13 @@ export default class Butterfly {
       },
       texture: {
         type: 't',
-        value: null
+        value: texture
       },
     }
     this.physicsRenderer = null;
-    this.obj = null;
+    this.obj = this.createObj();
   }
-  loadTexture(images, renderer, callback) {
-    const loader = new THREE.TextureLoader();
-    loader.load(images, (texture) => {
-      texture.magFilter = THREE.NearestFilter;
-      texture.minFilter = THREE.NearestFilter;
-      this.uniforms.texture.value = texture;
-      this.obj = this.createObj(renderer);
-      callback();
-    });
-  }
-  createObj(renderer) {
+  createObj() {
     const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE, 24, 24);
     const mesh = new THREE.Mesh(
       geometry,

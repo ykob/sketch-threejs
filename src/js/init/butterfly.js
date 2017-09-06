@@ -16,6 +16,7 @@ export default function() {
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 10000);
   const clock = new THREE.Clock();
+  const loader = new THREE.TextureLoader();
 
   const vectorTouchStart = new THREE.Vector2();
   const vectorTouchMove = new THREE.Vector2();
@@ -30,7 +31,7 @@ export default function() {
   // process for this sketch.
   //
 
-  const butterfly = new Butterfly();
+  const butterflies = [];
 
   //
   // common process
@@ -54,7 +55,9 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
-    butterfly.render(renderer, time);
+    for (var i = 0; i < butterflies.length; i++) {
+      butterflies[i].render(renderer, time);
+    }
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
@@ -119,17 +122,22 @@ export default function() {
   }
 
   const init = () => {
-    renderer.setSize(document.body.clientWidth, window.innerHeight);
+    resizeWindow();
+    on();
+
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(500, 500, 1000);
+    camera.position.set(250, 500, 1000);
     camera.lookAt(new THREE.Vector3());
 
-    butterfly.loadTexture('/img/sketch/butterfly/tex.png', renderer, () => {
-      scene.add(butterfly.obj);
-      resizeWindow();
+    loader.load('/sketch-threejs/img/sketch/butterfly/tex.png', (texture) => {
+      texture.magFilter = THREE.NearestFilter;
+      texture.minFilter = THREE.NearestFilter;
+
+      butterflies[0] = new Butterfly(texture);
+      scene.add(butterflies[0].obj);
+
       renderLoop();
     });
-    on();
   }
   init();
 }
