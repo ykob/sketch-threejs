@@ -42,10 +42,10 @@ void main() {
 
   float mask = circleOut * noise + circleIn;
   float maskHighLight = circleLight * (noise + 0.12);
-  float mask0 = 1.0 - step(maskHighLight, 0.23);
-  float mask1 = (1.0 - step(mask, 0.6)) * step(maskHighLight, 0.23);
-  float mask2 = (1.0 - step(mask, 0.36)) * step(mask, 0.6) * step(maskHighLight, 0.23);
-  float mask3 = (1.0 - step(mask, 0.014)) * step(mask, 0.36);
+  float mask0 = 1.0 - step(maskHighLight, 0.13);
+  float mask1 = (1.0 - step(mask, 0.6)) * step(maskHighLight, 0.13);
+  float mask2 = (1.0 - step(mask, 0.28)) * step(mask, 0.6) * step(maskHighLight, 0.23);
+  float mask3 = (1.0 - step(mask, 0.014)) * step(mask, 0.28);
   float mask4 = (1.0 - step(mask, 0.01)) * step(mask, 0.014);
 
   vec4 rgba0 = vec4(convertHsvToRgb(vec3(0.125, 0.2, 1.0)), 1.0) * mask0;
@@ -54,7 +54,11 @@ void main() {
   vec4 rgba3 = vec4(convertHsvToRgb(vec3(0.1, 0.02, 0.99)), 1.0) * mask3;
   vec4 rgba4 = vec4(convertHsvToRgb(vec3(0.1, 0.2, 0.9)), 1.0) * mask4;
 
-  vec4 eggColor = rgba0 + rgba1 + rgba2 + rgba3 + rgba4;
+  float patternNoise1 = step(0.0, snoise3(vPosition * 0.015 + vec3(0.0, 0.0, time * 0.1))) * 0.05;
+  float patternNoise2 = step(0.2, snoise3(vPosition * 0.025 + vec3(0.0, 1.0, time * 0.3))) * 0.03;
+  vec4 patternColor = vec4(vec3(patternNoise1), 1.0) * mask1 + vec4(vec3(patternNoise2), 1.0) * mask2;
+
+  vec4 eggColor = rgba0 + rgba1 + rgba2 + rgba3 + rgba4 + patternColor;
 
   gl_FragColor = eggColor;
 }
