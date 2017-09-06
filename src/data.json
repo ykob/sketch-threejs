@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "butterfly": {
+      "title": "butterfly",
+      "id": "butterfly",
+      "description": "express butterfly flapping with plane geometry and trigonometric function.",
+      "path": "/sketch/butterfly.html",
+      "posted": "2017.9.6",
+      "update": "",
+      "color": "black"
+    },
     "puddle": {
       "title": "puddle",
       "id": "puddle",

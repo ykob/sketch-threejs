@@ -1,49 +1,36 @@
-import initCommon from './init/common.js'
-import initCommonSketch from './init/commonSketch.js'
-import initIndex from './init/index.js'
-
-// initialize function for sketches
-import initPuddle from './init/puddle.js'
-import initReel from './init/reel.js'
-import initGlitch from './init/glitch.js'
-import initInstancing from './init/instancing.js'
-import initParticle from './init/particle.js'
-import initAttract from './init/attract.js'
-import initHole from './init/hole.js'
-import initMetalCube from './init/metalCube.js'
-import initDistort from './init/distort.js'
-import initImageData from './init/imageData.js'
-import initGallery from './init/gallery.js'
-import initComet from './init/comet.js'
-import initHyperSpace from './init/hyperSpace.js'
-import initFireBall from './init/fireBall.js'
-
 import ConsoleSignature from './modules/common/ConsoleSignature.js';
 import redirectOldSketches from './modules/common/redirectOldSketches.js';
 
+const page = document.querySelector('.l-page');
+const pageId = page.dataset.id;
+const consoleSignature = new ConsoleSignature();
+
 const init = () => {
-  redirectOldSketches();
-  const consoleSignature = new ConsoleSignature();
-  const path = location.pathname.replace('/sketch-threejs', '');
-  initCommon();
-  if (path !== `/`) initCommonSketch();
-  switch (path) {
-    case '/': initIndex(); break;
-    case '/sketch/puddle.html': initPuddle(); break;
-    case '/sketch/reel.html': initReel(); break;
-    case '/sketch/glitch.html': initGlitch(); break;
-    case '/sketch/instancing.html': initInstancing(); break;
-    case '/sketch/particle.html': initParticle(); break;
-    case '/sketch/attract.html': initAttract(); break;
-    case '/sketch/hole.html': initHole(); break;
-    case '/sketch/metal_cube.html': initMetalCube(); break;
-    case '/sketch/distort.html': initDistort(); break;
-    case '/sketch/image_data.html': initImageData(); break;
-    case '/sketch/gallery.html': initGallery(); break;
-    case '/sketch/comet.html': initComet(); break;
-    case '/sketch/hyper_space.html': initHyperSpace(); break;
-    case '/sketch/fire_ball.html': initFireBall(); break;
-    default:
+  require('./init/common.js').default();
+  if (pageId == 'index') {
+    require('./init/index.js').default();
+  } else {
+    require('./init/commonSketch.js').default();
+    switch (pageId) {
+      case 'butterfly':   require('./init/butterfly.js').default(); break;
+      case 'puddle':      require('./init/puddle.js').default(); break;
+      case 'reel':        require('./init/reel.js').default(); break;
+      case 'glitch':      require('./init/glitch.js').default(); break;
+      case 'instancing':  require('./init/instancing.js').default(); break;
+      case 'particle':    require('./init/particle.js').default(); break;
+      case 'attract':     require('./init/attract.js').default(); break;
+      case 'hole':        require('./init/hole.js').default(); break;
+      case 'metal_cube':  require('./init/metalCube.js').default(); break;
+      case 'distort':     require('./init/distort.js').default(); break;
+      case 'image_data':  require('./init/imageData.js').default(); break;
+      case 'gallery':     require('./init/gallery.js').default(); break;
+      case 'comet':       require('./init/comet.js').default(); break;
+      case 'hyper_space': require('./init/hyperSpace.js').default(); break;
+      case 'fire_ball':   require('./init/fireBall.js').default(); break;
+      default:
+    }
   }
+  redirectOldSketches();
 }
+
 init();
