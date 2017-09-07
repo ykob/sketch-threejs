@@ -151,7 +151,7 @@ export default function() {
     on();
 
     renderer.setClearColor(0xeeeeee, 1.0);
-    cameraBack.position.set(300, 500, 700);
+    cameraBack.position.set(400, 500, 800);
     floor.mirrorCamera.position.set(
       cameraBack.position.x,
       cameraBack.position.y * -1,
@@ -167,7 +167,7 @@ export default function() {
       // add 3d objects
       for (var i = 0; i < BUTTERFLY_NUM; i++) {
         butterflies[i] = new Butterfly(i, texture);
-        butterflies[i].obj.position.x = (Math.random() * 2 - 1) * 240;
+        butterflies[i].obj.position.x = (Math.random() * 2 - 1) * 280;
         butterflies[i].obj.position.z = 1800 / BUTTERFLY_NUM * i;
         sceneBack.add(butterflies[i].obj);
       }
