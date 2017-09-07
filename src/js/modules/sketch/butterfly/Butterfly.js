@@ -1,5 +1,5 @@
 const glslify = require('glslify');
-const SIZE = 240;
+const SIZE = 280;
 
 export default class Butterfly {
   constructor(i, texture) {
