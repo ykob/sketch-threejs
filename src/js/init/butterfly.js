@@ -42,8 +42,8 @@ export default function() {
   const butterflies = [];
   const floor = new Floor(resolution);
   const postEffectBright = new PostEffectBright(renderBack1.texture);
-  const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0, 2);
-  const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1, 2);
+  const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0, 1);
+  const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1, 1);
   const postEffectBloom = new PostEffectBloom(renderBack1.texture, renderBack2.texture);
 
   //
