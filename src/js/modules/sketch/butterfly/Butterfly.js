@@ -25,7 +25,7 @@ export default class Butterfly {
     this.obj.renderOrder = 10;
   }
   createObj() {
-    const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE, 24, 24);
+    const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE / 2, 24, 12);
     const mesh = new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
