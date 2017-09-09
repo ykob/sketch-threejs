@@ -18,11 +18,15 @@ varying float vOpacity;
 void main() {
   float thisTime = mod(time + i / size * interval, interval);
 
-  vec3 updatePosition = position + vec3(0.0, pow(thisTime, 2.0) * -8.0, 0.0);
+  vec3 updatePosition = position + vec3(
+    cos(thisTime * 3.0 + i) * 3.0,
+    thisTime * -16.0,
+    sin(thisTime * 3.0 + i) * 3.0
+  );
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(updatePosition, 1.0);
 
   vColor = convertHsvToRgb(vec3(colorH, 0.8, 0.6));
-  vOpacity = smoothstep(interval * 0.05, interval * 0.2, thisTime)
+  vOpacity = smoothstep(interval * 0.0, interval * 0.1, thisTime)
     * (1.0 - smoothstep(interval * 0.2, interval * 0.9, thisTime));
 
   gl_PointSize = 6.0 * (1200.0 / length(mvPosition.xyz));
