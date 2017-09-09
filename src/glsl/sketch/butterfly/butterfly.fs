@@ -19,5 +19,7 @@ void main() {
   vec3 hsv = vec3(colorH + noise * 0.2, 0.4, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
+  if (texColor.a < 0.5) discard;
+
   gl_FragColor = vec4(rgb, vOpacity) * texColor;
 }

@@ -36,9 +36,8 @@ export default class Butterfly {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/butterfly/butterfly.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/butterfly/butterfly.fs'),
-        depthWrite: false,
         side: THREE.DoubleSide,
-        transparent: true
+        transparent: true,
       })
     );
     mesh.position.y = SIZE * 0.5 + (Math.random() * 2 - 1) * SIZE * 0.1;
