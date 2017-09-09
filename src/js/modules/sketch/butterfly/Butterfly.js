@@ -37,7 +37,7 @@ export default class Butterfly {
         transparent: true
       })
     );
-    mesh.position.y = SIZE * 0.55;
+    mesh.position.y = SIZE * 0.5 + (Math.random() * 2 - 1) * SIZE * 0.1;
     mesh.rotation.set(-45 * Math.PI / 180, 0, 0);
     return mesh;
   }
