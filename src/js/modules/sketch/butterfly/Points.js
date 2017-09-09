@@ -1,5 +1,5 @@
 const glslify = require('glslify');
-const SIZE = 400;
+const SIZE = 500;
 const INTERVAL = 3;
 
 export default class Points {
@@ -12,6 +12,10 @@ export default class Points {
     };
     this.geometry = new THREE.BufferGeometry();
     this.uniforms = {
+      size: {
+        type: 'f',
+        value: SIZE
+      },
       interval: {
         type: 'f',
         value: INTERVAL
@@ -21,7 +25,8 @@ export default class Points {
         value: 0
       },
     };
-    this.index = 0;
+    this.butterflies = null;
+    this.butterfliesLengh = 0;
     this.obj = this.createObj();
     this.obj.renderOrder = 5;
   }
@@ -46,22 +51,28 @@ export default class Points {
       })
     );
   }
+  addButterflies(butterflies) {
+    this.butterflies = butterflies;
+    this.butterfliesLengh = butterflies.length;
+  }
   render(time) {
     this.uniforms.time.value += time;
     for (var i = 0; i < SIZE; i++) {
       const time = (this.uniforms.time.value + this.attr.index.getX(i) / SIZE * INTERVAL) % INTERVAL;
       const isValid = this.attr.valid.getX(i);
 
-      if (time >= INTERVAL && isValid == 1) {
+      if (time >= INTERVAL * 0.9 && isValid == 1) {
         this.attr.valid.setX(i, 0);
-      } else if (time <= INTERVAL && isValid == 0) {
+      } else if (time <= INTERVAL * 0.9 && isValid == 0) {
+        const index = Math.floor(Math.random() * this.butterfliesLengh);
+        const butterfly = this.butterflies[index];
         const radian = Math.random() * 360 * Math.PI / 180;
         const radius = Math.random() * 50 + 50;
         this.attr.position.setXYZ(
           i,
-          Math.cos(radian) * radius,
-          Math.sin(radian) * radius * 0.5 + 100,
-          0
+          Math.cos(radian) * radius + butterfly.obj.position.x,
+          Math.sin(radian) * radius * 0.5 + butterfly.obj.position.y,
+          butterfly.obj.position.z
         );
         this.attr.valid.setX(i, 1);
       }

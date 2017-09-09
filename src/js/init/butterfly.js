@@ -174,6 +174,8 @@ export default function() {
         butterflies[i].obj.position.z = 1800 / BUTTERFLY_NUM * i;
         sceneBack.add(butterflies[i].obj);
       }
+      points.butterflies = butterflies;
+      points.butterfliesLengh = butterflies.length;
       sceneBack.add(points.obj);
       floor.add(scene, sceneBack);
 
