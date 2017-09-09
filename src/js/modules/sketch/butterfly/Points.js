@@ -27,7 +27,7 @@ export default class Points {
     this.butterflies = null;
     this.butterfliesLengh = 0;
     this.obj = this.createObj();
-    this.obj.renderOrder = 5;
+    this.obj.renderOrder = 20;
   }
   createObj() {
     const indices = [];
@@ -45,8 +45,8 @@ export default class Points {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/butterfly/points.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/butterfly/points.fs'),
-        transparent: true,
         depthWrite: false,
+        transparent: true,
       })
     );
   }
