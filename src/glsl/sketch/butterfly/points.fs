@@ -10,5 +10,5 @@ void main() {
   n.z = 1.0 - dot(n.xy, n.xy);
   if (n.z < 0.0) discard;
 
-  gl_FragColor = vec4(vColor, vOpacity);
+  gl_FragColor = vec4(vColor, (vOpacity) * 0.3);
 }

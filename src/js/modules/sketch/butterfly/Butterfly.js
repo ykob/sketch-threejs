@@ -20,6 +20,10 @@ export default class Butterfly {
         type: 't',
         value: texture
       },
+      colorH: {
+        type: 'f',
+        value: Math.random()
+      },
     }
     this.obj = this.createObj();
     this.obj.renderOrder = 10;
@@ -43,6 +47,10 @@ export default class Butterfly {
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
-    this.obj.position.z = (this.obj.position.z > -900) ? this.obj.position.z - 4 : 900;
+    this.obj.position.z -= 4;
+    if (this.obj.position.z < -900) {
+      this.obj.position.z = 900;
+      this.uniforms.colorH.value = Math.random();
+    }
   }
 }

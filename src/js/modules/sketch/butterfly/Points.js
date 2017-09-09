@@ -1,12 +1,12 @@
 const glslify = require('glslify');
-const SIZE = 500;
+const SIZE = 600;
 const INTERVAL = 3;
 
 export default class Points {
   constructor() {
     this.attr = {
       position: new THREE.BufferAttribute(new Float32Array(SIZE * 3), 3),
-      color: new THREE.BufferAttribute(new Float32Array(SIZE * 3), 3),
+      colorH: new THREE.BufferAttribute(new Float32Array(SIZE), 1),
       index: new THREE.BufferAttribute(new Float32Array(SIZE), 1),
       valid: new THREE.BufferAttribute(new Float32Array(SIZE), 1),
     };
@@ -36,7 +36,7 @@ export default class Points {
       this.attr.index.setX(i, i);
     }
     this.geometry.addAttribute('position', this.attr.position);
-    this.geometry.addAttribute('color', this.attr.color);
+    this.geometry.addAttribute('colorH', this.attr.colorH);
     this.geometry.addAttribute('i', this.attr.index);
     this.geometry.addAttribute('valid', this.attr.valid);
 
@@ -71,12 +71,14 @@ export default class Points {
         this.attr.position.setXYZ(
           i,
           Math.cos(radian) * radius + butterfly.obj.position.x,
-          Math.sin(radian) * radius * 0.5 + butterfly.obj.position.y,
+          Math.sin(radian) * radius * 0.25 + butterfly.obj.position.y,
           butterfly.obj.position.z
         );
+        this.attr.colorH.setX(i, butterfly.uniforms.colorH.value);
         this.attr.valid.setX(i, 1);
       }
     }
     this.attr.position.needsUpdate = true;
+    this.attr.colorH.needsUpdate = true;
   }
 }
