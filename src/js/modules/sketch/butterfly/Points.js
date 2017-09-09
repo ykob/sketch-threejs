@@ -1,20 +1,19 @@
 const glslify = require('glslify');
-const SIZE = 12 * 50;
 const INTERVAL = 3;
 
 export default class Points {
-  constructor() {
+  constructor(size) {
     this.attr = {
-      position: new THREE.BufferAttribute(new Float32Array(SIZE * 3), 3),
-      colorH: new THREE.BufferAttribute(new Float32Array(SIZE), 1),
-      index: new THREE.BufferAttribute(new Float32Array(SIZE), 1),
-      valid: new THREE.BufferAttribute(new Float32Array(SIZE), 1),
+      position: new THREE.BufferAttribute(new Float32Array(size * 3), 3),
+      colorH: new THREE.BufferAttribute(new Float32Array(size), 1),
+      index: new THREE.BufferAttribute(new Float32Array(size), 1),
+      valid: new THREE.BufferAttribute(new Float32Array(size), 1),
     };
     this.geometry = new THREE.BufferGeometry();
     this.uniforms = {
       size: {
         type: 'f',
-        value: SIZE
+        value: size
       },
       interval: {
         type: 'f',
@@ -32,7 +31,7 @@ export default class Points {
   }
   createObj() {
     const indices = [];
-    for (var i = 0; i < SIZE; i++) {
+    for (var i = 0; i < this.uniforms.size.value; i++) {
       this.attr.index.setX(i, i);
     }
     this.geometry.addAttribute('position', this.attr.position);
@@ -57,8 +56,9 @@ export default class Points {
   }
   render(time) {
     this.uniforms.time.value += time;
-    for (var i = 0; i < SIZE; i++) {
-      const time = (this.uniforms.time.value + this.attr.index.getX(i) / SIZE * INTERVAL) % INTERVAL;
+    for (var i = 0; i < this.uniforms.size.value; i++) {
+      const time = (this.uniforms.time.value + this.attr.index.getX(i)
+        / this.uniforms.size.value * INTERVAL) % INTERVAL;
       const isValid = this.attr.valid.getX(i);
 
       if (time >= INTERVAL * 0.9 && isValid == 1) {
