@@ -40,8 +40,9 @@ export default function() {
   //
 
   const BUTTERFLY_NUM = 12;
+  const PARTICLE_NUM = 100;
   const butterflies = [];
-  const points = new Points(BUTTERFLY_NUM * 50);
+  const points = new Points(BUTTERFLY_NUM * PARTICLE_NUM);
   const floor = new Floor(resolution);
   const postEffectBright = new PostEffectBright(renderBack1.texture);
   const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0, 1);
