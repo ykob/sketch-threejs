@@ -3,6 +3,7 @@ attribute float colorH;
 attribute float i;
 attribute float valid;
 
+uniform vec3 cameraPosition;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
@@ -29,6 +30,6 @@ void main() {
   vOpacity = smoothstep(interval * 0.0, interval * 0.1, thisTime)
     * (1.0 - smoothstep(interval * 0.2, interval * 0.9, thisTime));
 
-  gl_PointSize = 6.0 * (1200.0 / length(mvPosition.xyz));
+  gl_PointSize = 6.0 * (length(cameraPosition) / length(mvPosition.xyz));
   gl_Position = projectionMatrix * mvPosition;
 }
