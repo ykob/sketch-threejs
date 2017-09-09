@@ -1,5 +1,5 @@
 const glslify = require('glslify');
-const SIZE = 600;
+const SIZE = 12 * 50;
 const INTERVAL = 3;
 
 export default class Points {
@@ -67,7 +67,7 @@ export default class Points {
         const index = Math.floor(Math.random() * this.butterfliesLengh);
         const butterfly = this.butterflies[index];
         const radian = Math.random() * 360 * Math.PI / 180;
-        const radius = Math.random() * 50 + 50;
+        const radius = Math.random() * 25 + 75;
         this.attr.position.setXYZ(
           i,
           Math.cos(radian) * radius + butterfly.obj.position.x,
