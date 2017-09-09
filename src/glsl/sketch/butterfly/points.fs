@@ -1,6 +1,7 @@
 precision highp float;
 
 varying vec3 vColor;
+varying float vOpacity;
 
 void main() {
   // to round.
@@ -9,5 +10,5 @@ void main() {
   n.z = 1.0 - dot(n.xy, n.xy);
   if (n.z < 0.0) discard;
 
-  gl_FragColor = vec4(vColor, 0.5);
+  gl_FragColor = vec4(vColor, vOpacity);
 }
