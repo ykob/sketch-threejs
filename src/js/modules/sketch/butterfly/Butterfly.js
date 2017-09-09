@@ -49,6 +49,7 @@ export default class Butterfly {
     this.uniforms.time.value += time;
     this.obj.position.z -= 4;
     if (this.obj.position.z < -900) {
+      this.obj.position.x = (Math.random() * 2 - 1) * 280;
       this.obj.position.z = 900;
       this.uniforms.colorH.value = Math.random();
     }
