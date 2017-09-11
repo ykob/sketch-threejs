@@ -1,5 +1,6 @@
 attribute vec3 position;
 attribute vec2 uv;
+attribute vec3 spherePosition;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -14,11 +15,15 @@ varying float vOpacity;
 
 void main() {
   float flapTime = radians(sin(time * 4.0 - length(position.xy) / size * 2.0 + index * 2.0) * 45.0 + 30.0);
-  vec3 updatePosition = vec3(
+  vec3 position1 = vec3(
     cos(flapTime) * position.x,
     position.y,
     sin(flapTime) * abs(position.x)
   );
+
+  vec3 position2 = spherePosition;
+
+  vec3 updatePosition = position1;
 
   vPosition = position;
   vUv = uv;
