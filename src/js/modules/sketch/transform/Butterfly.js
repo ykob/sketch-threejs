@@ -30,7 +30,7 @@ export default class Butterfly {
   }
   createObj() {
     const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE / 2, 128, 64);
-    const sphereGeometry = new THREE.SphereBufferGeometry(SIZE * 0.15, 128, 64, -0.5 * Math.PI, 2 * Math.PI);
+    const sphereGeometry = new THREE.SphereBufferGeometry(SIZE * 0.125, 128, 64, -0.5 * Math.PI, 2 * Math.PI);
     geometry.addAttribute('spherePosition', sphereGeometry.attributes.position);
 
     const mesh = new THREE.Mesh(

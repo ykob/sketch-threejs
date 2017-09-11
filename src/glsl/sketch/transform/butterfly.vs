@@ -16,11 +16,14 @@ varying float vStep;
 
 #pragma glslify: ease = require(glsl-easings/cubic-in-out);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d);
+#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
 
 void main() {
-  float transformTimeBase = 1.0 - mod(time / 2.0, 1.0);
-  float transformTime1 = ease(transformTimeBase);
-  float transformTime2 = ease(1.0 - transformTimeBase);
+  float interval = mod(time / 8.0, 1.0);
+
+  float transformTimeBase = clamp(interval * 8.0 - 2.0, 0.0, 1.0) * clamp((1.0 - interval) * 8.0 - 2.0, 0.0, 1.0);
+  float transformTime1 = ease(1.0 - transformTimeBase);
+  float transformTime2 = ease(transformTimeBase);
   float transformTimeScale = transformTimeBase / 2.0;
 
   float flapTime = radians(sin(time * 4.0 - length(position.xy) / size * 2.0 + index * 2.0) * 45.0 + 30.0);
@@ -30,9 +33,10 @@ void main() {
     sin(flapTime) * abs(position.x)
   );
 
-  float sphereNoise = cnoise3(spherePosition * 0.03 + time * 1.4);
+  float sphereNoise = cnoise3(spherePosition * 0.018 + time * 2.4);
   vec3 sphereNoisePosition = normalize(spherePosition) * sphereNoise * 30.0;
-  vec3 position2 = spherePosition + sphereNoisePosition;
+  mat4 rotateMat = computeRotateMat(time, time, time);
+  vec3 position2 = (rotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
   vec3 updatePosition = position1 * transformTime1 + position2 * transformTime2;
 

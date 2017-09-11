@@ -14,7 +14,7 @@ varying float vStep;
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 void main() {
-  vec4 texColor = texture2D(texture, vUv) + vec4(vec3(1.0 - vStep) * 0.8, 0.0);
+  vec4 texColor = texture2D(texture, vUv) + vec4(vec3(1.0 - vStep) * 0.8, (1.0 - vStep));
 
   float noise = snoise3(vPosition / vec3(size * 0.25) + vec3(0.0, 0.0, time));
   vec3 hsv = vec3(colorH + noise * 0.2, 0.4, 1.0);
