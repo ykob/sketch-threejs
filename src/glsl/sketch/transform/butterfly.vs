@@ -21,9 +21,11 @@ void main() {
     sin(flapTime) * abs(position.x)
   );
 
-  vec3 position2 = spherePosition;
+  vec3 position2 = spherePosition; 
 
-  vec3 updatePosition = position1;
+  float transformTime = (cos(time) + 1.0) / 2.0;
+
+  vec3 updatePosition = position1 * transformTime + position2 * (1.0 - transformTime);
 
   vPosition = position;
   vUv = uv;
