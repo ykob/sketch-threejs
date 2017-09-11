@@ -8,12 +8,13 @@ uniform float colorH;
 varying vec3 vPosition;
 varying vec2 vUv;
 varying float vOpacity;
+varying float vStep;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 void main() {
-  vec4 texColor = texture2D(texture, vUv);
+  vec4 texColor = texture2D(texture, vUv) + vec4(vec3(1.0 - vStep) * 0.8, 0.0);
 
   float noise = snoise3(vPosition / vec3(size * 0.25) + vec3(0.0, 0.0, time));
   vec3 hsv = vec3(colorH + noise * 0.2, 0.4, 1.0);
