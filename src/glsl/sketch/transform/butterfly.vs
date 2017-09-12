@@ -37,10 +37,11 @@ void main() {
 
   float sphereNoise = cnoise3(spherePosition * 0.02 + time * 2.4);
   vec3 sphereNoisePosition = normalize(spherePosition) * sphereNoise * 30.0;
-  mat4 rotateMat = computeRotateMat(interval * 4.0, 0.0, 0.0);
-  vec3 position2 = (rotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
+  mat4 sphereRotateMat = computeRotateMat(interval * 4.0, 0.0, 0.0);
+  vec3 position2 = (sphereRotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
-  vec3 position3 = squarePosition;
+  mat4 squareRotateMat = computeRotateMat(radians(-45.0), radians(45.0), 0.0);
+  vec3 position3 = (squareRotateMat * vec4(squarePosition, 1.0)).xyz;;
 
   vec3 updatePosition = position1 * ease(transformTime1) + position2 * ease(transformTime2) + position3 * ease(transformTime3);
 
