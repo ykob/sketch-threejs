@@ -29,18 +29,20 @@ void main() {
   float transformTime3 = max((interval) * 2.0 - 1.0, 0.0);
 
   float flapTime = radians(sin(time * 4.0 - length(position.xy) / size * 2.0 + index * 2.0) * 45.0 + 30.0);
-  vec3 position1 = vec3(
+  vec3 flapPosition = vec3(
     cos(flapTime) * position.x,
-    position.y,
+    position.y + sin(time) * 20.0,
     sin(flapTime) * abs(position.x)
   );
+  mat4 flapRotateMat = computeRotateMat(radians(45.0), 0.0, 0.0);
+  vec3 position1 = (flapRotateMat * vec4(flapPosition, 1.0)).xyz;
 
   float sphereNoise = cnoise3(spherePosition * 0.02 + time * 2.4);
   vec3 sphereNoisePosition = normalize(spherePosition) * sphereNoise * 30.0;
   mat4 sphereRotateMat = computeRotateMat(interval * 4.0, 0.0, 0.0);
   vec3 position2 = (sphereRotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
-  mat4 squareRotateMat = computeRotateMat(radians(-45.0), radians(45.0), 0.0);
+  mat4 squareRotateMat = computeRotateMat(0.0, radians(45.0), 0.0);
   vec3 position3 = (squareRotateMat * vec4(squarePosition, 1.0)).xyz;;
 
   vec3 updatePosition = position1 * ease(transformTime1) + position2 * ease(transformTime2) + position3 * ease(transformTime3);

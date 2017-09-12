@@ -45,12 +45,10 @@ export default class Butterfly {
         transparent: true,
       })
     );
-    mesh.position.y = SIZE * 0.25;
-    mesh.rotation.set(-45 * Math.PI / 180, 0, 0);
+    mesh.position.y = SIZE * 0.3;
     return mesh;
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
-    this.obj.position.y = SIZE * 0.25 + Math.sin(this.uniforms.time.value) * 15;
   }
 }
