@@ -29,9 +29,11 @@ export default class Butterfly {
     this.obj.renderOrder = 10;
   }
   createObj() {
-    const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE / 2, 128, 64);
-    const sphereGeometry = new THREE.SphereBufferGeometry(SIZE * 0.125, 128, 64, -0.5 * Math.PI, 2 * Math.PI);
+    const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE / 2, 64, 64);
+    const sphereGeometry = new THREE.SphereBufferGeometry(SIZE * 0.1, 64, 64, -0.5 * Math.PI, 2 * Math.PI);
+    const squareGeometry = new THREE.PlaneBufferGeometry(SIZE * 0.75, SIZE * 0.75, 64, 64);
     geometry.addAttribute('spherePosition', sphereGeometry.attributes.position);
+    geometry.addAttribute('squarePosition', squareGeometry.attributes.position);
 
     const mesh = new THREE.Mesh(
       geometry,
