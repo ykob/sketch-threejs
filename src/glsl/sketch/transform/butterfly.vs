@@ -14,7 +14,7 @@ varying vec2 vUv;
 varying float vOpacity;
 varying float vStep;
 
-#pragma glslify: ease = require(glsl-easings/cubic-in-out);
+#pragma glslify: ease = require(glsl-easings/back-in-out);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d);
 #pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
 
@@ -33,14 +33,14 @@ void main() {
     sin(flapTime) * abs(position.x)
   );
 
-  float sphereNoise = cnoise3(spherePosition * 0.018 + time * 2.4);
+  float sphereNoise = cnoise3(spherePosition * 0.018 + time * 1.6);
   vec3 sphereNoisePosition = normalize(spherePosition) * sphereNoise * 30.0;
   mat4 rotateMat = computeRotateMat(time, time, time);
-  vec3 position2 = (rotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
+  vec3 position2 = (vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
   vec3 updatePosition = position1 * transformTime1 + position2 * transformTime2;
 
-  vPosition = position;
+  vPosition = updatePosition;
   vUv = uv;
   vOpacity = (1.0 - smoothstep(0.75, 1.0, abs((modelMatrix * vec4(updatePosition, 1.0)).z) / 900.0)) * 0.85;
   vStep = transformTime1;
