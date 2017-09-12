@@ -8,6 +8,7 @@ uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float index;
 uniform float time;
+uniform float timeTransform;
 uniform float size;
 
 varying vec3 vPosition;
@@ -22,11 +23,9 @@ varying float vStep3;
 #pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
 
 void main() {
-  float interval = mod(time / 1.5, 1.0);
-
-  float transformTime1 = max((1.0 - interval) * 2.0 - 1.0, 0.0);
-  float transformTime2 = min((interval) * 2.0, 1.0) * min((1.0 - interval) * 2.0, 1.0);
-  float transformTime3 = max((interval) * 2.0 - 1.0, 0.0);
+  float transformTime1 = max((1.0 - timeTransform) * 2.0 - 1.0, 0.0);
+  float transformTime2 = min((timeTransform) * 2.0, 1.0) * min((1.0 - timeTransform) * 2.0, 1.0);
+  float transformTime3 = max((timeTransform) * 2.0 - 1.0, 0.0);
 
   float flapTime = radians(sin(time * 4.0 - length(position.xy) / size * 2.0 + index * 2.0) * 45.0 + 30.0);
   vec3 flapPosition = vec3(
@@ -39,7 +38,7 @@ void main() {
 
   float sphereNoise = cnoise3(spherePosition * 0.02 + time * 2.4);
   vec3 sphereNoisePosition = normalize(spherePosition) * sphereNoise * 30.0;
-  mat4 sphereRotateMat = computeRotateMat(interval * 4.0, 0.0, 0.0);
+  mat4 sphereRotateMat = computeRotateMat(timeTransform * 4.0, 0.0, 0.0);
   vec3 position2 = (sphereRotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
   mat4 squareRotateMat = computeRotateMat(0.0, radians(45.0), 0.0);
@@ -49,9 +48,9 @@ void main() {
 
   vPosition = updatePosition;
   vUv = uv;
-  vStep1 = clamp((1.0 - interval) * 4.0 - 2.0, 0.0, 1.0);
-  vStep2 = clamp((interval) * 4.0 - 1.0, 0.0, 1.0) * clamp((1.0 - interval) * 3.0 - 1.0, 0.0, 1.0);
-  vStep3 = clamp((interval) * 3.0 - 1.0, 0.0, 1.0);
+  vStep1 = clamp((1.0 - timeTransform) * 4.0 - 2.0, 0.0, 1.0);
+  vStep2 = clamp((timeTransform) * 4.0 - 1.0, 0.0, 1.0) * clamp((1.0 - timeTransform) * 3.0 - 1.0, 0.0, 1.0);
+  vStep3 = clamp((timeTransform) * 3.0 - 1.0, 0.0, 1.0);
 
   gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(updatePosition, 1.0);
 }

@@ -1,5 +1,6 @@
 const glslify = require('glslify');
 const SIZE = 280;
+const TIME = 1;
 
 export default class Butterfly {
   constructor(i, texture) {
@@ -9,6 +10,10 @@ export default class Butterfly {
         value: i
       },
       time: {
+        type: 'f',
+        value: 0
+      },
+      timeTransform: {
         type: 'f',
         value: 0
       },
@@ -22,11 +27,12 @@ export default class Butterfly {
       },
       colorH: {
         type: 'f',
-        value: Math.random()
+        value: 0.15
       },
     }
     this.obj = this.createObj();
     this.obj.renderOrder = 10;
+    this.isTransform = false;
   }
   createObj() {
     const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE / 2, 64, 64);
@@ -50,5 +56,10 @@ export default class Butterfly {
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
+    if (this.uniforms.timeTransform.value < TIME && this.isTransform === true) {
+      this.uniforms.timeTransform.value = Math.min(this.uniforms.timeTransform.value + time, TIME);
+    } else if (this.uniforms.timeTransform.value > 0 && this.isTransform === false) {
+      this.uniforms.timeTransform.value = Math.max(this.uniforms.timeTransform.value - time, 0);
+    }
   }
 }

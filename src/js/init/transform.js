@@ -93,6 +93,7 @@ export default function() {
   }
   const touchStart = (isTouched) => {
     isDrag = true;
+    butterflies[0].isTransform = !butterflies[0].isTransform;
   };
   const touchMove = (isTouched) => {
     if (isDrag) {}
@@ -149,13 +150,13 @@ export default function() {
   }
 
   const init = () => {
-    const lookAtY = 50;
+    const lookAtY = 60;
 
     resizeWindow();
     on();
 
     renderer.setClearColor(0xeeeeee, 1.0);
-    cameraBack.position.set(400, 100, -400);
+    cameraBack.position.set(400, 60, -400);
     floor.mirrorCamera.position.set(
       cameraBack.position.x,
       cameraBack.position.y * -1,
