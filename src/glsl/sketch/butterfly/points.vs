@@ -26,10 +26,12 @@ void main() {
   );
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(updatePosition, 1.0);
 
-  vColor = convertHsvToRgb(vec3(colorH, 0.8, 0.6));
+  vec3 hsv = vec3(colorH + sin(i) * 0.075, 0.8, 1.0);
+
+  vColor = convertHsvToRgb(hsv);
   vOpacity = smoothstep(interval * 0.0, interval * 0.1, thisTime)
     * (1.0 - smoothstep(interval * 0.2, interval * 0.9, thisTime));
 
-  gl_PointSize = 12.0 * (length(cameraPosition) / length(mvPosition.xyz));
+  gl_PointSize = 8.0 * (length(cameraPosition) / length(mvPosition.xyz));
   gl_Position = projectionMatrix * mvPosition;
 }
