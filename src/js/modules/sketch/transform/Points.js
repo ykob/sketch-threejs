@@ -1,8 +1,8 @@
 const glslify = require('glslify');
-const INTERVAL = 3;
 
 export default class Points {
   constructor(size) {
+    this.interval = 6;
     this.attr = {
       position: new THREE.BufferAttribute(new Float32Array(size * 3), 3),
       colorH: new THREE.BufferAttribute(new Float32Array(size), 1),
@@ -18,7 +18,7 @@ export default class Points {
       },
       interval: {
         type: 'f',
-        value: INTERVAL
+        value: this.interval
       },
       time: {
         type: 'f',
@@ -60,12 +60,12 @@ export default class Points {
     this.uniforms.time.value += time;
     for (var i = 0; i < this.uniforms.size.value; i++) {
       const time = (this.uniforms.time.value + this.attr.index.getX(i)
-        / this.uniforms.size.value * INTERVAL) % INTERVAL;
+        / this.uniforms.size.value * this.interval) % this.interval;
       const isValid = this.attr.valid.getX(i);
 
-      if (time >= INTERVAL * 0.9 && isValid == 1) {
+      if (time >= this.interval * 0.9 && isValid == 1) {
         this.attr.valid.setX(i, 0);
-      } else if (time <= INTERVAL * 0.9 && isValid == 0) {
+      } else if (time <= this.interval * 0.9 && isValid == 0) {
         const index = Math.floor(Math.random() * this.butterfliesLengh);
         const butterfly = this.butterflies[index];
         const radian = (Math.random() * -180) * Math.PI / 180;

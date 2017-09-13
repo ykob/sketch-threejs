@@ -40,7 +40,7 @@ export default function() {
   //
 
   const BUTTERFLY_NUM = 1;
-  const PARTICLE_NUM = 40;
+  const PARTICLE_NUM = 24;
   const butterflies = [];
   const points = new Points(BUTTERFLY_NUM * PARTICLE_NUM);
   const floor = new Floor(resolution);
