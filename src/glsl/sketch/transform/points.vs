@@ -23,7 +23,7 @@ void main() {
 
   vec3 updatePosition = position + vec3(
     cos(thisTime * 3.0 + i) * 3.0,
-    thisTime * -12.0,
+    thisTime * -20.0,
     sin(thisTime * 3.0 + i) * 3.0
   );
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(updatePosition, 1.0);

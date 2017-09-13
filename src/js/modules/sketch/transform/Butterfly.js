@@ -1,9 +1,8 @@
 const glslify = require('glslify');
-const SIZE = 280;
-const TIME = 1;
 
 export default class Butterfly {
   constructor(i, texture) {
+    this.size = 280;
     this.uniforms = {
       index: {
         type: 'f',
@@ -19,7 +18,7 @@ export default class Butterfly {
       },
       size: {
         type: 'f',
-        value: SIZE
+        value: this.size
       },
       texture: {
         type: 't',
@@ -27,7 +26,7 @@ export default class Butterfly {
       },
       colorH: {
         type: 'f',
-        value: 0.15
+        value: 0.4
       },
     }
     this.obj = this.createObj();
@@ -35,9 +34,9 @@ export default class Butterfly {
     this.isTransform = false;
   }
   createObj() {
-    const geometry = new THREE.PlaneBufferGeometry(SIZE, SIZE / 2, 64, 64);
-    const sphereGeometry = new THREE.SphereBufferGeometry(SIZE * 0.1, 64, 64, -0.5 * Math.PI, 2 * Math.PI);
-    const squareGeometry = new THREE.PlaneBufferGeometry(SIZE, SIZE * 0.5, 64, 64);
+    const geometry = new THREE.PlaneBufferGeometry(this.size, this.size / 2, 64, 64);
+    const sphereGeometry = new THREE.SphereBufferGeometry(this.size * 0.1, 64, 64, -0.5 * Math.PI, 2 * Math.PI);
+    const squareGeometry = new THREE.PlaneBufferGeometry(this.size, this.size * 0.5, 64, 64);
     geometry.addAttribute('spherePosition', sphereGeometry.attributes.position);
     geometry.addAttribute('squarePosition', squareGeometry.attributes.position);
 
@@ -51,13 +50,13 @@ export default class Butterfly {
         transparent: true,
       })
     );
-    mesh.position.y = SIZE * 0.3;
+    mesh.position.y = this.size * 0.3;
     return mesh;
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
-    if (this.uniforms.timeTransform.value < TIME && this.isTransform === true) {
-      this.uniforms.timeTransform.value = Math.min(this.uniforms.timeTransform.value + time, TIME);
+    if (this.uniforms.timeTransform.value < 1 && this.isTransform === true) {
+      this.uniforms.timeTransform.value = Math.min(this.uniforms.timeTransform.value + time, 1);
     } else if (this.uniforms.timeTransform.value > 0 && this.isTransform === false) {
       this.uniforms.timeTransform.value = Math.max(this.uniforms.timeTransform.value - time, 0);
     }

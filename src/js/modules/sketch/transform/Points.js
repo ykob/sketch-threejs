@@ -1,8 +1,9 @@
 const glslify = require('glslify');
+const MathEx = require('js-util/MathEx');
 
 export default class Points {
   constructor(size) {
-    this.interval = 6;
+    this.interval = 4;
     this.attr = {
       position: new THREE.BufferAttribute(new Float32Array(size * 3), 3),
       colorH: new THREE.BufferAttribute(new Float32Array(size), 1),
@@ -68,15 +69,17 @@ export default class Points {
       } else if (time <= this.interval * 0.9 && isValid == 0) {
         const index = Math.floor(Math.random() * this.butterfliesLengh);
         const butterfly = this.butterflies[index];
-        const radian = (Math.random() * -180) * Math.PI / 180;
-        const radius = Math.random() * 80;
+        const radian1 = (Math.random() * -90 - 90) * Math.PI / 180;
+        const radian2 = (Math.random() * -180) * Math.PI / 180;
+        const radius = Math.random() * butterfly.uniforms.size.value / 4 + butterfly.uniforms.size.value / 8;
+        const position = MathEx.polar(radian1, radian2, radius);
         const opacity = (butterfly.uniforms.timeTransform.value > 0) ? 0 : 1;
 
         this.attr.position.setXYZ(
           i,
-          Math.cos(radian) * radius + butterfly.obj.position.x,
-          Math.sin(radian) * radius * 0.5 + butterfly.obj.position.y + Math.sin(butterfly.uniforms.time.value) * 20.0,
-          butterfly.obj.position.z
+          position[0] + butterfly.obj.position.x,
+          position[1] * 0.2 + butterfly.obj.position.y + Math.sin(butterfly.uniforms.time.value) * 20.0,
+          position[2] * 0.5 + butterfly.obj.position.z
         );
         this.attr.colorH.setX(i, butterfly.uniforms.colorH.value);
         this.attr.opacity.setX(i, opacity);
