@@ -7,6 +7,7 @@ export default class Points {
       position: new THREE.BufferAttribute(new Float32Array(size * 3), 3),
       colorH: new THREE.BufferAttribute(new Float32Array(size), 1),
       index: new THREE.BufferAttribute(new Float32Array(size), 1),
+      opacity: new THREE.BufferAttribute(new Float32Array(size), 1),
       valid: new THREE.BufferAttribute(new Float32Array(size), 1),
     };
     this.geometry = new THREE.BufferGeometry();
@@ -37,6 +38,7 @@ export default class Points {
     this.geometry.addAttribute('position', this.attr.position);
     this.geometry.addAttribute('colorH', this.attr.colorH);
     this.geometry.addAttribute('i', this.attr.index);
+    this.geometry.addAttribute('opacity', this.attr.opacity);
     this.geometry.addAttribute('valid', this.attr.valid);
 
     return new THREE.Points(
@@ -68,17 +70,22 @@ export default class Points {
         const butterfly = this.butterflies[index];
         const radian = (Math.random() * -180) * Math.PI / 180;
         const radius = Math.random() * 80;
+        const opacity = (butterfly.uniforms.timeTransform.value > 0) ? 0 : 1;
+
         this.attr.position.setXYZ(
           i,
           Math.cos(radian) * radius + butterfly.obj.position.x,
-          Math.sin(radian) * radius * 0.5 + butterfly.obj.position.y,
+          Math.sin(radian) * radius * 0.5 + butterfly.obj.position.y + Math.sin(butterfly.uniforms.time.value) * 20.0,
           butterfly.obj.position.z
         );
         this.attr.colorH.setX(i, butterfly.uniforms.colorH.value);
+        this.attr.opacity.setX(i, opacity);
         this.attr.valid.setX(i, 1);
       }
     }
     this.attr.position.needsUpdate = true;
     this.attr.colorH.needsUpdate = true;
+    this.attr.opacity.needsUpdate = true;
+    this.attr.valid.needsUpdate = true;
   }
 }
