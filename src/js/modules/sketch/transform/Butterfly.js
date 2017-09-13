@@ -26,7 +26,7 @@ export default class Butterfly {
       },
       colorH: {
         type: 'f',
-        value: 0.4
+        value: 0.08
       },
     }
     this.obj = this.createObj();
