@@ -30,8 +30,8 @@ void main() {
   float flapTime = radians(sin(time * 4.0 - length(position.xy) / size * 2.0 + index * 2.0) * 45.0 + 30.0);
   vec3 flapPosition = vec3(
     cos(flapTime) * position.x,
-    position.y + sin(time) * 20.0,
-    sin(flapTime) * abs(position.x)
+    position.y + sin(time) * 10.0,
+    sin(flapTime) * abs(position.x) + sin(time) * 10.0
   );
   mat4 flapRotateMat = computeRotateMat(radians(45.0), 0.0, 0.0);
   vec3 position1 = (flapRotateMat * vec4(flapPosition, 1.0)).xyz;
