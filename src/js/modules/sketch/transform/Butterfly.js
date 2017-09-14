@@ -3,6 +3,7 @@ const glslify = require('glslify');
 export default class Butterfly {
   constructor(i, tex1, tex2) {
     this.size = 280;
+    this.interval = 1.6;
     this.uniforms = {
       index: {
         type: 'f',
@@ -15,6 +16,10 @@ export default class Butterfly {
       timeTransform: {
         type: 'f',
         value: 0
+      },
+      interval: {
+        type: 'f',
+        value: this.interval
       },
       size: {
         type: 'f',
@@ -59,8 +64,8 @@ export default class Butterfly {
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
-    if (this.uniforms.timeTransform.value < 1 && this.isTransform === true) {
-      this.uniforms.timeTransform.value = Math.min(this.uniforms.timeTransform.value + time, 1);
+    if (this.uniforms.timeTransform.value < this.interval && this.isTransform === true) {
+      this.uniforms.timeTransform.value = Math.min(this.uniforms.timeTransform.value + time, this.interval);
     } else if (this.uniforms.timeTransform.value > 0 && this.isTransform === false) {
       this.uniforms.timeTransform.value = Math.max(this.uniforms.timeTransform.value - time, 0);
     }
