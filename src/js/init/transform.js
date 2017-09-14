@@ -49,6 +49,12 @@ export default function() {
   const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1, 1);
   const postEffectBloom = new PostEffectBloom(renderBack1.texture, renderBack2.texture);
 
+  const texArray = [
+    '/sketch-threejs/img/sketch/transform/tex.png',
+    '/sketch-threejs/img/sketch/transform/flower.jpg'
+  ];
+  const textures = [];
+
   //
   // common process
   //
@@ -165,27 +171,34 @@ export default function() {
     cameraBack.lookAt(new THREE.Vector3(0, lookAtY, 0));
     floor.mirrorCamera.lookAt(new THREE.Vector3(0, -lookAtY, 0));
 
-    loader.load('/sketch-threejs/img/sketch/butterfly/tex.png', (texture) => {
-      texture.magFilter = THREE.NearestFilter;
-      texture.minFilter = THREE.NearestFilter;
+    let countLoaded = 0;
+    for (var i = 0; i < texArray.length; i++) {
+      const index = i;
+      loader.load(texArray[i], (texture) => {
+        texture.magFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.NearestFilter;
+        textures[index] = texture;
+        countLoaded++;
+        if (countLoaded >= texArray.length) {
+          // add 3d objects
+          for (var j = 0; j < BUTTERFLY_NUM; j++) {
+            butterflies[j] = new Butterfly(j, textures[0], textures[1]);
+            sceneBack.add(butterflies[j].obj);
+          }
+          points.addButterflies(butterflies);
+          sceneBack.add(points.obj);
+          floor.add(scene, sceneBack);
 
-      // add 3d objects
-      for (var i = 0; i < BUTTERFLY_NUM; i++) {
-        butterflies[i] = new Butterfly(i, texture);
-        sceneBack.add(butterflies[i].obj);
-      }
-      points.addButterflies(butterflies);
-      sceneBack.add(points.obj);
-      floor.add(scene, sceneBack);
+          // add post effects
+          scene.add(postEffectBright.obj);
+          scene.add(postEffectBlurX.obj);
+          scene.add(postEffectBlurY.obj);
+          scene.add(postEffectBloom.obj);
 
-      // add post effects
-      scene.add(postEffectBright.obj);
-      scene.add(postEffectBlurX.obj);
-      scene.add(postEffectBlurY.obj);
-      scene.add(postEffectBloom.obj);
-
-      renderLoop();
-    });
+          renderLoop();
+        }
+      });
+    }
   }
   init();
 }

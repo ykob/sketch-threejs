@@ -1,7 +1,7 @@
 const glslify = require('glslify');
 
 export default class Butterfly {
-  constructor(i, texture) {
+  constructor(i, tex1, tex2) {
     this.size = 280;
     this.uniforms = {
       index: {
@@ -20,9 +20,13 @@ export default class Butterfly {
         type: 'f',
         value: this.size
       },
-      texture: {
+      texButterfly: {
         type: 't',
-        value: texture
+        value: tex1
+      },
+      texPicture: {
+        type: 't',
+        value: tex2
       },
       colorH: {
         type: 'f',
