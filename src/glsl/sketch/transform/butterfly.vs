@@ -51,9 +51,9 @@ void main() {
 
   vPosition = updatePosition;
   vUv = uv;
-  vStep1 = clamp((1.0 - t) * 4.0 - 2.0, 0.0, 1.0);
-  vStep2 = clamp((t) * 4.0 - 1.0, 0.0, 1.0) * clamp((1.0 - t) * 3.0 - 1.0, 0.0, 1.0);
-  vStep3 = clamp((t) * 3.0 - 1.0, 0.0, 1.0);
+  vStep1 = clamp((1.0 - t) * 6.0 - 2.0, 0.0, 1.0);
+  vStep2 = clamp((t) * 6.0 - 1.0, 0.0, 1.0) * clamp((1.0 - t) * 6.0 - 1.0, 0.0, 1.0);
+  vStep3 = clamp((t) * 6.0 - 3.0, 0.0, 1.0);
 
   gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(updatePosition, 1.0);
 }

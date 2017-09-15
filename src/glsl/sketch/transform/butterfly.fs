@@ -25,7 +25,7 @@ void main() {
   vec3 rgb = convertHsvToRgb(hsv);
 
   vec4 color1 = texButterflyColor;
-  vec4 color2 = vec4(vec3(1.0 + length(texButterflyColor.rgb) * texButterflyColor.a), 1.0);
+  vec4 color2 = vec4((1.0 - texButterflyColor.rgb * 0.5), texButterflyColor.a);
   vec4 color3 = texPictureColor;
 
   vec4 color = vec4(rgb, 1.0) * (color1 * vStep1 + color2 * vStep2) + color3 * vStep3;
