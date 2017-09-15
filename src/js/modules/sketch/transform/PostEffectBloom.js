@@ -1,8 +1,12 @@
 const glslify = require('glslify');
 
 export default class PostEffectBloom {
-  constructor(texture1, texture2) {
+  constructor(brightMin, texture1, texture2) {
     this.uniforms = {
+      brightMin: {
+        type: 'f',
+        value: brightMin,
+      },
       texture1: {
         type: 't',
         value: texture1

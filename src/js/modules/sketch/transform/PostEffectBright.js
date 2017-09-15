@@ -1,11 +1,11 @@
 const glslify = require('glslify');
 
 export default class PostEffectBright {
-  constructor(texture) {
+  constructor(brightMin, texture) {
     this.uniforms = {
-      minBright: {
+      brightMin: {
         type: 'f',
-        value: 0.3,
+        value: brightMin,
       },
       texture: {
         type: 't',

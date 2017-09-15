@@ -41,13 +41,15 @@ export default function() {
 
   const BUTTERFLY_NUM = 1;
   const PARTICLE_NUM = 32;
+  const BRIGHT_MIN = 0.4;
+
   const butterflies = [];
   const points = new Points(BUTTERFLY_NUM * PARTICLE_NUM);
   const floor = new Floor(resolution);
-  const postEffectBright = new PostEffectBright(renderBack1.texture);
+  const postEffectBright = new PostEffectBright(BRIGHT_MIN, renderBack1.texture);
   const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0, 1);
   const postEffectBlurY = new PostEffectBlur(renderBack3.texture, 0, 1, 1);
-  const postEffectBloom = new PostEffectBloom(renderBack1.texture, renderBack2.texture);
+  const postEffectBloom = new PostEffectBloom(BRIGHT_MIN, renderBack1.texture, renderBack2.texture);
 
   const texArray = [
     '/sketch-threejs/img/sketch/transform/tex.png',
@@ -161,7 +163,7 @@ export default function() {
     resizeWindow();
     on();
 
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0xf9f9f9, 1.0);
     cameraBack.position.set(400, 60, -400);
     floor.mirrorCamera.position.set(
       cameraBack.position.x,
