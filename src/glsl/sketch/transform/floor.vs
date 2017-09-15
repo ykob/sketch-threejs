@@ -12,7 +12,7 @@ varying vec4 vUv;
 void main(void) {
   vec4 worldPosition = modelMatrix * vec4(position, 1.0);
 
-  vPosition = position;
+  vPosition = worldPosition.xyz;
   vUv = textureMatrix * worldPosition;
 
   gl_Position = projectionMatrix * viewMatrix * worldPosition;

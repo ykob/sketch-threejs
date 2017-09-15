@@ -36,7 +36,7 @@ export default class Floor {
   }
   createObj() {
     const mesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1000, 2000),
+      new THREE.PlaneBufferGeometry(4000, 4000),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/transform/floor.vs'),
