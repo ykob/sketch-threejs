@@ -43,9 +43,9 @@ export default class Butterfly {
     this.isTransform = false;
   }
   createObj() {
-    const geometry = new THREE.PlaneBufferGeometry(this.size, this.size / 2, 64, 64);
-    const sphereGeometry = new THREE.SphereBufferGeometry(this.size * 0.1, 64, 64, -0.5 * Math.PI, 2 * Math.PI);
-    const squareGeometry = new THREE.PlaneBufferGeometry(this.size, this.size * 0.5, 64, 64);
+    const geometry = new THREE.PlaneBufferGeometry(this.size, this.size / 2, 64, 32);
+    const sphereGeometry = new THREE.SphereBufferGeometry(this.size * 0.1, 64, 32, -0.5 * Math.PI, 2 * Math.PI);
+    const squareGeometry = new THREE.PlaneBufferGeometry(this.size, this.size * 0.5, 64, 32);
     geometry.addAttribute('spherePosition', sphereGeometry.attributes.position);
     geometry.addAttribute('squarePosition', squareGeometry.attributes.position);
 

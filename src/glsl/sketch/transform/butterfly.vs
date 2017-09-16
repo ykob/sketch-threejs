@@ -47,8 +47,12 @@ void main() {
   vec3 position2 = (sphereRotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
   // Position of Picture
-  mat4 squareRotateMat = computeRotateMat(0.0, radians(45.0), 0.0);
-  vec3 position3 = (squareRotateMat * vec4(squarePosition, 1.0)).xyz;;
+  float picureSin1 = sin(uv.y * 3.4 + time / 2.0);
+  float picureSin2 = sin(uv.x * 5.2 + time / 1.8);
+  float picureSin3 = sin(uv.x * 2.0 + time / 4.0);
+  vec3 pictureWave = picureSin1 * picureSin2 * picureSin3 * vec3(0.0, 0.0, 20.0);
+  mat4 pictureRotateMat = computeRotateMat(0.0, radians(45.0), 0.0);
+  vec3 position3 = (pictureRotateMat * vec4(squarePosition + pictureWave, 1.0)).xyz;;
 
   // Total of All Position
   vec3 updatePosition = position1 * ease(transformTime1) + position2 * ease(transformTime2) + position3 * ease(transformTime3);

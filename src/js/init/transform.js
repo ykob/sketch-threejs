@@ -15,7 +15,7 @@ export default function() {
   };
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
-    antialias: false,
+    antialias: true,
     canvas: canvas,
     alpha: true
   });
