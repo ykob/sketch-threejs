@@ -20,6 +20,10 @@ export default class Butterfly {
         type: 't',
         value: texture
       },
+      colorH: {
+        type: 'f',
+        value: Math.random()
+      },
     }
     this.obj = this.createObj();
     this.obj.renderOrder = 10;
@@ -32,17 +36,21 @@ export default class Butterfly {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/butterfly/butterfly.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/butterfly/butterfly.fs'),
-        depthWrite: false,
         side: THREE.DoubleSide,
-        transparent: true
+        transparent: true,
       })
     );
-    mesh.position.y = SIZE * 0.55;
+    mesh.position.y = SIZE * 0.5 + (Math.random() * 2 - 1) * SIZE * 0.1;
     mesh.rotation.set(-45 * Math.PI / 180, 0, 0);
     return mesh;
   }
   render(renderer, time) {
     this.uniforms.time.value += time;
-    this.obj.position.z = (this.obj.position.z > -900) ? this.obj.position.z - 4 : 900;
+    this.obj.position.z -= 4;
+    if (this.obj.position.z < -900) {
+      this.obj.position.x = (Math.random() * 2 - 1) * 280;
+      this.obj.position.z = 900;
+      this.uniforms.colorH.value = Math.random();
+    }
   }
 }

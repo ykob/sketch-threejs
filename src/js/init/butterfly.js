@@ -1,5 +1,6 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Butterfly from '../modules/sketch/butterfly/Butterfly';
+import Points from '../modules/sketch/butterfly/Points';
 import Floor from '../modules/sketch/butterfly/Floor.js';
 import PostEffectBright from '../modules/sketch/butterfly/PostEffectBright.js';
 import PostEffectBlur from '../modules/sketch/butterfly/PostEffectBlur.js';
@@ -39,7 +40,9 @@ export default function() {
   //
 
   const BUTTERFLY_NUM = 12;
+  const PARTICLE_NUM = 60;
   const butterflies = [];
+  const points = new Points(BUTTERFLY_NUM * PARTICLE_NUM);
   const floor = new Floor(resolution);
   const postEffectBright = new PostEffectBright(renderBack1.texture);
   const postEffectBlurX = new PostEffectBlur(renderBack2.texture, 1, 0, 1);
@@ -74,6 +77,7 @@ export default function() {
     for (var i = 0; i < butterflies.length; i++) {
       butterflies[i].render(renderer, time);
     }
+    points.render(time);
     floor.render(renderer, scene, sceneBack, camera, time);
     renderer.render(sceneBack, cameraBack, renderBack1);
 
@@ -171,6 +175,8 @@ export default function() {
         butterflies[i].obj.position.z = 1800 / BUTTERFLY_NUM * i;
         sceneBack.add(butterflies[i].obj);
       }
+      points.addButterflies(butterflies);
+      sceneBack.add(points.obj);
       floor.add(scene, sceneBack);
 
       // add post effects
