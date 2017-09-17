@@ -3,7 +3,7 @@ const glslify = require('glslify');
 export default class Butterfly {
   constructor(i, tex1, tex2) {
     this.size = 280;
-    this.interval = 1.5;
+    this.interval = 1.2;
     this.uniforms = {
       index: {
         type: 'f',

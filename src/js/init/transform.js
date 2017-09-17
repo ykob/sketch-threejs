@@ -41,7 +41,7 @@ export default function() {
 
   const BUTTERFLY_NUM = 1;
   const PARTICLE_NUM = 32;
-  const BRIGHT_MIN = 0.4;
+  const BRIGHT_MIN = 0.7;
 
   const butterflies = [];
   const points = new Points(BUTTERFLY_NUM * PARTICLE_NUM);
@@ -179,6 +179,7 @@ export default function() {
       loader.load(texArray[i], (texture) => {
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.NearestFilter;
+        texture.repeat = THREE.RepeatWrapping;
         textures[index] = texture;
         countLoaded++;
         if (countLoaded >= texArray.length) {
