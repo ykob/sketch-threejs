@@ -1,5 +1,4 @@
 import normalizeVector2 from '../modules/common/normalizeVector2';
-import IndexScroller from '../modules/common/IndexScroller';
 import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
 import SkyOctahedron from '../modules/index/SkyOctahedron';
@@ -10,8 +9,6 @@ import PostEffect from '../modules/index/PostEffect';
 const debounce = require('js-util/debounce');
 
 export default function() {
-  const indexScroller = new IndexScroller();
-
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     antialias: false,

@@ -1,7 +1,4 @@
-import IndexScroller from '../modules/common/IndexScroller';
-
 export default function() {
-  const indexScroller = new IndexScroller();
   const canvas = document.getElementById('canvas-webgl');
 
   const on = () => {
