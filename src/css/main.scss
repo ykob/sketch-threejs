@@ -18,6 +18,7 @@
 // ==========================================================================
 // Layout
 // ==========================================================================
+@import "layout/_contents";
 @import "layout/_page";
 
 // ==========================================================================
@@ -33,6 +34,7 @@
 // -----------------------------------------------------------------
 @import "object/project/_badges";
 @import "object/project/_canvas-webgl";
+@import "object/project/_dummy-scroll";
 @import "object/project/_introduction";
 @import "object/project/_sketch-index";
 @import "object/project/_sketch-outline";

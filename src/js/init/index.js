@@ -1,4 +1,4 @@
-import normalizeVector2 from '../modules/common/normalizeVector2';
+import SmoothScrollManager from '../modules/smooth_scroll_manager/SmoothScrollManager';
 import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
 import SkyOctahedron from '../modules/index/SkyOctahedron';
@@ -9,6 +9,8 @@ import PostEffect from '../modules/index/PostEffect';
 const debounce = require('js-util/debounce');
 
 export default function() {
+  const scrollManager = new SmoothScrollManager();
+
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     antialias: false,
@@ -86,6 +88,7 @@ export default function() {
     on();
     resizeWindow();
     renderLoop();
+    scrollManager.start();
   }
   init();
 }
