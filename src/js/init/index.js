@@ -1,3 +1,4 @@
+import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
 import SmoothScrollManager from '../modules/smooth_scroll_manager/SmoothScrollManager';
 import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
@@ -20,7 +21,7 @@ export default function() {
   const scene = new THREE.Scene();
   const sceneBack = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  const cameraBack = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const cameraBack = new ForcePerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   const titleObject = new TitleObject();
@@ -43,6 +44,7 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
+    cameraBack.render();
     titleObject.render(time);
     skyOctahedron.render(time);
     skyOctahedronShell.render(time);
@@ -59,6 +61,10 @@ export default function() {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
     }), 1000);
+
+    scrollManager.renderNext = () => {
+      cameraBack.anchor[1] = cameraBack.lookAnchor[1] = scrollManager.scrollTop * -0.6;
+    }
   }
   const transitionOnload = () => {
     for (var i = 0; i < elemIntro.length; i++) {
@@ -73,8 +79,9 @@ export default function() {
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    cameraBack.position.set(0, 0, 800);
-    cameraBack.lookAt(new THREE.Vector3());
+    cameraBack.velocity[2] = cameraBack.anchor[2] = 800;
+    cameraBack.k = cameraBack.lookK = 0.3;
+    cameraBack.d = cameraBack.lookD = 0.8;
 
     scene.add(postEffect.obj);
     titleObject.loadTexture(() => {
