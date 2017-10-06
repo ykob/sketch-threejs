@@ -24,7 +24,10 @@
   &__row {
     opacity: 0;
     transform: translateY(-10px);
-    &.is-animate {
+    transition-property: opacity, transform;
+    &.is-shown {
+      opacity: 1;
+      transform: translateY(0);
       transition-duration: 1s;
       transition-timing-function: $easeOutCubic;
       @for $i from 0 through 4 {
@@ -32,10 +35,6 @@
           transition-delay: $i * 0.25s + 5s;
         }
       }
-    }
-    &.is-opened{
-      opacity: 1;
-      transform: translateY(0);
     }
   }
   &__links {
@@ -52,10 +51,13 @@
     opacity: 0;
     transform: scale(1.8);
     margin: 0 12px;
+    transition-property: opacity, transform;
     svg {
       width: 18px;
     }
-    &.is-animate {
+    &.is-shown {
+      opacity: 1;
+      transform: scale(1);
       transition-duration: 1s;
       transition-timing-function: $easeOutCubic;
       @for $i from 0 through 4 {
@@ -64,10 +66,6 @@
         }
       }
     }
-    &.is-opened {
-      opacity: 1;
-      transform: scale(1);
-    }
   }
   &__follow {
     width: 15px;
@@ -75,6 +73,13 @@
     overflow: hidden;
     position: relative;
     margin: 6vh auto 0;
+    opacity: 0;
+    transition-property: opacity;
+    &.is-shown {
+      opacity: 1;
+      transition-duration: 1s;
+      transition-delay: 3s;
+    }
     &-in {
       width: 1px;
       height: 100%;

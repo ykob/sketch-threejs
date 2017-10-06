@@ -69,10 +69,7 @@ export default function() {
   const transitionOnload = () => {
     for (var i = 0; i < elemIntro.length; i++) {
       const elm = elemIntro[i];
-      elm.classList.add('is-opened', 'is-animate');
-      elm.addEventListener('transitionend', () => {
-        elm.classList.remove('is-animate');
-      })
+      elm.classList.add('is-shown');
     }
   }
 
