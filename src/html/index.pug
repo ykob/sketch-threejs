@@ -30,7 +30,7 @@ block content
       each item in data.pages
         if (item.title !== '')
           .p-sketch-index__item(
-            class = 'js-smooth-item',
+            class = 'js-smooth-item js-scroll-item',
             data-ratio = Math.floor(count / 3) * 0.03 + count % 3 * 0.02 + 0.05
           )
             a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
@@ -38,7 +38,7 @@ block content
                 style = `background-image: url(/sketch-threejs/img/common/ogp_${item.id}.jpg)`
               )
               .p-sketch-index__item-title
-                |#{item.title}
+                +splitStr(item.title, 'js-split-str')
               .p-sketch-index__item-date
                 |posted: #{item.posted} 
                 if (item.update)

@@ -57,6 +57,13 @@
       padding-top: 630 / 1200 * 100%;
       background-color: #fff;
       background-size: cover;
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -5%; right: -5%; bottom: -5%; left: -5%;
+        background-color: #fff;
+      }
     }
     &-title {
       letter-spacing: 0.1em;
@@ -76,6 +83,51 @@
     &-date {
       margin-top: 5px;
       @include fontSize(12);
+    }
+  }
+  //
+  // Interaction
+  //
+  &__item {
+    &-thumb {
+      transform: scaleY(0);
+      transition-duration: 0.6s;
+      transition-delay: 0.4s;
+      transition-timing-function: $easeOutCirc;
+      &:after {
+        transition-duration: 0.4s;
+        transition-delay: 0.6s;
+      }
+    }
+    &-title {
+      .js-split-str {
+        opacity: 0;
+        transform: scale(0.5);
+        transition-duration: 0.6s;
+        @include iterateTransitionDelay(30, 0.02, 0.6);
+      }
+    }
+    &-date {
+      opacity: 0;
+      transition-duration: 1s;
+      transition-delay: 0.8s;
+    }
+    &.is-shown & {
+      &-thumb {
+        transform: scaleY(1);
+        &:after {
+          opacity: 0;
+        }
+      }
+      &-title {
+        .js-split-str {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      &-date {
+        opacity: 1;
+      }
     }
   }
 }
