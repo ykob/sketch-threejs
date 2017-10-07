@@ -37,6 +37,8 @@ block content
               .p-sketch-index__item-thumb(
                 style = `background-image: url(/sketch-threejs/img/common/ogp_${item.id}.jpg)`
               )
+                .p-sketch-index__item-thumb-label
+                  +splitStr('show this', 'js-split-str')
               .p-sketch-index__item-title
                 +splitStr(item.title, 'js-split-str')
               .p-sketch-index__item-date
