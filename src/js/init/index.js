@@ -5,6 +5,7 @@ import FrameObject from '../modules/index/FrameObject';
 import SkyOctahedron from '../modules/index/SkyOctahedron';
 import SkyOctahedronShell from '../modules/index/SkyOctahedronShell';
 import Ground from '../modules/index/Ground';
+import Debris from '../modules/index/Debris';
 import PostEffect from '../modules/index/PostEffect';
 
 const debounce = require('js-util/debounce');
@@ -29,6 +30,15 @@ export default function() {
   const skyOctahedron = new SkyOctahedron();
   const skyOctahedronShell = new SkyOctahedronShell();
   const ground = new Ground();
+  const debris = [
+     new Debris(400, -500, 200),
+     new Debris(-350, -600, -50),
+     new Debris(-150, -700, -150),
+     new Debris(-500, -900, 0),
+     new Debris(100, -1100, 250),
+     new Debris(-100, -1200, -300),
+     new Debris(150, -1500, -100),
+  ];
   const postEffect = new PostEffect(renderBack.texture);
 
   const elemIntro = document.getElementsByClassName('js-transition-intro');
@@ -49,6 +59,9 @@ export default function() {
     skyOctahedron.render(time);
     skyOctahedronShell.render(time);
     ground.render(time);
+    for (var i = 0; i < debris.length; i++) {
+      debris[i].render(time);
+    }
     renderer.render(sceneBack, cameraBack, renderBack);
     postEffect.render(time);
     renderer.render(scene, camera);
@@ -86,6 +99,9 @@ export default function() {
       sceneBack.add(skyOctahedron.obj);
       sceneBack.add(skyOctahedronShell.obj);
       sceneBack.add(ground.obj);
+      for (var i = 0; i < debris.length; i++) {
+        sceneBack.add(debris[i].obj);
+      }
       transitionOnload();
     });
 
