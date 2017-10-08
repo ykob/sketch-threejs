@@ -13,7 +13,17 @@ html(lang="ja")
       data-id = page.id
     )
       block content
-      include ../_modules/_sketch-index.pug
+      - if (page.id !== 'index')
+        .p-utility-menu
+          a.c-button(
+            href = "/sketch-threejs/",
+            class = (page.color == "white") ?  'c-button--white' : 'c-button--black',
+            )
+            span.c-button__icon.c-button__icon--back(
+              class = (page.color == "white") ?  'c-button__icon--white' : 'c-button__icon--black'
+              )
+            span.c-button__label
+              +splitStr('back', 'js-split-str')
     script(src="/sketch-threejs/js/vendor.js")
     script(src="/sketch-threejs/js/main.js")
     script.

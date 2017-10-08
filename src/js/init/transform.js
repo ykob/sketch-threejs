@@ -164,7 +164,7 @@ export default function() {
     on();
 
     renderer.setClearColor(0xf9f9f9, 1.0);
-    cameraBack.position.set(400, 60, -400);
+    cameraBack.position.set(400.1, 60, -400);
     floor.mirrorCamera.position.set(
       cameraBack.position.x,
       cameraBack.position.y * -1,
