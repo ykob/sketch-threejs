@@ -8,3 +8,7 @@ http://ykob.github.io/sketch-threejs/
 Copyright (c) 2017 Yoichi Kobayashi  
 Released under the MIT license  
 http://opensource.org/licenses/mit-license.php
+
+## Misc
+
+Follow Yoichi Kobayashi: [Web](https://www.tplh.net/), [Twitter](https://twitter.com/ykob0123)
