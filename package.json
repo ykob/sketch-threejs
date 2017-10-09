@@ -57,6 +57,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "glslify": "^5.1.0",
-    "js-util": "git://github.com/ykob/js-util.git"
+    "js-util": "git://github.com/ykob/js-util.git",
+    "three": "^0.87.1"
   }
 }
