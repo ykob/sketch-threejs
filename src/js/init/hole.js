@@ -135,7 +135,7 @@ export default function() {
       ]),
       vertexShader: glslify('../../glsl/sketch/hole/object.vs'),
       fragmentShader: glslify('../../glsl/sketch/hole/object.fs'),
-      shading: THREE.FlatShading,
+      flatShading: THREE.FlatShading,
       lights: true,
     });
     return new THREE.Mesh(geometry, material);
@@ -253,7 +253,7 @@ export default function() {
     points = createPointsForCrossFade();
     sub_scene.add(points);
     sub_camera.position.set(0, 0, 3000);
-    sub_camera.lookAt(0, 0, 0);
+    sub_camera.force.look.anchor.set(0, 0, 0);
 
     framebuffer = createPlaneForFramebuffer();
     scene.add(framebuffer);
