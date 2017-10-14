@@ -160,9 +160,26 @@ module.exports.copy = {
 
 module.exports.imagemin = {
   src: [
-    `${DIR.DEST}/**/*.{jpg,jpeg,png,gif,svg}`
+    `${DIR.DEST}/**/*.{jpg,jpeg,png,gif,svg}`,
+    `!${DIR.DEST}/img/**/no_compress/*.*`,
   ],
-  dest: `${DIR.BUILD}/img`
+  dest: `${DIR.BUILD}/img`,
+  opts: {
+    pngquant: {
+      quality: 80,
+      speed: 1,
+    },
+    mozjpeg: {
+      quality: 80,
+      progressive: true,
+    },
+    svgo: {
+      plugins: [
+        { removeViewBox: false },
+        { cleanupIDs: true },
+      ]
+    },
+  }
 };
 
 module.exports.clean = {
