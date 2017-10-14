@@ -1,3 +1,5 @@
+const THREE = require('three/build/three.js');
+
 import glMatrix from 'gl-matrix';
 import MathEx from 'js-util/MathEx';
 

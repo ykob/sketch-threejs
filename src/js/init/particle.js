@@ -1,10 +1,11 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import PostEffectBright from '../modules/sketch/particle/PostEffectBright.js';
 import PostEffectBlur from '../modules/sketch/particle/PostEffectBlur.js';
 import PostEffectBloom from '../modules/sketch/particle/PostEffectBloom.js';
 import Points from '../modules/sketch/particle/Points';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

@@ -1,3 +1,4 @@
+const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
 export default function() {

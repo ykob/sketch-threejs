@@ -1,7 +1,8 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import PhysicsRenderer from '../modules/common/PhysicsRenderer';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const glslify = require('glslify');

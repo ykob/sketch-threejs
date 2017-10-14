@@ -1,6 +1,7 @@
-import Egg from '../modules/sketch/egg/Egg.js';
-
+const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+
+import Egg from '../modules/sketch/egg/Egg.js';
 
 export default function() {
   const resolution = {
