@@ -1,3 +1,6 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
 import SmoothScrollManager from '../modules/smooth_scroll_manager/SmoothScrollManager';
 import TitleObject from '../modules/index/TitleObject';
@@ -7,8 +10,6 @@ import SkyOctahedronShell from '../modules/index/SkyOctahedronShell';
 import Ground from '../modules/index/Ground';
 import Debris from '../modules/index/Debris';
 import PostEffect from '../modules/index/PostEffect';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const scrollManager = new SmoothScrollManager();
