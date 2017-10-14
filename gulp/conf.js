@@ -57,7 +57,7 @@ module.exports.scripts = {
 
 module.exports.vendorScripts = {
   src: [
-    `./${DIR.SRC}/js/vendor/three.js`,
+    // `./${DIR.SRC}/js/vendor/three.js`,
   ],
   concat: 'vendor.js',
   dest: `./${DIR.DEST}/js/`
