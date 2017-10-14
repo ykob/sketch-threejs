@@ -132,7 +132,6 @@ module.exports.uglify = {
   ],
   dest: `${DIR.BUILD}/js`,
   opts: {
-    preserveComments: 'some'
   }
 };
 
