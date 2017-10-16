@@ -1,11 +1,12 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
 import CameraController from '../modules/sketch/instancing/CameraController';
 import Debris from '../modules/sketch/instancing/Debris';
 import SkyBox from '../modules/sketch/instancing/SkyBox';
 import PostEffect from '../modules/sketch/instancing/PostEffect.js';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

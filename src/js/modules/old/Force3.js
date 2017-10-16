@@ -1,4 +1,5 @@
-var Util = require('./util');
+const THREE = require('three/build/three.js');
+const Util = require('./util');
 
 var exports = function(){
   var Force = function() {

@@ -1,6 +1,7 @@
-import PhysicsRenderer from '../../../modules/common/PhysicsRenderer';
-
+const THREE = require('three/build/three.js');
 const glslify = require('glslify');
+
+import PhysicsRenderer from '../../../modules/common/PhysicsRenderer';
 
 export default class Points {
   constructor() {

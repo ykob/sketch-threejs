@@ -1,3 +1,6 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Butterfly from '../modules/sketch/transform/Butterfly';
 import Points from '../modules/sketch/transform/Points';
@@ -5,8 +8,6 @@ import Floor from '../modules/sketch/transform/Floor.js';
 import PostEffectBright from '../modules/sketch/transform/PostEffectBright.js';
 import PostEffectBlur from '../modules/sketch/transform/PostEffectBlur.js';
 import PostEffectBloom from '../modules/sketch/transform/PostEffectBloom.js';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const resolution = {

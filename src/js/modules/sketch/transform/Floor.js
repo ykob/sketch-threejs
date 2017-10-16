@@ -1,6 +1,7 @@
-import PostEffectBlur from './PostEffectBlur.js';
-
+const THREE = require('three/build/three.js');
 const glslify = require('glslify');
+
+import PostEffectBlur from './PostEffectBlur.js';
 
 export default class Floor {
   constructor(resolution) {

@@ -1,3 +1,4 @@
+const THREE = require('three/build/three.js');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
@@ -60,7 +61,7 @@ export default class SkyOctahedron {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../glsl/index/skyOctahedron.vs'),
         fragmentShader: glslify('../../../glsl/index/skyOctahedron.fs'),
-        shading: THREE.FlatShading,
+        flatShading: THREE.FlatShading,
         transparent: true,
         side: THREE.DoubleSide
       })

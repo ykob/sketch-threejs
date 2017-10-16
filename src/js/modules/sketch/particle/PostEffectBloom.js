@@ -1,3 +1,4 @@
+const THREE = require('three/build/three.js');
 const glslify = require('glslify');
 
 export default class PostEffectBloom {

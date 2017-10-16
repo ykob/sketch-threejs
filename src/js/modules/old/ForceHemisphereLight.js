@@ -1,5 +1,6 @@
-var Util = require('./util');
-var Force3 = require('./Force3');
+const THREE = require('three/build/three.js');
+const Util = require('./util');
+const Force3 = require('./Force3');
 
 var exports = function(){
   var ForceHemisphereLight = function(hex1, hex2, intensity) {

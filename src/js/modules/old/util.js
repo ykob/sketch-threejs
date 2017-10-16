@@ -1,3 +1,5 @@
+const THREE = require('three/build/three.js');
+
 module.exports = {
   getRandomInt: function(min, max){
     return Math.floor(Math.random() * (max - min)) + min;
