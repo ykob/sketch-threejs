@@ -61,7 +61,7 @@ export default class SkyOctahedron {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../glsl/index/skyOctahedron.vs'),
         fragmentShader: glslify('../../../glsl/index/skyOctahedron.fs'),
-        shading: THREE.FlatShading,
+        flatShading: THREE.FlatShading,
         transparent: true,
         side: THREE.DoubleSide
       })
