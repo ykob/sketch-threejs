@@ -12,6 +12,7 @@ const init = () => {
   } else {
     require('./init/commonSketch.js').default();
     switch (pageId) {
+      case 'blink':       require('./init/blink.js').default(); break;
       case 'transform':   require('./init/transform.js').default(); break;
       case 'egg':         require('./init/egg.js').default(); break;
       case 'butterfly':   require('./init/butterfly.js').default(); break;

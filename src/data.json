@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "blink": {
+      "title": "blink",
+      "id": "blink",
+      "description": "",
+      "path": "/sketch/blink.html",
+      "posted": "2017.x.x",
+      "update": "",
+      "color": "white"
+    },
     "transform": {
       "title": "transform",
       "id": "transform",
