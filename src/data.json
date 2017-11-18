@@ -15,9 +15,9 @@
     "blink": {
       "title": "blink",
       "id": "blink",
-      "description": "",
+      "description": "scale points with simplex noise.",
       "path": "/sketch/blink.html",
-      "posted": "2017.x.x",
+      "posted": "2017.11.19",
       "update": "",
       "color": "black"
     },
