@@ -13,17 +13,17 @@ varying float vOpacity;
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 void main() {
-  float noise1 = snoise3(position * 0.024 + vec3(-time, time, time) * 0.3);
-  float noise2 = snoise3(position * 0.001 + vec3(time, -time, time) * 0.01);
-
   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
 
-  vec3 hsv = vec3(noise2 + time * 0.1, 0.6, 1.0);
+  float noise1 = snoise3(mvPosition.xyz * 0.046 + vec3(-time, time, time) * 0.3);
+  float noise2 = snoise3(mvPosition.xyz * 0.0012 + vec3(time, -time, time) * 0.01);
+
+  vec3 hsv = vec3(noise2 * 0.2 + time * 0.1, 1.0, 0.6);
   vec3 rgb = convertHsvToRgb(hsv);
 
   vColor = rgb;
-  vOpacity = max(noise1 * (length(cameraPosition) / length(mvPosition.xyz)), 0.0);
+  vOpacity = pow(40.0 / length(mvPosition.xyz) * noise1, 2.0);
 
-  gl_PointSize = length(cameraPosition) / length(mvPosition.xyz) * 4.0 * noise1;
   gl_Position = projectionMatrix * mvPosition;
+  gl_PointSize = 600.0 / length(mvPosition.xyz) * noise1;
 }

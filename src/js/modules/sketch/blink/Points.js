@@ -14,16 +14,15 @@ export default class Points {
   createObj() {
     const geometry = new THREE.BufferGeometry();
     const position = [];
-    const SIDE = 60;
-    const LENGTH = 80;
+    const SIDE = 50;
+    const LENGTH = 70;
     for (var z = 0; z < SIDE; z++) {
       for (var y = 0; y < SIDE; y++) {
         for (var x = 0; x < SIDE; x++) {
-          position.push(
-            ((x / SIDE) * 2 - 1) * LENGTH + (Math.random() * 2.0 - 1.0) * 4.0,
-            ((y / SIDE) * 2 - 1) * LENGTH + (Math.random() * 2.0 - 1.0) * 4.0,
-            ((z / SIDE) * 2 - 1) * LENGTH + (Math.random() * 2.0 - 1.0) * 4.0
-          )
+          const px = ((x / SIDE) * 2 - 1) * LENGTH;
+          const py = ((y / SIDE) * 2 - 1) * LENGTH;
+          const pz = ((z / SIDE) * 2 - 1) * LENGTH;
+          position.push(px, py, pz);
         }
       }
     }
@@ -34,16 +33,16 @@ export default class Points {
       vertexShader: glslify('../../../../glsl/sketch/blink/points.vs'),
       fragmentShader: glslify('../../../../glsl/sketch/blink/points.fs'),
       transparent: true,
-      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     })
     return new THREE.Points(geometry, material);
   }
   render(time) {
     this.uniforms.time.value += time;
     this.obj.rotation.set(
-      this.uniforms.time.value * 0.01,
+      this.uniforms.time.value * 0.005,
       this.uniforms.time.value * 0.02,
-      this.uniforms.time.value * 0.01
+      this.uniforms.time.value * 0.004
     )
   }
 }
