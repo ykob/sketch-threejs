@@ -36,6 +36,6 @@ void main() {
     * (1.0 - smoothstep(interval * 0.2, interval * 0.9, thisTime))
   ) * opacity;
 
-  gl_PointSize = 10.0 * (length(cameraPosition) / length(mvPosition.xyz));
+  gl_PointSize = 5000.0 / length(mvPosition.xyz);
   gl_Position = projectionMatrix * mvPosition;
 }
