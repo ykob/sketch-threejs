@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "blink": {
+      "title": "blink",
+      "id": "blink",
+      "description": "scale points with simplex noise.",
+      "path": "/sketch/blink.html",
+      "posted": "2017.11.19",
+      "update": "",
+      "color": "black"
+    },
     "transform": {
       "title": "transform",
       "id": "transform",

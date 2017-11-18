@@ -91,8 +91,8 @@ export default function() {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
     cameraBack.velocity[2] = cameraBack.anchor[2] = 800;
-    cameraBack.k = cameraBack.lookK = 0.3;
-    cameraBack.d = cameraBack.lookD = 0.8;
+    cameraBack.k = cameraBack.lookK = 0.28;
+    cameraBack.d = cameraBack.lookD = 0.75;
 
     scene.add(postEffect.obj);
     titleObject.loadTexture(() => {
