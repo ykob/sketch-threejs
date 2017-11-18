@@ -1,8 +1,9 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import BackgroundImage from '../modules/sketch/glitch/BackgroundImage.js';
 import PostEffect from '../modules/sketch/glitch/PostEffect.js';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

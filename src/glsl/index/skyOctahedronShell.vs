@@ -18,7 +18,7 @@ const float delay = 3.0;
 
 void main() {
   float now = clamp((time - delay) / duration, 0.0, 1.0);
-  mat4 translateMat = computeTranslateMat(vec3(0.0, sin(time) * 10.0, 0.0));
+  mat4 translateMat = computeTranslateMat(vec3(0.0, sin(time) * 10.0 + 210.0, 0.0));
   mat4 scaleMat = computeScaleMat(vec3(ease(now) * 0.6 + 0.4 + sin(time * 2.0) * 0.04));
   mat4 rotateMat = computeRotateMat(radians(45.0), radians(time * 2.0), radians(-time * 2.0));
   float noise = smoothstep(-0.4, 0.4, cnoise3(position * 0.035 - time)) * 2.0 - 1.0;

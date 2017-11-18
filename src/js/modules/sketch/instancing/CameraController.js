@@ -1,5 +1,6 @@
-import glMatrix from 'gl-matrix';
-import MathEx from 'js-util/MathEx';
+const THREE = require('three/build/three.js');
+const glMatrix = require('gl-matrix');
+const MathEx = require('js-util/MathEx');
 
 export default class CameraController {
   constructor(camera) {

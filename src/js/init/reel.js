@@ -1,9 +1,10 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Boxes from '../modules/sketch/reel/Boxes.js';
 import Floor from '../modules/sketch/reel/Floor.js';
 import Hill from '../modules/sketch/reel/Hill.js';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

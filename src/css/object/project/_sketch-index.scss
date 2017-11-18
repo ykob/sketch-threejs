@@ -1,39 +1,34 @@
 .p-sketch-index {
-  &__contents {
-    max-width: $break-point-pc;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    position: fixed;
-    top: 0; right: 0; left: 0;
-    z-index: 100000;
-    margin-right: auto;
-    margin-left: auto;
-    @include l-pc-all {
-      padding-top: 100px;
-      padding-bottom: 50px;
-      padding-right: 7.5%;
-      padding-left: 7.5%;
-    }
-    @include l-tablet {
-      padding-top: 100px;
-      padding-bottom: 50px;
-      padding-right: 7.5%;
-      padding-left: 7.5%;
-    }
-    @include l-mobile {
-      padding-top: 70px;
-      padding-bottom: 40px;
-      padding-right: 10px;
-      padding-left: 10px;
-    }
+  max-width: $break-point-pc;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  top: 0; right: 0; left: 0;
+  z-index: 100000;
+  margin-right: auto;
+  margin-left: auto;
+  @include l-pc-all {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    padding-right: 7.5%;
+    padding-left: 7.5%;
   }
-  &__scroll {
-    position: absolute;
-    top: 0; right: 0; left: 0;
+  @include l-tablet {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    padding-right: 7.5%;
+    padding-left: 7.5%;
+  }
+  @include l-mobile {
+    padding-top: 70px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+    padding-left: 10px;
   }
   &__item {
     box-sizing: border-box;
+    overflow: hidden;
     @include l-pc-all {
       width: 33.3%;
       margin-bottom: 60px;
@@ -57,18 +52,41 @@
     }
     &-thumb {
       width: 100%;
-      overflow: hidden;
       position: relative;
       margin-bottom: 10px;
       padding-top: 630 / 1200 * 100%;
       background-color: #fff;
       background-size: cover;
-      &-cover {
+      &:before, &:after {
+        content: '';
+        display: block;
         position: absolute;
         top: 0; right: 0; bottom: 0; left: 0;
+      }
+      &:before {
         background-color: #fff;
-        &--black {
-          background-color: #111;
+      }
+      &:after {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      &-label {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0; left: 0;
+        z-index: 10;
+        letter-spacing: 0.2em;
+        @include l-pc-all {
+          @include fontSize(24);
+        }
+        @include l-tablet {
+          @include fontSize(21);
+        }
+        @include l-mobile {
+          @include fontSize(18);
         }
       }
     }
@@ -92,227 +110,72 @@
       @include fontSize(12);
     }
   }
-  &__bg {
-    position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
-    z-index: (100000 - 1);
-    background-color: rgba(0, 0, 0, 0.8);
-    &--black {
-      background-color: rgba(255, 255, 255, 0.8);
-    }
-  }
-  &__hamburger {
-    cursor: pointer;
-    position: fixed;
-    z-index: 100001;
-    pointer-events: auto;
-    @include l-pc-all {
-      width: 50px;
-      height: 50px;
-      top: 25px; right: 40px;
-    }
-    @include l-tablet {
-      width: 50px;
-      height: 50px;
-      top: 25px; right: 40px;
-    }
-    @include l-mobile {
-      width: 40px;
-      height: 40px;
-      top: 15px; right: 20px;
-    }
-    &--black & {
-      &-line {
-        background-color: #222;
-      }
-    }
-    &-line {
-      height: 2px;
-      position: absolute;
-      top: 50%; right: 0; left: 0;
-      margin-top: -1px;
-      background-color: #fff;
-      &--top {
-        transform: translateY(-7px) scaleX(1);
-      }
-      &--bottom {
-        transform: translateY(7px) scaleX(1);
-      }
-    }
-  }
   //
   // Interaction
   //
-  pointer-events: none;
-  &.is-opened {
-    pointer-events: auto;
-  }
-  @keyframes closeIndexThumb {
-    0% {
-      opacity: 1;
-      transform: scale3d(1, 1, 1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale3d(0.9, 0.9, 1);
-    }
-  }
-  @keyframes openIndexThumb {
-    0% {
-      transform: scale3d(0, 0.01, 1);
-    }
-    50% {
-      transform: scale3d(1, 0.01, 1);
-    }
-    100% {
-      transform: scale3d(1, 0.99, 1);
-    }
-  }
   &__item {
-    pointer-events: none;
-    &.is-opened {
-      pointer-events: auto;
-    }
     &-thumb {
-      opacity: 0;
-      animation-duration: 0.5s;
-      animation-fill-mode: both;
-      animation-timing-function: $easeOutCirc;
-      &.is-opened {
-        opacity: 1;
-        animation-name: openIndexThumb;
+      transform: scaleY(0);
+      transition-duration: 0.6s;
+      transition-delay: 0.4s;
+      transition-timing-function: $easeOutCirc;
+      &:before {
+        transition-duration: 0.4s;
+        transition-delay: 0.6s;
       }
-      &.is-closed {
-        animation-name: closeIndexThumb;
-        animation-duration: 0.5s;
-        animation-fill-mode: both;
-        animation-timing-function: $easeOutCirc;
-      }
-    }
-    &-thumb-cover {
-      opacity: 1;
-      transition-duration: 0.4s;
-      &.is-opened {
+      &:after {
         opacity: 0;
-        transition-duration: 1s;
-        transition-timing-function: $easeOutCirc;
+        transition-duration: 0.4s;
       }
-    }
-    @keyframes closeIndexTitleStr {
-      0% {
-        opacity: 1;
-        transform: scale3d(1, 1, 1);
-      }
-      100% {
-        opacity: 0;
-        transform: scale3d(0, 0.5, 1);
-      }
-    }
-    @keyframes openIndexTitleStr {
-      0% {
-        opacity: 0;
-        transform: scale3d(0, 0, 1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale3d(1, 1, 1);
+      &-label {
+        .js-split-str {
+          opacity: 0;
+          transform: scale(0.5);
+          transition-duration: 0.6s;
+          @include iterateTransitionDelay(30, 0.02, 0);
+        }
       }
     }
     &-title {
       .js-split-str {
         opacity: 0;
-        animation-duration: 0.4s;
-        animation-fill-mode: both;
-      }
-      &.is-opened {
-        .js-split-str {
-          animation-name: openIndexTitleStr;
-        }
-      }
-      &.is-closed {
-        .js-split-str {
-          animation-name: closeIndexTitleStr;
-        }
+        transform: scale(0.5);
+        transition-duration: 0.6s;
+        @include iterateTransitionDelay(30, 0.02, 0.6);
       }
     }
     &-date {
       opacity: 0;
-      transition-duration: 0.4s;
-      &.is-opened {
+      transition-duration: 1s;
+      transition-delay: 0.8s;
+    }
+    &.is-shown & {
+      &-thumb {
+        transform: scaleY(1);
+        &:before {
+          opacity: 0;
+        }
+      }
+      &-title {
+        .js-split-str {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      &-date {
         opacity: 1;
       }
     }
-    $delayStep: 0.03;
-    $delayArr: 1, 3, 4, 5, 2, 6, 7, 8, 9;
-    @each $value in $delayArr {
-      $key: index($delayArr, $value);
-      &:nth-of-type(9n + #{$key}) & {
-        &-thumb {
-          &.is-opened {
-            animation-delay: $value * $delayStep * 1s;
+    &:hover & {
+      &-thumb {
+        &:after {
+          opacity: 1;
+        }
+        &-label {
+          .js-split-str {
+            opacity: 1;
+            transform: scale(1);
           }
-        }
-        &-thumb-cover {
-          &.is-opened {
-            transition-delay: $value * $delayStep + 0.4s;
-          }
-        }
-        &-title {
-          &.is-opened {
-            .js-split-str {
-              @for $i from 1 through 20 {
-                &:nth-of-type(#{$i}) {
-                  animation-delay: $value * $delayStep + $i * 0.03s + 0.2s;
-                }
-              }
-            }
-          }
-        }
-        &-date {
-          &.is-opened {
-            transition-delay: $value * $delayStep + 0.6s;
-          }
-        }
-      }
-    }
-  }
-  &__bg {
-    opacity: 0;
-    transition-duration: 0.4s;
-    &.is-opened {
-      opacity: 1;
-    }
-  }
-  &__hamburger {
-    &-line {
-      transition-duration: 0.3s;
-      transition-timing-function: $easeInOutQuint;
-      &--top {
-        transform-origin: left center;
-        transition-delay: 0.1s;
-      }
-      &--bottom {
-        transform-origin: right center;
-        transition-delay: 0.1s;
-      }
-    }
-    &.is-opened & {
-      &-line {
-        &--top {
-          transform: translateY(-7px) scaleX(0);
-          transition-delay: 0s;
-        }
-        &--bottom {
-          transform: translateY(7px) scaleX(0);
-          transition-delay: 0s;
-        }
-        &--cross1 {
-          transform: rotate(-45deg) scale(0.8);
-          transition-delay: 0.1s;
-        }
-        &--cross2 {
-          transform: rotate(-135deg) scale(0.8);
-          transition-delay: 0.1s;
         }
       }
     }

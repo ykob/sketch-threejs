@@ -1,16 +1,18 @@
-import normalizeVector2 from '../modules/common/normalizeVector2';
-import IndexScroller from '../modules/common/IndexScroller';
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
+import ForcePerspectiveCamera from '../modules/common/ForcePerspectiveCamera';
+import SmoothScrollManager from '../modules/smooth_scroll_manager/SmoothScrollManager';
 import TitleObject from '../modules/index/TitleObject';
 import FrameObject from '../modules/index/FrameObject';
 import SkyOctahedron from '../modules/index/SkyOctahedron';
 import SkyOctahedronShell from '../modules/index/SkyOctahedronShell';
 import Ground from '../modules/index/Ground';
+import Debris from '../modules/index/Debris';
 import PostEffect from '../modules/index/PostEffect';
 
-const debounce = require('js-util/debounce');
-
 export default function() {
-  const indexScroller = new IndexScroller();
+  const scrollManager = new SmoothScrollManager();
 
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
@@ -21,7 +23,7 @@ export default function() {
   const scene = new THREE.Scene();
   const sceneBack = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  const cameraBack = new THREE.PerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
+  const cameraBack = new ForcePerspectiveCamera(45, document.body.clientWidth / window.innerHeight, 1, 10000);
   const clock = new THREE.Clock();
 
   const titleObject = new TitleObject();
@@ -29,6 +31,15 @@ export default function() {
   const skyOctahedron = new SkyOctahedron();
   const skyOctahedronShell = new SkyOctahedronShell();
   const ground = new Ground();
+  const debris = [
+     new Debris(400, -500, 200),
+     new Debris(-350, -600, -50),
+     new Debris(-150, -700, -150),
+     new Debris(-500, -900, 0),
+     new Debris(100, -1100, 250),
+     new Debris(-100, -1200, -300),
+     new Debris(150, -1500, -100),
+  ];
   const postEffect = new PostEffect(renderBack.texture);
 
   const elemIntro = document.getElementsByClassName('js-transition-intro');
@@ -44,10 +55,14 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
+    cameraBack.render();
     titleObject.render(time);
     skyOctahedron.render(time);
     skyOctahedronShell.render(time);
     ground.render(time);
+    for (var i = 0; i < debris.length; i++) {
+      debris[i].render(time);
+    }
     renderer.render(sceneBack, cameraBack, renderBack);
     postEffect.render(time);
     renderer.render(scene, camera);
@@ -60,22 +75,24 @@ export default function() {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
     }), 1000);
+
+    scrollManager.renderNext = () => {
+      cameraBack.anchor[1] = cameraBack.lookAnchor[1] = scrollManager.scrollTop * -0.6;
+    }
   }
   const transitionOnload = () => {
     for (var i = 0; i < elemIntro.length; i++) {
       const elm = elemIntro[i];
-      elm.classList.add('is-opened', 'is-animate');
-      elm.addEventListener('transitionend', () => {
-        elm.classList.remove('is-animate');
-      })
+      elm.classList.add('is-shown');
     }
   }
 
   const init = () => {
     renderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setClearColor(0x111111, 1.0);
-    cameraBack.position.set(0, 0, 800);
-    cameraBack.lookAt(new THREE.Vector3());
+    cameraBack.velocity[2] = cameraBack.anchor[2] = 800;
+    cameraBack.k = cameraBack.lookK = 0.28;
+    cameraBack.d = cameraBack.lookD = 0.75;
 
     scene.add(postEffect.obj);
     titleObject.loadTexture(() => {
@@ -83,12 +100,16 @@ export default function() {
       sceneBack.add(skyOctahedron.obj);
       sceneBack.add(skyOctahedronShell.obj);
       sceneBack.add(ground.obj);
+      for (var i = 0; i < debris.length; i++) {
+        sceneBack.add(debris[i].obj);
+      }
       transitionOnload();
     });
 
     on();
     resizeWindow();
     renderLoop();
+    scrollManager.start();
   }
   init();
 }

@@ -5,17 +5,48 @@ block vars
     var page = data.pages.index;
 
 block content
-  .p-introduction
-    .p-introduction__row.js-transition-intro
-      |Interactive sketches made with three.js.
-    .p-introduction__row.js-transition-intro
-      |created by 
-      +textLink("http://www.tplh.net/", "yoichi kobayashi.", "_blank")
-    .p-introduction__links
-      a(href="https://github.com/ykob/sketch-threejs/", target="_blank").p-introduction__link.js-transition-intro
-        +iconGitHub(24)
-      a(href="https://twitter.com/ykob0123", target="_blank").p-introduction__link.js-transition-intro
-        +iconTwitter(24)
-      a(href="mailto:info@tplh.net").p-introduction__link.js-transition-intro
-        +iconMail(24)
+  .l-contents.js-contents
+    .p-introduction
+      .p-introduction__wrap
+        .p-introduction__row.js-transition-intro
+          |Interactive sketches made with three.js.
+        .p-introduction__row.js-transition-intro
+          |created by 
+          +textLink("http://www.tplh.net/", "yoichi kobayashi.", "_blank")
+        .p-introduction__links
+          a(href="https://github.com/ykob/sketch-threejs/", target="_blank").p-introduction__link.js-transition-intro
+            +iconGitHub(24)
+          a(href="https://twitter.com/ykob0123", target="_blank").p-introduction__link.js-transition-intro
+            +iconTwitter(24)
+          a(href="mailto:info@tplh.net").p-introduction__link.js-transition-intro
+            +iconMail(24)
+        .p-introduction__follow.js-transition-intro
+          .p-introduction__follow-in.p-introduction__follow-in--1
+          .p-introduction__follow-in.p-introduction__follow-in--2
+          .p-introduction__follow-in.p-introduction__follow-in--3
+
+    .p-sketch-index
+      - var count = 0;
+      each item in data.pages
+        if (item.title !== '')
+          .p-sketch-index__item(
+            class = 'js-smooth-item js-scroll-item',
+            data-ratio = Math.floor(count / 3) * 0.06 + 0.05
+          )
+            a(href = `/sketch-threejs${item.path}`).p-sketch-index__item-wrap
+              .p-sketch-index__item-thumb(
+                style = `background-image: url(/sketch-threejs/img/common/ogp_${item.id}.jpg)`
+              )
+                .p-sketch-index__item-thumb-label
+                  +splitStr('show this', 'js-split-str')
+              .p-sketch-index__item-title
+                +splitStr(item.title, 'js-split-str')
+              .p-sketch-index__item-date
+                |posted: #{item.posted} 
+                if (item.update)
+                  |/ update: #{item.update}
+          - count++;
+
+  .p-dummy-scroll.js-dummy-scroll
+
   canvas(id="canvas-webgl", class="p-canvas-webgl")

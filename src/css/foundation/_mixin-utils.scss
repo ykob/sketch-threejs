@@ -23,6 +23,20 @@
     font-size: $break-point-mobile / 100 * $vw;
   }
 }
+@mixin iterateTransitionDelay($size, $step, $base) {
+  @for $i from 1 through $size {
+    &:nth-of-type(#{$i}) {
+      transition-delay: (($i - 1) * $step + $base) * 1s;
+    }
+  }
+}
+@mixin iterateAnimationDelay($size, $step, $base) {
+  @for $i from 1 through $size {
+    &:nth-of-type(#{$i}) {
+      animation-delay: (($i - 1) * $step + $base) * 1s;
+    }
+  }
+}
 
 //
 // rwd break points

@@ -57,10 +57,7 @@ module.exports.scripts = {
 
 module.exports.vendorScripts = {
   src: [
-    `./${DIR.SRC}/js/vendor/three.js`,
-    `./${DIR.SRC}/js/vendor/dat.gui.js`,
-    `./${DIR.SRC}/js/vendor/stats.js`,
-    `./${DIR.SRC}/js/vendor/vue.js`,
+    // `./${DIR.SRC}/js/vendor/three.js`,
   ],
   concat: 'vendor.js',
   dest: `./${DIR.DEST}/js/`
@@ -135,7 +132,6 @@ module.exports.uglify = {
   ],
   dest: `${DIR.BUILD}/js`,
   opts: {
-    preserveComments: 'some'
   }
 };
 
@@ -164,9 +160,26 @@ module.exports.copy = {
 
 module.exports.imagemin = {
   src: [
-    `${DIR.DEST}/**/*.{jpg,jpeg,png,gif,svg}`
+    `${DIR.DEST}/**/*.{jpg,jpeg,png,gif,svg}`,
+    `!${DIR.DEST}/img/**/no_compress/*.*`,
   ],
-  dest: `${DIR.BUILD}/img`
+  dest: `${DIR.BUILD}/img`,
+  opts: {
+    pngquant: {
+      quality: 80,
+      speed: 1,
+    },
+    mozjpeg: {
+      quality: 80,
+      progressive: true,
+    },
+    svgo: {
+      plugins: [
+        { removeViewBox: false },
+        { cleanupIDs: true },
+      ]
+    },
+  }
 };
 
 module.exports.clean = {

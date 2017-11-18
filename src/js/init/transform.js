@@ -1,3 +1,6 @@
+const THREE = require('three/build/three.js');
+const debounce = require('js-util/debounce');
+
 import normalizeVector2 from '../modules/common/normalizeVector2';
 import Butterfly from '../modules/sketch/transform/Butterfly';
 import Points from '../modules/sketch/transform/Points';
@@ -5,8 +8,6 @@ import Floor from '../modules/sketch/transform/Floor.js';
 import PostEffectBright from '../modules/sketch/transform/PostEffectBright.js';
 import PostEffectBlur from '../modules/sketch/transform/PostEffectBlur.js';
 import PostEffectBloom from '../modules/sketch/transform/PostEffectBloom.js';
-
-const debounce = require('js-util/debounce');
 
 export default function() {
   const resolution = {
@@ -164,7 +165,7 @@ export default function() {
     on();
 
     renderer.setClearColor(0xf9f9f9, 1.0);
-    cameraBack.position.set(400, 60, -400);
+    cameraBack.position.set(400.1, 60, -400);
     floor.mirrorCamera.position.set(
       cameraBack.position.x,
       cameraBack.position.y * -1,
