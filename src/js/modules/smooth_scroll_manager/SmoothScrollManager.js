@@ -61,9 +61,9 @@ export default class SmoothScrollManager {
   initHookes() {
     // Hookesオブジェクトの初期化
     this.hookes = {
-      contents: new Hookes({ k: 0.25, d: 0.7 }),
-      smooth:   new Hookes({ k: 0.2, d: 0.8 }),
-      parallax: new Hookes({ k: 0.2, d: 0.8 }),
+      contents: new Hookes({ k: 0.28, d: 0.75 }),
+      smooth:   new Hookes({ k: 0.28, d: 0.8 }),
+      parallax: new Hookes({ k: 0.28, d: 0.8 }),
     }
   }
   scrollBasis() {
