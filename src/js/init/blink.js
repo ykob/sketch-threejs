@@ -3,10 +3,7 @@ const debounce = require('js-util/debounce');
 const Points = require('../modules/sketch/blink/Points').default;
 
 export default function() {
-  const resolution = {
-    x: 0,
-    y: 0
-  };
+  const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     antialias: false,
@@ -45,8 +42,7 @@ export default function() {
     camera.updateProjectionMatrix();
   };
   const resizeWindow = () => {
-    resolution.x = document.body.clientWidth;
-    resolution.y = window.innerHeight;
+    resolution.set(document.body.clientWidth, window.innerHeight);
     canvas.width = resolution.x;
     canvas.height = resolution.y;
     resizeCamera();
