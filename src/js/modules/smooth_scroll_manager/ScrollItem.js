@@ -1,7 +1,7 @@
 export default class ScrollItem {
   constructor(elm) {
     this.elm = elm;
-    this.elmChildren = elm.querySelectorAll('js-scroll-item-child');
+    this.elmChildren = elm.querySelectorAll('.js-scroll-item-child');
     this.top = 0;
     this.bottom = 0;
   }
