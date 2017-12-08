@@ -153,6 +153,9 @@ export default class SmoothScrollManager {
       });
     }
   }
+  isValidSmooth() {
+    return this.resolution.x > X_SWITCH_SMOOTH;
+  }
   on() {
     const hookEventForResize = (isiOS() || isAndroid()) ? 'orientationchange' : 'resize';
 
