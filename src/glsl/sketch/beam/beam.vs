@@ -21,7 +21,7 @@ void main(void) {
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(updatePosition, 1.0);
 
   float now = mod(time + delay, duration) / duration;
-  float opacity = smoothstep(0.9, 1.0, mod(uv.y - now, 1.0));
+  float opacity = smoothstep(0.94, 1.0, mod(uv.y - now, 1.0));
 
   vOpacity = opacity;
 
