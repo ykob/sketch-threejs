@@ -32,7 +32,7 @@ export default class Beam {
         i,
         ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 250,
         0,
-        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 200,
+        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 160,
       );
       rotate.setXYZ(i, MathEx.randomInt(0, 360));
       delay.setXYZ(i, Math.random() * 2.0);

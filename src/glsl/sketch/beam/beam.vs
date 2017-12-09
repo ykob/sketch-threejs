@@ -19,7 +19,7 @@ const float duration = 2.4;
 
 void main(void) {
   // calculate posiitons of instances.
-  vec3 wavePosition = vec3(0.0, 0.0, sin(radians(position.y / 3.0) + time * 0.1 + delay) * 20.0);
+  vec3 wavePosition = vec3(0.0, 0.0, sin(radians(position.y / 3.6) + time * 0.1 + delay * 9.0) * 40.0);
   vec3 updatePosition = position + instancePosition + wavePosition;
   mat4 rotateMat = computeRotateMat(radians(90.0), 0.0, radians(rotate));
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(updatePosition, 1.0);
