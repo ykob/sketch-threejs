@@ -10,7 +10,7 @@ export default class Beam {
         value: 0
       }
     };
-    this.instances = 400;
+    this.instances = 500;
     this.obj = null;
   }
   createObj() {
