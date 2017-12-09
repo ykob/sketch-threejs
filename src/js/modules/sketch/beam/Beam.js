@@ -10,13 +10,13 @@ export default class Beam {
         value: 0
       }
     };
-    this.instances = 100;
+    this.instances = 400;
     this.obj = null;
   }
   createObj() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(4, 1000);
+    const baseGeometry = new THREE.PlaneBufferGeometry(3, 1000, 2, 128);
 
     // Add common attributes
     geometry.addAttribute('position', baseGeometry.attributes.position);
@@ -30,12 +30,12 @@ export default class Beam {
     for ( var i = 0, ul = this.instances; i < ul; i++ ) {
       instancePosition.setXYZ(
         i,
-        (Math.random() * 2 - 1) * 300,
+        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 250,
         0,
-        (Math.random() * 2 - 1) * 100,
+        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 200,
       );
-      rotate.setXYZ(i, MathEx.randomInt(0, 3) * 90);
-      delay.setXYZ(i, Math.random());
+      rotate.setXYZ(i, MathEx.randomInt(0, 360));
+      delay.setXYZ(i, Math.random() * 2.0);
     }
     geometry.addAttribute('instancePosition', instancePosition);
     geometry.addAttribute('rotate', rotate);
@@ -48,8 +48,10 @@ export default class Beam {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/beam/beam.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/beam/beam.fs'),
+        depthWrite: false,
         transparent: true,
         side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
       })
     );
     // this.obj.rotation.set(0, 0, MathEx.radians(90));
