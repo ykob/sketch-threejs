@@ -14,5 +14,5 @@ void main() {
   float opacityBothEnds = smoothstep(-500.0, -400.0, vPosition.y) * (1.0 - smoothstep(400.0, 500.0, vPosition.y));
   float opacity = smoothstep(0.95, 1.0, mod(vUv.y - now, 1.0));
 
-  gl_FragColor = vec4(vColor, opacity * opacityBothEnds * 0.8);
+  gl_FragColor = vec4(vColor, opacity * opacityBothEnds * 0.9);
 }

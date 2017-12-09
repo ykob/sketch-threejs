@@ -26,7 +26,7 @@ void main(void) {
 
   // calculate interval for uv animation and setting color.
   float noise = cnoise3(updatePosition / 100.0) * 0.5 + time * 0.1;
-  vec3 hsv = vec3(noise, 0.5, 1.0);
+  vec3 hsv = vec3(noise, 0.45, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
   vPosition = position;
