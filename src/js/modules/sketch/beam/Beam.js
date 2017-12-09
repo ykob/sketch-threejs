@@ -10,13 +10,13 @@ export default class Beam {
         value: 0
       }
     };
-    this.instances = 500;
+    this.instances = 300;
     this.obj = null;
   }
   createObj() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(3, 1000, 2, 128);
+    const baseGeometry = new THREE.BoxBufferGeometry(1.2, 1000, 1.2, 2, 128);
 
     // Add common attributes
     geometry.addAttribute('position', baseGeometry.attributes.position);
