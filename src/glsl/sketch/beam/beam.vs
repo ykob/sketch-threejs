@@ -15,24 +15,25 @@ varying float vOpacity;
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
 
-const float duration = 2.4;
+const float duration = 2.8;
 
 void main(void) {
   // calculate posiitons of instances.
-  vec3 wavePosition = vec3(0.0, 0.0, sin(radians(position.y / 3.6) + time * 0.1 + delay * 9.0) * 40.0);
+  vec3 wavePosition = vec3(0.0, 0.0, sin(radians(position.y / 3.6) + time * 0.1 + delay * 9.0) * 50.0);
   vec3 updatePosition = position + instancePosition + wavePosition;
   mat4 rotateMat = computeRotateMat(radians(90.0), 0.0, radians(rotate));
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(updatePosition, 1.0);
 
   // calculate interval for uv animation and setting color.
-  float now = mod(time + delay, duration) / duration;
+  float now = mod(time, duration) / duration + delay * duration;
   float noise = cnoise3(updatePosition / 100.0) * 0.5 + time * 0.1;
-  vec3 hsv = vec3(noise, 0.4, 1.0);
+  vec3 hsv = vec3(noise, 0.5, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
-  float opacity = smoothstep(0.94, 1.0, mod(uv.y - now, 1.0));
+  float opacityBothEnds = smoothstep(-500.0, -400.0, position.y) * (1.0 - smoothstep(400.0, 500.0, position.y));
+  float opacity = smoothstep(0.95, 1.0, mod(uv.y - now, 1.0));
 
   vColor = rgb;
-  vOpacity = opacity;
+  vOpacity = opacity * opacityBothEnds;
 
   gl_Position = projectionMatrix * mvPosition;
 }

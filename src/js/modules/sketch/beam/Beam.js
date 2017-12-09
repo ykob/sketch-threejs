@@ -16,7 +16,7 @@ export default class Beam {
   createObj() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(3, 1000, 2, 128);
+    const baseGeometry = new THREE.BoxBufferGeometry(1.2, 1000, 1.2, 2, 128);
 
     // Add common attributes
     geometry.addAttribute('position', baseGeometry.attributes.position);
@@ -32,7 +32,7 @@ export default class Beam {
         i,
         ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 250,
         0,
-        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 160,
+        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 50,
       );
       rotate.setXYZ(i, MathEx.randomInt(0, 360));
       delay.setXYZ(i, Math.random() * 2.0);
