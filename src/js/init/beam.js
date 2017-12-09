@@ -99,7 +99,7 @@ export default function() {
     scene.add(beam.obj);
 
     renderer.setClearColor(0x0e0e0e, 1.0);
-    camera.position.set(0, 0, 50);
+    camera.position.set(0, 0, 100);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     renderLoop();
