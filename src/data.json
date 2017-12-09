@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "beam": {
+      "title": "beam",
+      "id": "beam",
+      "description": "",
+      "path": "/sketch/beam.html",
+      "posted": "2017.12.9",
+      "update": "",
+      "color": "white"
+    },
     "blink": {
       "title": "blink",
       "id": "blink",
