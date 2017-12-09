@@ -29,10 +29,11 @@ void main(void) {
   float noise = cnoise3(updatePosition / 100.0) * 0.5 + time * 0.1;
   vec3 hsv = vec3(noise, 0.3, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
+  float opacityBothEnds = smoothstep(-500.0, -400.0, position.y) * (1.0 - smoothstep(400.0, 500.0, position.y));
   float opacity = smoothstep(0.92, 1.0, mod(uv.y - now, 1.0)) * 0.6;
 
   vColor = rgb;
-  vOpacity = opacity;
+  vOpacity = opacity * opacityBothEnds;
 
   gl_Position = projectionMatrix * mvPosition;
 }
