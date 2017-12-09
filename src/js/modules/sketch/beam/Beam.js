@@ -16,7 +16,7 @@ export default class Beam {
   createObj() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(1.2, 1000, 1.2, 2, 128);
+    const baseGeometry = new THREE.BoxBufferGeometry(1, 1000, 1, 2, 128);
 
     // Add common attributes
     geometry.addAttribute('position', baseGeometry.attributes.position);
@@ -30,11 +30,11 @@ export default class Beam {
     for ( var i = 0, ul = this.instances; i < ul; i++ ) {
       instancePosition.setXYZ(
         i,
-        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 250,
+        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 300,
         0,
-        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 50,
+        ((Math.random() + Math.random() + Math.random()) / 3 * 2 - 1) * 150,
       );
-      rotate.setXYZ(i, MathEx.randomInt(0, 360));
+      rotate.setXYZ(i, (MathEx.randomInt(0, 1) * 2 - 1) * 90 + (Math.random(0, 1) * 2 - 1) * 60);
       delay.setXYZ(i, Math.random() * 2.0);
     }
     geometry.addAttribute('instancePosition', instancePosition);
