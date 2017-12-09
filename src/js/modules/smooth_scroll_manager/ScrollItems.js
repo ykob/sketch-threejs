@@ -1,6 +1,6 @@
-import ScrollItem from './ScrollItem';
-import SmoothItem from './SmoothItem';
-import ParallaxItem from './ParallaxItem';
+const ScrollItem = require('./ScrollItem').default;
+const SmoothItem = require('./SmoothItem').default;
+const ParallaxItem = require('./ParallaxItem').default;
 
 export default class ScrollItems {
   constructor(scrollManager) {
@@ -9,10 +9,10 @@ export default class ScrollItems {
     this.smoothItems = [];
     this.parallaxItems = [];
   }
-  init(wrap) {
-    const elmScrollItems = wrap.querySelectorAll('.js-scroll-item');
-    const elmSmoothItems = wrap.querySelectorAll('.js-smooth-item');
-    const elmParallaxItems = wrap.querySelectorAll('.js-parallax-item');
+  init() {
+    const elmScrollItems = document.querySelectorAll('.js-scroll-item');
+    const elmSmoothItems = document.querySelectorAll('.js-smooth-item');
+    const elmParallaxItems = document.querySelectorAll('.js-parallax-item');
 
     this.scrollItems = [];
     this.smoothItems = [];
@@ -49,15 +49,14 @@ export default class ScrollItems {
     }
   }
   resize() {
-    const scrollTop = window.pageYOffset;
     for (var i = 0; i < this.scrollItems.length; i++) {
-      this.scrollItems[i].init(scrollTop);
+      this.scrollItems[i].init(this.scrollManager.scrollTop);
     }
     for (var i = 0; i < this.smoothItems.length; i++) {
-      this.smoothItems[i].init(scrollTop);
+      this.smoothItems[i].init(this.scrollManager.scrollTop);
     }
     for (var i = 0; i < this.parallaxItems.length; i++) {
-      this.parallaxItems[i].init(scrollTop);
+      this.parallaxItems[i].init(this.scrollManager.scrollTop);
     }
   }
   render(isWorking) {

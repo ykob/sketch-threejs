@@ -1,4 +1,5 @@
-import MathEx from 'js-util/MathEx';
+const MathEx = require('js-util/MathEx');
+const isIE = require('js-util/isIE');
 
 export default class ParallaxItem {
   constructor(elm, scrollManager, hookes, opt) {
@@ -7,23 +8,35 @@ export default class ParallaxItem {
     this.elm = elm;
     this.height = 0;
     this.top = 0;
-    this.max = (opt && opt.max) ? opt.max : 10;
-    this.min = (opt && opt.min) ? opt.min : -10;
-    this.ratio = (opt && opt.ratio) ? opt.ratio : 0.012;
-    this.unit = (opt && opt.unit) ? opt.unit : '%';
+    this.rangeX = (opt && opt.rangeX) ? opt.rangeX : 10000;
+    this.ratioX = (opt && opt.ratioX) ? opt.ratioX : 0;
+    this.unitX = (opt && opt.unitX) ? opt.unitX : 'px';
+    this.rangeY = (opt && opt.rangeY) ? opt.rangeY : 10;
+    this.ratioY = (opt && opt.ratioY) ? opt.ratioY : 0.012;
+    this.unitY = (opt && opt.unitY) ? opt.unitY : '%';
   }
   init(scrollTop) {
+    this.elm.style.transform = '';
     const rect = this.elm.getBoundingClientRect();
     this.height = rect.height;
     this.top = scrollTop + rect.top;
     this.elm.style.backfaceVisibility = 'hidden';
+    this.render();
   }
   render(iwWorking) {
-    const y = (iwWorking) ? MathEx.clamp(
-      (this.hookes.velocity[1] - (this.top + this.height * 0.5)) * this.ratio,
-      this.min,
-      this.max
+    const x = (iwWorking) ? MathEx.clamp(
+      this.hookes.velocity[0] * this.ratioX,
+      this.rangeX * -1,
+      this.rangeX
     ) : 0;
-    this.elm.style.transform = `translate3D(0, ${y}${this.unit}, 0)`;
+    const y = (iwWorking) ? MathEx.clamp(
+      (this.hookes.velocity[1] - (this.top + this.height * 0.5)) * this.ratioY,
+      this.rangeY * -1,
+      this.rangeY
+    ) : 0;
+    this.elm.style.transform =
+      (isIE())
+        ? `translate(${x}${this.unitX}, ${y}${this.unitY})`
+        : `translate3D(${x}${this.unitX}, ${y}${this.unitY}, 0)`;
   }
 }

@@ -1,12 +1,12 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
-const Points = require('../modules/sketch/blink/Points').default;
+const Beam = require('../modules/sketch/beam/Beam').default;
 
 export default function() {
   const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
-    antialias: false,
+    antialias: true,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
@@ -23,14 +23,14 @@ export default function() {
   // process for this sketch.
   //
 
-  const points = new Points();
+  const beam = new Beam();
 
   //
   // common process
   //
   const render = () => {
     const time = clock.getDelta();
-    points.render(time);
+    beam.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -95,10 +95,12 @@ export default function() {
     on();
     resizeWindow();
 
-    renderer.setClearColor(0xe9e9e9, 1.0);
-    camera.position.set(10, 10, 50);
-    camera.lookAt(new THREE.Vector3());
-    scene.add(points.obj);
+    beam.createObj();
+    scene.add(beam.obj);
+
+    renderer.setClearColor(0x0e0e0e, 1.0);
+    camera.position.set(150, 0, 150);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     renderLoop();
   }

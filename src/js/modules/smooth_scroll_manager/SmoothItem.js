@@ -7,7 +7,7 @@ export default class SmoothItem {
     this.top = 0;
     this.max = (opt && opt.max) ? opt.max : null;
     this.min = (opt && opt.min) ? opt.min : null;
-    this.ratio = (opt && opt.ratio) ? opt.ratio : 0.05;
+    this.ratio = (opt && opt.ratio) ? opt.ratio : 0.1;
     this.unit = (opt && opt.unit) ? opt.unit : 'px';
   }
   init(scrollTop) {
