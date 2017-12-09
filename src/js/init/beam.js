@@ -10,7 +10,7 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(90, 1, 1, 10000);
+  const camera = new THREE.PerspectiveCamera(120, 1, 1, 10000);
   const clock = new THREE.Clock();
 
   const vectorTouchStart = new THREE.Vector2();
@@ -99,7 +99,7 @@ export default function() {
     scene.add(beam.obj);
 
     renderer.setClearColor(0x0e0e0e, 1.0);
-    camera.position.set(150, 0, 150);
+    camera.position.set(0, 0, 50);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     renderLoop();

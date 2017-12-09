@@ -19,7 +19,7 @@ const float duration = 2.8;
 
 void main(void) {
   // calculate posiitons of instances.
-  vec3 wavePosition = vec3(0.0, 0.0, sin(radians(position.y / 3.6) + time * 0.1 + delay * 9.0) * 40.0);
+  vec3 wavePosition = vec3(0.0, 0.0, sin(radians(position.y / 3.6) + time * 0.1 + delay * 9.0) * 50.0);
   vec3 updatePosition = position + instancePosition + wavePosition;
   mat4 rotateMat = computeRotateMat(radians(90.0), 0.0, radians(rotate));
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(updatePosition, 1.0);
@@ -30,7 +30,7 @@ void main(void) {
   vec3 hsv = vec3(noise, 0.3, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
   float opacityBothEnds = smoothstep(-500.0, -400.0, position.y) * (1.0 - smoothstep(400.0, 500.0, position.y));
-  float opacity = smoothstep(0.92, 1.0, mod(uv.y - now, 1.0)) * 0.6;
+  float opacity = smoothstep(0.95, 1.0, mod(uv.y - now, 1.0)) * 0.6;
 
   vColor = rgb;
   vOpacity = opacity * opacityBothEnds;
