@@ -184,7 +184,7 @@ export default function() {
         textures[index] = texture;
         countLoaded++;
         if (countLoaded >= texArray.length) {
-          // add 3d objects
+          // create and add 3d objects
           for (var j = 0; j < BUTTERFLY_NUM; j++) {
             butterflies[j] = new Butterfly(j, textures[0], textures[1]);
             sceneBack.add(butterflies[j].obj);

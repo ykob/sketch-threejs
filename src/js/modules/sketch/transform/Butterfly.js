@@ -39,29 +39,34 @@ export default class Butterfly {
         value: 0.08
       },
     }
-    this.obj = this.createObj();
-    this.obj.renderOrder = 10;
+    this.obj = null;
     this.isTransform = false;
+
+    this.createObj();
   }
   createObj() {
+    // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(this.size, this.size / 2, 64, 32);
     const sphereGeometry = new THREE.SphereBufferGeometry(this.size * 0.1, 64, 32, -0.5 * Math.PI, 2 * Math.PI);
     const squareGeometry = new THREE.PlaneBufferGeometry(this.size * 1.1, this.size * 0.55, 64, 32);
+
+    // Add common attributes
     geometry.addAttribute('spherePosition', sphereGeometry.attributes.position);
     geometry.addAttribute('squarePosition', squareGeometry.attributes.position);
 
-    const mesh = new THREE.Mesh(
-      geometry,
-      new THREE.RawShaderMaterial({
-        uniforms: this.uniforms,
-        vertexShader: glslify('../../../../glsl/sketch/transform/butterfly.vs'),
-        fragmentShader: glslify('../../../../glsl/sketch/transform/butterfly.fs'),
-        side: THREE.DoubleSide,
-        transparent: true,
-      })
-    );
-    mesh.position.y = this.size * 0.3;
-    return mesh;
+    // Define Material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: glslify('../../../../glsl/sketch/transform/butterfly.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/transform/butterfly.fs'),
+      side: THREE.DoubleSide,
+      transparent: true,
+    });
+
+    // Create Object3D
+    this.obj = new THREE.Mesh(geometry, material);
+    this.obj.position.y = this.size * 0.3;
+    this.obj.renderOrder = 10;
   }
   render(renderer, time) {
     this.uniforms.time.value += time;

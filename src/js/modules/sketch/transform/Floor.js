@@ -28,7 +28,9 @@ export default class Floor {
     this.postEffectBlurY = new PostEffectBlur(this.renderBack2.texture, 0, 1, 4);
 
     this.mirrorCamera.up.set(0, -1, 0);
-    this.obj = this.createObj();
+    this.obj = null;
+
+    this.createObj();
   }
   add(scene, sceneBack) {
     sceneBack.add(this.obj);
@@ -36,17 +38,20 @@ export default class Floor {
     scene.add(this.postEffectBlurY.obj);
   }
   createObj() {
-    const mesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(4000, 4000),
-      new THREE.RawShaderMaterial({
-        uniforms: this.uniforms,
-        vertexShader: glslify('../../../../glsl/sketch/transform/floor.vs'),
-        fragmentShader: glslify('../../../../glsl/sketch/transform/floor.fs'),
-        transparent: true
-      })
-    );
-    mesh.rotation.set(-0.5 * Math.PI, 0, 0);
-    return mesh;
+    // Define Geometry
+    const geometry = new THREE.PlaneBufferGeometry(4000, 4000);
+
+    // Define Material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: glslify('../../../../glsl/sketch/transform/floor.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/transform/floor.fs'),
+      transparent: true
+    });
+
+    // Create Object3D
+    this.obj = new THREE.Mesh(geometry, material);
+    this.obj.rotation.set(-0.5 * Math.PI, 0, 0);
   }
   updateTextureMatrix() {
     this.textureMatrix.set(

@@ -12,7 +12,6 @@ export default class Points {
       opacity: new THREE.BufferAttribute(new Float32Array(size), 1),
       valid: new THREE.BufferAttribute(new Float32Array(size), 1),
     };
-    this.geometry = new THREE.BufferGeometry();
     this.uniforms = {
       size: {
         type: 'f',
@@ -29,30 +28,37 @@ export default class Points {
     };
     this.butterflies = null;
     this.butterfliesLengh = 0;
-    this.obj = this.createObj();
-    this.obj.renderOrder = 20;
+    this.obj = null;
+
+    this.createObj();
   }
   createObj() {
+    // Define Geometry
+    const geometry = new THREE.BufferGeometry();
+
+    // Add attributes
     const indices = [];
     for (var i = 0; i < this.uniforms.size.value; i++) {
       this.attr.index.setX(i, i);
     }
-    this.geometry.addAttribute('position', this.attr.position);
-    this.geometry.addAttribute('colorH', this.attr.colorH);
-    this.geometry.addAttribute('i', this.attr.index);
-    this.geometry.addAttribute('opacity', this.attr.opacity);
-    this.geometry.addAttribute('valid', this.attr.valid);
+    geometry.addAttribute('position', this.attr.position);
+    geometry.addAttribute('colorH', this.attr.colorH);
+    geometry.addAttribute('i', this.attr.index);
+    geometry.addAttribute('opacity', this.attr.opacity);
+    geometry.addAttribute('valid', this.attr.valid);
 
-    return new THREE.Points(
-      this.geometry,
-      new THREE.RawShaderMaterial({
-        uniforms: this.uniforms,
-        vertexShader: glslify('../../../../glsl/sketch/transform/points.vs'),
-        fragmentShader: glslify('../../../../glsl/sketch/transform/points.fs'),
-        depthWrite: false,
-        transparent: true,
-      })
-    );
+    // Define Material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: glslify('../../../../glsl/sketch/transform/points.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/transform/points.fs'),
+      depthWrite: false,
+      transparent: true,
+    });
+
+    // Create Object3D
+    this.obj = new THREE.Points(geometry, material);
+    this.obj.renderOrder = 20;
   }
   addButterflies(butterflies) {
     this.butterflies = butterflies;

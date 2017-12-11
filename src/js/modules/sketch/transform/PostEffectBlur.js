@@ -21,18 +21,24 @@ export default class PostEffectBlur {
         value: texture
       }
     };
-    this.obj = this.createObj();
-    this.obj.visible = false;
+    this.obj = null;
+
+    this.createObj();
   }
   createObj() {
-    return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
-      new THREE.RawShaderMaterial({
-        uniforms: this.uniforms,
-        vertexShader: glslify('../../../../glsl/sketch/transform/postEffect.vs'),
-        fragmentShader: glslify('../../../../glsl/sketch/transform/postEffectBlur.fs'),
-      })
-    );
+    // Define Geometry
+    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+    // Define Material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: glslify('../../../../glsl/sketch/transform/postEffect.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/transform/postEffectBlur.fs'),
+    });
+
+    // Create Object3D
+    this.obj = new THREE.Mesh(geometry, material);
+    this.obj.visible = false;
   }
   resize(resolution) {
     this.uniforms.resolution.value.set(resolution.x, resolution.y);
