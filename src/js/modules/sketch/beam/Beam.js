@@ -23,7 +23,7 @@ export default class Beam {
     geometry.addAttribute('uv', baseGeometry.attributes.uv);
     geometry.setIndex(baseGeometry.index);
 
-    // Add common attributes
+    // Add instance attributes
     const instancePosition = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
     const rotate = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
     const delay = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
@@ -41,20 +41,19 @@ export default class Beam {
     geometry.addAttribute('rotate', rotate);
     geometry.addAttribute('delay', delay);
 
+    // Define Material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: glslify('../../../../glsl/sketch/beam/beam.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/beam/beam.fs'),
+      depthWrite: false,
+      transparent: true,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending,
+    });
+
     // Create Object3D
-    this.obj = new THREE.Mesh(
-      geometry,
-      new THREE.RawShaderMaterial({
-        uniforms: this.uniforms,
-        vertexShader: glslify('../../../../glsl/sketch/beam/beam.vs'),
-        fragmentShader: glslify('../../../../glsl/sketch/beam/beam.fs'),
-        depthWrite: false,
-        transparent: true,
-        side: THREE.DoubleSide,
-        blending: THREE.AdditiveBlending,
-      })
-    );
-    // this.obj.rotation.set(0, 0, MathEx.radians(90));
+    this.obj = new THREE.Mesh(geometry, material);
   }
   render(time) {
     this.uniforms.time.value += time;
