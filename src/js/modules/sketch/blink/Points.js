@@ -9,10 +9,13 @@ export default class Points {
         value: 0
       },
     };
-    this.obj = this.createObj();
+    this.obj = null;
   }
   createObj() {
+    // Define Geometry
     const geometry = new THREE.BufferGeometry();
+
+    // Add attributes
     const position = [];
     const SIDE = 50;
     const LENGTH = 70;
@@ -28,14 +31,18 @@ export default class Points {
     }
     const attrPosition = new THREE.BufferAttribute(new Float32Array(position), 3);
     geometry.addAttribute('position', attrPosition);
+
+    // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: glslify('../../../../glsl/sketch/blink/points.vs'),
       fragmentShader: glslify('../../../../glsl/sketch/blink/points.fs'),
       transparent: true,
       depthWrite: false,
-    })
-    return new THREE.Points(geometry, material);
+    });
+
+    // Create Object3D
+    this.obj = new THREE.Points(geometry, material);
   }
   render(time) {
     this.uniforms.time.value += time;

@@ -95,10 +95,12 @@ export default function() {
     on();
     resizeWindow();
 
+    points.createObj();
+    scene.add(points.obj);
+
     renderer.setClearColor(0xe9e9e9, 1.0);
     camera.position.set(10, 10, 50);
     camera.lookAt(new THREE.Vector3());
-    scene.add(points.obj);
 
     renderLoop();
   }
