@@ -121,11 +121,7 @@ export default function() {
       images[i].applyHook(0, 0.14);
       images[i].applyDrag(0.4);
       images[i].updateVelocity();
-      images[i].obj.lookAt({
-        x: 0,
-        y: images[i].obj.position.y,
-        z: 0
-      });
+      images[i].obj.lookAt(0, images[i].obj.position.y, 0);
       if (images[i].obj.id == picked_id && is_draged == false && get_near == false) {
         if (is_clicked == true) {
           picked_index = i;

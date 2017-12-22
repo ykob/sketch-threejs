@@ -34,10 +34,10 @@ export default class ForcePerspectiveCamera extends THREE.PerspectiveCamera {
       this.velocity[1],
       this.velocity[2]
     );
-    this.lookAt({
-      x: this.lookVelocity[0],
-      y: this.lookVelocity[1],
-      z: this.lookVelocity[2]
-    });
+    this.lookAt(
+      this.lookVelocity[0],
+      this.lookVelocity[1],
+      this.lookVelocity[2]
+    );
   }
 }

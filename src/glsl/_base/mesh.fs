@@ -3,7 +3,7 @@ precision highp float;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-const vec3 light = vec3(-0.7, 0.7, -0.7); // For Flat Shading
+const vec3 light = normalize(vec3(-1.0, 1.0, -1.0)); // For Flat Shading
 
 void main() {
   // Flat Shading

@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "cyberspace": {
+      "title": "cyberspace",
+      "id": "cyberspace",
+      "description": "",
+      "path": "/sketch/cyberspace.html",
+      "posted": "yyyy/mm/dd",
+      "update": "",
+      "color": "white"
+    },
     "beam": {
       "title": "beam",
       "id": "beam",
