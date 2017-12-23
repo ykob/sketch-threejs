@@ -12,6 +12,11 @@ export default function(imgs, callback) {
         count++;
         if (count >= length) callback(loadedImgs);
       };
+      img.onerror = () => {
+        console.error(`Failed to load image in loadImage function.`)
+        count++;
+        if (count >= length) callback(loadedImgs);
+      };
       img.src = imgs[k];
     }
   }
