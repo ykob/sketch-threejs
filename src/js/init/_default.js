@@ -10,8 +10,10 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, 1, 1, 10000);
+  const camera = new THREE.PerspectiveCamera();
   const clock = new THREE.Clock();
+
+  camera.setFocalLength(24);
 
   //
   // process for this sketch.
