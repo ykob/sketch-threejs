@@ -51,6 +51,7 @@ export default function() {
     renderer.setClearColor(0xeeeeee, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
+    clock.start();
 
     on();
     resizeWindow();
