@@ -1,6 +1,8 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
+import GUI from '../modules/sketch/cyberspace/GUI';
+
 export default function() {
   const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
@@ -10,14 +12,16 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, 1, 1, 10000);
+  const camera = new THREE.PerspectiveCamera();
   const clock = new THREE.Clock();
+
+  camera.setFocalLength(24);
 
   //
   // process for this sketch.
   //
 
-
+  const gui = new GUI();
 
   //
   // common process
@@ -46,9 +50,15 @@ export default function() {
   };
 
   const init = () => {
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
+    gui.createObj();
+
+    scene.add(gui.obj);
+
+    renderer.setClearColor(0x000000, 1.0);
+    camera.position.set(0, 0, 1000);
     camera.lookAt(new THREE.Vector3());
+
+    clock.start();
 
     on();
     resizeWindow();
