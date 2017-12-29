@@ -1,11 +1,9 @@
 const debounce = require('js-util/debounce');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
-const ConsoleSignature = require('../common/ConsoleSignature').default;
 const Hookes = require('./Hookes').default;
 const ScrollItems = require('./ScrollItems').default;
 
-const consoleSignature = new ConsoleSignature();
 const contents = document.querySelector('.js-contents');
 const dummyScroll = document.querySelector('.js-dummy-scroll');
 
