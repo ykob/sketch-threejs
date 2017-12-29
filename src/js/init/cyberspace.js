@@ -1,7 +1,7 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
-
-import GUI from '../modules/sketch/cyberspace/GUI';
+const loadTexs = require('../modules/common/loadTexs').default;
+const GUI = require('../modules/sketch/cyberspace/GUI').default;
 
 export default function() {
   const resolution = new THREE.Vector2();
@@ -23,11 +23,18 @@ export default function() {
 
   const gui = new GUI();
 
+  const texs = {
+    gui1: '/img/sketch/cyberspace/tex_gui01.png',
+    gui2: '/img/sketch/cyberspace/tex_gui02.png',
+    gui3: '/img/sketch/cyberspace/tex_gui03.png',
+  };
+
   //
   // common process
   //
   const render = () => {
     const time = clock.getDelta();
+    gui.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -50,19 +57,21 @@ export default function() {
   };
 
   const init = () => {
-    gui.createObj();
+    loadTexs(texs, (loadedTexs) => {
+      gui.createObj([loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3]);
 
-    scene.add(gui.obj);
+      scene.add(gui.obj);
 
-    renderer.setClearColor(0x000000, 1.0);
-    camera.position.set(0, 0, 1000);
-    camera.lookAt(new THREE.Vector3());
+      renderer.setClearColor(0x000000, 1.0);
+      camera.position.set(0, 0, 1000);
+      camera.lookAt(new THREE.Vector3());
 
-    clock.start();
+      clock.start();
 
-    on();
-    resizeWindow();
-    renderLoop();
+      on();
+      resizeWindow();
+      renderLoop();
+    });
   }
   init();
 }
