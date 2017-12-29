@@ -11,8 +11,6 @@ export default function(imgs, callback) {
     const k = key;
     if (imgs.hasOwnProperty(k)) {
       texLoader.load(imgs[k], (tex) => {
-        tex.magFilter = THREE.NearestFilter;
-        tex.minFilter = THREE.NearestFilter;
         tex.repeat = THREE.RepeatWrapping;
         loadedTexs[k] = tex;
         count++;
