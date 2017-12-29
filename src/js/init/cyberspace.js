@@ -2,6 +2,7 @@ const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 const loadTexs = require('../modules/common/loadTexs').default;
 const GUI = require('../modules/sketch/cyberspace/GUI').default;
+const FloatPoints = require('../modules/sketch/cyberspace/FloatPoints').default;
 
 export default function() {
   const resolution = new THREE.Vector2();
@@ -22,6 +23,7 @@ export default function() {
   //
 
   const gui = new GUI();
+  const floatPoints = new FloatPoints();
 
   const texs = {
     gui1: '/img/sketch/cyberspace/tex_gui01.png',
@@ -35,6 +37,7 @@ export default function() {
   const render = () => {
     const time = clock.getDelta();
     gui.render(time);
+    floatPoints.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -59,8 +62,10 @@ export default function() {
   const init = () => {
     loadTexs(texs, (loadedTexs) => {
       gui.createObj([loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3]);
+      floatPoints.createObj();
 
       scene.add(gui.obj);
+      scene.add(floatPoints.obj);
 
       renderer.setClearColor(0x000000, 1.0);
       camera.position.set(0, 0, 1000);
