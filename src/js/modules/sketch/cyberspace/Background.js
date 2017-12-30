@@ -50,8 +50,8 @@ export default class Background {
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
   }
-  render(time, rotateX, rotateZ) {
+  render(time, rotateX, rotateY, rotateZ) {
     this.uniforms.time.value += time;
-    this.obj.rotation.set(rotateX, this.uniforms.time.value * 0.1, rotateZ);
+    this.obj.rotation.set(rotateX, this.uniforms.time.value * rotateY, rotateZ);
   }
 }

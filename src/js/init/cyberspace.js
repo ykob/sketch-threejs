@@ -43,8 +43,8 @@ export default function() {
     const time = clock.getDelta();
     gui.render(time);
     floatPoints.render(time);
-    bg1.render(time, 0.1, 0.3);
-    bg2.render(time, -0.2, -0.2);
+    bg1.render(time, 0.1, 0.1, 0.3);
+    bg2.render(time, -0.2, 0.02, -0.2);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -70,8 +70,8 @@ export default function() {
     loadTexs(texs, (loadedTexs) => {
       gui.createObj([loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3]);
       floatPoints.createObj();
-      bg1.createObj(1200, 84.1, 98.6, 301.2, 828.4);
-      bg2.createObj(2400, 22.6, 112.4, 383.9, 961.2);
+      bg1.createObj(1200, 284.1, 398.6, 601.2, 828.4);
+      bg2.createObj(2400, 222.6, 412.4, 683.9, 961.2);
 
       scene.add(gui.obj);
       scene.add(floatPoints.obj);
