@@ -26,7 +26,8 @@ export default function() {
 
   const gui = new GUI();
   const floatPoints = new FloatPoints();
-  const bg = new Background();
+  const bg1 = new Background();
+  const bg2 = new Background();
 
   const texs = {
     gui1: '/img/sketch/cyberspace/tex_gui01.png',
@@ -42,6 +43,8 @@ export default function() {
     const time = clock.getDelta();
     gui.render(time);
     floatPoints.render(time);
+    bg1.render(time, 0.1, 0.3);
+    bg2.render(time, -0.2, -0.2);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -67,11 +70,13 @@ export default function() {
     loadTexs(texs, (loadedTexs) => {
       gui.createObj([loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3]);
       floatPoints.createObj();
-      bg.createObj(loadedTexs.bg);
+      bg1.createObj(1200, 84.1, 98.6, 301.2, 828.4);
+      bg2.createObj(2400, 22.6, 112.4, 383.9, 961.2);
 
       scene.add(gui.obj);
       scene.add(floatPoints.obj);
-      scene.add(bg.obj);
+      scene.add(bg1.obj);
+      scene.add(bg2.obj);
 
       renderer.setClearColor(0x000000, 1.0);
       camera.position.set(0, 0, 1000);
