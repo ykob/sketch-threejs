@@ -15,8 +15,8 @@ export default class CameraController {
   }
   tilt(mousemove) {
     this.anchorTilt = [
-      mousemove.x * -30,
-      mousemove.y * 15,
+      mousemove.x * -50,
+      mousemove.y * 25,
       0
     ];
   }
