@@ -10,7 +10,7 @@ export default class FloatPoints {
         value: 0
       },
     };
-    this.num = 200;
+    this.num = 150;
     this.obj = null;
   }
   createObj() {

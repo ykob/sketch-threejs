@@ -26,7 +26,7 @@ export default class Mesh {
   }
   createObj(textures) {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(800, 800, 2, 2);
+    const geometry = new THREE.PlaneBufferGeometry(1000, 1000, 2, 2);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -34,6 +34,7 @@ export default class Mesh {
       vertexShader: glslify('../../../../glsl/sketch/cyberspace/gui.vs'),
       fragmentShader: glslify('../../../../glsl/sketch/cyberspace/gui.fs'),
       transparent: true,
+      blending: THREE.AdditiveBlending,
     });
     this.uniforms.texture1.value = textures[0];
     this.uniforms.texture2.value = textures[1];

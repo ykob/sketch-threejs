@@ -7,6 +7,7 @@ uniform sampler2D texture3;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying vec3 vColor;
 
 mat3 rotateMat2D(float radian) {
   return mat3(
@@ -29,5 +30,5 @@ void main() {
 
   if (color.a <= 0.1) discard;
 
-  gl_FragColor = color;
+  gl_FragColor = vec4(vColor, color.a * 0.7);
 }
