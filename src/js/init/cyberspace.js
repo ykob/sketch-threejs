@@ -1,6 +1,10 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+
+const ForcePerspectiveCamera = require('../modules/common/ForcePerspectiveCamera').default;
 const loadTexs = require('../modules/common/loadTexs').default;
+
+const CameraController = require('../modules/sketch/cyberspace/CameraController').default;
 const GUI = require('../modules/sketch/cyberspace/GUI').default;
 const Beam = require('../modules/sketch/cyberspace/Beam').default;
 const FloatPoints = require('../modules/sketch/cyberspace/FloatPoints').default;
@@ -8,6 +12,7 @@ const Background = require('../modules/sketch/cyberspace/Background').default;
 
 export default function() {
   const resolution = new THREE.Vector2();
+  const mousemove = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -15,7 +20,8 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera();
+  const camera = new ForcePerspectiveCamera();
+  const cameraController = new CameraController(camera);
   const clock = new THREE.Clock();
 
   camera.far = 10000;
@@ -43,11 +49,14 @@ export default function() {
   //
   const render = () => {
     const time = clock.getDelta();
+
     gui.render(time);
     beam.render(time);
     floatPoints.render(time);
     bg1.render(time, 0.1, 0.1, 0.3);
     bg2.render(time, -0.2, 0.02, -0.8);
+
+    cameraController.render(time, mousemove);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -67,6 +76,15 @@ export default function() {
   };
   const on = () => {
     window.addEventListener('resize', debounce(resizeWindow), 1000);
+    window.addEventListener('mousemove', (event) => {
+      mousemove.set(
+        event.clientX / resolution.x * 2.0 - 1.0,
+        event.clientY / resolution.y * 2.0 - 1.0
+      );
+    });
+    window.addEventListener('mouseout', (event) => {
+      mousemove.set(0, 0);
+    });
   };
 
   const init = () => {
@@ -84,8 +102,7 @@ export default function() {
       scene.add(bg2.obj);
 
       renderer.setClearColor(0x000000, 1.0);
-      camera.position.set(0, 0, 1000);
-      camera.lookAt(new THREE.Vector3());
+      cameraController.init([0, 0, 1000], [0, 0, 0]);
 
       clock.start();
 
