@@ -15,7 +15,7 @@ export default class Node {
     this.objPoints = null;
   }
   createObj() {
-    const geometry = new THREE.RingBufferGeometry(1550, 1600, 36, 2, MathEx.radians(120), MathEx.radians(300));
+    const geometry = new THREE.RingBufferGeometry(1550, 1600, 36, 2, MathEx.radians(135), MathEx.radians(270));
 
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
@@ -48,9 +48,9 @@ export default class Node {
     this.objWire = new THREE.Mesh(geometry, materialWire);
     this.objPoints = new THREE.Points(geometry, materialPoints);
 
-    this.obj.position.set(0, 0, -1000);
-    this.objWire.position.set(0, 0, -1000);
-    this.objPoints.position.set(0, 0, -1000);
+    this.obj.position.set(0, 0, -1200);
+    this.objWire.position.set(0, 0, -1200);
+    this.objPoints.position.set(0, 0, -1200);
   }
   render(time) {
     this.uniforms.time.value += time;
