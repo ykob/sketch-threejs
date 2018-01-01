@@ -28,7 +28,7 @@ export default class Mesh {
   createObj(textures) {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1500, 1500, 2, 2);
+    const baseGeometry = new THREE.PlaneBufferGeometry(1800, 1800, 2, 2);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.addAttribute('position', baseGeometry.attributes.position);
