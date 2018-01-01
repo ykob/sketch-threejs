@@ -17,7 +17,7 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
-    "babelify": "^7.3.0",
+    "babelify": "^8.0.0",
     "browser-sync": "^2.18.11",
     "browserify": "^14.4.0",
     "del": "^3.0.0",
@@ -27,7 +27,7 @@
     "gulp-autoprefixer": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-data": "^1.2.1",
-    "gulp-imagemin": "^3.4.0",
+    "gulp-imagemin": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.0.0",
@@ -41,13 +41,13 @@
     "imagemin-pngquant": "^5.0.1",
     "licensify": "^3.1.3",
     "node-sass": "^4.5.3",
-    "pump": "^1.0.2",
+    "pump": "^2.0.0",
     "require-dir": "^0.3.1",
     "run-sequence": "^2.2.0",
     "slash": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0",
-    "yargs": "^9.0.1"
+    "yargs": "^10.0.3"
   },
   "dependencies": {
     "gl-matrix": "^2.3.2",
@@ -60,6 +60,6 @@
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "glslify": "^6.1.0",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.87.1"
+    "three": "^0.88.0"
   }
 }

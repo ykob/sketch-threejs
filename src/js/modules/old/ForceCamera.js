@@ -17,11 +17,11 @@ var exports = function(){
     this.position.copy(this.force.position.velocity);
   };
   ForceCamera.prototype.updateLook = function() {
-    this.lookAt({
-      x: this.force.look.velocity.x,
-      y: this.force.look.velocity.y,
-      z: this.force.look.velocity.z,
-    });
+    this.lookAt(
+      this.force.look.velocity.x,
+      this.force.look.velocity.y,
+      this.force.look.velocity.z
+    );
   };
   ForceCamera.prototype.reset = function() {
     this.setPolarCoord();
@@ -35,11 +35,7 @@ var exports = function(){
     this.force.position.anchor.copy(Util.getPolarCoord(rad1, rad2, range));
   };
   ForceCamera.prototype.lookAtCenter = function() {
-    this.lookAt({
-      x: 0,
-      y: 0,
-      z: 0
-    });
+    this.lookAt(0, 0, 0);
   };
   return ForceCamera;
 };

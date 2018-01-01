@@ -106,6 +106,8 @@ export default function() {
       transitionOnload();
     });
 
+    clock.start();
+
     on();
     resizeWindow();
     renderLoop();
