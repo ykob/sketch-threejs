@@ -9,6 +9,7 @@ const GUI = require('../modules/sketch/cyberspace/GUI').default;
 const Beam = require('../modules/sketch/cyberspace/Beam').default;
 const Node = require('../modules/sketch/cyberspace/Node').default;
 const FloatPoints = require('../modules/sketch/cyberspace/FloatPoints').default;
+const Bg = require('../modules/sketch/cyberspace/Bg').default;
 const BgLine = require('../modules/sketch/cyberspace/BgLine').default;
 
 export default function() {
@@ -25,7 +26,7 @@ export default function() {
   const cameraController = new CameraController(camera);
   const clock = new THREE.Clock();
 
-  camera.far = 10000;
+  camera.far = 50000;
   camera.setFocalLength(24);
 
   //
@@ -36,6 +37,7 @@ export default function() {
   const beam = new Beam();
   const node = new Node();
   const floatPoints = new FloatPoints();
+  const bg = new Bg();
   const bgLine1 = new BgLine();
   const bgLine2 = new BgLine();
 
@@ -55,6 +57,7 @@ export default function() {
     beam.render(time);
     node.render(time);
     floatPoints.render(time);
+    bg.render(time);
     bgLine1.render(time, 0.1, 0.1, 0.3);
     bgLine2.render(time, -0.2, 0.02, -0.8);
 
@@ -97,6 +100,7 @@ export default function() {
       beam.createObj();
       node.createObj();
       floatPoints.createObj();
+      bg.createObj();
       bgLine1.createObj(1200, 284.1, 398.6, 601.2, 828.4);
       bgLine2.createObj(2400, 222.6, 412.4, 683.9, 961.2);
 
@@ -106,8 +110,11 @@ export default function() {
       scene.add(node.objWire);
       scene.add(node.objPoints);
       scene.add(floatPoints.obj);
+      scene.add(bg.obj);
       scene.add(bgLine1.obj);
       scene.add(bgLine2.obj);
+
+      bg.obj.position.set(0, 0, -2000);
 
       renderer.setClearColor(0x000000, 1.0);
       cameraController.init([0, 0, 1000], [0, 0, 0]);
