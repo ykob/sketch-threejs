@@ -21,12 +21,24 @@ export default class Mesh {
         type: 't',
         value: null
       },
+      rotate1: {
+        type: 'f',
+        value: 0
+      },
+      rotate2: {
+        type: 'f',
+        value: 0
+      },
+      rotate3: {
+        type: 'f',
+        value: 0
+      },
     };
     this.obj = null;
   }
-  createObj(textures) {
+  createObj(textures, rotates) {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(1000, 1000, 2, 2);
+    const geometry = new THREE.PlaneBufferGeometry(900, 900, 2, 2);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -39,6 +51,9 @@ export default class Mesh {
     this.uniforms.texture1.value = textures[0];
     this.uniforms.texture2.value = textures[1];
     this.uniforms.texture3.value = textures[2];
+    this.uniforms.rotate1.value = rotates[0];
+    this.uniforms.rotate2.value = rotates[1];
+    this.uniforms.rotate3.value = rotates[2];
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
