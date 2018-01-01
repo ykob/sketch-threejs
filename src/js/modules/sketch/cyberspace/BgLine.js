@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-export default class Background {
+export default class BgLine {
   constructor() {
     this.uniforms = {
       time: {
@@ -35,8 +35,8 @@ export default class Background {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/cyberspace/background.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/cyberspace/background.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/cyberspace/bgLine.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/cyberspace/bgLine.fs'),
       transparent: true,
       depthWrite: false,
       side: THREE.BackSide,
