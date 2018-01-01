@@ -42,9 +42,9 @@ export default function() {
   const bgLine2 = new BgLine();
 
   const texs = {
-    gui1: '/img/sketch/cyberspace/tex_gui01.png',
-    gui2: '/img/sketch/cyberspace/tex_gui02.png',
-    gui3: '/img/sketch/cyberspace/tex_gui03.png',
+    gui1: '../img/sketch/cyberspace/tex_gui01.png',
+    gui2: '../img/sketch/cyberspace/tex_gui02.png',
+    gui3: '../img/sketch/cyberspace/tex_gui03.png',
   };
 
   //
