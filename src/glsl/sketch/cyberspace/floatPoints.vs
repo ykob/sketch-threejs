@@ -19,9 +19,9 @@ void main() {
   float now = mod(time + delay * duration, duration) / duration;
   float size = 10.0 * sin(now * 4.0);
   float blink = max(sin(now * 4.0) * 2.0 - 1.0, 0.0);
-  vec3 hsv1 = vec3(time * 0.1, 0.25, 1.0);
+  vec3 hsv1 = vec3(time * 0.1, 0.6, 1.0);
   vec3 rgb1 = convertHsvToRgb(hsv1);
-  vec3 hsv2 = vec3(time * 0.1 + 0.2, 0.25, 1.0);
+  vec3 hsv2 = vec3(time * 0.1 + 0.2, 0.6, 1.0);
   vec3 rgb2 = convertHsvToRgb(hsv2);
 
   mat4 rotateMat = computeRotateMat(
