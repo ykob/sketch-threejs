@@ -25,15 +25,13 @@ export default function() {
   const clock = new THREE.Clock();
 
   camera.far = 10000;
-  camera.setFocalLength(24);
+  camera.setFocalLength(18);
 
   //
   // process for this sketch.
   //
 
   const gui = new GUI();
-  const gui2 = new GUI();
-  const gui3 = new GUI();
   const beam = new Beam();
   const floatPoints = new FloatPoints();
   const bg1 = new Background();
@@ -52,8 +50,6 @@ export default function() {
     const time = clock.getDelta();
 
     gui.render(time);
-    gui2.render(time);
-    gui3.render(time);
     beam.render(time);
     floatPoints.render(time);
     bg1.render(time, 0.1, 0.1, 0.3);
@@ -93,16 +89,7 @@ export default function() {
   const init = () => {
     loadTexs(texs, (loadedTexs) => {
       gui.createObj(
-        [loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3],
-        [1.0, -0.75, -0.5]
-      );
-      gui2.createObj(
-        [loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3],
-        [-0.6, 0.8, 0.7]
-      );
-      gui3.createObj(
-        [loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3],
-        [0.8, -0.8, -0.4]
+        [loadedTexs.gui1, loadedTexs.gui2, loadedTexs.gui3]
       );
       beam.createObj();
       floatPoints.createObj();
@@ -110,15 +97,10 @@ export default function() {
       bg2.createObj(2400, 222.6, 412.4, 683.9, 961.2);
 
       scene.add(gui.obj);
-      scene.add(gui2.obj);
-      scene.add(gui3.obj);
       scene.add(beam.obj);
       scene.add(floatPoints.obj);
       scene.add(bg1.obj);
       scene.add(bg2.obj);
-
-      gui2.obj.position.z = -40;
-      gui3.obj.position.z = -80;
 
       renderer.setClearColor(0x000000, 1.0);
       cameraController.init([0, 0, 1000], [0, 0, 0]);

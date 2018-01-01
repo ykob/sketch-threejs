@@ -4,13 +4,13 @@ uniform float time;
 uniform sampler2D texture1;
 uniform sampler2D texture2;
 uniform sampler2D texture3;
-uniform float rotate1;
-uniform float rotate2;
-uniform float rotate3;
 
 varying vec3 vPosition;
 varying vec2 vUv;
 varying vec3 vColor;
+varying float vRotate1;
+varying float vRotate2;
+varying float vRotate3;
 
 mat3 rotateMat2D(float radian) {
   return mat3(
@@ -21,9 +21,9 @@ mat3 rotateMat2D(float radian) {
 }
 
 void main() {
-  vec2 uv1 = ((vec3(vUv - 0.5, 1.0) * rotateMat2D(time * rotate1)).xy + 0.5);
-  vec2 uv2 = ((vec3(vUv - 0.5, 1.0) * rotateMat2D(time * rotate2)).xy + 0.5);
-  vec2 uv3 = ((vec3(vUv - 0.5, 1.0) * rotateMat2D(time * rotate3)).xy + 0.5);
+  vec2 uv1 = ((vec3(vUv - 0.5, 1.0) * rotateMat2D(time * vRotate1)).xy + 0.5);
+  vec2 uv2 = ((vec3(vUv - 0.5, 1.0) * rotateMat2D(time * vRotate2)).xy + 0.5);
+  vec2 uv3 = ((vec3(vUv - 0.5, 1.0) * rotateMat2D(time * vRotate3)).xy + 0.5);
 
   vec4 texColor1 = texture2D(texture1, uv1);
   vec4 texColor2 = texture2D(texture2, uv2);
@@ -33,5 +33,5 @@ void main() {
 
   if (color.a <= 0.1) discard;
 
-  gl_FragColor = vec4(vColor, color.a * 0.4);
+  gl_FragColor = vec4(vColor, color.a * 0.35);
 }
