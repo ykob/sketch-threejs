@@ -10,7 +10,7 @@ export default class Beam {
         value: 0
       }
     };
-    this.instances = 1200;
+    this.instances = 2000;
     this.obj = null;
   }
   createObj() {
@@ -32,10 +32,10 @@ export default class Beam {
         i,
         MathEx.randomArbitrary(-5000, 5000),
         0,
-        MathEx.randomArbitrary(-400, 400) + (MathEx.randomInt(0, 1) * 2 - 1) * 600,
+        MathEx.randomArbitrary(-500, 500) + (MathEx.randomInt(0, 1) * 2 - 1) * 700,
       );
       delay.setXYZ(i, Math.random() * 2.0);
-      h.setXYZ(i, Math.random() * 0.4);
+      h.setXYZ(i, Math.random() * 0.3);
     }
     geometry.addAttribute('instancePosition', instancePosition);
     geometry.addAttribute('delay', delay);
