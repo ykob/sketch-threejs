@@ -22,7 +22,7 @@ varying float vRotate3;
 
 void main(void) {
   // calculate color
-  vec3 hsv = vec3(h + time * 0.1, 0.4, 1.0);
+  vec3 hsv = vec3(h + time * 0.1 + 0.5, 0.4, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
   vec4 mvPosition = modelViewMatrix * vec4(position + instancePosition, 1.0);
