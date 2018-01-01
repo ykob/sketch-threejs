@@ -17,12 +17,10 @@ varying vec3 vColor;
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
 
 void main(void) {
-  // calculate posiitons of instances.
   vec3 updatePosition = position + instancePosition;
   mat4 rotateMat = computeRotateMat(radians(90.0), 0.0, radians(180.0));
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(updatePosition, 1.0);
 
-  // calculate interval for uv animation and setting color.
   vec3 hsv = vec3(h + time * 0.1, 0.35, 0.6);
   vec3 rgb = convertHsvToRgb(hsv);
 
