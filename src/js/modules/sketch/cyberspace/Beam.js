@@ -10,7 +10,7 @@ export default class Beam {
         value: 0
       }
     };
-    this.instances = 800;
+    this.instances = 1200;
     this.obj = null;
   }
   createObj() {
@@ -30,7 +30,7 @@ export default class Beam {
     for ( var i = 0, ul = this.instances; i < ul; i++ ) {
       instancePosition.setXYZ(
         i,
-        MathEx.randomArbitrary(-2500, 2500),
+        MathEx.randomArbitrary(-5000, 5000),
         0,
         MathEx.randomArbitrary(-400, 400) + (MathEx.randomInt(0, 1) * 2 - 1) * 600,
       );

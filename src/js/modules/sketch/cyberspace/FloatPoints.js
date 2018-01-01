@@ -10,7 +10,7 @@ export default class FloatPoints {
         value: 0
       },
     };
-    this.num = 150;
+    this.num = 2000;
     this.obj = null;
   }
   createObj() {
@@ -24,7 +24,7 @@ export default class FloatPoints {
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       const radian1 = MathEx.radians(MathEx.randomArbitrary(0, 150) - 75);
       const radian2 = MathEx.radians(MathEx.randomArbitrary(0, 360));
-      const radius = MathEx.randomArbitrary(600, 1000);
+      const radius = MathEx.randomArbitrary(600, 2500);
       const polar = MathEx.polar(radian1, radian2, radius);
       position.setXYZ(i, polar[0], polar[1], polar[2]);
       delay.setXYZ(i, Math.random());
