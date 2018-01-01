@@ -15,8 +15,10 @@ export default class Node {
     this.objPoints = null;
   }
   createObj() {
+    // Define Geometry
     const geometry = new THREE.RingBufferGeometry(1550, 1600, 36, 2, MathEx.radians(135), MathEx.radians(270));
 
+    // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: glslify('../../../../glsl/sketch/cyberspace/node.vs'),
@@ -44,6 +46,7 @@ export default class Node {
       blending: THREE.AdditiveBlending,
     });
 
+    // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
     this.objWire = new THREE.Mesh(geometry, materialWire);
     this.objPoints = new THREE.Points(geometry, materialPoints);
