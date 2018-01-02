@@ -90,6 +90,12 @@ export default function() {
     window.addEventListener('mouseout', (event) => {
       mousemove.set(0, 0);
     });
+    window.addEventListener('deviceorientation', (event) => {
+      mousemove.set(
+        event.gamma / 45,
+        (event.beta - 90) / -30
+      );
+    });
   };
 
   const init = () => {
