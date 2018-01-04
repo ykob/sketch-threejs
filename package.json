@@ -51,7 +51,6 @@
   },
   "dependencies": {
     "gl-matrix": "^2.3.2",
-    "glsl-convert-color": "git://github.com/ykob/glsl-convert-color.git",
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",
     "glsl-inverse": "^1.0.0",
