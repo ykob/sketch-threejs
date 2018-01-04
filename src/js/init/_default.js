@@ -13,6 +13,7 @@ export default function() {
   const camera = new THREE.PerspectiveCamera();
   const clock = new THREE.Clock();
 
+  camera.far = 50000;
   camera.setFocalLength(24);
 
   //
