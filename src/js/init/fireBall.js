@@ -125,7 +125,7 @@ export default function() {
     var geometry = new THREE.OctahedronGeometry(1500, 3);
     var material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
-      shading: THREE.FlatShading,
+      flatShading: true,
       side: THREE.BackSide
     });
     return new THREE.Mesh(geometry, material);

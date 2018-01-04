@@ -171,7 +171,7 @@ export default function() {
     var geometry = new THREE.BufferGeometry();
     var material = new THREE.MeshPhongMaterial({
       color: new THREE.Color('hsl(' + comet_color_h + ', 100%, 100%)'),
-      shading: THREE.FlatShading
+      flatShading: true
     });
     var positions = new Float32Array(base_geometry.vertices.length * 3);
     for (var i = 0; i < base_geometry.vertices.length; i++) {
@@ -196,7 +196,7 @@ export default function() {
     var geometry = new THREE.OctahedronGeometry(250, 4);
     var material = new THREE.MeshPhongMaterial({
       color: 0x222222,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     return new THREE.Mesh(geometry, material);
   };

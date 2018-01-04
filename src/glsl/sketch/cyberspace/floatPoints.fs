@@ -17,6 +17,5 @@ void main() {
   vec3 color2 = vColor2 * r2;
   float opacity = ((r1 - r2) * 0.25 + r2 * 0.5) * vOpacity;
 
-  // 以下必須の処理
   gl_FragColor = vec4(color1 + color2, opacity);
 }

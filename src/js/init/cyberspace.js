@@ -1,5 +1,8 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+const MathEx = require('js-util/MathEx');
+const isiOS = require('js-util/isiOS');
+const isAndroid = require('js-util/isAndroid');
 
 const ForcePerspectiveCamera = require('../modules/common/ForcePerspectiveCamera').default;
 const loadTexs = require('../modules/common/loadTexs').default;
@@ -81,15 +84,28 @@ export default function() {
   };
   const on = () => {
     window.addEventListener('resize', debounce(resizeWindow), 1000);
-    window.addEventListener('mousemove', (event) => {
-      mousemove.set(
-        event.clientX / resolution.x * 2.0 - 1.0,
-        event.clientY / resolution.y * 2.0 - 1.0
-      );
-    });
-    window.addEventListener('mouseout', (event) => {
-      mousemove.set(0, 0);
-    });
+    if (isiOS() || isAndroid()) {
+      window.addEventListener('deviceorientation', (event) => {
+        if (resolution.x / resolution.y < 1) {
+          mousemove.set(
+            event.gamma / 60,
+            MathEx.clamp((Math.abs(event.beta) - 90), -90, 90) / -30
+          );
+        } else {
+          mousemove.set(0, 0);
+        }
+      });
+    } else {
+      window.addEventListener('mousemove', (event) => {
+        mousemove.set(
+          event.clientX / resolution.x * 2.0 - 1.0,
+          event.clientY / resolution.y * 2.0 - 1.0
+        );
+      });
+      window.addEventListener('mouseout', (event) => {
+        mousemove.set(0, 0);
+      });
+    }
   };
 
   const init = () => {

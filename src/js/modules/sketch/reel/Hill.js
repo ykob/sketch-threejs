@@ -38,14 +38,14 @@ export default class Hill {
         uniforms: this.uniforms,
         vertexShader: glslify('../../../../glsl/sketch/reel/hill.vs'),
         fragmentShader: glslify('../../../../glsl/sketch/reel/hill.fs'),
-        shading: THREE.FlatShading
+        flatShading: true,
       })
     )
   }
   render(renderer, scene, time) {
     this.uniforms.time.value += time;
     this.obj.visible = false;
-    this.cubeCamera.updateCubeMap(renderer, scene);
+    this.cubeCamera.update(renderer, scene);
     this.obj.visible = true;
   }
 }

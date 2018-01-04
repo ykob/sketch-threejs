@@ -74,7 +74,7 @@ export default function() {
       },
       vertexShader: glslify('../../glsl/sketch/metal_cube/background.vs'),
       fragmentShader: glslify('../../glsl/sketch/metal_cube/background.fs'),
-      shading: THREE.FlatShading,
+      flatShading: true,
       side: THREE.BackSide
     });
     var mesh = new THREE.Mesh(geometry, material);

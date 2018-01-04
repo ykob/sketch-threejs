@@ -21,7 +21,6 @@ varying float vRotate3;
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
 
 void main(void) {
-  // calculate color
   vec3 hsv = vec3(h + time * 0.1 + 0.5, 0.4, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
