@@ -57,7 +57,7 @@ export default class Wire {
         depthWrite: false,
         transparent: true,
         side: THREE.DoubleSide,
-        shading: THREE.FlatShading
+        flatShading: true
       })
     );
   }

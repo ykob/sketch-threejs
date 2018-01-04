@@ -136,7 +136,7 @@ export default function() {
       ]),
       vertexShader: glslify('../../glsl/sketch/hole/object.vs'),
       fragmentShader: glslify('../../glsl/sketch/hole/object.fs'),
-      flatShading: THREE.FlatShading,
+      flatShading: true,
       lights: true,
     });
     return new THREE.Mesh(geometry, material);
