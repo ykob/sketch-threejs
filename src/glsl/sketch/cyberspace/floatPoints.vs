@@ -16,26 +16,32 @@ varying float vOpacity;
 const float duration = 3.0;
 
 void main() {
-  float now = mod(time + delay * duration, duration) / duration;
-  float size = 10.0 * sin(now * 4.0);
-  float blink = max(sin(now * 4.0) * 2.0 - 1.0, 0.0);
-  vec3 hsv1 = vec3(time * 0.1, 0.6, 1.0);
-  vec3 rgb1 = convertHsvToRgb(hsv1);
-  vec3 hsv2 = vec3(time * 0.1 + 0.2, 0.6, 1.0);
-  vec3 rgb2 = convertHsvToRgb(hsv2);
+  // calculate interval time from 0 to 1
+  float interval = mod(time + delay * duration, duration) / duration;
 
+  // update position and size
+  float size = 10.0 * sin(interval * 4.0);
+  float blink = max(sin(interval * 4.0) * 2.0 - 1.0, 0.0);
   mat4 rotateMat = computeRotateMat(
     radians(time * speed * 0.3),
     radians(time * speed),
     radians(time * speed * 0.3)
     );
+
+  // calculate colors
+  vec3 hsv1 = vec3(time * 0.1, 0.6, 1.0);
+  vec3 rgb1 = convertHsvToRgb(hsv1);
+  vec3 hsv2 = vec3(time * 0.1 + 0.2, 0.6, 1.0);
+  vec3 rgb2 = convertHsvToRgb(hsv2);
+
+  // coordinate transformation
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(position, 1.0);
-  float lengthToCamera = 1000.0 / length(mvPosition.xyz);
+  float distanceFromCamera = 1000.0 / length(mvPosition.xyz);
 
   vColor1 = rgb1;
   vColor2 = rgb2;
-  vOpacity = blink * clamp(lengthToCamera, 0.1, 0.8);
+  vOpacity = blink * clamp(distanceFromCamera, 0.1, 0.8);
 
   gl_Position = projectionMatrix * mvPosition;
-  gl_PointSize = lengthToCamera * size;
+  gl_PointSize = distanceFromCamera * size;
 }

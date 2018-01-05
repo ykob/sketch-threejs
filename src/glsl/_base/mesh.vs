@@ -8,6 +8,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 
 void main(void) {
+  // coordinate transformation
   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
 
   vPosition = position;

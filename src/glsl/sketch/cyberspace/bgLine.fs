@@ -10,6 +10,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 
 void main() {
+  // draw lines
   float v1 = sin(vUv.y * wave1 + time * 0.2);
   float v2 = sin(vUv.y * wave2 + time * 0.2);
   float v3 = sin(vUv.y * wave3 + time * 0.2);
