@@ -9,7 +9,7 @@ uniform float timeShow;
 uniform float durationShow;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
-#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
+#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 varying vec3 vPosition;
 varying vec3 vColor;
@@ -22,7 +22,7 @@ void main() {
   float rotateX = p.x * 100.0 + time / 2.0;
   float rotateY = p.y * 200.0 + time / 2.0;
   float rotateZ = length(p.xy) * 150.0 + time / 2.0;
-  mat4 rotateMat = computeRotateMat(rotateX, rotateY, rotateZ);
+  mat4 rotateMat = calcRotateMat4(vec3(rotateX, rotateY, rotateZ));
   vec3 rotatePosition = (rotateMat * vec4(vec3(sin(time * 0.1 + p.x * 10.0) * 150.0), 1.0)).xyz;
 
   // update position

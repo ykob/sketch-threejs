@@ -12,16 +12,16 @@ uniform float time;
 varying vec3 vPosition;
 varying vec3 vNormal;
 
-#pragma glslify: computeTranslateMat = require(glsl-matrix/computeTranslateMat);
-#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
+#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
+#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 void main(void) {
   float radian = radians(time);
-  mat4 rotateWorld = computeRotateMat(radian * 5.0 + rotate.x, radian * 20.0 + rotate.y, radian + rotate.z);
-  mat4 rotateSelf = computeRotateMat(radian * rotate.x * 100.0, radian * rotate.y * 100.0, radian * rotate.z * 100.0);
+  mat4 rotateWorld = calcRotateMat4(vec3(radian) * vec3(5.0, 20.0, 1.0) + rotate);
+  mat4 rotateSelf = calcRotateMat4(vec3(radian) * rotate * 100.0);
   vec4 updatePosition =
     rotateWorld
-    * computeTranslateMat(translate)
+    * calcTranslateMat4(translate)
     * rotateSelf
     * vec4(position + normalize(position) * offset, 1.0);
   vPosition = (modelMatrix * updatePosition).xyz;

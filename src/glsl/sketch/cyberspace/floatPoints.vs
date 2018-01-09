@@ -11,7 +11,7 @@ varying vec3 vColor2;
 varying float vOpacity;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
-#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
+#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 const float duration = 3.0;
 
@@ -22,11 +22,11 @@ void main() {
   // update position and size
   float size = 10.0 * sin(interval * 4.0);
   float blink = max(sin(interval * 4.0) * 2.0 - 1.0, 0.0);
-  mat4 rotateMat = computeRotateMat(
+  mat4 rotateMat = calcRotateMat4(vec3(
     radians(time * speed * 0.3),
     radians(time * speed),
     radians(time * speed * 0.3)
-    );
+    ));
 
   // calculate colors
   vec3 hsv1 = vec3(time * 0.1, 0.6, 1.0);
