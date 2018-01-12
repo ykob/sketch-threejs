@@ -71,7 +71,7 @@ export default class Points {
         const radian1 = (Math.random() * -90 - 90) * Math.PI / 180;
         const radian2 = (Math.random() * -180) * Math.PI / 180;
         const radius = Math.random() * butterfly.uniforms.size.value / 4 + butterfly.uniforms.size.value / 8;
-        const position = MathEx.polar(radian1, radian2, radius);
+        const position = MathEx.spherical(radian1, radian2, radius);
 
         this.attr.position.setXYZ(
           i,

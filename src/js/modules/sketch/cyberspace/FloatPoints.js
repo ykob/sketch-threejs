@@ -25,8 +25,8 @@ export default class FloatPoints {
       const radian1 = MathEx.radians(MathEx.randomArbitrary(0, 150) - 75);
       const radian2 = MathEx.radians(MathEx.randomArbitrary(0, 360));
       const radius = MathEx.randomArbitrary(600, 2500);
-      const polar = MathEx.polar(radian1, radian2, radius);
-      position.setXYZ(i, polar[0], polar[1], polar[2]);
+      const spherical = MathEx.spherical(radian1, radian2, radius);
+      position.setXYZ(i, spherical[0], spherical[1], spherical[2]);
       delay.setXYZ(i, Math.random());
       speed.setXYZ(i, MathEx.randomArbitrary(5, 10) * (MathEx.randomInt(0, 1) * 2.0 - 1.0));
     }
