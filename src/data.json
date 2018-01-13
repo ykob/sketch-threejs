@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "blaze": {
+      "title": "blaze",
+      "id": "blaze",
+      "description": "",
+      "path": "/sketch/blaze.html",
+      "posted": "2018.1.x",
+      "update": "",
+      "color": "white"
+    },
     "cyberspace": {
       "title": "cyberspace",
       "id": "cyberspace",
