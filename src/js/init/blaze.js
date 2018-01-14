@@ -1,6 +1,8 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+const BlazeCore = require('../modules/sketch/blaze/BlazeCore').default;
 const BlazeCylinder = require('../modules/sketch/blaze/BlazeCylinder').default;
+const BlazeStone = require('../modules/sketch/blaze/BlazeStone').default;
 
 export default function() {
   // ==========
@@ -24,14 +26,18 @@ export default function() {
   // Define unique variables
   //
 
+  const blazeCore = new BlazeCore();
   const blazeCylinder = new BlazeCylinder();
+  const blazeStone = new BlazeStone();
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    blazeCore.render(time);
     blazeCylinder.render(time);
+    blazeStone.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -57,13 +63,17 @@ export default function() {
   // Initialize
   //
   const init = () => {
+    blazeCore.createObj();
     blazeCylinder.createObj();
+    blazeStone.createObj();
 
+    scene.add(blazeCore.obj);
     scene.add(blazeCylinder.obj);
+    scene.add(blazeStone.obj);
 
     renderer.setClearColor(0x000000, 1.0);
-    camera.position.set(0, 0, 3000);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    camera.position.set(0, 1500, 3000);
+    camera.lookAt(new THREE.Vector3(0, -100, 0));
     clock.start();
 
     on();

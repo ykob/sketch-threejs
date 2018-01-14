@@ -11,17 +11,19 @@ varying vec2 vUv;
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 
 void main(void) {
+  float roundRadius = (1.0 - smoothstep(0.1, 1.0, uv.y)* 1.2) * 480.0;
   vec3 roundPosition = vec3(
-    sin(radians(uv.x * 360.0)) * 750.0,
-    position.y + 300.0,
-    cos(radians(uv.x * 360.0)) * 750.0
+    sin(radians(uv.x * 360.0)) * roundRadius,
+    position.y + 900.0,
+    cos(radians(uv.x * 360.0)) * roundRadius
     );
 
-  float noise = (snoise3(roundPosition * 0.0015 + time * 1.2) + 0.5);
+  float noise = (snoise3(roundPosition * vec3(0.01, 0.0001, 0.01) + time * 0.8) + 0.5);
+  float noiseRadius = noise * smoothstep(0.2, 0.3, uv.y) * 70.0;
   vec3 noisePosition = vec3(
-    sin(radians(uv.x * 360.0)) * noise * 300.0 * uv.y,
+    sin(radians(uv.x * 360.0)) * noiseRadius,
     0.0,
-    cos(radians(uv.x * 360.0)) * noise * 300.0 * uv.y
+    cos(radians(uv.x * 360.0)) * noiseRadius
     );
 
   vec4 mvPosition = modelViewMatrix * vec4(roundPosition + noisePosition, 1.0);
