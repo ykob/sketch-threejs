@@ -10,7 +10,7 @@ export default class BlazeStone {
         value: 0
       },
     };
-    this.num = 400;
+    this.num = 500;
     this.obj = null;
   }
   createObj() {
@@ -28,19 +28,26 @@ export default class BlazeStone {
     const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
     const scales = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
     const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
+    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
-      const radian1 = MathEx.radians(MathEx.randomArbitrary(-20, 20));
-      const radian2 = MathEx.radians(MathEx.randomArbitrary(0, 360));
-      const radius = MathEx.randomArbitrary(1100, 2400);
-      const spherical = MathEx.spherical(radian1, radian2, radius);
-      const scale = Math.pow((2400 - radius) / 1200, 3.0) + 0.1;
-      instancePositions.setXYZ(i, spherical[0], spherical[1], spherical[2]);
+      const radian = MathEx.radians(MathEx.randomArbitrary(0, 360));
+      const radius = MathEx.randomArbitrary(1000, 2500);
+      const scale = Math.pow((2500 - radius) / 1500, 2.0) + 0.1;
+      const speed = MathEx.randomArbitrary(0.2, 0.6) * (MathEx.randomInt(0, 1) * 2 - 1);
+      instancePositions.setXYZ(
+        i,
+        Math.cos(radian) * radius,
+        MathEx.randomArbitrary(-600, 300),
+        Math.sin(radian) * radius,
+      );
       scales.setXYZ(i, scale);
       rotates.setXYZ(i, i);
+      speeds.setXYZ(i, speed);
     }
     geometry.addAttribute('instancePosition', instancePositions);
     geometry.addAttribute('scale', scales);
     geometry.addAttribute('rotate', rotates);
+    geometry.addAttribute('speed', speeds);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

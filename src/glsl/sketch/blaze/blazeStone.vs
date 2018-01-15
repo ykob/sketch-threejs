@@ -3,6 +3,7 @@ attribute vec2 uv;
 attribute vec3 instancePosition;
 attribute float scale;
 attribute float rotate;
+attribute float speed;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -16,9 +17,10 @@ varying vec2 vUv;
 
 void main(void) {
   mat4 scaleMat = calcScaleMat4(vec3(scale));
-  mat4 rotateMat = calcRotateMat4(vec3(0.0, rotate + time * 0.1, 0.0));
-  vec3 updatePosition = (rotateMat * scaleMat * vec4(position, 1.0)).xyz;
-  vec4 mvPosition = modelViewMatrix * rotateMat * vec4(updatePosition + instancePosition, 1.0);
+  mat4 rotateMatSelf = calcRotateMat4(vec3(time * speed));
+  mat4 rotateMatWorld = calcRotateMat4(vec3(0.0, rotate + time * speed * 0.2, 0.0));
+  vec3 updatePosition = (rotateMatSelf * scaleMat * vec4(position, 1.0)).xyz;
+  vec4 mvPosition = modelViewMatrix * rotateMatWorld * vec4(updatePosition + instancePosition, 1.0);
 
   vPosition = updatePosition + instancePosition;
   vUv = uv;
