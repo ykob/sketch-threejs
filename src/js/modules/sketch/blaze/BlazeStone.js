@@ -10,13 +10,13 @@ export default class BlazeStone {
         value: 0
       },
     };
-    this.num = 500;
+    this.num = 2000;
     this.obj = null;
   }
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(120, 120, 120);
+    const baseGeometry = new THREE.BoxBufferGeometry(20, 500, 100);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.addAttribute('position', baseGeometry.attributes.position);
@@ -33,12 +33,12 @@ export default class BlazeStone {
       const radian = MathEx.radians(MathEx.randomArbitrary(0, 360));
       const radius = MathEx.randomArbitrary(1000, 2500);
       const scale = Math.pow((2500 - radius) / 1500, 2.0) + 0.1;
-      const speed = MathEx.randomArbitrary(0.2, 0.6) * (MathEx.randomInt(0, 1) * 2 - 1);
+      const speed = MathEx.randomArbitrary(0.01, 0.6);
       instancePositions.setXYZ(
         i,
-        Math.cos(radian) * radius,
-        MathEx.randomArbitrary(-600, 300),
-        Math.sin(radian) * radius,
+        radius,
+        MathEx.randomArbitrary(-4000, 200),
+        0,
       );
       scales.setXYZ(i, scale);
       rotates.setXYZ(i, i);
