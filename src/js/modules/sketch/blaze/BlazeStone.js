@@ -10,7 +10,7 @@ export default class BlazeStone {
         value: 0
       },
     };
-    this.num = 2000;
+    this.num = 4000;
     this.obj = null;
   }
   createObj() {
@@ -31,13 +31,13 @@ export default class BlazeStone {
     const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       const radian = MathEx.radians(MathEx.randomArbitrary(0, 360));
-      const radius = MathEx.randomArbitrary(1000, 2500);
-      const scale = Math.pow((2500 - radius) / 1500, 2.0) + 0.1;
-      const speed = MathEx.randomArbitrary(0.01, 0.6);
+      const radius = MathEx.randomArbitrary(1000, 5000);
+      const scale = Math.pow((5000 - radius) / 3300, 2.0) + 0.1;
+      const speed = MathEx.randomArbitrary(0.1, 0.4);
       instancePositions.setXYZ(
         i,
         radius,
-        MathEx.randomArbitrary(-4000, 200),
+        MathEx.randomArbitrary(-8000, 50),
         0,
       );
       scales.setXYZ(i, scale);
