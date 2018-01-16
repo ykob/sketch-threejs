@@ -1,5 +1,10 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+const MathEx = require('js-util/MathEx');
+const isiOS = require('js-util/isiOS');
+const isAndroid = require('js-util/isAndroid');
+const ForcePerspectiveCamera = require('../modules/common/ForcePerspectiveCamera').default;
+const CameraController = require('../modules/sketch/blaze/CameraController').default;
 const BlazeCore = require('../modules/sketch/blaze/BlazeCore').default;
 const BlazeCylinder = require('../modules/sketch/blaze/BlazeCylinder').default;
 const BlazeStone = require('../modules/sketch/blaze/BlazeStone').default;
@@ -10,6 +15,7 @@ export default function() {
   // Define common variables
   //
   const resolution = new THREE.Vector2();
+  const mousemove = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -17,7 +23,8 @@ export default function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera();
+  const camera = new ForcePerspectiveCamera();
+  const cameraController = new CameraController(camera);
   const clock = new THREE.Clock();
 
   camera.far = 50000;
@@ -41,6 +48,7 @@ export default function() {
     blazeCylinder.render(time);
     blazeStone.render(time);
     backgroundSphere.render(time);
+    cameraController.render(time, mousemove);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -60,6 +68,28 @@ export default function() {
   };
   const on = () => {
     window.addEventListener('resize', debounce(resizeWindow), 1000);
+    if (isiOS() || isAndroid()) {
+      window.addEventListener('deviceorientation', (event) => {
+        if (resolution.x / resolution.y < 1) {
+          mousemove.set(
+            event.gamma / 60,
+            MathEx.clamp((Math.abs(event.beta) - 90), -90, 90) * -0.02
+          );
+        } else {
+          mousemove.set(0, 0);
+        }
+      });
+    } else {
+      window.addEventListener('mousemove', (event) => {
+        mousemove.set(
+          event.clientX / resolution.x * 2.0 - 1.0,
+          event.clientY / resolution.y * 2.0 - 1.0
+        );
+      });
+      window.addEventListener('mouseout', (event) => {
+        mousemove.set(0, 0);
+      });
+    }
   };
 
   // ==========
@@ -77,8 +107,7 @@ export default function() {
     scene.add(backgroundSphere.obj);
 
     renderer.setClearColor(0x000000, 1.0);
-    camera.position.set(0, 1500, 3000);
-    camera.lookAt(new THREE.Vector3(0, -100, 0));
+    cameraController.init([0, 1500, 3000], [0, -100, 0]);
     clock.start();
 
     on();
