@@ -3,6 +3,7 @@ const debounce = require('js-util/debounce');
 const BlazeCore = require('../modules/sketch/blaze/BlazeCore').default;
 const BlazeCylinder = require('../modules/sketch/blaze/BlazeCylinder').default;
 const BlazeStone = require('../modules/sketch/blaze/BlazeStone').default;
+const BackgroundSphere = require('../modules/sketch/blaze/BackgroundSphere').default;
 
 export default function() {
   // ==========
@@ -29,6 +30,7 @@ export default function() {
   const blazeCore = new BlazeCore();
   const blazeCylinder = new BlazeCylinder();
   const blazeStone = new BlazeStone();
+  const backgroundSphere = new BackgroundSphere();
 
   // ==========
   // Define functions
@@ -38,6 +40,7 @@ export default function() {
     blazeCore.render(time);
     blazeCylinder.render(time);
     blazeStone.render(time);
+    backgroundSphere.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -66,10 +69,12 @@ export default function() {
     blazeCore.createObj();
     blazeCylinder.createObj();
     blazeStone.createObj();
+    backgroundSphere.createObj();
 
     scene.add(blazeCore.obj);
     scene.add(blazeCylinder.obj);
     scene.add(blazeStone.obj);
+    scene.add(backgroundSphere.obj);
 
     renderer.setClearColor(0x000000, 1.0);
     camera.position.set(0, 1500, 3000);
