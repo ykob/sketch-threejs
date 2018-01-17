@@ -2,6 +2,9 @@ const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
 export default function() {
+  // ==========
+  // Define common variables
+  //
   const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
@@ -16,14 +19,12 @@ export default function() {
   camera.far = 50000;
   camera.setFocalLength(24);
 
-  //
-  // process for this sketch.
+  // ==========
+  // Define unique variables
   //
 
-
-
-  //
-  // common process
+  // ==========
+  // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
@@ -48,6 +49,9 @@ export default function() {
     window.addEventListener('resize', debounce(resizeWindow), 1000);
   };
 
+  // ==========
+  // Initialize
+  //
   const init = () => {
     renderer.setClearColor(0xeeeeee, 1.0);
     camera.position.set(1000, 1000, 1000);

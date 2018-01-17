@@ -30,7 +30,7 @@ export default class CameraController {
     this.radian2Base = this.radian2;
   }
   render() {
-    this.camera.anchor = MathEx.polar(this.radian1, this.radian2, this.radius);
+    this.camera.anchor = MathEx.spherical(this.radian1, this.radian2, this.radius);
     this.camera.render();
   }
   computeZoomLength() {

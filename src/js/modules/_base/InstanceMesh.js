@@ -21,6 +21,7 @@ export default class InstanceMesh {
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.addAttribute('position', baseGeometry.attributes.position);
     geometry.addAttribute('normal', baseGeometry.attributes.normal);
+    geometry.addAttribute('uv', baseGeometry.attributes.uv);
     geometry.setIndex(baseGeometry.index);
 
     // Define attributes of the instancing geometry

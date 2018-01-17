@@ -16,6 +16,9 @@ const Bg = require('../modules/sketch/cyberspace/Bg').default;
 const BgLine = require('../modules/sketch/cyberspace/BgLine').default;
 
 export default function() {
+  // ==========
+  // Define common variables
+  //
   const resolution = new THREE.Vector2();
   const mousemove = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
@@ -32,10 +35,9 @@ export default function() {
   camera.far = 50000;
   camera.setFocalLength(24);
 
+  // ==========
+  // Define unique variables
   //
-  // process for this sketch.
-  //
-
   const gui = new GUI();
   const beam = new Beam();
   const node = new Node();
@@ -50,8 +52,8 @@ export default function() {
     gui3: '../img/sketch/cyberspace/tex_gui03.png',
   };
 
-  //
-  // common process
+  // ==========
+  // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
@@ -108,6 +110,9 @@ export default function() {
     }
   };
 
+  // ==========
+  // Initialize
+  //
   const init = () => {
     loadTexs(texs, (loadedTexs) => {
       gui.createObj(

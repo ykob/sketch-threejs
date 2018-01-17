@@ -21,7 +21,7 @@ varying float vStep3;
 
 #pragma glslify: ease = require(glsl-easings/exponential-in-out);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d);
-#pragma glslify: computeRotateMat = require(glsl-matrix/computeRotateMat);
+#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 void main() {
   // Calcurate time of tranforming
@@ -37,17 +37,17 @@ void main() {
     position.y + sin(time) * 10.0,
     sin(flapTime) * abs(position.x) + sin(time) * 10.0
   );
-  mat4 flapRotateMat = computeRotateMat(radians(45.0), 0.0, 0.0);
+  mat4 flapRotateMat = calcRotateMat4(vec3(radians(45.0), 0.0, 0.0));
   vec3 position1 = (flapRotateMat * vec4(flapPosition, 1.0)).xyz;
 
   // Position of Sphere on transforming
   float sphereNoise = cnoise3(spherePosition * 0.02 + time * 2.4);
   vec3 sphereNoisePosition = normalize(spherePosition) * sphereNoise * 30.0;
-  mat4 sphereRotateMat = computeRotateMat(t * 4.0, 0.0, 0.0);
+  mat4 sphereRotateMat = calcRotateMat4(vec3(t * 4.0, 0.0, 0.0));
   vec3 position2 = (sphereRotateMat * vec4(spherePosition + sphereNoisePosition, 1.0)).xyz;
 
   // Position of Picture
-  mat4 pictureRotateMat = computeRotateMat(0.0, radians(45.0), 0.0);
+  mat4 pictureRotateMat = calcRotateMat4(vec3(0.0, radians(45.0), 0.0));
   vec3 position3 = (pictureRotateMat * vec4(squarePosition, 1.0)).xyz;;
 
   // Total of All Position

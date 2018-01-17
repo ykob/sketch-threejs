@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "flame": {
+      "title": "flame",
+      "id": "flame",
+      "description": "draw a flame with the Simplex Noise and a cylinder geometry.",
+      "path": "/sketch/flame.html",
+      "posted": "2018.1.18",
+      "update": "",
+      "color": "white"
+    },
     "cyberspace": {
       "title": "cyberspace",
       "id": "cyberspace",
