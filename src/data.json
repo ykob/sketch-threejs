@@ -15,9 +15,9 @@
     "blaze": {
       "title": "blaze",
       "id": "blaze",
-      "description": "",
+      "description": "draw a flame with the Simplex Noise and a cylinder geometry.",
       "path": "/sketch/blaze.html",
-      "posted": "2018.1.x",
+      "posted": "2018.1.18",
       "update": "",
       "color": "white"
     },
