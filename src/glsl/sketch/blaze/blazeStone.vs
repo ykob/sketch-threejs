@@ -11,6 +11,7 @@ uniform float time;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying float vDistance;
 
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 #pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
@@ -20,9 +21,11 @@ void main(void) {
   mat4 rotateMatWorld = calcRotateMat4(vec3(0.0, rotate + time * speed * 0.2, 0.0));
   vec3 updatePosition = (scaleMat * vec4(position, 1.0)).xyz;
   vec4 mvPosition = modelViewMatrix * rotateMatWorld * vec4(updatePosition + instancePosition, 1.0);
+  float distanceFromCenter = 1.0 - clamp(length(instancePosition) / 6000.0, 0.0, 0.8);
 
   vPosition = updatePosition + instancePosition;
   vUv = uv;
+  vDistance = distanceFromCenter;
 
   gl_Position = projectionMatrix * mvPosition;
 }
