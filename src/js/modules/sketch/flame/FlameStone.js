@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-export default class BlazeStone {
+export default class FlameStone {
   constructor() {
     this.uniforms = {
       time: {
@@ -52,8 +52,8 @@ export default class BlazeStone {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/blaze/blazeStone.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/blaze/blazeStone.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/flame/flameStone.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/flame/flameStone.fs'),
       flatShading: true,
     });
 

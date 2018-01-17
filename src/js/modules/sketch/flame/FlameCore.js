@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-export default class BlazeCore {
+export default class FlameCore {
   constructor() {
     this.uniforms = {
       time: {
@@ -19,8 +19,8 @@ export default class BlazeCore {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/blaze/blazeCore.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/blaze/blazeCore.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/flame/flameCore.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/flame/flameCore.fs'),
       flatShading: true,
     });
 

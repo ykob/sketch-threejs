@@ -4,11 +4,11 @@ const MathEx = require('js-util/MathEx');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
 const ForcePerspectiveCamera = require('../modules/common/ForcePerspectiveCamera').default;
-const CameraController = require('../modules/sketch/blaze/CameraController').default;
-const BlazeCore = require('../modules/sketch/blaze/BlazeCore').default;
-const BlazeCylinder = require('../modules/sketch/blaze/BlazeCylinder').default;
-const BlazeStone = require('../modules/sketch/blaze/BlazeStone').default;
-const BackgroundSphere = require('../modules/sketch/blaze/BackgroundSphere').default;
+const CameraController = require('../modules/sketch/Flame/CameraController').default;
+const FlameCore = require('../modules/sketch/Flame/FlameCore').default;
+const FlameCylinder = require('../modules/sketch/Flame/FlameCylinder').default;
+const FlameStone = require('../modules/sketch/Flame/FlameStone').default;
+const BackgroundSphere = require('../modules/sketch/Flame/BackgroundSphere').default;
 
 export default function() {
   // ==========
@@ -34,9 +34,9 @@ export default function() {
   // Define unique variables
   //
 
-  const blazeCore = new BlazeCore();
-  const blazeCylinder = new BlazeCylinder();
-  const blazeStone = new BlazeStone();
+  const flameCore = new FlameCore();
+  const flameCylinder = new FlameCylinder();
+  const flameStone = new FlameStone();
   const backgroundSphere = new BackgroundSphere();
 
   // ==========
@@ -44,9 +44,9 @@ export default function() {
   //
   const render = () => {
     const time = clock.getDelta();
-    blazeCore.render(time);
-    blazeCylinder.render(time);
-    blazeStone.render(time);
+    flameCore.render(time);
+    flameCylinder.render(time);
+    flameStone.render(time);
     backgroundSphere.render(time);
     cameraController.render(time, mousemove);
     renderer.render(scene, camera);
@@ -96,14 +96,14 @@ export default function() {
   // Initialize
   //
   const init = () => {
-    blazeCore.createObj();
-    blazeCylinder.createObj();
-    blazeStone.createObj();
+    flameCore.createObj();
+    flameCylinder.createObj();
+    flameStone.createObj();
     backgroundSphere.createObj();
 
-    scene.add(blazeCore.obj);
-    scene.add(blazeCylinder.obj);
-    scene.add(blazeStone.obj);
+    scene.add(flameCore.obj);
+    scene.add(flameCylinder.obj);
+    scene.add(flameStone.obj);
     scene.add(backgroundSphere.obj);
 
     renderer.setClearColor(0x000000, 1.0);

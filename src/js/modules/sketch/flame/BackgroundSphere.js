@@ -18,8 +18,8 @@ export default class backgroundSphere {
     // Materialを定義
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/blaze/backgroundSphere.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/blaze/backgroundSphere.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/Flame/backgroundSphere.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/Flame/backgroundSphere.fs'),
       side: THREE.BackSide,
     });
 

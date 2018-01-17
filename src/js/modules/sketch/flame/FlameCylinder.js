@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-export default class BlazeCylinder {
+export default class FlameCylinder {
   constructor() {
     this.uniforms = {
       time: {
@@ -19,8 +19,8 @@ export default class BlazeCylinder {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/blaze/blazeCylinder.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/blaze/blazeCylinder.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/flame/flameCylinder.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/flame/flameCylinder.fs'),
       transparent: true,
       depthWrite: false,
       side: THREE.DoubleSide,
