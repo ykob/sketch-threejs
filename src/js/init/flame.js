@@ -83,7 +83,7 @@ export default function() {
       window.addEventListener('mousemove', (event) => {
         mousemove.set(
           event.clientX / resolution.x * 2.0 - 1.0,
-          event.clientY / resolution.y * 2.0 - 1.0
+          -(event.clientY / resolution.y * 2.0 - 1.0)
         );
       });
       window.addEventListener('mouseout', (event) => {
