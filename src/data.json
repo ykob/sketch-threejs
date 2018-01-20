@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "recede": {
+      "title": "recede",
+      "id": "recede",
+      "description": "",
+      "path": "/sketch/recede.html",
+      "posted": "2018.1.x",
+      "update": "",
+      "color": "black"
+    },
     "flame": {
       "title": "flame",
       "id": "flame",
