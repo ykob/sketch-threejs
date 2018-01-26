@@ -13,6 +13,10 @@ export default class Points {
         type: 't',
         value: null
       },
+      mouse: {
+        type: 'v3',
+        value: new THREE.Vector3()
+      },
     };
     this.obj = null;
   }
@@ -32,7 +36,15 @@ export default class Points {
     // Create Object3D
     this.obj = new THREE.Points(geometry, material);
   }
-  render(time) {
+  render(time, camera, mousemove) {
     this.uniforms.time.value += time;
+
+    const v = new THREE.Vector3();
+    v.set(mousemove.x, mousemove.y, -1);
+    v.unproject(camera);
+    const dir = v.sub(camera.position).normalize();
+    const distance = -camera.position.z / dir.z;
+    const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+    this.uniforms.mouse.value.copy(pos);
   }
 }
