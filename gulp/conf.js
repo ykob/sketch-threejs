@@ -46,7 +46,13 @@ module.exports.scripts = {
     transform: [
       ['babelify', {
         babelrc: false,
-        presets: ['es2015']
+        presets: [
+          ['env', {
+            targets: {
+              browsers: ['last 2 versions', 'ie >= 11']
+            }
+          }]
+        ]
       }],
       'envify',
       'glslify'
