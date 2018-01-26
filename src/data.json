@@ -15,9 +15,9 @@
     "repel": {
       "title": "repel",
       "id": "repel",
-      "description": "",
+      "description": "Convert the mousemove position to the 3d scene position.",
       "path": "/sketch/repel.html",
-      "posted": "2018.1.x",
+      "posted": "2018.1.26",
       "update": "",
       "color": "black"
     },
