@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "nodeText": {
+      "title": "node text",
+      "id": "node_text",
+      "description": "",
+      "path": "/sketch/node_text.html",
+      "posted": "2018.1.26",
+      "update": "",
+      "color": "black"
+    },
     "repel": {
       "title": "repel",
       "id": "repel",
