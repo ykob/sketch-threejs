@@ -1,5 +1,6 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+const loadTexs = require('../modules/common/loadTexs').default;
 const Points = require('../modules/sketch/recede/Points').default;
 
 export default function() {
@@ -24,6 +25,9 @@ export default function() {
   // Define unique variables
   //
 
+  const texsSrc = {
+    points: '../img/sketch/image_data/elephant.png'
+  };
   const points = new Points();
 
   // ==========
@@ -31,7 +35,6 @@ export default function() {
   //
   const render = () => {
     const time = clock.getDelta();
-    points.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -57,18 +60,20 @@ export default function() {
   // Initialize
   //
   const init = () => {
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(0, 0, 1000);
-    camera.lookAt(new THREE.Vector3());
-    clock.start();
+    loadTexs(texsSrc, (loadedTexs) => {
+      renderer.setClearColor(0xeeeeee, 1.0);
+      camera.position.set(0, 0, 1000);
+      camera.lookAt(new THREE.Vector3());
+      clock.start();
 
-    points.createObj();
+      points.createObj(loadedTexs.points);
 
-    scene.add(points.obj);
+      scene.add(points.obj);
 
-    on();
-    resizeWindow();
-    renderLoop();
+      on();
+      resizeWindow();
+      renderLoop();
+    });
   }
   init();
 }

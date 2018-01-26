@@ -9,20 +9,25 @@ export default class Points {
         type: 'f',
         value: 0
       },
+      tex: {
+        type: 't',
+        value: null
+      },
     };
     this.obj = null;
   }
-  createObj() {
+  createObj(tex) {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(1000, 1000, 50, 50);
-    console.log(geometry)
+    const geometry = new THREE.PlaneBufferGeometry(800, 800, 200, 200);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: glslify('../../../../glsl/sketch/recede/points.vs'),
       fragmentShader: glslify('../../../../glsl/sketch/recede/points.fs'),
+      transparent: true,
     });
+    this.uniforms.tex.value = tex;
 
     // Create Object3D
     this.obj = new THREE.Points(geometry, material);
