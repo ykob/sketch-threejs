@@ -12,7 +12,7 @@ const init = () => {
   } else {
     require('./init/commonSketch.js').default();
     switch (pageId) {
-      case 'recede':      require('./init/recede.js').default(); break;
+      case 'repel':       require('./init/repel.js').default(); break;
       case 'flame':       require('./init/flame.js').default(); break;
       case 'cyberspace':  require('./init/cyberspace.js').default(); break;
       case 'beam':        require('./init/beam.js').default(); break;

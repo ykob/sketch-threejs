@@ -12,11 +12,11 @@
       "path": "/",
       "color": "white"
     },
-    "recede": {
-      "title": "recede",
-      "id": "recede",
+    "repel": {
+      "title": "repel",
+      "id": "repel",
       "description": "",
-      "path": "/sketch/recede.html",
+      "path": "/sketch/repel.html",
       "posted": "2018.1.x",
       "update": "",
       "color": "black"

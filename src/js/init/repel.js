@@ -1,7 +1,7 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 const loadTexs = require('../modules/common/loadTexs').default;
-const Points = require('../modules/sketch/recede/Points').default;
+const Points = require('../modules/sketch/repel/Points').default;
 
 export default function() {
   // ==========

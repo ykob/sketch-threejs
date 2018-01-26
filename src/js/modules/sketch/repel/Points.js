@@ -27,8 +27,8 @@ export default class Points {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/recede/points.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/recede/points.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/repel/points.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/repel/points.fs'),
       transparent: true,
     });
     this.uniforms.tex.value = tex;
