@@ -71,7 +71,7 @@ export default function() {
   //
   const init = () => {
     loadTexs(texsSrc, (loadedTexs) => {
-      renderer.setClearColor(0xeeeeee, 1.0);
+      renderer.setClearColor(0x7aa3cc, 1.0);
       camera.position.set(0, 0, 1000);
       camera.lookAt(0, 0, 0);
       clock.start();
