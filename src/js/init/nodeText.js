@@ -1,5 +1,6 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+const NodeText = require('../modules/sketch/node_text/NodeText').default;
 
 export default function() {
   // ==========
@@ -23,11 +24,14 @@ export default function() {
   // Define unique variables
   //
 
+  const nodeText = new NodeText();
+
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    nodeText.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -53,6 +57,9 @@ export default function() {
   // Initialize
   //
   const init = () => {
+    nodeText.createObj();
+    scene.add(nodeText.obj);
+
     renderer.setClearColor(0xeeeeee, 1.0);
     camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());

@@ -21,8 +21,8 @@ export default class Node {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/node_text/node.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/node_text/node.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/node_text/nodeText.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeText.fs'),
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,
@@ -30,8 +30,8 @@ export default class Node {
     });
     const materialWire = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/node_text/node.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeWire.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/node_text/nodeText.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeTextWire.fs'),
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,
@@ -39,8 +39,8 @@ export default class Node {
     });
     const materialPoints = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('../../../../glsl/sketch/node_text/nodePoints.vs'),
-      fragmentShader: glslify('../../../../glsl/sketch/node_text/nodePoints.fs'),
+      vertexShader: glslify('../../../../glsl/sketch/node_text/nodeTextPoints.vs'),
+      fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeTextPoints.fs'),
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,
