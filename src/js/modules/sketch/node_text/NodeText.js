@@ -22,6 +22,7 @@ export default class Node {
       height: 0,
       curveSegments: 1,
     });
+    geometry.center();
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
