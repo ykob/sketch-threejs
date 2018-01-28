@@ -16,6 +16,7 @@ export default function() {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera();
   const clock = new THREE.Clock();
+  const loader = new THREE.FontLoader();
 
   camera.far = 50000;
   camera.setFocalLength(24);
@@ -23,7 +24,6 @@ export default function() {
   // ==========
   // Define unique variables
   //
-
   const nodeText = new NodeText();
 
   // ==========
@@ -57,17 +57,22 @@ export default function() {
   // Initialize
   //
   const init = () => {
-    nodeText.createObj();
-    scene.add(nodeText.obj);
+    loader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', (font) => {
+      nodeText.createObj(font);
 
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
-    camera.lookAt(new THREE.Vector3());
-    clock.start();
+      //scene.add(nodeText.obj);
+      scene.add(nodeText.objWire);
+      scene.add(nodeText.objPoints);
 
-    on();
-    resizeWindow();
-    renderLoop();
+      renderer.setClearColor(0x111111, 1.0);
+      camera.position.set(0, 0, 1000);
+      camera.lookAt(new THREE.Vector3());
+      clock.start();
+
+      on();
+      resizeWindow();
+      renderLoop();
+    });
   }
   init();
 }

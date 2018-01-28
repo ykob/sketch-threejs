@@ -14,9 +14,14 @@ export default class Node {
     this.objWire = null;
     this.objPoints = null;
   }
-  createObj() {
+  createObj(font) {
     // Define Geometry
-    const geometry = new THREE.RingBufferGeometry();
+    const geometry = new THREE.TextBufferGeometry('HELLO', {
+      font: font,
+      size: 300,
+      height: 0,
+      curveSegments: 1,
+    });
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -25,7 +30,6 @@ export default class Node {
       fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeText.fs'),
       depthWrite: false,
       transparent: true,
-      blending: THREE.AdditiveBlending,
       flatShading: true,
     });
     const materialWire = new THREE.RawShaderMaterial({
@@ -34,7 +38,6 @@ export default class Node {
       fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeTextWire.fs'),
       depthWrite: false,
       transparent: true,
-      blending: THREE.AdditiveBlending,
       wireframe: true,
     });
     const materialPoints = new THREE.RawShaderMaterial({
@@ -43,7 +46,6 @@ export default class Node {
       fragmentShader: glslify('../../../../glsl/sketch/node_text/nodeTextPoints.fs'),
       depthWrite: false,
       transparent: true,
-      blending: THREE.AdditiveBlending,
     });
 
     // Create Object3D
