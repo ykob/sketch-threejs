@@ -4,12 +4,30 @@ const MathEx = require('js-util/MathEx');
 
 export default class Node {
   constructor() {
+    this.durationTransform = 0.8;
     this.uniforms = {
       time: {
         type: 'f',
         value: 0
       },
+      timeTransform: {
+        type: 'f',
+        value: this.durationTransform
+      },
+      durationTransform: {
+        type: 'f',
+        value: this.durationTransform
+      },
+      prevIndex: {
+        type: 'f',
+        value: 1
+      },
+      nextIndex: {
+        type: 'f',
+        value: 0
+      },
     };
+    this.isTransform = false;
     this.obj = null;
     this.objWire = null;
     this.objPoints = null;
@@ -31,6 +49,7 @@ export default class Node {
 
     baseGeometries.map((g, i) => {
       g.center();
+      //g.mergeVertices();
       if (g.attributes.position.count > maxCount) {
         maxCount = g.attributes.position.count;
       }
@@ -43,14 +62,14 @@ export default class Node {
         const opacity = [];
         for (var j = 0; j < maxCount * 3; j += 3) {
           if (j < (maxCount * 3 - basePosition.length) / 2) {
-            position[j] = 0;
-            position[j + 1] = 0;
-            position[j + 2] = 0;
+            position[j] = (Math.random() * 2 - 1) * 700;
+            position[j + 1] = (Math.random() * 2 - 1) * 250;
+            position[j + 2] = (Math.random() * 2 - 1) * 250;
             opacity[j / 3] = 0;
           } else if (j >= basePosition.length + (maxCount * 3 - basePosition.length) / 2) {
-            position[j] = 0;
-            position[j + 1] = 0;
-            position[j + 2] = 0;
+            position[j] = (Math.random() * 2 - 1) * 700;
+            position[j + 1] = (Math.random() * 2 - 1) * 250;
+            position[j + 2] = (Math.random() * 2 - 1) * 250;
             opacity[j / 3] = 0;
           } else {
             const k = j - (maxCount * 3 - basePosition.length) / 2;
@@ -105,7 +124,24 @@ export default class Node {
     this.objWire = new THREE.Mesh(geometry, materialWire);
     this.objPoints = new THREE.Points(geometry, materialPoints);
   }
+  transform() {
+    const max = 1;
+    this.isTransform = true;
+    this.uniforms.timeTransform.value = 0;
+    this.uniforms.prevIndex.value = (this.uniforms.prevIndex.value < max) ? this.uniforms.prevIndex.value + 1 : 0;
+    this.uniforms.nextIndex.value = (this.uniforms.nextIndex.value < max) ? this.uniforms.nextIndex.value + 1 : 0;
+  }
   render(time) {
     this.uniforms.time.value += time;
+    if (this.isTransform) {
+      this.uniforms.timeTransform.value = MathEx.clamp(
+        this.uniforms.timeTransform.value + time,
+        0,
+        this.durationTransform
+      );
+    }
+    if (this.uniforms.timeTransform.value === this.durationTransform) {
+      this.isTransform = false;
+    }
   }
 }

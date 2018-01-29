@@ -51,6 +51,9 @@ export default function() {
   };
   const on = () => {
     window.addEventListener('resize', debounce(resizeWindow), 1000);
+    window.addEventListener('click', () => {
+      nodeText.transform();
+    });
   };
 
   // ==========
