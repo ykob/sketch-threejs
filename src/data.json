@@ -15,7 +15,7 @@
     "nodeText": {
       "title": "node text",
       "id": "node_text",
-      "description": "transform the nodes that is made with Points and Wireframe",
+      "description": "transform the node that is made with Points and Wireframe",
       "path": "/sketch/node_text.html",
       "posted": "2018.1.29",
       "update": "",
