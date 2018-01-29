@@ -16,7 +16,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 varying float vOpacity;
 
-#pragma glslify: easeExpoInOut = require(glsl-easings/exponential-in-out)
+#pragma glslify: easeExpoOut = require(glsl-easings/exponential-out)
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 void main(void) {
@@ -33,7 +33,7 @@ void main(void) {
   float nextOpacity =
     opacity * (1.0 - step(1.0, nextIndex))
     + opacity2 * step(1.0, nextIndex) * (1.0 - step(2.0, nextIndex));
-  float ease = easeExpoInOut(min(timeTransform / 1.0, durationTransform) / durationTransform);
+  float ease = easeExpoOut(min(timeTransform / 1.0, durationTransform) / durationTransform);
   vec3 mixPosition = mix(prevPosition, nextPosition, ease);
   float mixOpacity = mix(prevOpacity, nextOpacity, ease);
 
