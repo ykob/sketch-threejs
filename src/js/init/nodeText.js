@@ -1,6 +1,7 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 const NodeText = require('../modules/sketch/node_text/NodeText').default;
+const BackgroundSphere = require('../modules/sketch/node_text/BackgroundSphere').default;
 
 export default function() {
   // ==========
@@ -25,6 +26,7 @@ export default function() {
   // Define unique variables
   //
   const nodeText = new NodeText();
+  const bg = new BackgroundSphere();
 
   // ==========
   // Define functions
@@ -62,10 +64,12 @@ export default function() {
   const init = () => {
     loader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', (font) => {
       nodeText.createObj(font);
+      bg.createObj();
 
       //scene.add(nodeText.obj);
       scene.add(nodeText.objWire);
       scene.add(nodeText.objPoints);
+      scene.add(bg.obj);
 
       renderer.setClearColor(0x111111, 1.0);
       camera.position.set(0, 0, 1000);
