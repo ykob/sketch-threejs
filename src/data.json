@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "fog": {
+      "title": "fog",
+      "id": "fog",
+      "description": "",
+      "path": "/sketch/fog.html",
+      "posted": "2018.x.x",
+      "update": "",
+      "color": "white"
+    },
     "nodeText": {
       "title": "node text",
       "id": "node_text",
