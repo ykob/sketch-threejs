@@ -14,13 +14,13 @@ export default class Fog {
         value: null
       }
     };
-    this.num = 240;
+    this.num = 100;
     this.obj = null;
   }
   createObj(tex) {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1000, 1000, 2, 2);
+    const baseGeometry = new THREE.PlaneBufferGeometry(1500, 1500, 2, 2);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.addAttribute('position', baseGeometry.attributes.position);
@@ -34,7 +34,7 @@ export default class Fog {
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       instancePositions.setXYZ(
         i,
-        (Math.random() * 2 - 1) * 1000,
+        (Math.random() * 2 - 1) * 1500,
         0,
         (Math.random() * 2 - 1) * 500,
       );
