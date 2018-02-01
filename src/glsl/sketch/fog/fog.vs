@@ -18,7 +18,7 @@ const float duration = 240.0;
 void main(void) {
   float now = mod(time + delay * duration, duration) / duration;
 
-  mat4 rotateMat = calcRotateMat4Z(radians(delay * 360.0) + time * 0.4 * (delay * 2.0 - 1.0));
+  mat4 rotateMat = calcRotateMat4Z(radians(delay * 360.0) + time * (0.1 + delay * 0.1));
   vec3 rotatePosition = (rotateMat * vec4(position, 1.0)).xyz;
 
   vec3 moveRise = vec3(

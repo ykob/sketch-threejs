@@ -14,7 +14,7 @@ export default class Fog {
         value: null
       }
     };
-    this.num = 300;
+    this.num = 240;
     this.obj = null;
   }
   createObj(tex) {
