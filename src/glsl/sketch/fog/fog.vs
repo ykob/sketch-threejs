@@ -30,7 +30,7 @@ void main(void) {
     );
   vec3 updatePosition = instancePosition + moveRise + rotatePosition;
 
-  vec3 hsv = vec3(time * 0.1 + delay * 0.1 + length(instancePosition), 0.32 , 0.8);
+  vec3 hsv = vec3(time * 0.1 + delay * 0.2 + length(instancePosition) * 100.0, 0.5 , 0.8);
   vec3 rgb = convertHsvToRgb(hsv);
   float opacity = smoothstep(0.0, 0.3, now) * (1.0 - smoothstep(0.7, 1.0, now));
 
