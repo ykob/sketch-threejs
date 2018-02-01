@@ -15,9 +15,9 @@
     "fog": {
       "title": "fog",
       "id": "fog",
-      "description": "",
+      "description": "make fog with one texture and Geometry instancing.",
       "path": "/sketch/fog.html",
-      "posted": "2018.x.x",
+      "posted": "2018.2.1",
       "update": "",
       "color": "white"
     },
