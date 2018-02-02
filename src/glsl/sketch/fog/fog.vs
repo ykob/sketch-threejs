@@ -2,6 +2,7 @@ attribute vec3 position;
 attribute vec2 uv;
 attribute vec3 instancePosition;
 attribute float delay;
+attribute float rotate;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -20,7 +21,7 @@ const float duration = 200.0;
 void main(void) {
   float now = mod(time + delay * duration, duration) / duration;
 
-  mat4 rotateMat = calcRotateMat4Z(radians(delay * 360.0) + time * 0.1);
+  mat4 rotateMat = calcRotateMat4Z(radians(rotate * 360.0) + time * 0.1);
   vec3 rotatePosition = (rotateMat * vec4(position, 1.0)).xyz;
 
   vec3 moveRise = vec3(
@@ -32,7 +33,7 @@ void main(void) {
 
   vec3 hsv = vec3(time * 0.1 + delay * 0.2 + length(instancePosition) * 100.0, 0.5 , 0.8);
   vec3 rgb = convertHsvToRgb(hsv);
-  float opacity = smoothstep(0.0, 0.3, now) * (1.0 - smoothstep(0.7, 1.0, now));
+  float opacity = sin(radians(now * 360.0 * 10.0));
 
   // coordinate transformation
   vec4 mvPosition = modelViewMatrix * vec4(updatePosition, 1.0);
