@@ -18,7 +18,7 @@
       "description": "make fog with one texture and Geometry instancing.",
       "path": "/sketch/fog.html",
       "posted": "2018.2.1",
-      "update": "",
+      "update": "2018.2.4",
       "color": "white"
     },
     "nodeText": {
@@ -27,7 +27,7 @@
       "description": "transform the node that is made with Points and Wireframe",
       "path": "/sketch/node_text.html",
       "posted": "2018.1.29",
-      "update": "",
+      "update": "2018.2.1",
       "color": "white"
     },
     "repel": {

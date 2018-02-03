@@ -14,13 +14,13 @@ export default class Fog {
         value: null
       }
     };
-    this.num = 300;
+    this.num = 200;
     this.obj = null;
   }
   createObj(tex) {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1200, 1200, 2, 2);
+    const baseGeometry = new THREE.PlaneBufferGeometry(1100, 1100, 20, 20);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.addAttribute('position', baseGeometry.attributes.position);
@@ -31,17 +31,20 @@ export default class Fog {
     // Define attributes of the instancing geometry
     const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
     const delays = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
+    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       instancePositions.setXYZ(
         i,
-        (Math.random() * 2 - 1) * 1000,
+        (Math.random() * 2 - 1) * 850,
         0,
-        (Math.random() * 2 - 1) * 400,
+        (Math.random() * 2 - 1) * 300,
       );
       delays.setXYZ(i, Math.random());
+      rotates.setXYZ(i, Math.random() * 2 + 1);
     }
     geometry.addAttribute('instancePosition', instancePositions);
     geometry.addAttribute('delay', delays);
+    geometry.addAttribute('rotate', rotates);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
