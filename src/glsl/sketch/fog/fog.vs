@@ -27,13 +27,13 @@ void main(void) {
   vec3 moveRise = vec3(
     (now * 2.0 - 1.0) * (2500.0 - (delay * 2.0 - 1.0) * 2000.0),
     (now * 2.0 - 1.0) * 2000.0,
-    sin(radians(time * 0.1 + delay)) * 200.0
+    sin(radians(time * 50.0 + delay + length(position))) * 30.0
     );
   vec3 updatePosition = instancePosition + moveRise + rotatePosition;
 
   vec3 hsv = vec3(time * 0.1 + delay * 0.2 + length(instancePosition) * 100.0, 0.5 , 0.8);
   vec3 rgb = convertHsvToRgb(hsv);
-  float opacity = sin(radians(now * 360.0 * 10.0));
+  float opacity = (sin(radians(now * 360.0 * 20.0)) + 1.0) * 0.18;
 
   // coordinate transformation
   vec4 mvPosition = modelViewMatrix * vec4(updatePosition, 1.0);
