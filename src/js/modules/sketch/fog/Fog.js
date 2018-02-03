@@ -14,7 +14,7 @@ export default class Fog {
         value: null
       }
     };
-    this.num = 300;
+    this.num = 200;
     this.obj = null;
   }
   createObj(tex) {
@@ -35,9 +35,9 @@ export default class Fog {
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       instancePositions.setXYZ(
         i,
-        (Math.random() * 2 - 1) * 800,
+        (Math.random() * 2 - 1) * 850,
         0,
-        (Math.random() * 2 - 1) * 200,
+        (Math.random() * 2 - 1) * 300,
       );
       delays.setXYZ(i, Math.random());
       rotates.setXYZ(i, Math.random() * 2 + 1);

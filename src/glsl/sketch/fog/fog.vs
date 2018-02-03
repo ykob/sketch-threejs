@@ -11,7 +11,7 @@ uniform float time;
 varying vec3 vPosition;
 varying vec2 vUv;
 varying vec3 vColor;
-varying float vOpacity;
+varying float vBlink;
 
 const float duration = 200.0;
 
@@ -33,7 +33,7 @@ void main(void) {
 
   vec3 hsv = vec3(time * 0.1 + delay * 0.2 + length(instancePosition) * 100.0, 0.5 , 0.8);
   vec3 rgb = convertHsvToRgb(hsv);
-  float opacity = (sin(radians(now * 360.0 * 20.0)) + 1.0) * 0.18;
+  float blink = (sin(radians(now * 360.0 * 20.0)) + 1.0) * 0.88;
 
   // coordinate transformation
   vec4 mvPosition = modelViewMatrix * vec4(updatePosition, 1.0);
@@ -41,7 +41,7 @@ void main(void) {
   vPosition = position;
   vUv = uv;
   vColor = rgb;
-  vOpacity = opacity;
+  vBlink = blink;
 
   gl_Position = projectionMatrix * mvPosition;
 }
