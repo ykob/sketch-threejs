@@ -37,6 +37,7 @@
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^5.0.0",
     "imagemin-mozjpeg": "^7.0.0",
     "imagemin-pngquant": "^5.0.1",
     "licensify": "^3.1.3",
