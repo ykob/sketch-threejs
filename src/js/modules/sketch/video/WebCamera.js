@@ -5,16 +5,22 @@ export default class WebCamera {
     this.ctx = this.canvas.getContext('canvas2d');
     this.w = 0;
     this.h = 0;
-    this.isValid = false;
   }
-  validate() {
-    this.isValid = true;
-  }
-  play() {
+  init() {
+    if (navigator.mediaDevices) {
+      const p = navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
+      p.then((stream) => {
+        this.video.src = window.URL.createObjectURL(stream);
+        this.video.onloadedmetadata = (e) => {
+          document.body.append(this.video);
+          this.video.play();
+        }
+      })
+    } else {
 
-  }
-  resize(w, h) {
-    this.w = this.video.width = this.canvas.width = w;
-    this.h = this.video.height = this.canvas.height = h;
+    }
   }
 }

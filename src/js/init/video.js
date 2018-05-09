@@ -1,6 +1,8 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
+const WebCamera = require('../modules/sketch/video/WebCamera').default;
+
 export default function() {
   // ==========
   // Define common variables
@@ -24,6 +26,8 @@ export default function() {
   // ==========
   // Define unique variables
   //
+
+  const webCamera = new WebCamera();
 
   // ==========
   // Define functions
@@ -62,6 +66,9 @@ export default function() {
 
     on();
     resizeWindow();
+
+    webCamera.init(resolution.x, resolution.y);
+
     renderLoop();
   }
   init();
