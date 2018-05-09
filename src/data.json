@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "video": {
+      "title": "video",
+      "id": "video",
+      "description": "",
+      "path": "/sketch/video.html",
+      "posted": "2018.x.x",
+      "update": "",
+      "color": "white"
+    },
     "fog": {
       "title": "fog",
       "id": "fog",
