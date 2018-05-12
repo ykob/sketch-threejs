@@ -67,7 +67,13 @@ export default function() {
     on();
     resizeWindow();
 
-    webCamera.init(resolution.x, resolution.y);
+    webCamera.init({
+      audio: false,
+      video: {
+        width: 512,
+        height: 512
+      }
+    });
 
     renderLoop();
   }
