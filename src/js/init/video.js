@@ -36,6 +36,7 @@ export default function() {
   //
   const render = () => {
     const time = clock.getDelta();
+    plane.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {

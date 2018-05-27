@@ -18,19 +18,21 @@ export default class Plane {
   }
   createObj(video) {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(1000, 1000, 2, 2);
+    const geometry = new THREE.PlaneBufferGeometry(1500, 1500, 2, 2);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: glslify('../../../../glsl/sketch/video/plane.vs'),
       fragmentShader: glslify('../../../../glsl/sketch/video/plane.fs'),
+      transparent: true,
     });
 
     const videoTex = new THREE.VideoTexture(video);
     videoTex.minFilter = THREE.LinearFilter;
     videoTex.magFilter = THREE.LinearFilter;
     videoTex.format = THREE.RGBFormat;
+
     this.uniforms.texVideo.value = videoTex;
 
     // Create Object3D
