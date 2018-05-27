@@ -12,7 +12,6 @@ export default class WebCamera {
       p.then((stream) => {
         this.video.srcObject = stream;
         this.video.onloadedmetadata = (e) => {
-          document.body.append(this.video);
           this.video.play();
         }
       })

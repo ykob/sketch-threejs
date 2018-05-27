@@ -2,6 +2,7 @@ const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
 const WebCamera = require('../modules/sketch/video/WebCamera').default;
+const Plane = require('../modules/sketch/video/Plane').default;
 
 export default function() {
   // ==========
@@ -28,6 +29,7 @@ export default function() {
   //
 
   const webCamera = new WebCamera();
+  const plane = new Plane();
 
   // ==========
   // Define functions
@@ -60,7 +62,7 @@ export default function() {
   //
   const init = () => {
     renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
+    camera.position.set(0, 0, 1000);
     camera.lookAt(new THREE.Vector3());
     clock.start();
 
@@ -74,6 +76,10 @@ export default function() {
         height: 512
       }
     });
+
+    plane.createObj(webCamera.video);
+
+    scene.add(plane.obj);
 
     renderLoop();
   }
