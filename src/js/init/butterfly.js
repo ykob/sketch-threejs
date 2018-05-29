@@ -105,7 +105,7 @@ export default function() {
     isDrag = false;
   };
   const on = () => {
-    window.addEventListener('resize', debounce(resizeWindow), 1000);
+    window.addEventListener('resize', debounce(resizeWindow, 1000));
     canvas.addEventListener('mousedown', function (event) {
       event.preventDefault();
       vectorTouchStart.set(event.clientX, event.clientY);

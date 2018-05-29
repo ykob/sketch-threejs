@@ -53,7 +53,7 @@ export default function() {
     renderer.setSize(resolution.x, resolution.y);
   };
   const on = () => {
-    window.addEventListener('resize', debounce(resizeWindow), 1000);
+    window.addEventListener('resize', debounce(resizeWindow, 1000));
   };
 
   // ==========

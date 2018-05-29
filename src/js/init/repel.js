@@ -61,7 +61,7 @@ export default function() {
     );
   };
   const on = () => {
-    window.addEventListener('resize', debounce(resizeWindow), 1000);
+    window.addEventListener('resize', debounce(resizeWindow, 1000));
 
     window.addEventListener('mousemove', onMouseMove);
   };

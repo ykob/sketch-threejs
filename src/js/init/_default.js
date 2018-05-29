@@ -14,7 +14,9 @@ export default function() {
   });
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera();
-  const clock = new THREE.Clock();
+  const clock = new THREE.Clock({
+    autoStart: false
+  });
 
   camera.far = 50000;
   camera.setFocalLength(24);
@@ -46,7 +48,7 @@ export default function() {
     renderer.setSize(resolution.x, resolution.y);
   };
   const on = () => {
-    window.addEventListener('resize', debounce(resizeWindow), 1000);
+    window.addEventListener('resize', debounce(resizeWindow, 1000));
   };
 
   // ==========

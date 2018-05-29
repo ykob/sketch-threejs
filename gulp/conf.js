@@ -20,7 +20,8 @@ module.exports.serve = {
       routes: {
         [DIR.PATH]: `${DIR.DEST}/`
       }
-    }
+    },
+    https: false,
   },
   build: {
     //tunnel: 'test',
@@ -33,7 +34,8 @@ module.exports.serve = {
       routes: {
         [DIR.PATH]: `${DIR.BUILD}/`
       }
-    }
+    },
+    https: false,
   }
 };
 
