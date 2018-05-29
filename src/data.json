@@ -15,7 +15,7 @@
     "webcam": {
       "title": "webcam",
       "id": "webcam",
-      "description": "play an image that is from a webcam with a fragment shader.",
+      "description": "play an image from a webcam with a fragment shader.",
       "path": "/sketch/webcam.html",
       "posted": "2018.5.29",
       "update": "",
