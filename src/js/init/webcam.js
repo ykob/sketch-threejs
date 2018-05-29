@@ -1,8 +1,8 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
-const WebCamera = require('../modules/sketch/video/WebCamera').default;
-const Plane = require('../modules/sketch/video/Plane').default;
+const WebCamera = require('../modules/sketch/webcam/WebCamera').default;
+const Plane = require('../modules/sketch/webcam/Plane').default;
 
 export default function() {
   // ==========

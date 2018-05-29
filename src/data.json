@@ -12,12 +12,12 @@
       "path": "/",
       "color": "white"
     },
-    "video": {
-      "title": "video",
-      "id": "video",
-      "description": "",
-      "path": "/sketch/video.html",
-      "posted": "2018.x.x",
+    "webcam": {
+      "title": "webcam",
+      "id": "webcam",
+      "description": "play an image that is from a webcam with a fragment shader.",
+      "path": "/sketch/webcam.html",
+      "posted": "2018.5.29",
       "update": "",
       "color": "black"
     },
