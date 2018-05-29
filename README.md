@@ -1,7 +1,7 @@
 # ![sketch of three.js](http://ykob.github.io/sketch-threejs/img/common/ogp_common.jpg)
 
 Interactive sketches made with three.js.  
-http://ykob.github.io/sketch-threejs/
+https://ykob.github.io/sketch-threejs/
 
 ## License
 
