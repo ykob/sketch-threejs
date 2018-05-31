@@ -1,21 +1,18 @@
 export default class WebCamera {
   constructor() {
     this.video = document.createElement('video');
-    this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext('canvas2d');
-    this.w = 0;
-    this.h = 0;
+    this.facingMode = null;
   }
   init(arg) {
     if (navigator.mediaDevices) {
       const p = navigator.mediaDevices.getUserMedia(arg);
+      this.facingMode = arg.video.facingMode;
       p.then((stream) => {
         this.video.srcObject = stream;
         this.video.onloadedmetadata = (e) => {
           this.video.play();
         }
       })
-    } else {
     }
   }
 }

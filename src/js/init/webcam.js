@@ -73,12 +73,13 @@ export default function() {
     webCamera.init({
       audio: false,
       video: {
+        facingMode: `user`, // environment or user
         width: 512,
         height: 512
       }
     });
 
-    plane.createObj(webCamera.video);
+    plane.createObj(webCamera);
 
     scene.add(plane.obj);
 
