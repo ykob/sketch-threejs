@@ -13,10 +13,14 @@ export default class Plane {
         type: 't',
         value: null
       },
+      facing: {
+        type: 'f',
+        value: 0
+      },
     };
     this.obj = null;
   }
-  createObj(video) {
+  createObj(webcam) {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(1400, 1400, 2, 2);
 
@@ -28,12 +32,13 @@ export default class Plane {
       transparent: true,
     });
 
-    const videoTex = new THREE.VideoTexture(video);
+    const videoTex = new THREE.VideoTexture(webcam.video);
     videoTex.minFilter = THREE.LinearFilter;
     videoTex.magFilter = THREE.LinearFilter;
     videoTex.format = THREE.RGBFormat;
 
     this.uniforms.texVideo.value = videoTex;
+    this.uniforms.facing.value = (webcam.facingMode === 'user') ? 1 : 0;
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
