@@ -1,0 +1,67 @@
+.p-setting {
+  position: fixed;
+  top: 0; bottom: 0; right: 0;
+  z-index: 1000;
+  @include l-more-than-mobile {
+    width: 500px;
+  }
+  @include l-mobile {
+    width: 240px;
+  }
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-top: auto;
+    background-color: rgba(#000, 0.9);
+    @include l-more-than-mobile {
+      width: 48px;
+      height: 48px * 2.5;
+      top: 0; bottom: 0; left: -48px;
+      margin-bottom: auto;
+      border-radius: 6px 0 0 6px;
+    }
+    @include l-mobile {
+      width: 44px;
+      height: 66px;
+      bottom: 25px; left: -44px;
+      border-radius: 4px 0 0 4px;
+    }
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  &__bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    background-color: rgba(#000, 0.9);
+  }
+
+  //
+  // Interaction
+  //
+  @include l-more-than-mobile {
+    transform: translateX(500px);
+  }
+  @include l-mobile {
+    transform: translateX(240px);
+  }
+  &__btn {
+    &:hover {
+      svg {
+        transform: rotate(180deg);
+        transition-duration: .4s;
+      }
+    }
+  }
+}
