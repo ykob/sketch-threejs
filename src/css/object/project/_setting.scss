@@ -56,6 +56,16 @@
   @include l-mobile {
     transform: translateX(240px);
   }
+  &.is-opened, &.is-closed {
+    transition-duration: .6s;
+    transition-timing-function: $easeOutExpo;
+  }
+  &.is-opened {
+    transform: translateX(0);
+  }
+  &.is-closed {
+
+  }
   &__btn {
     &:hover {
       svg {

@@ -3,6 +3,7 @@ const debounce = require('js-util/debounce');
 
 const WebCamera = require('../modules/sketch/webcam/WebCamera').default;
 const Plane = require('../modules/sketch/webcam/Plane').default;
+const setting = require('../modules/sketch/webcam/buildSetting').default();
 
 export default function() {
   // ==========
