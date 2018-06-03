@@ -61,6 +61,7 @@
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "glslify": "^6.1.0",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.89.0"
+    "three": "^0.89.0",
+    "vue": "^2.5.16"
   }
 }
