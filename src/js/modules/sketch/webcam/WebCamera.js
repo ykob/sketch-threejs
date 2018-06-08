@@ -13,7 +13,7 @@ export default class WebCamera {
           this.video.play();
         }
       }).catch((error) => {
-        window.alert("It wasn't allowed to use WebCam.")
+        window.alert("It wasn't allowed to use WebCam.");
       });
     }
   }
