@@ -12,7 +12,9 @@ export default class WebCamera {
         this.video.onloadedmetadata = (e) => {
           this.video.play();
         }
-      })
+      }).catch((error) => {
+        window.alert("It wasn't allowed to use WebCam.")
+      });
     }
   }
 }
