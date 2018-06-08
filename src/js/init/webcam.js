@@ -74,8 +74,8 @@ export default function() {
       audio: false,
       video: {
         facingMode: `user`, // environment or user
-        width: 512,
-        height: 512
+        width: window.clientWidth,
+        height: window.clientHeight
       }
     });
 
