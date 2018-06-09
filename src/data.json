@@ -18,7 +18,7 @@
       "description": "play an image from a webcam with a fragment shader.",
       "path": "/sketch/webcam.html",
       "posted": "2018.5.29",
-      "update": "2018.6.1",
+      "update": "2018.6.9",
       "color": "black"
     },
     "fog": {
