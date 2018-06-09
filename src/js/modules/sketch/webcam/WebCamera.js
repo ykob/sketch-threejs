@@ -30,7 +30,7 @@ export default class WebCamera {
             this.resolution.x = this.video.videoWidth;
             this.resolution.y = this.video.videoHeight;
             resolve();
-          }, 500);
+          }, 1000);
         });
       })
       .catch((error) => {
