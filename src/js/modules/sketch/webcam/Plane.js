@@ -17,6 +17,10 @@ export default class Plane {
         type: 'f',
         value: 0
       },
+      resolution: {
+        type: 'v2',
+        value: new THREE.Vector2()
+      },
     };
     this.obj = null;
   }
@@ -39,6 +43,10 @@ export default class Plane {
 
     this.uniforms.texVideo.value = videoTex;
     this.uniforms.facing.value = (webcam.facingMode === 'user') ? 1 : 0;
+    this.uniforms.resolution.value.set(
+      webcam.resolution.x,
+      webcam.resolution.y
+    );
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
