@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
@@ -54,9 +56,20 @@ export default function() {
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
+
+    return webCamera.init({
+      audio: false,
+      video: {
+        facingMode: `environment`, // environment or user
+      }
+    });
   };
   const on = () => {
-    window.addEventListener('resize', debounce(resizeWindow, 1000));
+    window.addEventListener('resize', debounce(() => {
+      resizeWindow().then(() => {
+        plane.resize(webCamera);
+      });
+    }, 500));
   };
 
   // ==========
@@ -68,14 +81,7 @@ export default function() {
   clock.start();
 
   on();
-  resizeWindow();
-
-  webCamera.init({
-    audio: false,
-    video: {
-      facingMode: `environment`, // environment or user
-    }
-  }).then(() => {
+  resizeWindow().then(() => {
     plane.createObj(webCamera);
     scene.add(plane.obj);
     renderLoop();

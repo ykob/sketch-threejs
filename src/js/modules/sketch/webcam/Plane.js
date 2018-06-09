@@ -51,6 +51,12 @@ export default class Plane {
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
   }
+  resize(webcam) {
+    this.uniforms.resolution.value.set(
+      webcam.resolution.x,
+      webcam.resolution.y
+    );
+  }
   render(time) {
     this.uniforms.time.value += time;
   }
