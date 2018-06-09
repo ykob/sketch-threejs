@@ -70,14 +70,7 @@ export default function() {
     on();
     resizeWindow();
 
-    webCamera.init({
-      audio: false,
-      video: {
-        facingMode: `user`, // environment or user
-        width: window.clientWidth,
-        height: window.clientHeight
-      }
-    });
+    webCamera.init();
 
     plane.createObj(webCamera);
 
