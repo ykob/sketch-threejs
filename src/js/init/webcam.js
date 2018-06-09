@@ -62,29 +62,22 @@ export default function() {
   // ==========
   // Initialize
   //
-  const init = () => {
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(0, 0, 1000);
-    camera.lookAt(new THREE.Vector3());
-    clock.start();
+  renderer.setClearColor(0xeeeeee, 1.0);
+  camera.position.set(0, 0, 1000);
+  camera.lookAt(new THREE.Vector3());
+  clock.start();
 
-    on();
-    resizeWindow();
+  on();
+  resizeWindow();
 
-    webCamera.init({
-      audio: false,
-      video: {
-        facingMode: `user`, // environment or user
-        width: 512,
-        height: 512
-      }
-    });
-
+  webCamera.init({
+    audio: false,
+    video: {
+      facingMode: `environment`, // environment or user
+    }
+  }).then(() => {
     plane.createObj(webCamera);
-
     scene.add(plane.obj);
-
     renderLoop();
-  }
-  init();
+  });
 }

@@ -3,6 +3,7 @@ precision highp float;
 uniform float time;
 uniform sampler2D texVideo;
 uniform float facing;
+uniform vec2 resolution;
 
 varying vec3 vPosition;
 varying vec2 vUv;
@@ -17,7 +18,14 @@ void main() {
   float noise2 = cnoise3(vec3(p * 6.4, time * 0.4)) * (0.15 + smoothstep(0.3, 0.4, length(p)) * (1.0 - smoothstep(0.9, 1.0, length(p))));
   float noiseSum = (noise1 + noise2) / 2.0;
 
-  vec2 updateUv = vec2(abs(vUv.x - facing), vUv.y);
+  vec2 adjustUv = vec2(
+    min(resolution.y / resolution.x, 1.0),
+    min(resolution.x / resolution.y, 1.0)
+    );
+  vec2 updateUv = vec2(
+    abs(vUv.x - facing) * adjustUv.x + (1.0 - adjustUv.x) * 0.5,
+                  vUv.y * adjustUv.y + (1.0 - adjustUv.y) * 0.5
+                  );
   vec4 texColor1 = texture2D(texVideo, updateUv - vec2(noise1 * noise2 - abs(p.x) / 50.0));
   vec4 texColor2 = texture2D(texVideo, updateUv - vec2(noise1 * noise2));
   vec4 texColor3 = texture2D(texVideo, updateUv - vec2(noise1 * noise2 + abs(p.x) / 50.0));
