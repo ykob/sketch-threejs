@@ -27,9 +27,7 @@ export default class Debris {
     const baseGeometry = new THREE.BoxBufferGeometry(10, 10, 10);
 
     // Add common attributes
-    geometry.addAttribute('position', baseGeometry.attributes.position);
-    geometry.addAttribute('normal', baseGeometry.attributes.normal);
-    geometry.setIndex(baseGeometry.index);
+    geometry.copy(baseGeometry);
 
     // Add common attributes
     const translate = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);

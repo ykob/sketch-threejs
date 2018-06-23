@@ -32,8 +32,7 @@ export default class Wire {
     const geometry = new THREE.InstancedBufferGeometry();
 
     // Setting BufferAttribute
-    geometry.addAttribute('position', this.baseGeometry.attributes.position);
-    geometry.setIndex(this.baseGeometry.index);
+    geometry.copy(this.baseGeometry);
 
     // Setting InstancedBufferAttribute
     const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
@@ -65,8 +64,7 @@ export default class Wire {
     const geometry = new THREE.InstancedBufferGeometry();
 
     // Setting BufferAttribute
-    geometry.addAttribute('position', this.baseGeometry.attributes.position);
-    geometry.setIndex(this.baseGeometry.index);
+    geometry.copy(this.baseGeometry);
 
     // Setting InstancedBufferAttribute
     const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);

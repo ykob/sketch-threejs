@@ -23,10 +23,7 @@ export default class Fog {
     const baseGeometry = new THREE.PlaneBufferGeometry(1100, 1100, 20, 20);
 
     // Copy attributes of the base Geometry to the instancing Geometry
-    geometry.addAttribute('position', baseGeometry.attributes.position);
-    geometry.addAttribute('normal', baseGeometry.attributes.normal);
-    geometry.addAttribute('uv', baseGeometry.attributes.uv);
-    geometry.setIndex(baseGeometry.index);
+    geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
     const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
