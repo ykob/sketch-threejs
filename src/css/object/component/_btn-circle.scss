@@ -1,0 +1,26 @@
+.c-btn-circle {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 5px;
+  border-radius: 50%;
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+  &--white {
+    background-color: #fff;
+    .path-fill {
+      fill: #222;
+    }
+  }
+  &--black {
+    background-color: #222;
+    .path-fill {
+      fill: #fff;
+    }
+  }
+}

@@ -1,8 +1,11 @@
 .p-sketch-outline {
   position: fixed;
   z-index: 100;
-  bottom: 25px;
+  bottom: 22px;
   left: 20px;
+  @include l-mobile {
+    right: 90px;
+  }
   &__title {
     line-height: 1;
     margin: 0 0 0.075em -0.05em;
@@ -15,7 +18,7 @@
     margin: 0;
   }
   &__description {
-    line-height: 1;
+    line-height: 1.5;
     margin: 10px 0 0;
   }
 }

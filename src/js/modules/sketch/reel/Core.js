@@ -26,9 +26,7 @@ export default class Core {
 
     // Setting BufferAttribute
     const baseGeometry = new THREE.OctahedronBufferGeometry(30, 4);
-    geometry.addAttribute('position', baseGeometry.attributes.position);
-    geometry.addAttribute('normal', baseGeometry.attributes.normal);
-    geometry.setIndex(baseGeometry.index);
+    geometry.copy(baseGeometry);
 
     // Setting InstancedBufferAttribute
     const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);

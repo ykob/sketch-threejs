@@ -19,9 +19,7 @@ export default class Beam {
     const baseGeometry = new THREE.BoxBufferGeometry(1, 1000, 1, 2, 128);
 
     // Add common attributes
-    geometry.addAttribute('position', baseGeometry.attributes.position);
-    geometry.addAttribute('uv', baseGeometry.attributes.uv);
-    geometry.setIndex(baseGeometry.index);
+    geometry.copy(baseGeometry);
 
     // Add instance attributes
     const instancePosition = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
