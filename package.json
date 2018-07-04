@@ -48,7 +48,7 @@
     "slash": "^2.0.0",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.10.0",
-    "yargs": "^11.0.0"
+    "yargs": "^12.0.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -61,7 +61,7 @@
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "glslify": "^6.1.0",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.93.0",
+    "three": "^0.94.0",
     "vue": "^2.5.16"
   }
 }
