@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "land": {
+      "title": "land",
+      "id": "land",
+      "description": "",
+      "path": "/sketch/land.html",
+      "posted": "2018.x.x",
+      "update": "",
+      "color": "black"
+    },
     "webcam": {
       "title": "webcam",
       "id": "webcam",
