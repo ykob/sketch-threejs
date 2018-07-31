@@ -10,6 +10,14 @@ export default class Mesh {
         type: 'f',
         value: 0
       },
+      addH1: {
+        type: 'f',
+        value: Math.random()
+      },
+      addH2: {
+        type: 'f',
+        value: Math.random()
+      },
     };
     this.obj = null;
   }
