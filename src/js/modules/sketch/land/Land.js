@@ -55,9 +55,9 @@ export default class Mesh {
         return t * t * (3 - 2 * t);
       };
       const updateY =
-        (noise1 * 0.75 + 0.25) * 800
-        + noise2 * 120
-        + noise3 * 20
+        (noise1 * 0.75 + 0.25) * 1000
+        + noise2 * 100
+        + noise3 * 15
         + noise4 * 200;
       const s = smoothstep(0, 100, updateY);
       const isBottom = step(0, y);

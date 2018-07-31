@@ -20,9 +20,9 @@ void main() {
   float stepMiddle2 = smoothstep(edge3, edge3 + 200.0, vPosition.y) * (1.0 - smoothstep(edge2, edge2 + 200.0, vPosition.y));
   float stepBottom  = 1.0 - smoothstep(edge3, edge3 + 200.0, vPosition.y);
 
-  vec4 colorTop     = vec4(convertHsvToRgb(vec3(0.8, 0.1, 0.8)), 1.0) * stepTop;
-  vec4 colorMiddle1 = vec4(convertHsvToRgb(vec3(0.35, 0.4, 0.5)), 1.0) * stepMiddle1;
-  vec4 colorMiddle2 = vec4(convertHsvToRgb(vec3(0.35, 0.25, 0.7)), 1.0) * stepMiddle2;
+  vec4 colorTop     = vec4(convertHsvToRgb(vec3(0.1, 0.1, 0.8)), 1.0) * stepTop;
+  vec4 colorMiddle1 = vec4(convertHsvToRgb(vec3(0.25, 0.4, 0.6)), 1.0) * stepMiddle1;
+  vec4 colorMiddle2 = vec4(convertHsvToRgb(vec3(0.25, 0.25, 0.8)), 1.0) * stepMiddle2;
   vec4 colorBottom  = vec4(convertHsvToRgb(vec3(0.1, 0.4, 0.3)), 1.0) * stepBottom;
 
   vec4 colorAll = colorTop + colorMiddle1 + colorMiddle2 + colorBottom;
