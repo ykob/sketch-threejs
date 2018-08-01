@@ -18,7 +18,7 @@ export default class Water {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(300, 300, 60, 60);
+    const geometry = new THREE.PlaneBufferGeometry(100, 100, 60, 60);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -31,7 +31,7 @@ export default class Water {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.translateY(30);
+    this.obj.translateY(7);
     this.obj.rotation.set(MathEx.radians(-90), 0, 0);
   }
   render(time) {
