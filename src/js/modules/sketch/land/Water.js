@@ -3,7 +3,7 @@ const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
 export default class Water {
-  constructor() {
+  constructor(h) {
     this.uniforms = {
       time: {
         type: 'f',
@@ -11,14 +11,14 @@ export default class Water {
       },
       addH: {
         type: 'f',
-        value: Math.random()
+        value: h - 0.5
       },
     };
     this.obj = null;
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(600, 600, 60, 60);
+    const geometry = new THREE.PlaneBufferGeometry(300, 300, 60, 60);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -31,7 +31,7 @@ export default class Water {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.translateY(50);
+    this.obj.translateY(30);
     this.obj.rotation.set(MathEx.radians(-90), 0, 0);
   }
   render(time) {

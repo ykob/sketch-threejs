@@ -21,14 +21,15 @@ export default function() {
     autoStart: false
   });
 
-  camera.far = 10000;
-  camera.setFocalLength(35);
+  camera.far = 1000;
+  camera.setFocalLength(50);
 
   // ==========
   // Define unique variables
   //
-  const land = new Land();
-  const water = new Water();
+  const randomH = Math.random();
+  const land = new Land(randomH);
+  const water = new Water(randomH);
 
   // ==========
   // Define functions
@@ -61,8 +62,8 @@ export default function() {
   // Initialize
   //
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(350, 600, 600);
-  camera.lookAt(new THREE.Vector3(0, 0, 0));
+  camera.position.set(350, 450, 350);
+  camera.lookAt(new THREE.Vector3(0, 30, 0));
 
   land.createObj();
   water.createObj();

@@ -4,7 +4,7 @@ const MathEx = require('js-util/MathEx');
 const SimplexNoise = require('../../vendor/simplex-noise');
 
 export default class Land {
-  constructor() {
+  constructor(h) {
     this.uniforms = {
       time: {
         type: 'f',
@@ -12,11 +12,11 @@ export default class Land {
       },
       addH1: {
         type: 'f',
-        value: Math.random()
+        value: h - 0.5
       },
       addH2: {
         type: 'f',
-        value: Math.random()
+        value: h
       },
     };
     this.obj = null;
@@ -25,21 +25,21 @@ export default class Land {
     // Define Geometry
     const baseY = 40;
     const simplex = new SimplexNoise(Math.random);
-    const geometry = new THREE.BoxBufferGeometry(600, baseY, 600, 60, 1, 60);
+    const geometry = new THREE.BoxBufferGeometry(300, baseY, 300, 60, 1, 60);
     for (var i = 0; i < geometry.attributes.position.count; i++) {
       const x = geometry.attributes.position.getX(i);
       const y = geometry.attributes.position.getY(i);
       const z = geometry.attributes.position.getZ(i);
       const noise1 = simplex.noise4D(
-        x / 400,
-        y / 400,
-        z / 400,
+        x / 180,
+        y / 180,
+        z / 180,
         1
       );
       const noise2 = simplex.noise4D(
-        x / 100,
-        y / 100,
-        z / 100,
+        x / 60,
+        y / 60,
+        z / 60,
         1
       );
       const noise3 = simplex.noise4D(
@@ -49,9 +49,9 @@ export default class Land {
         1
       );
       const noise4 = simplex.noise4D(
-        x / 400,
-        y / 60,
-        z / 60,
+        x / 120,
+        y / 90,
+        z / 90,
         1
       );
       const step = (e, x) => {
@@ -63,11 +63,11 @@ export default class Land {
         return t * t * (3 - 2 * t);
       };
       const updateY =
-        (noise1 * 0.75 + 0.25) * 350
-        + noise2 * 40
-        + noise3 * 5
-        + noise4 * 20;
-      const s = smoothstep(0, 100, updateY);
+        (noise1 * 0.75 + 0.25) * 180
+        + noise2 * 20
+        + noise3 * 7
+        + noise4 * 40;
+      const s = smoothstep(0, 30, updateY);
       const isBottom = step(0, y);
 
       geometry.attributes.position.setY(i, (y + updateY * s) * isBottom);

@@ -8,9 +8,9 @@ varying vec2 vUv;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
-const float edge1 = 240.0;
-const float edge2 = 120.0;
-const float edge3 = 40.0;
+const float edge1 = 120.0;
+const float edge2 = 70.0;
+const float edge3 = 20.0;
 
 void main() {
   // Flat Shading
