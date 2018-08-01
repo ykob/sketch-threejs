@@ -23,35 +23,35 @@ export default class Land {
   }
   createObj() {
     // Define Geometry
-    const baseY = 200;
+    const baseY = 40;
     const simplex = new SimplexNoise(Math.random);
-    const geometry = new THREE.BoxBufferGeometry(2000, baseY, 2000, 100, 1, 100);
+    const geometry = new THREE.BoxBufferGeometry(500, baseY, 500, 60, 1, 60);
     for (var i = 0; i < geometry.attributes.position.count; i++) {
       const x = geometry.attributes.position.getX(i);
       const y = geometry.attributes.position.getY(i);
       const z = geometry.attributes.position.getZ(i);
       const noise1 = simplex.noise4D(
-        x / 1600,
-        y / 1600,
-        z / 1600,
+        x / 500,
+        y / 500,
+        z / 500,
         1
       );
       const noise2 = simplex.noise4D(
-        x / 400,
-        y / 400,
-        z / 400,
-        1
-      );
-      const noise3 = simplex.noise4D(
         x / 100,
         y / 100,
         z / 100,
         1
       );
+      const noise3 = simplex.noise4D(
+        x / 20,
+        y / 20,
+        z / 20,
+        1
+      );
       const noise4 = simplex.noise4D(
-        x / 2400,
-        y / 600,
-        z / 600,
+        x / 400,
+        y / 60,
+        z / 60,
         1
       );
       const step = (e, x) => {
@@ -63,10 +63,10 @@ export default class Land {
         return t * t * (3 - 2 * t);
       };
       const updateY =
-        (noise1 * 0.75 + 0.25) * 1000
-        + noise2 * 100
-        + noise3 * 15
-        + noise4 * 200;
+        (noise1 * 0.75 + 0.25) * 350
+        + noise2 * 40
+        + noise3 * 5
+        + noise4 * 20;
       const s = smoothstep(0, 100, updateY);
       const isBottom = step(0, y);
 

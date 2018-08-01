@@ -2,6 +2,7 @@ const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
 const Land = require('../modules/sketch/land/Land').default;
+const Water = require('../modules/sketch/land/Water').default;
 
 export default function() {
   // ==========
@@ -20,19 +21,21 @@ export default function() {
     autoStart: false
   });
 
-  camera.far = 50000;
+  camera.far = 10000;
   camera.setFocalLength(35);
 
   // ==========
   // Define unique variables
   //
   const land = new Land();
+  const water = new Water();
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    water.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -58,12 +61,14 @@ export default function() {
   // Initialize
   //
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(1500, 2000, 2000);
-  camera.lookAt(new THREE.Vector3());
+  camera.position.set(400, 600, 600);
+  camera.lookAt(new THREE.Vector3(0, 50, 0));
 
   land.createObj();
+  water.createObj();
 
   scene.add(land.obj);
+  scene.add(water.obj);
 
   on();
   resizeWindow();
