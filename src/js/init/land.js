@@ -61,8 +61,8 @@ export default function() {
   // Initialize
   //
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(400, 600, 600);
-  camera.lookAt(new THREE.Vector3(0, 50, 0));
+  camera.position.set(350, 600, 600);
+  camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   land.createObj();
   water.createObj();

@@ -25,15 +25,15 @@ export default class Land {
     // Define Geometry
     const baseY = 40;
     const simplex = new SimplexNoise(Math.random);
-    const geometry = new THREE.BoxBufferGeometry(500, baseY, 500, 60, 1, 60);
+    const geometry = new THREE.BoxBufferGeometry(600, baseY, 600, 60, 1, 60);
     for (var i = 0; i < geometry.attributes.position.count; i++) {
       const x = geometry.attributes.position.getX(i);
       const y = geometry.attributes.position.getY(i);
       const z = geometry.attributes.position.getZ(i);
       const noise1 = simplex.noise4D(
-        x / 500,
-        y / 500,
-        z / 500,
+        x / 400,
+        y / 400,
+        z / 400,
         1
       );
       const noise2 = simplex.noise4D(
