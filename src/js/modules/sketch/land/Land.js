@@ -3,7 +3,7 @@ const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 const SimplexNoise = require('../../vendor/simplex-noise');
 
-export default class Mesh {
+export default class Land {
   constructor() {
     this.uniforms = {
       time: {

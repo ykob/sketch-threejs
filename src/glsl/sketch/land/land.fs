@@ -2,8 +2,6 @@ precision highp float;
 
 uniform float addH1;
 uniform float addH2;
-uniform float addH3;
-uniform float addH4;
 
 varying vec3 vPosition;
 varying vec2 vUv;
