@@ -14,7 +14,7 @@ void main() {
   vec3 normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
   float diff = (dot(normal, light) + 1.0) / 2.0;
 
-  vec4 color = vec4(convertHsvToRgb(vec3(0.4 + vSinAll * 0.15 + addH, 0.2, 1.0)), 0.6);
+  vec4 color = vec4(convertHsvToRgb(vec3(0.2 + vSinAll * 0.15 + addH, 0.2, 1.0)), 0.6);
 
   gl_FragColor = color * vec4(vec3(diff), 1.0);
 }

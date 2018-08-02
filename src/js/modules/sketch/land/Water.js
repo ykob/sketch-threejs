@@ -31,7 +31,7 @@ export default class Water {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.translateY(7);
+    this.obj.translateY(8);
     this.obj.rotation.set(MathEx.radians(-90), 0, 0);
   }
   render(time) {
