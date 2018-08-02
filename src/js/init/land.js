@@ -1,8 +1,10 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
+const MathEx = require('js-util/MathEx');
 
 const Land = require('../modules/sketch/land/Land').default;
 const Water = require('../modules/sketch/land/Water').default;
+const DragAndDrop = require('../modules/sketch/land/DragAndDrop').default;
 
 export default function() {
   // ==========
@@ -30,12 +32,21 @@ export default function() {
   const randomH = Math.random();
   const land = new Land(randomH);
   const water = new Water(randomH);
+  const group = new THREE.Group();
+  const dd = new DragAndDrop();
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    dd.render(resolution);
+    group.rotation.set(
+      MathEx.radians(dd.v.y / resolution.x * 1000),
+      MathEx.radians(dd.v.x / resolution.y * 1000),
+      0
+    );
+    land.render(time);
     water.render(time);
     renderer.render(scene, camera);
   };
@@ -55,6 +66,22 @@ export default function() {
     renderer.setSize(resolution.x, resolution.y);
   };
   const on = () => {
+    const touchstart = (e) => {
+      dd.touchStart(e);
+    }
+    const touchmove = (e) => {
+      dd.touchMove(e);
+    }
+    const touchend = (e) => {
+      dd.touchEnd(e);
+    }
+    canvas.addEventListener('mousedown', touchstart, { passive: false });
+    window.addEventListener('mousemove', touchmove, { passive: false });
+    window.addEventListener('mouseup', touchend);
+    canvas.addEventListener('touchstart', touchstart, { passive: false });
+    window.addEventListener('touchmove', touchmove, { passive: false });
+    window.addEventListener('touchend', touchend);
+
     window.addEventListener('resize', debounce(resizeWindow, 1000));
   };
 
@@ -68,8 +95,10 @@ export default function() {
   land.createObj();
   water.createObj();
 
-  scene.add(land.obj);
-  scene.add(water.obj);
+  group.add(land.obj);
+  group.add(water.obj);
+
+  scene.add(group);
 
   on();
   resizeWindow();
