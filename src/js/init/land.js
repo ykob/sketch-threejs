@@ -42,8 +42,8 @@ export default function() {
     const time = clock.getDelta();
     dd.render(resolution);
     group.rotation.set(
-      MathEx.radians(dd.v.y / resolution.x * 1000),
-      MathEx.radians(dd.v.x / resolution.y * 1000),
+      MathEx.radians(dd.v.y / resolution.x * 1000 + 45),
+      MathEx.radians(dd.v.x / resolution.y * 1000 - 30),
       0
     );
     land.render(time);
@@ -89,7 +89,7 @@ export default function() {
   // Initialize
   //
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(80, 140, 120);
+  camera.position.set(0, 0, 200);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   land.createObj();
