@@ -15,9 +15,9 @@
     "land": {
       "title": "land",
       "id": "land",
-      "description": "",
+      "description": "generate landscape objects with simplex noise.",
       "path": "/sketch/land.html",
-      "posted": "2018.x.x",
+      "posted": "2018.8.2",
       "update": "",
       "color": "black"
     },
