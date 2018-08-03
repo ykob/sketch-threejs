@@ -2,7 +2,8 @@ attribute vec3 position;
 attribute vec2 uv;
 
 uniform mat4 projectionMatrix;
-uniform mat4 modelViewMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
 uniform float time;
 
 varying vec3 vPosition;
@@ -19,11 +20,11 @@ void main(void) {
   mat4 waveMat = calcTranslateMat4(vec3(0.0, 0.0, sinAll * 1.5));
 
   // coordinate transformation
-  vec4 mvPosition = modelViewMatrix * waveMat * vec4(position, 1.0);
+  vec4 mPosition = modelMatrix * waveMat * vec4(position, 1.0);
 
-  vPosition = mvPosition.xyz;
+  vPosition = mPosition.xyz;
   vUv = uv;
   vSinAll = sinAll;
 
-  gl_Position = projectionMatrix * mvPosition;
+  gl_Position = projectionMatrix * viewMatrix * mPosition;
 }
