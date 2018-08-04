@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "planet": {
+      "title": "planet",
+      "id": "planet",
+      "description": "generate planet objects with simplex noise.",
+      "path": "/sketch/planet.html",
+      "posted": "2018.8.2",
+      "update": "",
+      "color": "black"
+    },
     "land": {
       "title": "land",
       "id": "land",
