@@ -33,7 +33,7 @@ export default function() {
   const land = new Land(randomH);
   const water = new Water(randomH);
   const group = new THREE.Group();
-  const dd = new Drag();
+  const dd = new Drag(resolution);
 
   // ==========
   // Define functions
@@ -42,8 +42,8 @@ export default function() {
     const time = clock.getDelta();
     dd.render(resolution);
     group.rotation.set(
-      MathEx.radians(dd.v.y / resolution.x * 1000 + 45),
-      MathEx.radians(dd.v.x / resolution.y * 1000 - 30),
+      MathEx.radians(dd.v.y),
+      MathEx.radians(dd.v.x),
       0
     );
     land.render(time);

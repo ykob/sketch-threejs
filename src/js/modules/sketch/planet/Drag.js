@@ -1,7 +1,9 @@
 const THREE = require('three');
+const MathEx = require('js-util/MathEx');
 
 export default class Drag {
-  constructor() {
+  constructor(resolution) {
+    this.resolution = resolution;
     this.vTouchStart = new THREE.Vector2();
     this.vPrev = new THREE.Vector2();
     this.v = new THREE.Vector2();
@@ -28,8 +30,8 @@ export default class Drag {
     if (this.isTouched === false) return;
 
     this.anchor.set(
-      (x - this.vTouchStart.x) / 10 + this.vPrev.x,
-      (y - this.vTouchStart.y) / 10 + this.vPrev.y
+      (x - this.vTouchStart.x) / (this.resolution.x / 200) + this.vPrev.x,
+      MathEx.clamp((y - this.vTouchStart.y) / (this.resolution.y / 200) + this.vPrev.y, -90, 90)
     );
 
     // If be using Mobile, event.preventDefault runs when start to drag.
