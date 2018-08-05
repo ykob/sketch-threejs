@@ -43,12 +43,19 @@ export default class Land {
         v3.z / 28,
         1
       );
+      const noise3 = simplex.noise4D(
+        v3.x / 4,
+        v3.y / 4,
+        v3.z / 4,
+        1
+      );
       const h =
         (MathEx.smoothstep(-0.05, 0.05, noise1 + noise2) * 2 - 1) *
         (
           2
           + MathEx.smoothstep(0.1, 0.2, Math.pow(noise1 + noise2 , 2)) * 2
           + MathEx.smoothstep(0.6, 0.7, Math.pow(noise1 + noise2 , 2)) * 6
+          + noise3 * 0.2
         )
         // + noise3 * 1.5
         // + noise4 * 0.6;
