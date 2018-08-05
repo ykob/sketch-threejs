@@ -12,7 +12,7 @@ void main() {
   // Flat Shading
   vec3 light = normalize(vec3(-1.0, 1.0, 1.0));
   vec3 normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
-  float diff = dot(normal, light);
+  float diff = (dot(normal, light) + 1.0) / 2.0;
 
   vec4 color = vec4(convertHsvToRgb(vec3(0.2 + vSinAll * 0.15 + addH, 0.2, 1.0)), 0.8);
 

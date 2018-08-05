@@ -3,9 +3,9 @@ precision highp float;
 uniform float addH1;
 uniform float addH2;
 
-varying vec3 vPosition;
 varying vec3 vMPosition;
 varying vec2 vUv;
+varying float vHeight;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
@@ -20,10 +20,10 @@ void main() {
   vec3 normal = normalize(cross(dFdx(vMPosition), dFdy(vMPosition)));
   float diff = (dot(normal, light) + 1.0) / 2.0;
 
-  float stepTop     = smoothstep(edge1, edge1 + range, vPosition.y);
-  float stepMiddle1 = smoothstep(edge2, edge2 + range, vPosition.y) * (1.0 - smoothstep(edge1, edge1 + range, vPosition.y));
-  float stepMiddle2 = smoothstep(edge3, edge3 + range, vPosition.y) * (1.0 - smoothstep(edge2, edge2 + range, vPosition.y));
-  float stepBottom  = 1.0 - smoothstep(edge3, edge3 + range, vPosition.y);
+  float stepTop     = smoothstep(edge1, edge1 + range, vHeight);
+  float stepMiddle1 = smoothstep(edge2, edge2 + range, vHeight) * (1.0 - smoothstep(edge1, edge1 + range, vHeight));
+  float stepMiddle2 = smoothstep(edge3, edge3 + range, vHeight) * (1.0 - smoothstep(edge2, edge2 + range, vHeight));
+  float stepBottom  = 1.0 - smoothstep(edge3, edge3 + range, vHeight);
 
   vec4 colorTop     = vec4(convertHsvToRgb(vec3( 0.1 + addH1, 0.1, 0.8)), 1.0) * stepTop;
   vec4 colorMiddle1 = vec4(convertHsvToRgb(vec3(0.25 + addH2, 0.4, 0.6)), 1.0) * stepMiddle1;

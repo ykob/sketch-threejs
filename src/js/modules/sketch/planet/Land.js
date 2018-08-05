@@ -24,7 +24,7 @@ export default class Land {
   createObj() {
     // Define Geometry
     const simplex = new SimplexNoise(Math.random);
-    const geometry = new THREE.OctahedronBufferGeometry(45, 5);
+    const geometry = new THREE.OctahedronBufferGeometry(50, 5);
     for (var i = 0; i < geometry.attributes.position.count; i++) {
       const v3 = new THREE.Vector3(
         geometry.attributes.position.getX(i),
@@ -32,34 +32,26 @@ export default class Land {
         geometry.attributes.position.getZ(i),
       );
       const noise1 = simplex.noise4D(
-        v3.x / 120,
-        v3.y / 120,
-        v3.z / 120,
+        v3.x / 72,
+        v3.y / 64,
+        v3.z / 72,
         1
       );
       const noise2 = simplex.noise4D(
-        v3.x / 48,
-        v3.y / 48,
-        v3.z / 48,
-        1
-      );
-      const noise3 = simplex.noise4D(
-        v3.x / 6,
-        v3.y / 6,
-        v3.z / 6,
-        1
-      );
-      const noise4 = simplex.noise4D(
-        v3.x / 2,
-        v3.y / 2,
-        v3.z / 2,
+        v3.x / 28,
+        v3.y / 24,
+        v3.z / 28,
         1
       );
       const h =
-        (noise1 * 0.75 + 0.25) * 10
-        + noise2 * 15
-        + noise3 * 1.5
-        + noise4 * 0.6;
+        (MathEx.smoothstep(-0.05, 0.05, noise1 + noise2) * 2 - 1) *
+        (
+          2
+          + MathEx.smoothstep(0.1, 0.2, Math.pow(noise1 + noise2 , 2)) * 2
+          + MathEx.smoothstep(0.6, 0.7, Math.pow(noise1 + noise2 , 2)) * 6
+        )
+        // + noise3 * 1.5
+        // + noise4 * 0.6;
       v3.add(v3.clone().normalize().multiplyScalar(h));
 
       geometry.attributes.position.setXYZ(i, v3.x, v3.y, v3.z);

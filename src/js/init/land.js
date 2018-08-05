@@ -89,7 +89,7 @@ export default function() {
   // Initialize
   //
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(0, 0, 200);
+  camera.position.set(0, 0, 300);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   land.createObj();
