@@ -9,10 +9,10 @@ varying float vHeight;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
-const float edge1 = 48.0;
-const float edge2 = 24.0;
-const float edge3 = 8.0;
-const float range = 14.0;
+const float edge1 = 56.0;
+const float edge2 = 52.0;
+const float edge3 = 50.0;
+const float range = 2.0;
 
 void main() {
   // Flat Shading
@@ -25,10 +25,10 @@ void main() {
   float stepMiddle2 = smoothstep(edge3, edge3 + range, vHeight) * (1.0 - smoothstep(edge2, edge2 + range, vHeight));
   float stepBottom  = 1.0 - smoothstep(edge3, edge3 + range, vHeight);
 
-  vec4 colorTop     = vec4(convertHsvToRgb(vec3( 0.1 + addH1, 0.1, 0.8)), 1.0) * stepTop;
-  vec4 colorMiddle1 = vec4(convertHsvToRgb(vec3(0.25 + addH2, 0.4, 0.6)), 1.0) * stepMiddle1;
-  vec4 colorMiddle2 = vec4(convertHsvToRgb(vec3(0.25 + addH2, 0.25, 0.8)), 1.0) * stepMiddle2;
-  vec4 colorBottom  = vec4(convertHsvToRgb(vec3( 0.1 + addH1, 0.4, 0.3)), 1.0) * stepBottom;
+  vec4 colorTop     = vec4(convertHsvToRgb(vec3(0.25 + addH1, 0.05, 1.0)), 1.0) * stepTop;
+  vec4 colorMiddle1 = vec4(convertHsvToRgb(vec3(0.25 + addH2, 0.05, 1.0)), 1.0) * stepMiddle1;
+  vec4 colorMiddle2 = vec4(convertHsvToRgb(vec3(0.25 + addH2, 0.1, 0.9)), 1.0) * stepMiddle2;
+  vec4 colorBottom  = vec4(convertHsvToRgb(vec3(0.25 + addH1, 0.1, 0.9)), 1.0) * stepBottom;
 
   vec4 colorAll = (colorTop + colorMiddle1 + colorMiddle2 + colorBottom) * diff;
 
