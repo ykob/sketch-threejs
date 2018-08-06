@@ -15,16 +15,16 @@
     "planet": {
       "title": "planet",
       "id": "planet",
-      "description": "generate planet objects with simplex noise.",
+      "description": "generate a planet object with simplex noise.",
       "path": "/sketch/planet.html",
-      "posted": "2018.8.2",
+      "posted": "2018.8.6",
       "update": "",
       "color": "black"
     },
     "land": {
       "title": "land",
       "id": "land",
-      "description": "generate landscape objects with simplex noise.",
+      "description": "generate a landscape object with simplex noise.",
       "path": "/sketch/land.html",
       "posted": "2018.8.2",
       "update": "",
