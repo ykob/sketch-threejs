@@ -12,6 +12,7 @@ const init = () => {
   } else {
     require('./init/commonSketch.js').default();
     switch (pageId) {
+      case 'planet':      require('./init/planet.js').default(); break;
       case 'land':        require('./init/land.js').default(); break;
       case 'webcam':      require('./init/webcam.js').default(); break;
       case 'fog':         require('./init/fog.js').default(); break;
