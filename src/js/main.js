@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 import ConsoleSignature from './modules/common/ConsoleSignature.js';
 import redirectOldSketches from './modules/common/redirectOldSketches.js';
 

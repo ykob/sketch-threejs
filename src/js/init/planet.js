@@ -6,7 +6,7 @@ const Land = require('../modules/sketch/planet/Land').default;
 const Water = require('../modules/sketch/planet/Water').default;
 const Drag = require('../modules/sketch/planet/Drag').default;
 
-export default function() {
+export default async function() {
   // ==========
   // Define common variables
   //
@@ -22,9 +22,6 @@ export default function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
-
-  camera.far = 1000;
-  camera.setFocalLength(50);
 
   // ==========
   // Define unique variables
@@ -57,6 +54,7 @@ export default function() {
   const resizeCamera = () => {
     camera.aspect = resolution.x / resolution.y;
     camera.updateProjectionMatrix();
+    camera.setFocalLength(MathEx.step(1, resolution.y / resolution.x) * 15 + 35);
   };
   const resizeWindow = () => {
     resolution.set(document.body.clientWidth, window.innerHeight);
@@ -88,8 +86,14 @@ export default function() {
   // ==========
   // Initialize
   //
+  on();
+  resizeWindow();
+
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(0, 0, 200);
+
+  camera.far = 1000;
+  camera.setFocalLength(MathEx.step(1, resolution.y / resolution.x) * 15 + 35);
+  camera.position.set(0, 0, 300);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   land.createObj();
@@ -100,9 +104,8 @@ export default function() {
 
   scene.add(group);
 
-  on();
-  resizeWindow();
-
   clock.start();
   renderLoop();
+
+  return;
 }
