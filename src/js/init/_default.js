@@ -1,7 +1,7 @@
 const THREE = require('three/build/three.js');
 const debounce = require('js-util/debounce');
 
-export default function() {
+export default async function() {
   // ==========
   // Define common variables
   //
@@ -17,9 +17,6 @@ export default function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
-
-  camera.far = 50000;
-  camera.setFocalLength(24);
 
   // ==========
   // Define unique variables
@@ -54,15 +51,16 @@ export default function() {
   // ==========
   // Initialize
   //
-  const init = () => {
-    renderer.setClearColor(0xeeeeee, 1.0);
-    camera.position.set(1000, 1000, 1000);
-    camera.lookAt(new THREE.Vector3());
-    clock.start();
+  renderer.setClearColor(0xeeeeee, 1.0);
 
-    on();
-    resizeWindow();
-    renderLoop();
-  }
-  init();
+  camera.far = 1000;
+  camera.setFocalLength(50);
+  camera.position.set(0, 0, 300);
+  camera.lookAt(new THREE.Vector3());
+
+  on();
+  resizeWindow();
+
+  clock.start();
+  renderLoop();
 }
