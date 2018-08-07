@@ -6,7 +6,7 @@ const Land = require('../modules/sketch/planet/Land').default;
 const Water = require('../modules/sketch/planet/Water').default;
 const Drag = require('../modules/sketch/planet/Drag').default;
 
-export default function() {
+export default async function() {
   // ==========
   // Define common variables
   //
@@ -106,4 +106,6 @@ export default function() {
 
   clock.start();
   renderLoop();
+
+  return;
 }
