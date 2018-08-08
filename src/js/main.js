@@ -1,7 +1,7 @@
 require("babel-polyfill");
 
-import ConsoleSignature from './modules/common/ConsoleSignature.js';
-import redirectOldSketches from './modules/common/redirectOldSketches.js';
+const ConsoleSignature = require('./modules/common/ConsoleSignature.js').default;
+const redirectOldSketches = require('./modules/common/redirectOldSketches.js').default;
 
 const page = document.querySelector('.l-page');
 const pageId = page.dataset.id;
