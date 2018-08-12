@@ -4,11 +4,11 @@ const MathEx = require('js-util/MathEx');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
 const ForcePerspectiveCamera = require('../modules/common/ForcePerspectiveCamera').default;
-const CameraController = require('../modules/sketch/Flame/CameraController').default;
-const FlameCore = require('../modules/sketch/Flame/FlameCore').default;
-const FlameCylinder = require('../modules/sketch/Flame/FlameCylinder').default;
-const FlameStone = require('../modules/sketch/Flame/FlameStone').default;
-const BackgroundSphere = require('../modules/sketch/Flame/BackgroundSphere').default;
+const CameraController = require('../modules/sketch/flame/CameraController').default;
+const FlameCore = require('../modules/sketch/flame/FlameCore').default;
+const FlameCylinder = require('../modules/sketch/flame/FlameCylinder').default;
+const FlameStone = require('../modules/sketch/flame/FlameStone').default;
+const BackgroundSphere = require('../modules/sketch/flame/BackgroundSphere').default;
 
 export default function() {
   // ==========

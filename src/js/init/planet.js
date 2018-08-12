@@ -4,6 +4,7 @@ const MathEx = require('js-util/MathEx');
 
 const Land = require('../modules/sketch/planet/Land').default;
 const Water = require('../modules/sketch/planet/Water').default;
+const BackgroundSphere = require('../modules/sketch/planet/BackgroundSphere').default;
 const Drag = require('../modules/sketch/planet/Drag').default;
 
 export default async function() {
@@ -31,6 +32,7 @@ export default async function() {
   const water = new Water(randomH);
   const group = new THREE.Group();
   const dd = new Drag(resolution);
+  const backgroundSphere = new BackgroundSphere(randomH);
 
   // ==========
   // Define functions
@@ -45,6 +47,7 @@ export default async function() {
     );
     land.render(time);
     water.render(time);
+    backgroundSphere.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -98,11 +101,13 @@ export default async function() {
 
   land.createObj();
   water.createObj();
+  backgroundSphere.createObj();
 
   group.add(land.obj);
   group.add(water.obj);
 
   scene.add(group);
+  scene.add(backgroundSphere.obj);
 
   clock.start();
   renderLoop();

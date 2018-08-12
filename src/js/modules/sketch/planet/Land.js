@@ -12,11 +12,11 @@ export default class Land {
       },
       addH1: {
         type: 'f',
-        value: h - 0.5
+        value: h
       },
       addH2: {
         type: 'f',
-        value: h
+        value: h - 0.5
       },
     };
     this.obj = null;
