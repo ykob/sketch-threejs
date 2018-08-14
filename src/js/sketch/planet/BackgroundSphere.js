@@ -1,8 +1,8 @@
-const THREE = require('three');
+const THREE = require('three/build/three.js');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-export default class Water {
+export default class BackgroundSphere {
   constructor(h) {
     this.uniforms = {
       time: {
@@ -11,25 +11,23 @@ export default class Water {
       },
       addH: {
         type: 'f',
-        value: h
+        value: h + 0.3
       },
     };
     this.obj = null;
   }
   createObj() {
-    // Define Geometry
-    const geometry = new THREE.OctahedronBufferGeometry(50, 5);
+    const geometry = new THREE.SphereBufferGeometry(200, 128, 128);
 
-    // Define Material
+    // Materialを定義
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/water.vs'),
-      fragmentShader: glslify('./glsl/water.fs'),
-      flatShading: true,
-      transparent: true,
+      vertexShader: glslify('./glsl/backgroundSphere.vs'),
+      fragmentShader: glslify('./glsl/backgroundSphere.fs'),
+      side: THREE.BackSide,
     });
 
-    // Create Object3D
+    // Object3Dを作成
     this.obj = new THREE.Mesh(geometry, material);
   }
   render(time) {
