@@ -37,6 +37,7 @@ export default class InstanceMesh {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
+    this.obj.frustumCulled = false;
   }
   render(time) {
     this.uniforms.time.value += time;
