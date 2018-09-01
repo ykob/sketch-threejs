@@ -10,13 +10,13 @@ export default class Clouds {
         value: 0
       },
     };
-    this.num = 1000;
+    this.num = 100;
     this.obj = null;
   }
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(100, 100, 100);
+    const baseGeometry = new THREE.BoxBufferGeometry(10, 10, 10);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
@@ -24,7 +24,7 @@ export default class Clouds {
     // Define attributes of the instancing geometry
     const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
-      instancePositions.setXYZ(i, 0, 0, 0);
+      instancePositions.setXYZ(i, 0, 60, 0);
     }
     geometry.addAttribute('instancePosition', instancePositions);
 
