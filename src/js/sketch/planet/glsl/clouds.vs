@@ -15,7 +15,7 @@ varying vec3 vPosition;
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 #pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
-#pragma glslify: ease = require(glsl-easings/circular-out);
+#pragma glslify: ease = require(glsl-easings/exponential-out);
 
 void main(void) {
   // added Noise to form like a cloud.
