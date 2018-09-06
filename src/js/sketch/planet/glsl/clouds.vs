@@ -1,8 +1,9 @@
 attribute vec3 position;
 attribute vec3 instancePosition;
 attribute vec3 instanceRotate;
-attribute vec2 uv;
+attribute vec3 instanceScale;
 attribute float speed;
+attribute vec2 uv;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -13,6 +14,7 @@ varying vec2 vUv;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
 #pragma glslify: ease = require(glsl-easings/circular-out);
 
@@ -25,8 +27,9 @@ void main(void) {
   // coordinate transformation
   mat4 translateMat = calcTranslateMat4(instancePosition);
   mat4 rotateMat = calcRotateMat4(instanceRotate);
+  mat4 scaleMat = calcScaleMat4(instanceScale);
   mat4 worldRotateMat = calcRotateMat4(vec3(0.0, time * speed, 0.0));
-  vec4 mvPosition = modelViewMatrix * worldRotateMat * translateMat * rotateMat * vec4(position + noisePosition, 1.0);
+  vec4 mvPosition = modelViewMatrix * worldRotateMat * translateMat * rotateMat * scaleMat * vec4(position + noisePosition, 1.0);
 
   vPosition = mvPosition.xyz;
   vUv = uv;

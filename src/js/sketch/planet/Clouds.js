@@ -10,7 +10,7 @@ export default class Clouds {
         value: 0
       },
     };
-    this.num = 50;
+    this.num = 40;
     this.obj = null;
   }
   createObj() {
@@ -27,6 +27,7 @@ export default class Clouds {
     // Define attributes of the instancing geometry
     const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
     const instanceRotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
+    const instanceScales = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
     const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       const rx = MathEx.radians(((Math.random() * 2) - 1) * 30);
@@ -34,14 +35,16 @@ export default class Clouds {
       const p = MathEx.spherical(
         rx,
         ry,
-        Math.random() * 20 + 70
+        Math.random() * 12 + 65
       );
       instancePositions.setXYZ(i, p[0], p[1], p[2]);
       instanceRotates.setXYZ(i, 0, ry, -rx);
+      instanceScales.setXYZ(i, 1.0, Math.random() * 0.2 + 1.0, Math.random() * 0.4 + 0.8);
       speeds.setXYZ(i, Math.random() * 0.05 + 0.01);
     }
     geometry.addAttribute('instancePosition', instancePositions);
     geometry.addAttribute('instanceRotate', instanceRotates);
+    geometry.addAttribute('instanceScale', instanceScales);
     geometry.addAttribute('speed', speeds);
 
     // Define Material
