@@ -21,7 +21,7 @@ varying vec2 vUv;
 void main(void) {
   // added Noise to form like a cloud.
   float noise = snoise3(position + instancePosition);
-  vec3 noiseEasePos = normalize(vec3(position.x, position.y, 0.01)) * ease((10.0 - abs(position.z)) / 10.0) * vec3(0.4, 1.0, 1.0);
+  vec3 noiseEasePos = normalize(vec3(position.x, position.y, 0.01)) * ease(1.0 - abs(position.z / 10.0)) * vec3(0.4, 1.0, 1.0);
   vec3 noisePosition = (noise + 1.0) / 2.0 * noiseEasePos * 3.0 + noiseEasePos * 1.0;
 
   // coordinate transformation
