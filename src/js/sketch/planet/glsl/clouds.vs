@@ -18,7 +18,7 @@ void main(void) {
   mat4 rotateMat = calcRotateMat4(instanceRotate);
   vec4 mvPosition = modelViewMatrix * translateMat * rotateMat * vec4(position, 1.0);
 
-  vPosition = position;
+  vPosition = mvPosition.xyz;
   vUv = uv;
 
   gl_Position = projectionMatrix * mvPosition;
