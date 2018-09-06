@@ -28,7 +28,7 @@ void main(void) {
   mat4 translateMat = calcTranslateMat4(instancePosition);
   mat4 rotateMat = calcRotateMat4(instanceRotate);
   mat4 scaleMat = calcScaleMat4(instanceScale);
-  mat4 worldRotateMat = calcRotateMat4(vec3(0.0, time * speed, 0.0));
+  mat4 worldRotateMat = calcRotateMat4(vec3(0.0, -time * speed, 0.0));
   vec4 mvPosition = modelViewMatrix * worldRotateMat * translateMat * rotateMat * scaleMat * vec4(position + noisePosition, 1.0);
 
   vPosition = mvPosition.xyz;
