@@ -4,7 +4,6 @@ uniform float addH1;
 uniform float addH2;
 
 varying vec3 vMPosition;
-varying vec2 vUv;
 varying float vHeight;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);

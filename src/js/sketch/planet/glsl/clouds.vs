@@ -10,7 +10,6 @@ uniform mat4 modelViewMatrix;
 uniform float time;
 
 varying vec3 vPosition;
-varying vec2 vUv;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
@@ -32,7 +31,6 @@ void main(void) {
   vec4 mvPosition = modelViewMatrix * worldRotateMat * translateMat * rotateMat * scaleMat * vec4(position + noisePosition, 1.0);
 
   vPosition = mvPosition.xyz;
-  vUv = uv;
 
   gl_Position = projectionMatrix * mvPosition;
 }

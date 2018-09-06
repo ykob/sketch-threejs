@@ -3,7 +3,6 @@ precision highp float;
 uniform float addH;
 
 varying vec3 vPosition;
-varying vec2 vUv;
 varying float vSinAll;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);

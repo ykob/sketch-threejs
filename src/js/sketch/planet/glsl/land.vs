@@ -6,7 +6,6 @@ uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
 varying vec3 vMPosition;
-varying vec2 vUv;
 varying float vHeight;
 
 void main(void) {
@@ -15,7 +14,6 @@ void main(void) {
 
   vHeight = length(position);
   vMPosition = mPosition.xyz;
-  vUv = uv;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
 }
