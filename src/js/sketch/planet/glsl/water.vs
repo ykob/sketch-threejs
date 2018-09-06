@@ -7,7 +7,6 @@ uniform mat4 modelMatrix;
 uniform float time;
 
 varying vec3 vPosition;
-varying vec2 vUv;
 varying float vSinAll;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
@@ -23,7 +22,6 @@ void main(void) {
   vec4 mPosition = modelMatrix * waveMat * vec4(position, 1.0);
 
   vPosition = mPosition.xyz;
-  vUv = uv;
   vSinAll = sinAll;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;

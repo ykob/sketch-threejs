@@ -10,13 +10,12 @@ uniform mat4 modelViewMatrix;
 uniform float time;
 
 varying vec3 vPosition;
-varying vec2 vUv;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 #pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
-#pragma glslify: ease = require(glsl-easings/circular-out);
+#pragma glslify: ease = require(glsl-easings/exponential-out);
 
 void main(void) {
   // added Noise to form like a cloud.
@@ -32,7 +31,6 @@ void main(void) {
   vec4 mvPosition = modelViewMatrix * worldRotateMat * translateMat * rotateMat * scaleMat * vec4(position + noisePosition, 1.0);
 
   vPosition = mvPosition.xyz;
-  vUv = uv;
 
   gl_Position = projectionMatrix * mvPosition;
 }
