@@ -18,7 +18,7 @@
       "description": "generate a planet object with simplex noise.",
       "path": "/sketch/planet.html",
       "posted": "2018.8.6",
-      "update": "",
+      "update": "2018.9.6",
       "color": "black"
     },
     "land": {

@@ -4,6 +4,7 @@ const MathEx = require('js-util/MathEx');
 
 const Land = require('./Land').default;
 const Water = require('./Water').default;
+const Clouds = require('./Clouds').default;
 const BackgroundSphere = require('./BackgroundSphere').default;
 const Drag = require('./Drag').default;
 
@@ -30,6 +31,7 @@ export default async function() {
   const randomH = Math.random();
   const land = new Land(randomH);
   const water = new Water(randomH);
+  const clouds = new Clouds();
   const bg = new BackgroundSphere(randomH);
   const group = new THREE.Group();
   const dd = new Drag(resolution);
@@ -47,6 +49,7 @@ export default async function() {
     );
     land.render(time);
     water.render(time);
+    clouds.render(time);
     bg.render(time);
     renderer.render(scene, camera);
   };
@@ -101,10 +104,12 @@ export default async function() {
 
   land.createObj();
   water.createObj();
+  clouds.createObj();
   bg.createObj();
 
   group.add(land.obj);
   group.add(water.obj);
+  group.add(clouds.obj);
 
   scene.add(group);
   scene.add(bg.obj);
