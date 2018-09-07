@@ -1,12 +1,13 @@
-require("babel-polyfill");
-
 const THREE = require('three/build/three.js');
+const faceapi = require('face-api.js/dist/face-api.js');
 const debounce = require('js-util/debounce');
 
 const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;
 
-export default function() {
+export default async function() {
+  await faceapi.loadFaceDetectionModel('/sketch-threejs/js/vendor/face-api.js/weights')
+
   // ==========
   // Define common variables
   //
