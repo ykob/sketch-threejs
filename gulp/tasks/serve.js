@@ -13,7 +13,12 @@ const confPug = require('../conf').pug;
 
 const getPugTemplatePath = (baseDir, req)=>{
   const requestPath = url.parse(req.url).pathname;
-  const suffix = path.parse(requestPath).ext ? '' : 'index.html';
+  const suffix =
+    (path.parse(requestPath).ext)
+      ? ''
+      : (requestPath.indexOf('/js/') > -1)
+        ? ''
+        : 'index.html';
   return path.join(baseDir, "src/html", requestPath, suffix);
 }
 
