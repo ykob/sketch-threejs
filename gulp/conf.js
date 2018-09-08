@@ -148,7 +148,7 @@ module.exports.copy = {
     src: [
       `${DIR.SRC}/img/**/*.*`,
       `${DIR.SRC}/font/**/*.*`,
-      `${DIR.SRC}/js/vendor/face-api.js/**/*.*`,
+      `${DIR.SRC}/js/vendor/face-api.js/**/*`,
     ],
     dest: `${DIR.DEST}`,
     opts: {
@@ -159,7 +159,7 @@ module.exports.copy = {
     src: [
       `${DIR.DEST}/img/**/*.ico`,
       `${DIR.DEST}/font/**/*.*`,
-      `${DIR.SRC}/js/vendor/face-api.js/**/*.*`,
+      `${DIR.SRC}/js/vendor/face-api.js/**/*`,
     ],
     dest: `${DIR.BUILD}`,
     opts: {
