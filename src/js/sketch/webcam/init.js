@@ -4,6 +4,7 @@ const debounce = require('js-util/debounce');
 
 const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;
+const Points = require('./Points').default;
 
 export default async function() {
   // ==========
@@ -28,6 +29,7 @@ export default async function() {
 
   const webCamera = new WebCamera();
   const plane = new Plane();
+  const points = new Points();
 
   // ==========
   // Define functions
@@ -83,6 +85,10 @@ export default async function() {
   await resizeWindow();
 
   plane.createObj(webCamera);
+  points.createObj();
+
   scene.add(plane.obj);
+  scene.add(points.obj);
+
   renderLoop();
 }
