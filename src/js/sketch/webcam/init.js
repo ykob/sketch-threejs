@@ -38,7 +38,10 @@ export default async function() {
     const time = clock.getDelta();
     plane.render(time);
     renderer.render(scene, camera);
-    const results = await faceapi.detectLandmarks(webCamera.video);
+    const detections = await faceapi.tinyYolov2(webCamera.video, {
+      scoreThreshold: 0.8
+    });
+    const landmarks = await faceapi.detectLandmarks(webCamera.video);
   };
   const renderLoop = () => {
     render();
@@ -72,6 +75,7 @@ export default async function() {
   // ==========
   // Initialize
   //
+  await faceapi.loadTinyYolov2Model('/sketch-threejs/js/vendor/face-api.js/weights');
   await faceapi.loadFaceLandmarkModel('/sketch-threejs/js/vendor/face-api.js/weights');
 
   renderer.setClearColor(0xeeeeee, 1.0);
