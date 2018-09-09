@@ -6,8 +6,6 @@ const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;
 
 export default async function() {
-  await faceapi.loadFaceDetectionModel('/sketch-threejs/js/vendor/face-api.js/weights')
-
   // ==========
   // Define common variables
   //
@@ -34,13 +32,16 @@ export default async function() {
   const webCamera = new WebCamera();
   const plane = new Plane();
 
+  await faceapi.loadFaceLandmarkModel('/sketch-threejs/js/vendor/face-api.js/weights');
+
   // ==========
   // Define functions
   //
-  const render = () => {
+  const render = async () => {
     const time = clock.getDelta();
     plane.render(time);
     renderer.render(scene, camera);
+    const results = await faceapi.detectLandmarks(webCamera.video);
   };
   const renderLoop = () => {
     render();
@@ -50,14 +51,13 @@ export default async function() {
     camera.aspect = resolution.x / resolution.y;
     camera.updateProjectionMatrix();
   };
-  const resizeWindow = () => {
+  const resizeWindow = async () => {
     resolution.set(document.body.clientWidth, window.innerHeight);
     canvas.width = resolution.x;
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
-
-    return webCamera.init({
+    await webCamera.init({
       audio: false,
       video: {
         facingMode: `environment`, // environment or user
@@ -81,9 +81,9 @@ export default async function() {
   clock.start();
 
   on();
-  resizeWindow().then(() => {
-    plane.createObj(webCamera);
-    scene.add(plane.obj);
-    renderLoop();
-  });
+  await resizeWindow();
+
+  plane.createObj(webCamera);
+  scene.add(plane.obj);
+  renderLoop();
 }
