@@ -22,9 +22,6 @@ export default async function() {
     autoStart: false
   });
 
-  camera.far = 50000;
-  camera.setFocalLength(24);
-
   // ==========
   // Define unique variables
   //
@@ -76,7 +73,9 @@ export default async function() {
   // Initialize
   //
   renderer.setClearColor(0xeeeeee, 1.0);
-  camera.position.set(0, 0, 1000);
+  camera.far = 1000;
+  camera.setFocalLength(50);
+  camera.position.set(0, 0, 100);
   camera.lookAt(new THREE.Vector3());
   clock.start();
 
