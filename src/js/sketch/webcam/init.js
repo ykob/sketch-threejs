@@ -29,8 +29,6 @@ export default async function() {
   const webCamera = new WebCamera();
   const plane = new Plane();
 
-  await faceapi.loadFaceLandmarkModel('/sketch-threejs/js/vendor/face-api.js/weights');
-
   // ==========
   // Define functions
   //
@@ -72,6 +70,8 @@ export default async function() {
   // ==========
   // Initialize
   //
+  await faceapi.loadFaceLandmarkModel('/sketch-threejs/js/vendor/face-api.js/weights');
+
   renderer.setClearColor(0xeeeeee, 1.0);
   camera.far = 1000;
   camera.setFocalLength(50);
