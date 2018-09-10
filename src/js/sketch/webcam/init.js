@@ -57,12 +57,7 @@ export default async function() {
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
-    await webCamera.init({
-      audio: false,
-      video: {
-        facingMode: `environment`, // environment or user
-      }
-    });
+    await webCamera.init();
   };
   const on = () => {
     window.addEventListener('resize', debounce(() => {
