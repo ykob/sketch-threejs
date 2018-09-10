@@ -22,6 +22,8 @@ export default async function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
+  const FPS_FACE_DETECT = 5;
+  let secFaceDetect = 0;
 
   // ==========
   // Define unique variables
@@ -38,14 +40,23 @@ export default async function() {
     const time = clock.getDelta();
     plane.render(time);
     renderer.render(scene, camera);
-    const detections = await faceapi.tinyYolov2(webCamera.video, {
-      scoreThreshold: 0.8
-    });
-    const landmarks = await faceapi.detectLandmarks(webCamera.video);
+
+    secFaceDetect += time;
+    if (secFaceDetect >= 1 / FPS_FACE_DETECT) {
+      const detections = await faceapi.tinyYolov2(webCamera.video, {
+        scoreThreshold: 0.5,
+      });
+      const faceTensors = await faceapi.extractFaceTensors(webCamera.video, detections);
+      const landmarksByFace = await Promise.all(faceTensors.map(t => faceapi.detectLandmarks(t)));
+      // const landmarks = await faceapi.detectLandmarks(webCamera.video);
+    }
+
+    return;
   };
-  const renderLoop = () => {
-    render();
+  const renderLoop = async () => {
+    await render();
     requestAnimationFrame(renderLoop);
+    return;
   };
   const resizeCamera = () => {
     camera.aspect = resolution.x / resolution.y;
