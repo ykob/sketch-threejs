@@ -1,11 +1,12 @@
 const THREE = require('three/build/three.js');
-const faceapi = require('face-api.js/dist/face-api.js');
+const Clm = require('clmtrackr/build/clmtrackr.js');
+const pModel = require('clmtrackr/models/model_pca_20_svm.js');
 const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 
 const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;
-// const Points = require('./Points').default;
+const Points = require('./Points').default;
 
 export default async function() {
   // ==========
@@ -23,8 +24,6 @@ export default async function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
-  // const FPS_FACE_DETECT = 5;
-  // let secFaceDetect = 0;
 
   // ==========
   // Define unique variables
@@ -32,7 +31,8 @@ export default async function() {
 
   const webCamera = new WebCamera();
   const plane = new Plane();
-  // const points = new Points();
+  const points = new Points();
+  const cTracker = new Clm.tracker();
 
   // ==========
   // Define functions
@@ -41,20 +41,8 @@ export default async function() {
     const time = clock.getDelta();
     plane.render(time);
     renderer.render(scene, camera);
-    // points.render(time);
-
-    // secFaceDetect += time;
-    // if (secFaceDetect >= 1 / FPS_FACE_DETECT) {
-    //   const detections = await faceapi.tinyYolov2(webCamera.video, {
-    //     scoreThreshold: 0.5,
-    //   });
-    //   if (detections.length > 0) {
-    //     const faceTensors = await faceapi.extractFaceTensors(webCamera.video, detections);
-    //     const landmarksByFace = await faceapi.detectLandmarks(faceTensors[0]);
-    //     const mouth = landmarksByFace.getMouth();
-    //     points.setPositions(landmarksByFace.getPositions(), detections[0].box, webCamera);
-    //   }
-    // }
+    points.setPositions(cTracker.getCurrentPosition(), webCamera);
+    points.render(time);
     return;
   };
   const renderLoop = async () => {
@@ -86,9 +74,6 @@ export default async function() {
   // ==========
   // Initialize
   //
-  // await faceapi.loadTinyYolov2Model('/sketch-threejs/js/vendor/face-api.js/weights');
-  // await faceapi.loadFaceLandmarkModel('/sketch-threejs/js/vendor/face-api.js/weights');
-
   renderer.setClearColor(0xeeeeee, 1.0);
   camera.far = 1000;
   camera.position.set(0, 0, 100);
@@ -99,10 +84,13 @@ export default async function() {
   await resizeWindow();
 
   plane.createObj(webCamera);
-  // points.createObj();
+  points.createObj();
 
   scene.add(plane.obj);
-  // scene.add(points.obj);
+  scene.add(points.obj);
+
+  cTracker.init(pModel);
+  cTracker.start(webCamera.video);
 
   renderLoop();
 }

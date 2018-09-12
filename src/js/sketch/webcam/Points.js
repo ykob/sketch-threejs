@@ -30,12 +30,14 @@ export default class Points {
     // Create Object3D
     this.obj = new THREE.Points(geometry, material);
   }
-  setPositions(positions, box, webcam) {
+  setPositions(positions, webcam) {
+    const isFacing = (webcam.facingMode === 'user') ? -1 : 1;
+    if (positions === false) return;
     for (var i = 0; i < this.positions.count; i++) {
       this.positions.setXYZ(
         i,
-        ((box.x + positions[i].x) / webcam.resolution.x * 2 - 1) * 25,
-        ((box.y + positions[i].y) / webcam.resolution.y * 2 - 1) * -25,
+        (positions[i][0] / webcam.resolution.x * 2 - 1) * 25 * isFacing,
+        (positions[i][1] / webcam.resolution.y * 2 - 1) * -25,
         10
       );
     }
