@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>webcam │ sketch of three.js</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <meta name="description" content="play an image from a webcam with a fragment shader.">
+    <meta name="description" content="to process an image of a webcam with a fragment shader and clmtrackr.">
     <meta name="keywords" content="undefined, Yoichi Kobayashi, WebGL, three.js">
     <meta name="theme-color" content="#111111">
     <meta name="msapplication-TileImage" content="/sketch-threejs/img/common/ms_tileimage.png">
@@ -16,12 +16,12 @@
     <meta property="og:title" content="webcam │ sketch of three.js">
     <meta property="og:site_name">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="play an image from a webcam with a fragment shader.">
+    <meta property="og:description" content="to process an image of a webcam with a fragment shader and clmtrackr.">
     <meta property="og:url" content="http://ykob.github.io/sketch-threejs/sketch/webcam.html">
     <meta property="og:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_webcam.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="webcam │ sketch of three.js">
-    <meta name="twitter:description" content="play an image from a webcam with a fragment shader.">
+    <meta name="twitter:description" content="to process an image of a webcam with a fragment shader and clmtrackr.">
     <meta name="twitter:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_webcam.jpg">
   </head>
   <body>
@@ -44,22 +44,16 @@
       </div>
       <div class="p-sketch-outline">
         <h2 class="p-sketch-outline__title">webcam</h2>
-        <p class="p-sketch-outline__date">posted: 2018.5.29 / update: 2018.6.9
+        <p class="p-sketch-outline__date">posted: 2018.5.29 / update: 2018.9.13
         </p>
-        <p class="p-sketch-outline__description">play an image from a webcam with a fragment shader.</p>
+        <p class="p-sketch-outline__description">to process an image of a webcam with a fragment shader and clmtrackr.</p>
       </div>
       <canvas class="p-canvas-webgl" id="canvas-webgl"></canvas>
-      <div class="p-config-menu">
-        <div class="c-btn-circle c-btn-circle--black">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <circle class="path-fill" cx="12" cy="12" r="3.2"></circle>
-            <path class="path-fill" d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
-            <path d="M0 0h24v24H0z" fill="none"></path>
-          </svg>
-        </div>
-      </div>
+      <div class="p-config-menu"></div>
       <div class="p-utility-menu"><a class="c-button c-button--black" href="/sketch-threejs/"><span class="c-button__icon c-button__icon--back c-button__icon--black"></span><span class="c-button__label"><span class="js-split-str">b</span><span class="js-split-str">a</span><span class="js-split-str">c</span><span class="js-split-str">k</span></span></a></div>
     </div>
+    <script src="/sketch-threejs/js/vendor/clmtrackr/clmtrackr.min.js"></script>
+    <script src="/sketch-threejs/js/vendor/clmtrackr/model_pca_20_svm.js"></script>
     <script src="/sketch-threejs/js/main.min.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
