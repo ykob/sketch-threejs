@@ -33,10 +33,10 @@
     "webcam": {
       "title": "webcam",
       "id": "webcam",
-      "description": "play an image from a webcam with a fragment shader.",
+      "description": "to process an image of a webcam with a fragment shader and clmtrackr.",
       "path": "/sketch/webcam.html",
       "posted": "2018.5.29",
-      "update": "2018.6.9",
+      "update": "2018.9.13",
       "color": "black"
     },
     "fog": {
