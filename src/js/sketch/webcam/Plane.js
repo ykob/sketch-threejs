@@ -21,6 +21,10 @@ export default class Plane {
         type: 'v2',
         value: new THREE.Vector2()
       },
+      force: {
+        type: 'f',
+        value: 0
+      },
     };
     this.mouth = [
       new THREE.Vector2(),
@@ -83,12 +87,13 @@ export default class Plane {
       open = Math.max((d2 / (d1 + d3)) - 1, 0);
     }
 
-    const hook = (1 - this.force.v) * 0.2;
-    const drag = -this.force.a * 0.6;
-    const force = open * 0.8;
+    const hook = (1 - this.force.v) * 0.01;
+    const drag = -this.force.a * 0.16;
+    const force = open * 0.1;
     this.force.a += hook + drag + force;
     this.force.v = this.force.v + this.force.a;
 
-    this.uniforms.time.value += time * (this.force.v * 2);
+    this.uniforms.force.value = this.force.v;
+    this.uniforms.time.value += time * (this.force.v * 1.2);
   }
 }
