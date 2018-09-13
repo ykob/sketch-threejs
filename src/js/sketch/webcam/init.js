@@ -1,6 +1,4 @@
 const THREE = require('three/build/three.js');
-const Clm = require('clmtrackr/build/clmtrackr.js');
-const pModel = require('clmtrackr/models/model_pca_20_svm.js');
 const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 
@@ -32,7 +30,7 @@ export default async function() {
   const webCamera = new WebCamera();
   const plane = new Plane();
   const points = new Points();
-  const cTracker = new Clm.tracker();
+  const cTracker = new clm.tracker();
 
   // ==========
   // Define functions

@@ -148,7 +148,7 @@ module.exports.copy = {
     src: [
       `${DIR.SRC}/img/**/*.*`,
       `${DIR.SRC}/font/**/*.*`,
-      `${DIR.SRC}/js/vendor/face-api.js/**/*`,
+      `${DIR.SRC}/js/vendor/clmtrackr/**/*`,
     ],
     dest: `${DIR.DEST}`,
     opts: {
@@ -159,7 +159,7 @@ module.exports.copy = {
     src: [
       `${DIR.DEST}/img/**/*.ico`,
       `${DIR.DEST}/font/**/*.*`,
-      `${DIR.SRC}/js/vendor/face-api.js/**/*`,
+      `${DIR.DEST}/js/vendor/clmtrackr/**/*`,
     ],
     dest: `${DIR.BUILD}`,
     opts: {

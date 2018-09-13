@@ -26,7 +26,6 @@
     "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^6.0.0",
-    "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-data": "^1.3.1",
     "gulp-imagemin": "^4.1.0",
@@ -54,7 +53,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "clmtrackr": "^1.1.2",
     "gl-matrix": "^2.4.0",
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",

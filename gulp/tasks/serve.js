@@ -40,7 +40,6 @@ const pugMiddleWare = (req, res, next) => {
 
 gulp.task("serve", ()=> {
   if (yargs.build == true) {
-    conf.build.server.middleware = [pugMiddleWare];
     browserSync(conf.build);
   } else {
     conf.dest.server.middleware = [pugMiddleWare];
