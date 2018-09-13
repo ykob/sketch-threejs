@@ -33,7 +33,7 @@ export default class Points {
   setPositions(cTracker, webcam) {
     const isFacing = (webcam.facingMode === 'user') ? -1 : 1;
     const landmarks = cTracker.getCurrentPosition();
-    this.obj.visible = (cTracker.getScore() >= 0.4);
+    this.obj.visible = (cTracker.getScore() >= 0.3);
     if (landmarks === false) return;
     for (var i = 0; i < this.positions.count; i++) {
       this.positions.setXYZ(

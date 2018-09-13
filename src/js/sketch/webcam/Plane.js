@@ -75,7 +75,7 @@ export default class Plane {
     const landmarks = cTracker.getCurrentPosition();
     let open = 0;
 
-    if (cTracker.getScore() >= 0.4 && landmarks !== false) {
+    if (cTracker.getScore() >= 0.3 && landmarks !== false) {
       this.mouth[0].set(landmarks[47][0], landmarks[47][1]);
       this.mouth[1].set(landmarks[60][0], landmarks[60][1]);
       this.mouth[2].set(landmarks[57][0], landmarks[57][1]);
