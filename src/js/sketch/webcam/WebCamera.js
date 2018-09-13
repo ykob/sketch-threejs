@@ -3,6 +3,7 @@ const sleep = require('js-util/sleep');
 export default class WebCamera {
   constructor() {
     this.video = document.createElement('video');
+    this.facingMode = undefined;
     this.resolution = {
       x: 0,
       y: 0
@@ -11,10 +12,11 @@ export default class WebCamera {
   async init() {
     if (!navigator.mediaDevices) return;
 
+    this.facingMode = `user`;  // environment or user
     await navigator.mediaDevices.getUserMedia({
         audio: false,
         video: {
-          facingMode: `environment`, // environment or user
+          facingMode: this.facingMode,
         }
       })
       .then((stream) => {
@@ -33,8 +35,8 @@ export default class WebCamera {
 
     // get video resolution with promise.
     await sleep(1000);
-    this.resolution.x = this.video.videoWidth;
-    this.resolution.y = this.video.videoHeight
+    this.resolution.x = this.video.width = this.video.videoWidth;
+    this.resolution.y = this.video.height = this.video.videoHeight;
 
     return;
   }

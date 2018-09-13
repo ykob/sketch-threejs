@@ -4,6 +4,7 @@ uniform float time;
 uniform sampler2D texVideo;
 uniform float facing;
 uniform vec2 resolution;
+uniform float force;
 
 varying vec3 vPosition;
 varying vec2 vUv;
@@ -14,13 +15,13 @@ varying vec2 vUv;
 void main() {
   vec2 p = (vUv * 2.0 - 1.0);
   float grad = 1.0 - smoothstep(0.5, 1.0, length(p));
-  float noise1 = cnoise3(vec3(p * 1.8, time * 0.4)) * (0.15 + smoothstep(0.5, 0.75, length(p)) * (1.0 - smoothstep(0.75, 1.0, length(p))));
-  float noise2 = cnoise3(vec3(p * 6.4, time * 0.4)) * (0.15 + smoothstep(0.3, 0.4, length(p)) * (1.0 - smoothstep(0.9, 1.0, length(p))));
+  float noise1 = cnoise3(vec3(p * (1.4 + force * 0.5), time * 0.4)) * (0.15 + smoothstep(0.5, 0.75, length(p)) * (1.0 - smoothstep(0.75, 1.0, length(p))));
+  float noise2 = cnoise3(vec3(p * (5.4 + force * 0.3), time * 0.4)) * (0.15 + smoothstep(0.3, 0.4, length(p)) * (1.0 - smoothstep(0.9, 1.0, length(p))));
   float noiseSum = (noise1 + noise2) / 2.0;
 
   vec2 adjustUv = vec2(
-    min(resolution.y / resolution.x, 1.0),
-    min(resolution.x / resolution.y, 1.0)
+    min(resolution.y / resolution.x, 1.0) * (1.0 - force * 0.008),
+    min(resolution.x / resolution.y, 1.0) * (1.0 - force * 0.008)
     );
   vec2 updateUv = vec2(
     abs(vUv.x - facing) * adjustUv.x + (1.0 - adjustUv.x) * 0.5,
