@@ -45,8 +45,8 @@ export default class Points {
     }
     this.positions.needsUpdate = true;
   }
-  render(time, landmarks, webcam) {
+  render(time, cTracker, webcam) {
     this.uniforms.time.value += time;
-    this.setPositions(landmarks, webcam);
+    this.setPositions(cTracker, webcam);
   }
 }
