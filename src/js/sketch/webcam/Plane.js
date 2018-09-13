@@ -22,6 +22,16 @@ export default class Plane {
         value: new THREE.Vector2()
       },
     };
+    this.mouth = [
+      new THREE.Vector2(),
+      new THREE.Vector2(),
+      new THREE.Vector2(),
+      new THREE.Vector2(),
+    ];
+    this.force = {
+      a: 0,
+      v: 1,
+    };
     this.obj = null;
   }
   createObj(webcam) {
@@ -57,7 +67,28 @@ export default class Plane {
       webcam.resolution.y
     );
   }
-  render(time) {
-    this.uniforms.time.value += time;
+  render(time, cTracker) {
+    const landmarks = cTracker.getCurrentPosition();
+    let open = 0;
+
+    if (cTracker.getScore() >= 0.4 && landmarks !== false) {
+      this.mouth[0].set(landmarks[47][0], landmarks[47][1]);
+      this.mouth[1].set(landmarks[60][0], landmarks[60][1]);
+      this.mouth[2].set(landmarks[57][0], landmarks[57][1]);
+      this.mouth[3].set(landmarks[53][0], landmarks[53][1]);
+
+      const d1 = this.mouth[0].distanceTo(this.mouth[1]);
+      const d2 = this.mouth[1].distanceTo(this.mouth[2]);
+      const d3 = this.mouth[2].distanceTo(this.mouth[3]);
+      open = Math.max((d2 / (d1 + d3)) - 1, 0);
+    }
+
+    const hook = (1 - this.force.v) * 0.2;
+    const drag = -this.force.a * 0.6;
+    const force = open * 0.8;
+    this.force.a += hook + drag + force;
+    this.force.v = this.force.v + this.force.a;
+
+    this.uniforms.time.value += time * (this.force.v * 2);
   }
 }

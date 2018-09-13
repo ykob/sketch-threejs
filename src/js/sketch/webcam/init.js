@@ -39,10 +39,9 @@ export default async function() {
   //
   const render = async () => {
     const time = clock.getDelta();
-    plane.render(time);
+    plane.render(time, cTracker);
+    // points.render(time, cTracker, webCamera);
     renderer.render(scene, camera);
-    points.setPositions(cTracker.getCurrentPosition(), webCamera);
-    points.render(time);
     return;
   };
   const renderLoop = async () => {
@@ -84,10 +83,10 @@ export default async function() {
   await resizeWindow();
 
   plane.createObj(webCamera);
-  points.createObj();
+  // points.createObj();
 
   scene.add(plane.obj);
-  scene.add(points.obj);
+  // scene.add(points.obj);
 
   cTracker.init(pModel);
   cTracker.start(webCamera.video);
