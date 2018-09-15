@@ -39,7 +39,8 @@ export default async function() {
   //
   const render = async () => {
     const time = clock.getDelta();
-    plane.render(time, cTracker);
+    webCamera.render(cTracker);
+    plane.render(time, webCamera.force.v);
     // points.render(time, cTracker, webCamera);
     bg.render(time);
     renderer.render(scene, camera);
