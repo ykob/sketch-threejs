@@ -49,7 +49,7 @@ module.exports.scripts = {
       ['babelify', {
         babelrc: false,
         presets: [
-          ['env', {
+          ['@babel/preset-env', {
             targets: {
               browsers: ['last 2 versions', 'ie >= 11']
             }

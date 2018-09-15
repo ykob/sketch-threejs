@@ -15,9 +15,9 @@
     "node": "8.9.4"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "babelify": "^10.0.0",
     "browser-sync": "^2.23.6",
     "browserify": "^16.2.2",
