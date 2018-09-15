@@ -42,7 +42,7 @@ export default async function() {
     webCamera.render(cTracker);
     plane.render(time, webCamera.force.v);
     // points.render(time, cTracker, webCamera);
-    bg.render(time);
+    bg.render(time, webCamera.force.v);
     renderer.render(scene, camera);
     return;
   };

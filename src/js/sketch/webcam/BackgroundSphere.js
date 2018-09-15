@@ -30,7 +30,7 @@ export default class BackgroundSphere {
     // Object3Dを作成
     this.obj = new THREE.Mesh(geometry, material);
   }
-  render(time) {
-    this.uniforms.time.value += time;
+  render(time, force) {
+    this.uniforms.time.value += time * (force * 1.2);
   }
 }
