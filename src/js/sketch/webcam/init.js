@@ -34,14 +34,19 @@ export default async function() {
   const bg = new BackgroundSphere(0);
   const cTracker = new clm.tracker();
 
+  const faceIcon = document.querySelector('.p-webcam-face-icon');
+
   // ==========
   // Define functions
   //
   const render = async () => {
     const time = clock.getDelta();
-    webCamera.render(cTracker);
+    const landmarks = cTracker.getCurrentPosition();
+    const score = cTracker.getScore();
+
+    webCamera.render(landmarks, score);
     plane.render(time, webCamera.force.v);
-    // points.render(time, cTracker, webCamera);
+    points.render(time, landmarks, score, webCamera);
     bg.render(time, webCamera.force.v);
     renderer.render(scene, camera);
     return;
@@ -85,11 +90,11 @@ export default async function() {
   await resizeWindow();
 
   plane.createObj(webCamera);
-  // points.createObj();
+  points.createObj();
   bg.createObj();
 
   scene.add(plane.obj);
-  // scene.add(points.obj);
+  scene.add(points.obj);
   scene.add(bg.obj);
 
   cTracker.init(pModel);

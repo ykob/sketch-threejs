@@ -30,10 +30,10 @@ export default class Points {
     // Create Object3D
     this.obj = new THREE.Points(geometry, material);
   }
-  setPositions(cTracker, webcam) {
+  setPositions(landmarks, score, webcam) {
     const isFacing = (webcam.facingMode === 'user') ? -1 : 1;
-    const landmarks = cTracker.getCurrentPosition();
-    this.obj.visible = (cTracker.getScore() >= 0.3);
+
+    this.obj.visible = (score >= 0.3);
     if (landmarks === false) return;
     for (var i = 0; i < this.positions.count; i++) {
       this.positions.setXYZ(
@@ -45,8 +45,8 @@ export default class Points {
     }
     this.positions.needsUpdate = true;
   }
-  render(time, cTracker, webcam) {
+  render(time, landmarks, score, webcam) {
     this.uniforms.time.value += time;
-    this.setPositions(cTracker, webcam);
+    this.setPositions(landmarks, score, webcam);
   }
 }
