@@ -34,8 +34,6 @@ export default async function() {
   const bg = new BackgroundSphere(0);
   const cTracker = new clm.tracker();
 
-  const faceIcon = document.querySelector('.p-webcam-face-icon');
-
   // ==========
   // Define functions
   //
