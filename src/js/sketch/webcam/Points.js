@@ -25,6 +25,9 @@ export default class Points {
       uniforms: this.uniforms,
       vertexShader: glslify('./glsl/points.vs'),
       fragmentShader: glslify('./glsl/points.fs'),
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
 
     // Create Object3D
