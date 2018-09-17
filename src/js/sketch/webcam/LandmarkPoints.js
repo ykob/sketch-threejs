@@ -49,7 +49,7 @@ export default class LandmarkPoints {
     this.positions.needsUpdate = true;
   }
   render(time, landmarks, score, webcam) {
-    this.uniforms.time.value += time;
+    this.uniforms.time.value += time * (webcam.force.v * 1.2);
     this.setPositions(landmarks, score, webcam);
   }
 }
