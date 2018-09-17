@@ -4,7 +4,7 @@ const MathEx = require('js-util/MathEx');
 
 const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;
-const Points = require('./Points').default;
+const LandmarkPoints = require('./LandmarkPoints').default;
 const BackgroundSphere = require('./BackgroundSphere').default;
 
 export default async function() {
@@ -30,7 +30,7 @@ export default async function() {
 
   const webCamera = new WebCamera();
   const plane = new Plane();
-  const points = new Points();
+  const landmarkPoints = new LandmarkPoints();
   const bg = new BackgroundSphere(0);
   const cTracker = new clm.tracker();
 
@@ -44,7 +44,7 @@ export default async function() {
 
     webCamera.render(landmarks, score);
     plane.render(time, webCamera.force.v);
-    points.render(time, landmarks, score, webCamera);
+    landmarkPoints.render(time, landmarks, score, webCamera);
     bg.render(time, webCamera.force.v);
     renderer.render(scene, camera);
     return;
@@ -88,11 +88,11 @@ export default async function() {
   await resizeWindow();
 
   plane.createObj(webCamera);
-  points.createObj();
+  landmarkPoints.createObj();
   bg.createObj();
 
   scene.add(plane.obj);
-  scene.add(points.obj);
+  scene.add(landmarkPoints.obj);
   scene.add(bg.obj);
 
   cTracker.init(pModel);

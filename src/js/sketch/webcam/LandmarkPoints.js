@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-export default class Points {
+export default class LandmarkPoints {
   constructor() {
     this.positions =
     this.uniforms = {
