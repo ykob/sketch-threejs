@@ -4,7 +4,7 @@ const MathEx = require('js-util/MathEx');
 
 export default class LandmarkPoints {
   constructor() {
-    this.positions =
+    this.positions = undefined;
     this.uniforms = {
       time: {
         type: 'f',
