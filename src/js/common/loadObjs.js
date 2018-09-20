@@ -15,7 +15,7 @@ export default function(objs, callback) {
       objLoader.load(objs[k], (object) => {
         loadedObjs[k] = object;
         count++;
-        if (count >= length) callback(loadedObjs);vendor
+        if (count >= length) callback(loadedObjs);
       });
     }
   }
