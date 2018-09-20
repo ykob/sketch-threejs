@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "buddha": {
+      "title": "buddha",
+      "id": "buddha",
+      "description": "",
+      "path": "/sketch/buddha.html",
+      "posted": "",
+      "update": "",
+      "color": "white"
+    },
     "planet": {
       "title": "planet",
       "id": "planet",

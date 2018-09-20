@@ -4,3 +4,4 @@ ignore
 dst/**/*
 psd/*-assets/
 .sass-cache
+!src/model/**/*
