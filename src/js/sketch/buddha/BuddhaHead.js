@@ -2,7 +2,8 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-const PromiseOBJLoader = require('../../common/PromiseOBJLoader').default;
+const promiseOBJLoader = require('../../common/PromiseOBJLoader').default;
+const promiseTextureLoader = require('../../common/PromiseTextureLoader').default;
 
 export default class BuddhaHead {
   constructor() {
@@ -11,12 +12,17 @@ export default class BuddhaHead {
         type: 'f',
         value: 0
       },
+      tex: {
+        type: 't',
+        value: null
+      },
     };
     this.obj = null;
   }
   async createObj() {
     // Load an obj file.
-    const obj = await PromiseOBJLoader('../../../model/buddha/buddha_head.obj');
+    const obj = await promiseOBJLoader('../../../model/buddha/buddha_head.obj');
+    this.uniforms.tex.value = await promiseTextureLoader('../../../model/buddha/buddha_ao.jpg');
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
