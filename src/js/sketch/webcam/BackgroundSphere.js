@@ -25,6 +25,7 @@ export default class BackgroundSphere {
       vertexShader: glslify('./glsl/backgroundSphere.vs'),
       fragmentShader: glslify('./glsl/backgroundSphere.fs'),
       side: THREE.BackSide,
+      depthTest: false,
     });
 
     // Object3Dを作成
