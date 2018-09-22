@@ -9,6 +9,10 @@ export default class Points {
         type: 'f',
         value: 0
       },
+      force: {
+        type: 'f',
+        value: 0
+      },
     };
     this.obj = null;
   }
@@ -17,7 +21,7 @@ export default class Points {
     const geometry = new THREE.BufferGeometry();
     const positions = [];
     for (var i = 0; i < 200 * 3; i += 3) {
-      const radius = Math.random() * Math.random() * 20 + 30;
+      const radius = Math.random() * Math.random() * 50 + 25;
       const radian = MathEx.radians(Math.random() * 360);
       positions[i + 0] = Math.cos(radian) * radius;
       positions[i + 1] = Math.sin(radian) * radius;
@@ -37,7 +41,8 @@ export default class Points {
     // Create Object3D
     this.obj = new THREE.Points(geometry, material);
   }
-  render(time) {
-    this.uniforms.time.value += time;
+  render(time, force) {
+    this.uniforms.force.value = force;
+    this.uniforms.time.value += time * (force * 1.2);
   }
 }
