@@ -10,7 +10,7 @@ const conf = require('../conf').scripts;
 
 const bundler = (entry, isWatch) => {
   const bOpts = conf.browserifyOpts;
-  var b;
+  let bundler;
 
   bOpts.entries = [conf.common, entry]
 
@@ -19,17 +19,17 @@ const bundler = (entry, isWatch) => {
     bOpts.cache = {};
     bOpts.packageCache = {};
     bOpts.fullPath = true;
-    b = watchify(browserify(bOpts));
+    bundler = watchify(browserify(bOpts));
   } else {
-    b = browserify(bOpts);
+    bundler = browserify(bOpts);
   }
 
   if (process.env.NODE_ENV === 'production') {
-    b.plugin(licensify);
+    bundler.plugin(licensify);
   }
 
   const bundle = () => {
-    return b.bundle()
+    return bundler.bundle()
       .on('error', err => {
         console.log(`bundle error: ${err}`);
       })
@@ -41,9 +41,8 @@ const bundler = (entry, isWatch) => {
       .pipe(gulp.dest(conf.dest));
   };
 
-  b
-  .on('update', bundle)
-  .on('log', message => {
+  bundler.on('update', bundle);
+  bundler.on('log', (message) => {
     console.log(message);
   });
 
