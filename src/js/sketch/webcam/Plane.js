@@ -62,7 +62,9 @@ export default class Plane {
     );
   }
   render(time, force) {
+    const scale = force * 0.008 + 1;
     this.uniforms.force.value = force;
     this.uniforms.time.value += time * (force * 1.2);
+    this.obj.scale.set(scale, scale, scale);
   }
 }
