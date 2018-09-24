@@ -4,6 +4,7 @@ attribute float delay;
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform float time;
+uniform float force;
 
 varying vec3 vColor;
 varying float vOpacity;
@@ -18,7 +19,7 @@ void main() {
   vec3 move = vec3(0.0, 0.0, (interval * 2.0 - 1.0) * 100.0);
 
   // calculate gradation with position.y
-  vec3 hsv = vec3(0.3 + time * 0.1, 0.5, 0.85);
+  vec3 hsv = vec3(0.3 + time * 0.1, 0.65 - force * 0.01, 0.85 + force * 0.01);
   vec3 rgb = convertHsvToRgb(hsv);
 
   // coordinate transformation
