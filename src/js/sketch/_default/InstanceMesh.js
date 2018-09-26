@@ -22,7 +22,7 @@ export default class InstanceMesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
+    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       instancePositions.setXYZ(i, 0, 0, 0);
     }

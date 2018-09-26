@@ -30,9 +30,9 @@ export default class Debris {
     geometry.copy(baseGeometry);
 
     // Add common attributes
-    const translate = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
-    const offsets = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
-    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
+    const translate = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3);
+    const offsets = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
+    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3);
     for ( var i = 0, ul = offsets.count; i < ul; i++ ) {
       const position = MathEx.spherical(Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI, Math.random() * 3000 + 100);
       translate.setXYZ(i, position[0], position[1], position[2]);

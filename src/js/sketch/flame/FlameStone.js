@@ -22,10 +22,10 @@ export default class FlameStone {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
-    const scales = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
-    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
-    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
+    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
+    const scales = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
+    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
+    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       const radian = MathEx.radians(MathEx.randomArbitrary(0, 360));
       const radius = MathEx.randomArbitrary(1000, 7000);

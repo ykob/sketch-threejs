@@ -26,9 +26,9 @@ export default class Fog {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
-    const delays = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
-    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
+    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
+    const delays = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
+    const rotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       instancePositions.setXYZ(
         i,

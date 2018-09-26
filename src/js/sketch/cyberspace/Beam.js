@@ -22,9 +22,9 @@ export default class Beam {
     geometry.copy(baseGeometry);
 
     // Add instance attributes
-    const instancePosition = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
-    const delay = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
-    const h = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
+    const instancePosition = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3);
+    const delay = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
+    const h = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
     for ( var i = 0, ul = this.instances; i < ul; i++ ) {
       instancePosition.setXYZ(
         i,

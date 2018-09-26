@@ -25,10 +25,10 @@ export default class Clouds {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
-    const instanceRotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
-    const instanceScales = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
-    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
+    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
+    const instanceRotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
+    const instanceScales = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
+    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
       const rx = MathEx.radians(((Math.random() * 2) - 1) * 30);
       const ry = MathEx.radians(((Math.random() * 2) - 1) * 180);
