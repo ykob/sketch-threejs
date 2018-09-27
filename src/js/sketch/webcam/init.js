@@ -99,6 +99,9 @@ export default async function() {
   landmarkPoints.createObj();
   bg.createObj();
 
+  plane.obj.renderOrder = 10;
+  landmarkPoints.obj.renderOrder = 20;
+
   scene.add(plane.obj);
   scene.add(points.obj);
   scene.add(pole.obj);
