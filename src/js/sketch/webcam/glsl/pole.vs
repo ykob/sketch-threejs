@@ -4,11 +4,12 @@ attribute vec3 iPosition;
 attribute float iDelay;
 
 uniform mat4 projectionMatrix;
-uniform mat4 modelViewMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
 uniform float time;
 
 varying vec3 vPosition;
-varying vec2 vUv;
+varying float vOpacity;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 
@@ -21,10 +22,11 @@ void main(void) {
 
   // coordinate transformation
   mat4 translateMat = calcTranslateMat4(iPosition);
-  vec4 mvPosition = modelViewMatrix * translateMat * vec4(position + move, 1.0);
+  vec4 mPosition = modelMatrix * translateMat * vec4(position + move, 1.0);
+  vec4 mvPosition = viewMatrix * mPosition;
 
-  vPosition = position;
-  vUv = uv;
+  vPosition = mPosition.xyz;
+  vOpacity = smoothstep(-100.0, -50.0, move.z);
 
   gl_Position = projectionMatrix * mvPosition;
 }

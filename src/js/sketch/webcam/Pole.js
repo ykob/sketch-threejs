@@ -50,6 +50,9 @@ export default class Pole {
       uniforms: this.uniforms,
       vertexShader: glslify('./glsl/pole.vs'),
       fragmentShader: glslify('./glsl/pole.fs'),
+      flatShading: true,
+      transparent: true,
+      depthWrite: false,
     });
 
     // Create Object3D
