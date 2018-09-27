@@ -19,17 +19,17 @@ export default class Pole {
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(1.4, 1.4, 20);
+    const baseGeometry = new THREE.BoxBufferGeometry(1.2, 1.2, 18);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const num = 100;
+    const num = 120;
     const iPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
     const iDelays = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
     for ( var i = 0, ul = num; i < ul; i++ ) {
-      const radius = Math.random() * Math.random() * 80 + 30;
+      const radius = Math.random() * Math.random() * 80 + 40;
       const radian = MathEx.radians(Math.random() * 360);
       iPositions.setXYZ(
         i,
