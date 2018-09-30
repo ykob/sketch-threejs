@@ -12,7 +12,7 @@ varying vec3 vColor;
 
 void main(void) {
   // calculate gradation
-  vec3 hsv = vec3(0.2 + sin(radians(uv.y * 180.0 * 4.0)) * 0.12 + time * 0.1, 0.12 + force * 0.03, 0.96 - force * 0.03);
+  vec3 hsv = vec3(0.1 + sin(radians(uv.y * 180.0 * 4.0)) * 0.12 - time * 0.1, 0.12 + force * 0.03, 0.96 - force * 0.03);
   vec3 rgb = convertHsvToRgb(hsv);
 
   // coordinate transformation
