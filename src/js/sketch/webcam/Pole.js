@@ -29,7 +29,7 @@ export default class Pole {
     const iPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
     const iDelays = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
     for ( var i = 0, ul = num; i < ul; i++ ) {
-      const radius = Math.random() * Math.random() * 80 + 40;
+      const radius = Math.random() * Math.random() * 40 + 40;
       const radian = MathEx.radians(Math.random() * 360);
       iPositions.setXYZ(
         i,
