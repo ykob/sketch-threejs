@@ -5,9 +5,13 @@ https://ykob.github.io/sketch-threejs/
 
 ## License
 
-Copyright (c) 2017 Yoichi Kobayashi  
+Copyright (c) 2018 Yoichi Kobayashi  
 Released under the MIT license  
 http://opensource.org/licenses/mit-license.php
+
+### Excluded files from the MIT License
+
+- 3D model and texture that are using on the sketch "buddha".
 
 ## Misc
 

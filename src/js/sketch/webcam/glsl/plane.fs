@@ -20,8 +20,8 @@ void main() {
   float noiseSum = (noise1 + noise2) / 2.0;
 
   vec2 adjustUv = vec2(
-    min(resolution.y / resolution.x, 1.0) * (1.0 - force * 0.008),
-    min(resolution.x / resolution.y, 1.0) * (1.0 - force * 0.008)
+    min(resolution.y / resolution.x, 1.0) * (1.0 + force * 0.03),
+    min(resolution.x / resolution.y, 1.0) * (1.0 + force * 0.03)
     );
   vec2 updateUv = vec2(
     abs(vUv.x - facing) * adjustUv.x + (1.0 - adjustUv.x) * 0.5,

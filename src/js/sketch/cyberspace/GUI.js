@@ -34,11 +34,11 @@ export default class GUI {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const instancePosition = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3, 1);
-    const rotate1 = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
-    const rotate2 = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
-    const rotate3 = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
-    const h = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1, 1);
+    const instancePosition = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
+    const rotate1 = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
+    const rotate2 = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
+    const rotate3 = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
+    const h = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
     for ( let i = 0, ul = this.num; i < ul; i++ ) {
       instancePosition.setXYZ(i, 0, 0, (this.num - i) * -150);
       rotate1.setXYZ(i, Math.random() * 2 - 1);

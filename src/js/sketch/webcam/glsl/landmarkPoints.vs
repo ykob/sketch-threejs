@@ -1,18 +1,18 @@
 attribute vec3 position;
-attribute vec2 uv;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform float time;
-uniform float force;
 
 varying vec3 vColor;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
-void main(void) {
-  // calculate gradation
-  vec3 hsv = vec3(0.1 + sin(radians(uv.y * 180.0 * 4.0)) * 0.12 - time * 0.1, 0.12 + force * 0.03, 0.96 - force * 0.03);
+const float duration = 3.0;
+
+void main() {
+  // calculate colors
+  vec3 hsv = vec3(0.45 + time * 0.1, 0.6, 1.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
   // coordinate transformation
@@ -21,4 +21,5 @@ void main(void) {
   vColor = rgb;
 
   gl_Position = projectionMatrix * mvPosition;
+  gl_PointSize = 7.0;
 }

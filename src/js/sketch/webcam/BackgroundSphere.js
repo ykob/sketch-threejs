@@ -9,15 +9,15 @@ export default class BackgroundSphere {
         type: 'f',
         value: 0
       },
-      addH: {
+      force: {
         type: 'f',
-        value: h + 0.3
+        value: 0
       },
     };
     this.obj = null;
   }
   createObj() {
-    const geometry = new THREE.SphereBufferGeometry(50, 128, 128);
+    const geometry = new THREE.SphereBufferGeometry(150, 128, 128, 0, 6.3, 0, 1.6);
 
     // Materialを定義
     const material = new THREE.RawShaderMaterial({
@@ -29,8 +29,14 @@ export default class BackgroundSphere {
 
     // Object3Dを作成
     this.obj = new THREE.Mesh(geometry, material);
+    this.obj.rotation.set(
+      MathEx.radians(-90),
+      0,
+      0
+    );
   }
   render(time, force) {
+    this.uniforms.force.value = force;
     this.uniforms.time.value += time * (force * 1.2);
   }
 }

@@ -20,6 +20,7 @@ if (pageId == 'index') {
   });
 
   switch (pageId) {
+    case 'buddha':      require('./sketch/buddha/init.js').default(); break;
     case 'planet':      require('./sketch/planet/init.js').default(); break;
     case 'land':        require('./sketch/land/init.js').default(); break;
     case 'webcam':      require('./sketch/webcam/init.js').default(); break;

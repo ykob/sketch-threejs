@@ -19,12 +19,8 @@ export default class Hill {
     const baseGeometry = new THREE.BoxBufferGeometry(40, 1, 10);
     geometry.copy(baseGeometry);
 
-    const height = new THREE.InstancedBufferAttribute(
-      new Float32Array(this.instances), 1, 1
-    );
-    const offsetX = new THREE.InstancedBufferAttribute(
-      new Float32Array(this.instances), 1, 1
-    );
+    const height = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
+    const offsetX = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
     for ( var i = 0, ul = this.instances; i < ul; i++ ) {
       height.setXYZ(i, (i + 1) * 150 + 200);
       offsetX.setXYZ(i, (i - (this.instances - 1) / 2) * 120);

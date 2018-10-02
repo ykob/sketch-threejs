@@ -23,7 +23,7 @@
     "browserify": "^16.2.2",
     "del": "^3.0.0",
     "envify": "^4.1.0",
-    "event-stream": "^3.3.4",
+    "event-stream": "^4.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-concat": "^2.6.1",

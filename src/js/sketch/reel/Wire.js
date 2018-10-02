@@ -35,9 +35,9 @@ export default class Wire {
     geometry.copy(this.baseGeometry);
 
     // Setting InstancedBufferAttribute
-    const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
-    const hsv = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
-    const timeHover = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
+    const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
+    const hsv = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3);
+    const timeHover = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
     for (var i = 0; i < this.instances; i++) {
       radian.setXYZ(i, MathEx.radians(i / this.instances * 360));
       hsv.setXYZ(i, i / this.instances - 0.25, 0.2, 1.0);
@@ -67,10 +67,10 @@ export default class Wire {
     geometry.copy(this.baseGeometry);
 
     // Setting InstancedBufferAttribute
-    const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
-    const pickedColor = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3, 1);
+    const radian = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
+    const pickedColor = new THREE.InstancedBufferAttribute(new Float32Array(this.instances * 3), 3);
     const color = new THREE.Color();
-    const timeHover = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1, 1);
+    const timeHover = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);
     for (var i = 0; i < this.instances; i++) {
       radian.setXYZ(i, MathEx.radians(i / this.instances * 360));
       color.setHex(i);

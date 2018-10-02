@@ -4,6 +4,8 @@ const MathEx = require('js-util/MathEx');
 
 const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;
+const Points = require('./Points').default;
+const Pole = require('./Pole').default;
 const LandmarkPoints = require('./LandmarkPoints').default;
 const BackgroundSphere = require('./BackgroundSphere').default;
 
@@ -30,6 +32,8 @@ export default async function() {
 
   const webCamera = new WebCamera();
   const plane = new Plane();
+  const points = new Points();
+  const pole = new Pole();
   const landmarkPoints = new LandmarkPoints();
   const bg = new BackgroundSphere(0);
   const cTracker = new clm.tracker();
@@ -44,6 +48,8 @@ export default async function() {
 
     webCamera.render(landmarks, score);
     plane.render(time, webCamera.force.v);
+    points.render(time, webCamera.force.v);
+    pole.render(time, webCamera.force.v);
     landmarkPoints.render(time, landmarks, score, webCamera);
     bg.render(time, webCamera.force.v);
     renderer.render(scene, camera);
@@ -88,10 +94,17 @@ export default async function() {
   await resizeWindow();
 
   plane.createObj(webCamera);
+  points.createObj();
+  pole.createObj();
   landmarkPoints.createObj();
   bg.createObj();
 
+  plane.obj.renderOrder = 10;
+  landmarkPoints.obj.renderOrder = 20;
+
   scene.add(plane.obj);
+  scene.add(points.obj);
+  scene.add(pole.obj);
   scene.add(landmarkPoints.obj);
   scene.add(bg.obj);
 
