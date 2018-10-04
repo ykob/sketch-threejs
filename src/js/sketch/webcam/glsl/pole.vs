@@ -34,7 +34,7 @@ void main(void) {
 
   vPosition = mPosition.xyz;
   vColor = rgb;
-  vOpacity = smoothstep(-100.0, -50.0, move.z);
+  vOpacity = smoothstep(-100.0, 0.0, move.z);
 
   gl_Position = projectionMatrix * mvPosition;
 }
