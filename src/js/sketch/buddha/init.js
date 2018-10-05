@@ -3,6 +3,7 @@ const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 
 const BuddhaHead = require('./BuddhaHead').default;
+const Wave = require('./Wave').default;
 const Drag = require('./Drag').default;
 
 export default async function() {
@@ -26,6 +27,7 @@ export default async function() {
   // Define unique variables
   //
   const buddhaHead = new BuddhaHead();
+  const wave = new Wave();
   const dd = new Drag(resolution);
 
   // ==========
@@ -33,6 +35,7 @@ export default async function() {
   //
   const render = () => {
     const time = clock.getDelta();
+    wave.render(time);
     dd.render(resolution);
     buddhaHead.obj.rotation.set(
       MathEx.radians(dd.v.y),
@@ -90,8 +93,10 @@ export default async function() {
   camera.lookAt(new THREE.Vector3());
 
   await buddhaHead.createObj();
+  wave.createObj();
 
   scene.add(buddhaHead.obj);
+  scene.add(wave.obj);
 
   clock.start();
   renderLoop();
