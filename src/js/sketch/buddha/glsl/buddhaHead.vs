@@ -19,10 +19,10 @@ void main(void) {
   vec3 light = normalize(vec3(0.5, 0.5, 1.0));
   vec3 invLight = normalize(inverse(modelMatrix) * vec4(light, 0.0)).xyz;
   float d = dot(invLight, normal);
-  float glow = smoothstep(0.8, 1.0, d);
+  float glow = smoothstep(0.85, 1.0, d);
   float shadow = d;
 
-  vec3 hsv = vec3(0.1, 0.85, 0.3 + (shadow + glow * 4.0) / 5.0);
+  vec3 hsv = vec3(0.1, 0.0, 0.0 + (shadow + glow * 6.0) / 10.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
   vColor = rgb;

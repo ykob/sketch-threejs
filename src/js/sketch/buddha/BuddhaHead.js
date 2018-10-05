@@ -33,7 +33,8 @@ export default class BuddhaHead {
 
     // Create Object3D
     this.obj = new THREE.Mesh(obj.children[0].geometry, material);
-    this.obj.scale.set(8, 8, 8);
+    this.obj.position.y = 4.0;
+    this.obj.scale.set(7, 7, 7);
   }
   render(time) {
     this.uniforms.time.value += time;
