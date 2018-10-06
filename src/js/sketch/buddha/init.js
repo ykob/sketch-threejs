@@ -88,8 +88,8 @@ export default async function() {
   renderer.setClearColor(0x090909, 1.0);
 
   camera.far = 1000;
-  camera.position.set(0, 0, 80);
-  camera.lookAt(new THREE.Vector3());
+  camera.position.set(0, 14, 80);
+  camera.lookAt(new THREE.Vector3(0, 14, 0));
 
   await buddhaHead.createObj();
   wave.createObj();

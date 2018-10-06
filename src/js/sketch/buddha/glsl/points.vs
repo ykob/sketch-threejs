@@ -15,7 +15,7 @@ const float duration = 60.0;
 void main() {
   // Loop animation
   float interval = mod(time + delay, duration) / duration;
-  vec3 move = vec3(0.0, (interval * 2.0 - 1.0) * 100.0, 0.0);
+  vec3 move = vec3(0.0, interval * 100.0, 0.0);
 
   // calculate gradation with position.y
   vec3 hsv = vec3(0.14, 0.65, 0.85);

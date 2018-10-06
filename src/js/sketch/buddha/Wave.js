@@ -27,7 +27,6 @@ export default class Wave {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.position.y = -14.0;
     this.obj.rotation.set(
       MathEx.radians(-90),
       0,
