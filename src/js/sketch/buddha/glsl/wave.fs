@@ -12,9 +12,8 @@ void main() {
   vec3 normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
   float diff = (dot(normal, light) + 1.0) / 2.0;
   float glow = smoothstep(0.9, 1.0, diff);
-  float shadow = diff;
 
-  vec3 hsv = vec3(0.1, 0.0, 0.05 + (glow * 6.0) / 10.0);
+  vec3 hsv = vec3(0.13, 1.0 - glow * 0.8, 0.05 + glow * 0.95);
   vec3 rgb = convertHsvToRgb(hsv);
 
   gl_FragColor = vec4(rgb, vOpacity);

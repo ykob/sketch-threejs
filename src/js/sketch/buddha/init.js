@@ -82,7 +82,7 @@ export default async function() {
   on();
   resizeWindow();
 
-  renderer.setClearColor(0x0c0c0c, 1.0);
+  renderer.setClearColor(0x090909, 1.0);
 
   camera.far = 1000;
   camera.position.set(0, 0, 80);

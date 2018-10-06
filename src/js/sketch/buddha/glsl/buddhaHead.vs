@@ -22,7 +22,7 @@ void main(void) {
   float shadow = d;
 
   // define colors.
-  vec3 hsv = vec3(0.1, 0.0, 0.0 + (shadow + glow * 6.0) / 10.0);
+  vec3 hsv = vec3(0.13, 1.0 - glow * 0.8, (shadow + glow * 6.0) / 8.0);
   vec3 rgb = convertHsvToRgb(hsv);
 
   // coordinate transformation

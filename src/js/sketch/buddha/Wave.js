@@ -14,7 +14,7 @@ export default class Wave {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(70, 70, 128, 128);
+    const geometry = new THREE.PlaneBufferGeometry(70, 70, 512, 512);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
