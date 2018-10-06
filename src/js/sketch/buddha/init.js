@@ -4,6 +4,7 @@ const MathEx = require('js-util/MathEx');
 
 const BuddhaHead = require('./BuddhaHead').default;
 const Wave = require('./Wave').default;
+const Points = require('./Points').default;
 const Drag = require('./Drag').default;
 
 export default async function() {
@@ -28,6 +29,7 @@ export default async function() {
   //
   const buddhaHead = new BuddhaHead();
   const wave = new Wave();
+  const points = new Points();
   const dd = new Drag(resolution);
 
   // ==========
@@ -38,6 +40,7 @@ export default async function() {
     dd.render(resolution);
     buddhaHead.render(time, dd.v.y, dd.v.x);
     wave.render(time);
+    points.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -90,9 +93,11 @@ export default async function() {
 
   await buddhaHead.createObj();
   wave.createObj();
+  points.createObj();
 
   scene.add(buddhaHead.obj);
   scene.add(wave.obj);
+  scene.add(points.obj);
 
   clock.start();
   renderLoop();

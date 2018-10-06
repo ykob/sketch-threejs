@@ -15,12 +15,28 @@ export default class Points {
   createObj() {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
+    const positions = [];
+    const delays = [];
+    for (var i = 0; i < 100 * 3; i += 3) {
+      const radius = Math.random() * Math.random() * 100 + 20;
+      const radian = MathEx.radians(Math.random() * 360);
+      positions[i + 0] = Math.cos(radian) * radius;
+      positions[i + 1] = 0;
+      positions[i + 2] = Math.sin(radian) * radius;
+      delays[i / 3] = Math.random() * 60;
+    }
+    const baPositions = new THREE.BufferAttribute(new Float32Array(positions), 3);
+    const baDelays = new THREE.BufferAttribute(new Float32Array(delays), 1);
+    geometry.addAttribute('position', baPositions);
+    geometry.addAttribute('delay', baDelays);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: glslify('./glsl/points.vs'),
       fragmentShader: glslify('./glsl/points.fs'),
+      transparent: true,
+      depthWrite: false,
     });
 
     // Create Object3D
