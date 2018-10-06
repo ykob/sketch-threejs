@@ -51,6 +51,7 @@ export default async function() {
   const resizeCamera = () => {
     camera.aspect = resolution.x / resolution.y;
     camera.updateProjectionMatrix();
+    camera.setFocalLength(MathEx.step(1, resolution.y / resolution.x) * 15 + 35);
   };
   const resizeWindow = () => {
     resolution.set(document.body.clientWidth, window.innerHeight);
@@ -88,8 +89,7 @@ export default async function() {
   renderer.setClearColor(0x111111, 1.0);
 
   camera.far = 1000;
-  camera.setFocalLength(50);
-  camera.position.set(0, 0, 100);
+  camera.position.set(0, 0, 80);
   camera.lookAt(new THREE.Vector3());
 
   await buddhaHead.createObj();
