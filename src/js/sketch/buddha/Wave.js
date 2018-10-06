@@ -14,19 +14,20 @@ export default class Wave {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(80, 80, 32, 32);
+    const geometry = new THREE.PlaneBufferGeometry(70, 70, 128, 128);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: glslify('./glsl/wave.vs'),
       fragmentShader: glslify('./glsl/wave.fs'),
+      transparent: true,
       flatShading: true,
     });
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.position.y = -12.0;
+    this.obj.position.y = -14.0;
     this.obj.rotation.set(
       MathEx.radians(-90),
       0,
