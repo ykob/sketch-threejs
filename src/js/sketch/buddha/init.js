@@ -35,13 +35,9 @@ export default async function() {
   //
   const render = () => {
     const time = clock.getDelta();
-    wave.render(time);
     dd.render(resolution);
-    buddhaHead.obj.rotation.set(
-      MathEx.radians(dd.v.y),
-      MathEx.radians(dd.v.x),
-      0
-    );
+    buddhaHead.render(time, dd.v.y, dd.v.x);
+    wave.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {

@@ -36,7 +36,12 @@ export default class BuddhaHead {
     this.obj.position.y = 4.0;
     this.obj.scale.set(7, 7, 7);
   }
-  render(time) {
+  render(time, rotateX, rotateY) {
     this.uniforms.time.value += time;
+    this.obj.rotation.set(
+      MathEx.radians(rotateX - 15),
+      MathEx.radians(rotateY + 15 - this.uniforms.time.value * 5),
+      MathEx.radians(-20)
+    );
   }
 }
