@@ -5,3 +5,4 @@ dst/**/*
 psd/*-assets/
 .sass-cache
 !src/model/**/*
+!docs/model/**/*
