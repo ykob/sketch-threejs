@@ -21,8 +21,8 @@ export default class BuddhaHead {
   }
   async createObj() {
     // Load an obj file.
-    const obj = await promiseOBJLoader('../../../model/buddha/buddha_head.obj');
-    this.uniforms.tex.value = await promiseTextureLoader('../../../model/buddha/buddha_ao.jpg');
+    const obj = await promiseOBJLoader('/sketch-threejs/model/buddha/buddha_head.obj');
+    this.uniforms.tex.value = await promiseTextureLoader('/sketch-threejs/model/buddha/buddha_ao.jpg');
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
