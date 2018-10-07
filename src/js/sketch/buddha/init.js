@@ -3,6 +3,9 @@ const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 
 const BuddhaHead = require('./BuddhaHead').default;
+const Wave = require('./Wave').default;
+const Points = require('./Points').default;
+const BackgroundSphere = require('./BackgroundSphere').default;
 const Drag = require('./Drag').default;
 
 export default async function() {
@@ -26,6 +29,9 @@ export default async function() {
   // Define unique variables
   //
   const buddhaHead = new BuddhaHead();
+  const wave = new Wave();
+  const points = new Points();
+  const bg = new BackgroundSphere();
   const dd = new Drag(resolution);
 
   // ==========
@@ -34,11 +40,9 @@ export default async function() {
   const render = () => {
     const time = clock.getDelta();
     dd.render(resolution);
-    buddhaHead.obj.rotation.set(
-      MathEx.radians(dd.v.y),
-      MathEx.radians(dd.v.x),
-      0
-    );
+    buddhaHead.render(time, dd.v.y, dd.v.x);
+    wave.render(time);
+    points.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -48,6 +52,7 @@ export default async function() {
   const resizeCamera = () => {
     camera.aspect = resolution.x / resolution.y;
     camera.updateProjectionMatrix();
+    camera.setFocalLength(MathEx.step(1, resolution.y / resolution.x) * 15 + 35);
   };
   const resizeWindow = () => {
     resolution.set(document.body.clientWidth, window.innerHeight);
@@ -82,16 +87,21 @@ export default async function() {
   on();
   resizeWindow();
 
-  renderer.setClearColor(0x111111, 1.0);
+  renderer.setClearColor(0x090909, 1.0);
 
   camera.far = 1000;
-  camera.setFocalLength(50);
-  camera.position.set(0, 0, 100);
-  camera.lookAt(new THREE.Vector3());
+  camera.position.set(0, 14, 80);
+  camera.lookAt(new THREE.Vector3(0, 14, 0));
 
   await buddhaHead.createObj();
+  wave.createObj();
+  points.createObj();
+  bg.createObj();
 
   scene.add(buddhaHead.obj);
+  scene.add(wave.obj);
+  scene.add(points.obj);
+  scene.add(bg.obj);
 
   clock.start();
   renderLoop();

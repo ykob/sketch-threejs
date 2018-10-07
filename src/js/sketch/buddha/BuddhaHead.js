@@ -33,9 +33,15 @@ export default class BuddhaHead {
 
     // Create Object3D
     this.obj = new THREE.Mesh(obj.children[0].geometry, material);
-    this.obj.scale.set(8, 8, 8);
+    this.obj.position.y = 16.0;
+    this.obj.scale.set(7, 7, 7);
   }
-  render(time) {
+  render(time, rotateX, rotateY) {
     this.uniforms.time.value += time;
+    this.obj.rotation.set(
+      MathEx.radians(rotateX - 15),
+      MathEx.radians(rotateY + 15 - this.uniforms.time.value * 5),
+      MathEx.radians(-20)
+    );
   }
 }

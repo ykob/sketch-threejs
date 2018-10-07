@@ -5,6 +5,7 @@ attribute vec2 uv;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+uniform mat3 normalMatrix;
 
 varying vec3 vColor;
 varying vec2 vUv;
@@ -13,17 +14,19 @@ varying vec2 vUv;
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 void main(void) {
-  // coordinate transformation
-  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
-
+  // calculate light and shadow.
   vec3 light = normalize(vec3(0.5, 0.5, 1.0));
-  vec3 invLight = normalize(inverse(modelMatrix) * vec4(light, 0.0)).xyz;
+  vec3 invLight = normalize(inverse(normalMatrix) * light);
   float d = dot(invLight, normal);
-  float glow = smoothstep(0.8, 1.0, d);
+  float glow = smoothstep(0.85, 1.0, d);
   float shadow = d;
 
-  vec3 hsv = vec3(0.1, 0.85, 0.3 + (shadow + glow * 4.0) / 5.0);
+  // define colors.
+  vec3 hsv = vec3(0.13, 1.0 - glow * 0.8, (shadow + glow * 6.0) / 8.0);
   vec3 rgb = convertHsvToRgb(hsv);
+
+  // coordinate transformation
+  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
 
   vColor = rgb;
   vUv = uv;
