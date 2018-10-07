@@ -41,6 +41,7 @@ export default class Points {
       fragmentShader: glslify('./glsl/points.fs'),
       transparent: true,
       depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
 
     // Create Object3D
