@@ -45,7 +45,7 @@
       "description": "to process an image of a webcam with a fragment shader and clmtrackr.",
       "path": "/sketch/webcam.html",
       "posted": "2018.5.29",
-      "update": "2018.9.13",
+      "update": "2018.10.7",
       "color": "black"
     },
     "fog": {
