@@ -1,5 +1,10 @@
 precision highp float;
 
+uniform sampler2D texHannyaShingyo;
+
+varying vec2 vUv;
+
 void main() {
-  gl_FragColor = vec4(1.0);
+  vec4 texColor = texture2D(texHannyaShingyo, vUv);
+  gl_FragColor = vec4(vec3(1.0), texColor.a);
 }
