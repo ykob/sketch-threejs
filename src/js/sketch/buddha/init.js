@@ -102,6 +102,8 @@ export default async function() {
   points.createObj();
   bg.createObj();
 
+  typo.obj.renderOrder = 10;
+
   scene.add(buddhaHead.obj);
   scene.add(typo.obj);
   scene.add(wave.obj);
