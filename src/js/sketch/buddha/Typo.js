@@ -2,6 +2,12 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
+const duration = 1;
+let iPositions = undefined;
+let iUvs = undefined;
+let iTimes = undefined;
+let num = 0;
+
 export default class InstanceMesh {
   constructor() {
     this.uniforms = {
@@ -17,9 +23,11 @@ export default class InstanceMesh {
         type: 'f',
         value: 0
       },
+      duration: {
+        type: 'f',
+        value: duration
+      },
     };
-    this.iPositions = undefined;
-    this.iUvs = undefined;
     this.obj = undefined;
   }
   createTexture() {
@@ -32,8 +40,10 @@ export default class InstanceMesh {
       alpha: true
     });
 
-    this.iPositions = new THREE.InstancedBufferAttribute(new Float32Array(text.length * 3), 3);
-    this.iUvs = new THREE.InstancedBufferAttribute(new Float32Array(text.length * 2), 2);
+    num = text.length;
+    iPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
+    iUvs = new THREE.InstancedBufferAttribute(new Float32Array(num * 2), 2);
+    iTimes = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
 
     canvas.width = canvas.height = widthPerSide;
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
@@ -42,10 +52,22 @@ export default class InstanceMesh {
     for (var y = 0; y < gridsPerSide; y++) {
       for (var x = 0; x < gridsPerSide; x++) {
         const i = y * gridsPerSide + x;
+
+        // draw canvas2D.
         const str = text.substr(y * gridsPerSide + x, 1);
         ctx.fillText(str, fontSize * x, fontSize * (gridsPerSide - y) - fontSize * 0.15);
-        this.iPositions.setXYZ(i, 0, 0, 0);
-        this.iUvs.setXY(i, x / gridsPerSide, y / gridsPerSide);
+
+        // define instance buffer attributes.
+        const radian = MathEx.radians(Math.random() * 360);
+        const radius = Math.random() * 20 + 5;
+        iPositions.setXYZ(
+          i,
+          Math.cos(radian) * radius,
+          4,
+          Math.sin(radian) * radius
+        );
+        iUvs.setXY(i, x / gridsPerSide, y / gridsPerSide);
+        iTimes.setX(i, 0);
       }
     }
 
@@ -57,14 +79,15 @@ export default class InstanceMesh {
 
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(2, 2, 2);
+    const baseGeometry = new THREE.PlaneBufferGeometry(6, 6, 6);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    geometry.addAttribute('iPosition', this.iPositions);
-    geometry.addAttribute('iUv', this.iUvs);
+    geometry.addAttribute('iPosition',  iPositions);
+    geometry.addAttribute('iUv',  iUvs);
+    geometry.addAttribute('iTime',  iTimes);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -83,5 +106,23 @@ export default class InstanceMesh {
   }
   render(time) {
     this.uniforms.time.value += time;
+    for (var i = 0; i < num; i++) {
+      const past =  iTimes.getX(i);
+      if (past > duration) {
+        const radian = MathEx.radians(Math.random() * 360);
+        const radius = Math.random() * 20 + 5;
+        iPositions.setXYZ(
+          i,
+          Math.cos(radian) * radius,
+          0,
+          Math.sin(radian) * radius
+        );
+        iTimes.setX(i, 0);
+        iPositions.needsUpdate = true;
+      } else {
+        iTimes.setX(i, past + time);
+      }
+    }
+    iTimes.needsUpdate = true;
   }
 }
