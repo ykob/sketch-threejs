@@ -9,29 +9,33 @@ export default class InstanceMesh {
         type: 'f',
         value: 0
       },
+      texHannyaShingyo: {
+        type: 't',
+        value: null
+      },
     };
     this.num = 1000;
     this.obj = null;
   }
   createTexture() {
-    var grid = 80;
-    var text = '観自在菩薩 行深般若波羅蜜多時 照見五蘊皆空 度一切苦厄 舎利子 色不異空 空不異色 色即是空 空即是色 受想行識亦復如是 舎利子 是諸法空相 不生不滅 不垢不浄 不増不減 是故空中 無色無受想行識 無眼耳鼻舌身意 無色声香味触法 無眼界乃至無意識界 無無明亦無無明尽 乃至無老死 亦無老死尽 無苦集滅道 無智亦無得 以無所得故 菩提薩埵 依般若波羅蜜多故 心無罣礙 無罣礙故 無有恐怖 遠離一切顛倒夢想 究竟涅槃 三世諸仏 依般若波羅蜜多故 得阿耨多羅三藐三菩提 故知般若波羅蜜多 是大神呪 是大明呪 是無上呪 是無等等呪 能除一切苦 真実不虚 故説般若波羅蜜多呪 即説呪日 羯諦羯諦 波羅羯諦 波羅僧羯諦 菩提薩婆訶 般若心経';
-    var length = text.length;
-    var colMax = 15;
-    var rowMax = Math.ceil(length / colMax);
-    var geometry = null;
-    var material = null;
-    var particle = null;
+    var text = '観自在菩薩行深般若波羅蜜多時照見五蘊皆空度一切苦厄舎利子色不異空空不異色色即是空空即是色受想行識亦復如是舎利子是諸法空相不生不滅不垢不浄不増不減是故空中無色無受想行識無眼耳鼻舌身意無色声香味触法無眼界乃至無意識界無無明亦無無明尽乃至無老死亦無老死尽無苦集滅道無智亦無得以無所得故菩提薩埵依般若波羅蜜多故心無罣礙無罣礙故無有恐怖遠離一切顛倒夢想究竟涅槃三世諸仏依般若波羅蜜多故得阿耨多羅三藐三菩提故知般若波羅蜜多是大神呪是大明呪是無上呪是無等等呪能除一切苦真実不虚故説般若波羅蜜多呪即説呪日羯諦羯諦波羅羯諦波羅僧羯諦菩提薩婆訶般若心経';
+    var widthPerSide = 2048;
+    var gridsPerSide = Math.ceil(Math.sqrt(text.length));
+    var fontSize = widthPerSide / gridsPerSide;
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d', {
       alpha: true
     });
-    var fontSize = 100;
 
-    canvas.width = fontSize * colMax;
-    canvas.height = fontSize * rowMax;
-    ctx.fillStyle = '#333333';
-    ctx.font = font_size + 'px serif';
+    canvas.width = canvas.height = widthPerSide;
+    ctx.fillStyle = '#000000';
+    ctx.font = fontSize + 'px serif';
+    for (var y = 0; y < gridsPerSide; y++) {
+      for (var x = 0; x < gridsPerSide; x++) {
+        var str = text.substr(y * gridsPerSide + x, 1);
+        ctx.fillText(str, fontSize * x, fontSize * (y + 1) - fontSize * 0.15);
+      }
+    }
   }
   createObj() {
     this.createTexture();
