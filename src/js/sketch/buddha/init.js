@@ -3,6 +3,7 @@ const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 
 const BuddhaHead = require('./BuddhaHead').default;
+const Typo = require('./Typo').default;
 const Wave = require('./Wave').default;
 const Points = require('./Points').default;
 const BackgroundSphere = require('./BackgroundSphere').default;
@@ -29,6 +30,7 @@ export default async function() {
   // Define unique variables
   //
   const buddhaHead = new BuddhaHead();
+  const typo = new Typo();
   const wave = new Wave();
   const points = new Points();
   const bg = new BackgroundSphere();
@@ -41,6 +43,7 @@ export default async function() {
     const time = clock.getDelta();
     dd.render(resolution);
     buddhaHead.render(time, dd.v.y, dd.v.x);
+    typo.render(time);
     wave.render(time);
     points.render(time);
     renderer.render(scene, camera);
@@ -94,11 +97,13 @@ export default async function() {
   camera.lookAt(new THREE.Vector3(0, 14, 0));
 
   await buddhaHead.createObj();
+  typo.createObj();
   wave.createObj();
   points.createObj();
   bg.createObj();
 
   scene.add(buddhaHead.obj);
+  scene.add(typo.obj);
   scene.add(wave.obj);
   scene.add(points.obj);
   scene.add(bg.obj);
