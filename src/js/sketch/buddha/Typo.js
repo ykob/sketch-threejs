@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-const duration = 2;
+const duration = 4;
 let iPositions = undefined;
 let iUvs = undefined;
 let iIds = undefined;
@@ -113,7 +113,7 @@ export default class InstanceMesh {
     this.uniforms.time.value += time;
     interval += time;
 
-    if (interval > 0.1) {
+    if (interval > 0.5) {
       const radian = MathEx.radians(Math.random() * 270 - 45);
       const radius = Math.random() * 12 + 12;
       iPositions.setXYZ(

@@ -21,11 +21,11 @@ varying float vStep;
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 void main(void) {
-  vec3 move = vec3(0.0, iTime / duration * 35.0, 0.0);
+  vec3 move = vec3(0.0, iTime / duration * 30.0, 0.0);
   mat4 rotateMat = calcRotateMat4(vec3(
-    radians(sin(time + iId * 30.0) * 30.0),
-    radians(cos(time + iId * 30.0) * 45.0),
-    radians(cos(time + iId * 30.0) * 30.0)
+    radians(sin(time * 0.3 + iId * 30.0) * 30.0),
+    radians(cos(time * 0.3 + iId * 30.0) * 45.0),
+    radians(cos(time * 0.3 + iId * 30.0) * 30.0)
   ));
   vec3 rotatePosition = (rotateMat * vec4(position, 1.0)).xyz;
 
