@@ -6,6 +6,7 @@ attribute float iId;
 attribute float iTime;
 attribute float iIsAnimated;
 attribute float iScale;
+attribute float iMove;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -23,7 +24,7 @@ varying float vStep;
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 void main(void) {
-  vec3 move = vec3(0.0, iTime / duration * 30.0, 0.0);
+  vec3 move = vec3(0.0, iTime / duration * iMove, 0.0);
   mat4 scaleMat = calcScaleMat4(vec3(iScale));
   mat4 rotateMat = calcRotateMat4(vec3(
     radians(sin(time * 0.3 + iId * 30.0) * 30.0),
