@@ -5,6 +5,7 @@ const MathEx = require('js-util/MathEx');
 const duration = 1;
 let iPositions = undefined;
 let iUvs = undefined;
+let iIds = undefined;
 let iTimes = undefined;
 let iIsAnimated = undefined;
 let num = 0;
@@ -46,6 +47,7 @@ export default class InstanceMesh {
     num = text.length;
     iPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
     iUvs = new THREE.InstancedBufferAttribute(new Float32Array(num * 2), 2);
+    iIds = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
     iTimes = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
     iIsAnimated = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
 
@@ -66,6 +68,7 @@ export default class InstanceMesh {
         const radius = Math.random() * 20 + 5;
         iPositions.setXYZ(i, 0, 0, 0);
         iUvs.setXY(i, x / gridsPerSide, y / gridsPerSide);
+        iIds.setX(i, i);
         iTimes.setX(i, 0);
         iIsAnimated.setX(i, 0);
       }
@@ -87,6 +90,7 @@ export default class InstanceMesh {
     // Define attributes of the instancing geometry
     geometry.addAttribute('iPosition',  iPositions);
     geometry.addAttribute('iUv',  iUvs);
+    geometry.addAttribute('iId',  iIds);
     geometry.addAttribute('iTime',  iTimes);
     geometry.addAttribute('iIsAnimated',  iIsAnimated);
 
