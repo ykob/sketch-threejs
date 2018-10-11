@@ -5,6 +5,7 @@ attribute vec2 iUv;
 attribute float iId;
 attribute float iTime;
 attribute float iIsAnimated;
+attribute float iScale;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -18,19 +19,21 @@ varying vec2 vUvBase;
 varying float vOpacity;
 varying float vStep;
 
+#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 
 void main(void) {
   vec3 move = vec3(0.0, iTime / duration * 30.0, 0.0);
+  mat4 scaleMat = calcScaleMat4(vec3(iScale));
   mat4 rotateMat = calcRotateMat4(vec3(
     radians(sin(time * 0.3 + iId * 30.0) * 30.0),
     radians(cos(time * 0.3 + iId * 30.0) * 45.0),
     radians(cos(time * 0.3 + iId * 30.0) * 30.0)
   ));
-  vec3 rotatePosition = (rotateMat * vec4(position, 1.0)).xyz;
+  vec3 updatePosition = (rotateMat * scaleMat * vec4(position, 1.0)).xyz;
 
   // coordinate transformation
-  vec4 mvPosition = modelViewMatrix * vec4(iPosition + move + rotatePosition, 1.0);
+  vec4 mvPosition = modelViewMatrix * vec4(iPosition + move + updatePosition, 1.0);
 
   vPositionNoise = position + iId;
   vUv = uv * unitUv + iUv;

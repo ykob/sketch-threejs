@@ -8,6 +8,7 @@ let iUvs = undefined;
 let iIds = undefined;
 let iTimes = undefined;
 let iIsAnimated = undefined;
+let iScales = undefined;
 let num = 0;
 let animateId = 0;
 let interval = 0;
@@ -50,6 +51,7 @@ export default class InstanceMesh {
     iIds = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
     iTimes = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
     iIsAnimated = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
+    iScales = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
 
     canvas.width = canvas.height = widthPerSide;
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
@@ -66,11 +68,8 @@ export default class InstanceMesh {
         // define instance buffer attributes.
         const radian = MathEx.radians(Math.random() * 360);
         const radius = Math.random() * 20 + 5;
-        iPositions.setXYZ(i, 0, 0, 0);
         iUvs.setXY(i, x / gridsPerSide, y / gridsPerSide);
         iIds.setX(i, i);
-        iTimes.setX(i, 0);
-        iIsAnimated.setX(i, 0);
       }
     }
 
@@ -93,6 +92,7 @@ export default class InstanceMesh {
     geometry.addAttribute('iId',  iIds);
     geometry.addAttribute('iTime',  iTimes);
     geometry.addAttribute('iIsAnimated',  iIsAnimated);
+    geometry.addAttribute('iScale',  iScales);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -123,8 +123,10 @@ export default class InstanceMesh {
         Math.sin(radian) * radius
       );
       iIsAnimated.setX(animateId, 1);
+      iScales.setX(animateId, (Math.random() * Math.random() * 2 - 1) * 0.1 + 1);
       iPositions.needsUpdate = true;
       iIsAnimated.needsUpdate = true;
+      iScales.needsUpdate = true;
       interval = 0;
       animateId = (animateId >= num - 1) ? 0 : animateId + 1;
     }
