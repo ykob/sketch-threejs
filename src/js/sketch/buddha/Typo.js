@@ -2,7 +2,7 @@ const THREE = require('three');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-const duration = 1;
+const duration = 2;
 let iPositions = undefined;
 let iUvs = undefined;
 let iIds = undefined;
@@ -82,7 +82,7 @@ export default class InstanceMesh {
 
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(6, 6, 6);
+    const baseGeometry = new THREE.PlaneBufferGeometry(6, 6);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
@@ -106,7 +106,7 @@ export default class InstanceMesh {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.position.y = 4.0;
+    this.obj.position.y = 0.0;
     this.obj.frustumCulled = false;
   }
   render(time) {
@@ -115,7 +115,7 @@ export default class InstanceMesh {
 
     if (interval > 0.1) {
       const radian = MathEx.radians(Math.random() * 270 - 45);
-      const radius = Math.random() * 20 + 8;
+      const radius = Math.random() * 12 + 12;
       iPositions.setXYZ(
         animateId,
         Math.cos(radian) * radius,
