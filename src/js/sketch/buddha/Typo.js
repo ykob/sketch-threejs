@@ -104,7 +104,6 @@ export default class InstanceMesh {
       fragmentShader: glslify('./glsl/typo.fs'),
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
     });
 
     // Create Object3D
