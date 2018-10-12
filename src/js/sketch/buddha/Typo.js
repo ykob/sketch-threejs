@@ -57,7 +57,7 @@ export default class InstanceMesh {
 
     canvas.width = canvas.height = widthPerSide;
     ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-    ctx.font = fontSize + 'px serif';
+    ctx.font = fontSize + 'px "Noto Serif JP"';
 
     for (var y = 0; y < gridsPerSide; y++) {
       for (var x = 0; x < gridsPerSide; x++) {
