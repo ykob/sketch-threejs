@@ -1,5 +1,4 @@
 const THREE = require('three/build/three.js');
-const FontFaceObserver = require('fontfaceobserver');
 const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 
@@ -88,15 +87,6 @@ export default async function() {
   // ==========
   // Initialize
   //
-  const font = new FontFaceObserver('Noto Serif JP', {
-    weight: 700
-  });
-  await font.load().then(function () {
-    console.log('Font is available');
-  }, function () {
-    console.log('Font is not available');
-  });
-
   on();
   resizeWindow();
 

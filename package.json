@@ -53,7 +53,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "fontfaceobserver": "^2.0.13",
     "gl-matrix": "^2.4.0",
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",
