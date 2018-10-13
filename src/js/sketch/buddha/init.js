@@ -97,7 +97,7 @@ export default async function() {
   camera.lookAt(new THREE.Vector3(0, 14, 0));
 
   await buddhaHead.createObj();
-  typo.createObj();
+  await typo.createObj();
   wave.createObj();
   points.createObj();
   bg.createObj();
