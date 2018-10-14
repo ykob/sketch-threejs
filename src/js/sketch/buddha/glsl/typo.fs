@@ -1,5 +1,6 @@
 precision highp float;
 
+uniform float time;
 uniform sampler2D texHannyaShingyo;
 
 varying vec3 vPositionNoise;
@@ -21,6 +22,7 @@ void main() {
   float crossFade = smoothstep(crossFadeDelay, crossFadeDelay + 0.3, vStep)
     * (1.0 - smoothstep(crossFadeDelay + 0.7 - dRange, crossFadeDelay + 1.0 - dRange, vStep));
 
+  // dissolve effect.
   float noise1 = cnoise3(vec3(vPositionNoise * 0.7));
   float noise2 = cnoise3(vec3(vPositionNoise * 1.8));
   float noiseAll = (noise1 * 2.0 + noise2 * 0.4) / 2.4;
@@ -30,5 +32,8 @@ void main() {
   float disolveEdgeMask = smoothstep(0.0, 0.02, noise) * (1.0 - smoothstep(0.28, 0.3, noise));
   vec4 disolveEdge = vec4(convertHsvToRgb(vec3(0.13, 0.4, 1.0)), 1.0) * disolveEdgeMask;
 
-  gl_FragColor = (disolve + disolveEdge) * vOpacity * texColor.a;
+  // glow
+  float glow = cnoise3(vPositionNoise * 0.25 + time) * 0.5;
+
+  gl_FragColor = (disolve + disolveEdge + vec4(vec3(glow), 0.0)) * vOpacity * texColor.a;
 }
