@@ -18,8 +18,8 @@ export default class Points {
     const positions = [];
     const delays1 = [];
     const delays2 = [];
-    for (var i = 0; i < 200 * 3; i += 3) {
-      const radius = Math.random() * Math.random() * 40 + 20;
+    for (var i = 0; i < 600 * 3; i += 3) {
+      const radius = Math.random() * Math.random() * 60 + 20;
       const radian = MathEx.radians(Math.random() * 360);
       positions[i + 0] = Math.cos(radian) * radius;
       positions[i + 1] = 0;
