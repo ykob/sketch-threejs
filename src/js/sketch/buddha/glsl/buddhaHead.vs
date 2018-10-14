@@ -6,29 +6,22 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
+uniform float time;
 
-varying vec3 vColor;
+varying vec3 vPosition;
 varying vec2 vUv;
 
-#pragma glslify: inverse = require(glsl-inverse);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
 
 void main(void) {
-  // calculate light and shadow.
-  vec3 light = normalize(vec3(0.5, 0.5, 1.0));
-  vec3 invLight = normalize(inverse(normalMatrix) * light);
-  float d = dot(invLight, normal);
-  float glow = smoothstep(0.85, 1.0, d);
-  float shadow = d;
-
-  // define colors.
-  vec3 hsv = vec3(0.13, 1.0 - glow * 0.8, (shadow + glow * 6.0) / 8.0);
-  vec3 rgb = convertHsvToRgb(hsv);
+  //
+  float noise = cnoise3(position * 0.8 + time * 0.4) * (sin(position.y - time * 0.8) * 1.4 + sin(position.y - time * 2.0) * 0.6) / 2.0;
+  vec3 noisePosition = normalize(position * vec3(1.0, 0.0, 1.0)) * pow(noise, 2.0) * 0.8;
 
   // coordinate transformation
-  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
+  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position + noisePosition, 1.0);
 
-  vColor = rgb;
+  vPosition = (modelMatrix * vec4(position + noisePosition, 0.0)).xyz;
   vUv = uv;
 
   gl_Position = projectionMatrix * mvPosition;
