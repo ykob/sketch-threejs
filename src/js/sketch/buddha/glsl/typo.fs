@@ -16,7 +16,7 @@ void main() {
   vec4 texColor = texture2D(texHannyaShingyo, vUv);
 
   // coordinate cross fade alpha value with delay.
-  float dRange = 0.05;
+  float dRange = 0.1;
   float crossFadeDelay = vUvBase.y * dRange;
   float crossFade = smoothstep(crossFadeDelay, crossFadeDelay + 0.3, vStep)
     * (1.0 - smoothstep(crossFadeDelay + 0.7 - dRange, crossFadeDelay + 1.0 - dRange, vStep));
@@ -25,9 +25,9 @@ void main() {
   float noise2 = cnoise3(vec3(vPositionNoise * 1.8));
   float noiseAll = (noise1 * 2.0 + noise2 * 0.4) / 2.4;
   float noise = (noiseAll * 0.5 + 0.5) + (crossFade * 2.0 - 1.0);
-  float disolveMask = smoothstep(0.2, 0.3, noise);
-  vec4 disolve = vec4(convertHsvToRgb(vec3(0.13, 1.0, 0.65)), 1.0) * disolveMask;
-  float disolveEdgeMask = smoothstep(0.0, 0.1, noise) * (1.0 - smoothstep(0.2, 0.3, noise));
+  float disolveMask = smoothstep(0.28, 0.3, noise);
+  vec4 disolve = vec4(convertHsvToRgb(vec3(0.13, 0.9, 0.75)), 1.0) * disolveMask;
+  float disolveEdgeMask = smoothstep(0.0, 0.02, noise) * (1.0 - smoothstep(0.28, 0.3, noise));
   vec4 disolveEdge = vec4(convertHsvToRgb(vec3(0.13, 0.4, 1.0)), 1.0) * disolveEdgeMask;
 
   gl_FragColor = (disolve + disolveEdge) * vOpacity * texColor.a;
