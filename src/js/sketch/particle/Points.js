@@ -22,7 +22,7 @@ export default class Points {
     this.physicsRenderer = null;
     this.vectorTouchMove = new THREE.Vector2(0, 0);
     this.vectorTouchMoveDiff = new THREE.Vector2(0, 0);
-    this.obj = null;
+    this.obj;
   }
   init(renderer) {
     this.obj = this.createObj(renderer);

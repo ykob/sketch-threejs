@@ -11,7 +11,7 @@ export default class LandmarkPoints {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

@@ -11,7 +11,7 @@ export default class Bg {
       },
     };
     this.isShown = false;
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

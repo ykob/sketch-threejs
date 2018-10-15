@@ -17,7 +17,7 @@ export default class BuddhaHead {
         value: null
       },
     };
-    this.obj = null;
+    this.obj;
   }
   async createObj() {
     // Load an obj file.

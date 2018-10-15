@@ -26,7 +26,7 @@ export default class BgLine {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj(radius, wave1, wave2, wave3, wave4) {
     // Define Geometry

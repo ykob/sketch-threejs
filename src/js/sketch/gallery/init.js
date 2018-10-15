@@ -33,7 +33,7 @@ export default function() {
 
   var Image = function() {
     this.rad = 0;
-    this.obj = null;
+    this.obj;
     this.is_entered = false;
     Force3.call(this);
   };

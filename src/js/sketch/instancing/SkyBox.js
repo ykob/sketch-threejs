@@ -13,7 +13,7 @@ export default class SkyBox {
         value: null
       }
     };
-    this.obj = null;
+    this.obj;
   }
   init(texture) {
     this.uniforms.cubeTex.value = texture;

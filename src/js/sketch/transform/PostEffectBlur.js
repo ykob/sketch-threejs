@@ -21,7 +21,7 @@ export default class PostEffectBlur {
         value: texture
       }
     };
-    this.obj = null;
+    this.obj;
 
     this.createObj();
   }

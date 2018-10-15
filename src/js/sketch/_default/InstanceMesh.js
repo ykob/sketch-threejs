@@ -11,7 +11,7 @@ export default class InstanceMesh {
       },
     };
     this.num = 1000;
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometries

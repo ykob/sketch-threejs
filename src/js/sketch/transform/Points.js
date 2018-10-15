@@ -28,7 +28,7 @@ export default class Points {
     };
     this.butterflies = null;
     this.butterfliesLengh = 0;
-    this.obj = null;
+    this.obj;
 
     this.createObj();
   }

@@ -14,7 +14,7 @@ export default class BackgroundSphere {
         value: h + 0.3
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     const geometry = new THREE.SphereBufferGeometry(200, 128, 128);

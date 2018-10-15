@@ -28,7 +28,7 @@ export default class Node {
       },
     };
     this.isTransform = false;
-    this.obj = null;
+    this.obj;
     this.objWire = null;
     this.objPoints = null;
   }

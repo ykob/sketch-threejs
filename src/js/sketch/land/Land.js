@@ -19,7 +19,7 @@ export default class Land {
         value: h
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

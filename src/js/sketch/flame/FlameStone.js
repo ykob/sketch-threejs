@@ -11,7 +11,7 @@ export default class FlameStone {
       },
     };
     this.num = 5000;
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometries

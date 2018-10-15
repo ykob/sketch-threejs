@@ -11,7 +11,7 @@ export default class Beam {
       }
     };
     this.instances = 500;
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

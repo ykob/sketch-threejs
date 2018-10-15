@@ -11,7 +11,7 @@ export default class FloatPoints {
       },
     };
     this.num = 2000;
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

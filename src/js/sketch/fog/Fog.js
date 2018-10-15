@@ -15,7 +15,7 @@ export default class Fog {
       }
     };
     this.num = 200;
-    this.obj = null;
+    this.obj;
   }
   createObj(tex) {
     // Define Geometries

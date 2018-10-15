@@ -26,7 +26,7 @@ export default class Plane {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj(webcam) {
     // Define Geometry

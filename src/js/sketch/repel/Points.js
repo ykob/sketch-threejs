@@ -18,7 +18,7 @@ export default class Points {
         value: new THREE.Vector3()
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj(tex) {
     // Define Geometry

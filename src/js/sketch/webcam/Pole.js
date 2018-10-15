@@ -14,7 +14,7 @@ export default class Pole {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometries

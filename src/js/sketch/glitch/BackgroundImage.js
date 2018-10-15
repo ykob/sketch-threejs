@@ -17,7 +17,7 @@ export default class BackgroundImage {
         value: null,
       },
     };
-    this.obj = null;
+    this.obj;
   }
   init(callback) {
     const loader = new THREE.TextureLoader();

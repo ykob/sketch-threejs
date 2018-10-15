@@ -6,7 +6,7 @@ var exports = function(){
   var Points = function() {
     this.geometry = new THREE.BufferGeometry();
     this.material = null;
-    this.obj = null;
+    this.obj;
     Force3.call(this);
   };
   Points.prototype = Object.create(Force3.prototype);

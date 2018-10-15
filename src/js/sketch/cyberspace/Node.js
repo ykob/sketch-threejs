@@ -10,7 +10,7 @@ export default class Node {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
     this.objWire = null;
     this.objPoints = null;
   }

@@ -28,7 +28,7 @@ export default class Floor {
     this.postEffectBlurY = new PostEffectBlur(this.renderBack2.texture, 0, 1, 4);
 
     this.mirrorCamera.up.set(0, -1, 0);
-    this.obj = null;
+    this.obj;
 
     this.createObj();
   }

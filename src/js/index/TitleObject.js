@@ -17,7 +17,7 @@ export default class TitleObject {
         value: null
       }
     };
-    this.obj = null;
+    this.obj;
     this.isLoaded = false;
   }
   loadTexture(callback) {

@@ -6,7 +6,7 @@ var exports = function(){
   var TextPlate = function() {
     this.geometry = null;
     this.material = null;
-    this.obj = null;
+    this.obj;
     this.texture = null;
     Force3.call(this);
   };

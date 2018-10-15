@@ -13,7 +13,7 @@ export default class PostEffectBright {
         value: texture,
       }
     };
-    this.obj = null;
+    this.obj;
 
     this.createObj();
   }

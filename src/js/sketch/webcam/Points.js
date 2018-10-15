@@ -14,7 +14,7 @@ export default class Points {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

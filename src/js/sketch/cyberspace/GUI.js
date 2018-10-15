@@ -23,7 +23,7 @@ export default class GUI {
       },
     };
     this.num = 6;
-    this.obj = null;
+    this.obj;
   }
   createObj(textures) {
     // Define Geometry

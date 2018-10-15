@@ -15,7 +15,7 @@ export default class Debris {
       }
     };
     this.instances = 1000;
-    this.obj = null;
+    this.obj;
   }
   init(texture) {
     this.uniforms.cubeTex.value = texture;

@@ -14,7 +14,7 @@ export default class Water {
         value: h
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

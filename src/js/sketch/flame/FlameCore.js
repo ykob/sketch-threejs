@@ -10,7 +10,7 @@ export default class FlameCore {
         value: 0
       },
     };
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometry

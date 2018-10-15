@@ -17,7 +17,7 @@ export default class PostEffectBloom {
         value: texture2
       }
     };
-    this.obj = null;
+    this.obj;
 
     this.createObj();
   }

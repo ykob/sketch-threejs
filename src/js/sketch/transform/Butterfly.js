@@ -39,7 +39,7 @@ export default class Butterfly {
         value: 0.08
       },
     }
-    this.obj = null;
+    this.obj;
     this.isTransform = false;
 
     this.createObj();

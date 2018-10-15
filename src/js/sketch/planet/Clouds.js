@@ -11,7 +11,7 @@ export default class Clouds {
       },
     };
     this.num = 40;
-    this.obj = null;
+    this.obj;
   }
   createObj() {
     // Define Geometries
