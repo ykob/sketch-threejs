@@ -16,7 +16,7 @@ export default class InstanceMesh {
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(100, 100, 100);
+    const baseGeometry = new THREE.BoxBufferGeometry(10, 10, 10);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
