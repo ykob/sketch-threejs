@@ -4,10 +4,10 @@ varying vec3 vColor;
 varying float vOpacity;
 
 void main() {
-  // convert PointCoord to range from -1.0 to 1.0
+  // Convert PointCoord to a range from -1.0 to 1.0
   vec2 p = gl_PointCoord * 2.0 - 1.0;
 
-  // draw double circle
+  // Draw double circle
   float radius = length(p);
   float opacity = (1.0 - smoothstep(0.2, 1.0, radius)) * vOpacity;
 
