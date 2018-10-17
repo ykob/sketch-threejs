@@ -63,14 +63,6 @@ module.exports.scripts = {
   dest: `${DIR.DEST}/js`
 };
 
-module.exports.vendorScripts = {
-  src: [
-    // `./${DIR.SRC}/js/vendor/three.js`,
-  ],
-  concat: 'vendor.js',
-  dest: `./${DIR.DEST}/js/`
-};
-
 module.exports.pug = {
   src: [
     `${DIR.SRC}/**/*.pug`,
