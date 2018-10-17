@@ -1,64 +1,19 @@
 const gulp = require('gulp');
-const browserify = require('browserify');
-const watchify = require('watchify');
-const licensify = require('licensify');
-const source = require('vinyl-source-stream');
-const eventStream = require('event-stream');
+const webpackStream = require("webpack-stream");
+const webpack = require("webpack");
 
 const $ = require('../plugins');
+const DIR = require('../conf').DIR;
 const conf = require('../conf').scripts;
 
-const bundler = (entry, isWatch) => {
-  const bOpts = conf.browserifyOpts;
-  let bundler;
-
-  bOpts.entries = [conf.common, entry]
-
-  if (isWatch) {
-    // bOpts.debug = true
-    bOpts.cache = {};
-    bOpts.packageCache = {};
-    bOpts.fullPath = true;
-    bundler = watchify(browserify(bOpts));
+gulp.task('scripts', () => {
+  conf.webpack.mode = process.env.NODE_ENV;
+  if (conf.webpack.mode == 'development') {
+    return webpackStream(conf.webpack, webpack)
+      .pipe(gulp.dest(conf.dest[conf.webpack.mode]));
   } else {
-    bundler = browserify(bOpts);
+    return webpackStream(conf.webpack, webpack)
+      .pipe($.rename({suffix: '.min'}))
+      .pipe(gulp.dest(conf.dest[conf.webpack.mode]));
   }
-
-  if (process.env.NODE_ENV === 'production') {
-    bundler.plugin(licensify);
-  }
-
-  const bundle = () => {
-    return bundler.bundle()
-      .on('error', err => {
-        console.log(`bundle error: ${err}`);
-      })
-      .pipe(source(entry))
-      .pipe($.rename({
-        dirname: '',
-        extname: '.js'
-      }))
-      .pipe(gulp.dest(conf.dest));
-  };
-
-  bundler.on('update', bundle);
-  bundler.on('log', (message) => {
-    console.log(message);
-  });
-
-  return bundle();
-};
-
-gulp.task('browserify', () => {
-  const tasks = conf.entryFiles.map(entry => {
-    return bundler(entry);
-  });
-  return eventStream.merge.apply(null, tasks);
-});
-
-gulp.task('watchify', () => {
-  const tasks = conf.entryFiles.map(entry => {
-    return bundler(entry, true);
-  });
-  return eventStream.merge.apply(null, tasks);
 });

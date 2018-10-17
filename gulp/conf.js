@@ -40,27 +40,16 @@ module.exports.serve = {
 };
 
 module.exports.scripts = {
-  common: '',
-  entryFiles: [
-    `./${DIR.SRC}/js/main.js`,
-  ],
-  browserifyOpts: {
-    transform: [
-      ['babelify', {
-        babelrc: false,
-        presets: [
-          ['@babel/preset-env', {
-            targets: {
-              browsers: ['last 2 versions', 'ie >= 11']
-            }
-          }]
-        ]
-      }],
-      'envify',
-      'glslify'
-    ]
+  dest: {
+    development: `./${DIR.DEST}/js/`,
+    production: `./${DIR.BUILD}/js/`,
   },
-  dest: `${DIR.DEST}/js`
+  webpack: {
+    entry: `./${DIR.SRC}/js/main.js`,
+    output: {
+      filename: `main.js`
+    }
+  },
 };
 
 module.exports.pug = {
