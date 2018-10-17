@@ -2,7 +2,7 @@ const THREE = require('three/build/three.js');
 const glslify = require('glslify');
 const MathEx = require('js-util/MathEx');
 
-import force3 from '../../common/force3';
+import Force3 from '../../common/Force3';
 
 export default class Wire {
   constructor(instances) {

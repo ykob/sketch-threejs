@@ -1,6 +1,5 @@
 const THREE = require('three/build/three.js');
-
-import force3 from './force3';
+const Force3 = require('./Force3').default;
 
 export default class ForcePerspectiveCamera extends THREE.PerspectiveCamera {
   constructor(fov, aspect, near, far) {
@@ -17,14 +16,14 @@ export default class ForcePerspectiveCamera extends THREE.PerspectiveCamera {
     this.lookAnchor = [0, 0, 0];
   }
   updatePosition() {
-    force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
-    force3.applyDrag(this.acceleration, this.d);
-    force3.updateVelocity(this.velocity, this.acceleration, 1);
+    Force3.applyHook(this.velocity, this.acceleration, this.anchor, 0, this.k);
+    Force3.applyDrag(this.acceleration, this.d);
+    Force3.updateVelocity(this.velocity, this.acceleration, 1);
   }
   updateLook() {
-    force3.applyHook(this.lookVelocity, this.lookAcceleration, this.lookAnchor, 0, this.lookK);
-    force3.applyDrag(this.lookAcceleration, this.lookD);
-    force3.updateVelocity(this.lookVelocity, this.lookAcceleration, 1);
+    Force3.applyHook(this.lookVelocity, this.lookAcceleration, this.lookAnchor, 0, this.lookK);
+    Force3.applyDrag(this.lookAcceleration, this.lookD);
+    Force3.updateVelocity(this.lookVelocity, this.lookAcceleration, 1);
   }
   render() {
     this.updatePosition();
