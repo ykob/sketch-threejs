@@ -60,6 +60,13 @@ module.exports.scripts = {
               presets: ['@babel/preset-env']
             }
           }
+        },
+        {
+          test: /\.(glsl|fs|vs)$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'raw-loader',
+          }
         }
       ]
     }
