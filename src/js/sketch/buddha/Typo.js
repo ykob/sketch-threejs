@@ -16,7 +16,7 @@ let num = 0;
 let animateId = 0;
 let interval = 0;
 
-export default class InstanceMesh {
+export default class Typo {
   constructor() {
     this.uniforms = {
       time: {
