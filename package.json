@@ -37,6 +37,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-watch": "^5.0.0",
+    "ify-loader": "^1.1.0",
     "imagemin-mozjpeg": "^7.0.0",
     "imagemin-pngquant": "^6.0.0",
     "node-sass": "^4.7.2",
@@ -63,5 +64,10 @@
     "js-util": "git://github.com/ykob/js-util.git",
     "three": "^0.96.0",
     "vue": "^2.5.16"
+  },
+  "browserify": {
+    "transform": [
+      "glslify"
+    ]
   }
 }

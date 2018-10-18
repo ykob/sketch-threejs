@@ -62,6 +62,11 @@ module.exports.scripts = {
           }
         },
         {
+          test: /\.js$/,
+          loader: 'ify-loader',
+          enforce: 'post'
+        },
+        {
           test: /\.(glsl|fs|vs)$/,
           exclude: /(node_modules)/,
           use: {
