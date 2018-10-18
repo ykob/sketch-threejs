@@ -34,7 +34,14 @@ gulp.task('default', ['predefault'], () => {
   ).on('change', reload);
 
   $.watch(
-    [`./${DIR.DEST}/**/*.js`]
+    [
+      `./${DIR.SRC}/**/*.js`,
+      `./${DIR.SRC}/**/*.vs`,
+      `./${DIR.SRC}/**/*.fs`,
+    ],
+    () => {
+      gulp.start(['scripts'])
+    }
   ).on('change', reload);
 });
 
