@@ -44,8 +44,8 @@ export default class Floor {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/floor.vs'),
-      fragmentShader: glslify('./glsl/floor.fs'),
+      vertexShader: require('./glsl/floor.vs'),
+      fragmentShader: require('./glsl/floor.fs'),
       transparent: true
     });
 

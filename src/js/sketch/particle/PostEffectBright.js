@@ -20,8 +20,8 @@ export default class PostEffectBright {
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('./glsl/postEffect.vs'),
-        fragmentShader: glslify('./glsl/postEffectBright.fs'),
+        vertexShader: require('./glsl/postEffect.vs'),
+        fragmentShader: require('./glsl/postEffectBright.fs'),
       })
     );
   }

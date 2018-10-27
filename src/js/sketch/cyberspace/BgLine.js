@@ -35,8 +35,8 @@ export default class BgLine {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/bgLine.vs'),
-      fragmentShader: glslify('./glsl/bgLine.fs'),
+      vertexShader: require('./glsl/bgLine.vs'),
+      fragmentShader: require('./glsl/bgLine.fs'),
       transparent: true,
       depthWrite: false,
       side: THREE.BackSide,

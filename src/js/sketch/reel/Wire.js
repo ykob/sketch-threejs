@@ -51,8 +51,8 @@ export default class Wire {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('./glsl/wire.vs'),
-        fragmentShader: glslify('./glsl/wire.fs'),
+        vertexShader: require('./glsl/wire.vs'),
+        fragmentShader: require('./glsl/wire.fs'),
         depthWrite: false,
         transparent: true,
         side: THREE.DoubleSide,
@@ -85,8 +85,8 @@ export default class Wire {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('./glsl/wirePicked.vs'),
-        fragmentShader: glslify('./glsl/wirePicked.fs'),
+        vertexShader: require('./glsl/wirePicked.vs'),
+        fragmentShader: require('./glsl/wirePicked.fs'),
       })
     );
   }

@@ -46,8 +46,8 @@ export default class Fog {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/fog.vs'),
-      fragmentShader: glslify('./glsl/fog.fs'),
+      vertexShader: require('./glsl/fog.vs'),
+      fragmentShader: require('./glsl/fog.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,

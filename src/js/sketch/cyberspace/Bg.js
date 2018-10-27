@@ -20,8 +20,8 @@ export default class Bg {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/bg.vs'),
-      fragmentShader: glslify('./glsl/bg.fs'),
+      vertexShader: require('./glsl/bg.vs'),
+      fragmentShader: require('./glsl/bg.fs'),
       side: THREE.BackSide,
     });
 

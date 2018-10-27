@@ -35,8 +35,8 @@ export default class Plane {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/plane.vs'),
-      fragmentShader: glslify('./glsl/plane.fs'),
+      vertexShader: require('./glsl/plane.vs'),
+      fragmentShader: require('./glsl/plane.fs'),
       transparent: true,
     });
 

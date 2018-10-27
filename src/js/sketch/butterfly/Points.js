@@ -45,8 +45,8 @@ export default class Points {
       this.geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('./glsl/points.vs'),
-        fragmentShader: glslify('./glsl/points.fs'),
+        vertexShader: require('./glsl/points.vs'),
+        fragmentShader: require('./glsl/points.fs'),
         depthWrite: false,
         transparent: true,
       })

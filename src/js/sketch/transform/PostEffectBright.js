@@ -24,8 +24,8 @@ export default class PostEffectBright {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/postEffect.vs'),
-      fragmentShader: glslify('./glsl/postEffectBright.fs'),
+      vertexShader: require('./glsl/postEffect.vs'),
+      fragmentShader: require('./glsl/postEffectBright.fs'),
     });
 
     // Create Object3D

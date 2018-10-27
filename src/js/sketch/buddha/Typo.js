@@ -84,8 +84,8 @@ export default class Typo {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/typo.vs'),
-      fragmentShader: glslify('./glsl/typo.fs'),
+      vertexShader: require('./glsl/typo.vs'),
+      fragmentShader: require('./glsl/typo.fs'),
       transparent: true,
       depthWrite: false,
     });

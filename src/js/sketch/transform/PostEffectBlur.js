@@ -32,8 +32,8 @@ export default class PostEffectBlur {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/postEffect.vs'),
-      fragmentShader: glslify('./glsl/postEffectBlur.fs'),
+      vertexShader: require('./glsl/postEffect.vs'),
+      fragmentShader: require('./glsl/postEffectBlur.fs'),
     });
 
     // Create Object3D

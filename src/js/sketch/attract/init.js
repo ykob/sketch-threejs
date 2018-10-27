@@ -62,8 +62,8 @@ export default function() {
           value: new THREE.Texture()
         }
       },
-      vertexShader: glslify('./glsl/points.vs'),
-      fragmentShader: glslify('./glsl/points.fs'),
+      vertexShader: require('./glsl/points.vs'),
+      fragmentShader: require('./glsl/points.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,

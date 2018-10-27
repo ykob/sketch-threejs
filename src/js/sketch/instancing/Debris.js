@@ -48,8 +48,8 @@ export default class Debris {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('./glsl/debris.vs'),
-        fragmentShader: glslify('./glsl/debris.fs'),
+        vertexShader: require('./glsl/debris.vs'),
+        fragmentShader: require('./glsl/debris.fs'),
         transparent: true,
         side: THREE.DoubleSide
       })

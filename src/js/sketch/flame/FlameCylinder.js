@@ -19,8 +19,8 @@ export default class FlameCylinder {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/flameCylinder.vs'),
-      fragmentShader: glslify('./glsl/flameCylinder.fs'),
+      vertexShader: require('./glsl/flameCylinder.vs'),
+      fragmentShader: require('./glsl/flameCylinder.fs'),
       transparent: true,
       depthWrite: false,
       side: THREE.DoubleSide,

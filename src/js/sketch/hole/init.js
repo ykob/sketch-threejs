@@ -78,8 +78,8 @@ export default function() {
           value: force.velocity,
         },
       },
-      vertexShader: glslify('./glsl/points.vs'),
-      fragmentShader: glslify('./glsl/points.fs'),
+      vertexShader: require('./glsl/points.vs'),
+      fragmentShader: require('./glsl/points.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
@@ -134,8 +134,8 @@ export default function() {
           },
         }
       ]),
-      vertexShader: glslify('./glsl/object.vs'),
-      fragmentShader: glslify('./glsl/object.fs'),
+      vertexShader: require('./glsl/object.vs'),
+      fragmentShader: require('./glsl/object.fs'),
       flatShading: true,
       lights: true,
     });
@@ -151,8 +151,8 @@ export default function() {
           value: 0,
         },
       },
-      vertexShader: glslify('./glsl/bg.vs'),
-      fragmentShader: glslify('./glsl/bg.fs'),
+      vertexShader: require('./glsl/bg.vs'),
+      fragmentShader: require('./glsl/bg.fs'),
       side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
@@ -186,8 +186,8 @@ export default function() {
           value: 0,
         },
       },
-      vertexShader: glslify('./glsl/fb_points.vs'),
-      fragmentShader: glslify('./glsl/fb_points.fs'),
+      vertexShader: require('./glsl/fb_points.vs'),
+      fragmentShader: require('./glsl/fb_points.fs'),
     });
     return new THREE.Points(geometry, material);
   };
@@ -203,8 +203,8 @@ export default function() {
           value: 0,
         },
       },
-      vertexShader: glslify('./glsl/fb_bg.vs'),
-      fragmentShader: glslify('./glsl/fb_bg.fs'),
+      vertexShader: require('./glsl/fb_bg.vs'),
+      fragmentShader: require('./glsl/fb_bg.fs'),
       side: THREE.BackSide,
     });
     return new THREE.Mesh(geometry, material);
@@ -233,8 +233,8 @@ export default function() {
           value: render_target2.texture,
         },
       },
-      vertexShader: glslify('./glsl/fb.vs'),
-      fragmentShader: glslify('./glsl/fb.fs'),
+      vertexShader: require('./glsl/fb.vs'),
+      fragmentShader: require('./glsl/fb.fs'),
       transparent: true
     });
     return new THREE.Mesh(geometry, material);

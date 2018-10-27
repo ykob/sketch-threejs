@@ -137,8 +137,8 @@ export default class PhysicsRenderer {
             value: this.vUniforms.velocityInit.value,
           },
         },
-        vertexShader: glslify('./glsl/physicsRenderer.vs'),
-        fragmentShader: glslify('./glsl/physicsRendererVelocityInit.fs'),
+        vertexShader: require('./glsl/physicsRenderer.vs'),
+        fragmentShader: require('./glsl/physicsRendererVelocityInit.fs'),
       })
     );
     for (var i = 0; i < 2; i++) {

@@ -23,8 +23,8 @@ export default class LandmarkPoints {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/landmarkPoints.vs'),
-      fragmentShader: glslify('./glsl/landmarkPoints.fs'),
+      vertexShader: require('./glsl/landmarkPoints.vs'),
+      fragmentShader: require('./glsl/landmarkPoints.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,

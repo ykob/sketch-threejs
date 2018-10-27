@@ -19,8 +19,8 @@ export default class Mesh {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/mesh.vs'),
-      fragmentShader: glslify('./glsl/mesh.fs'),
+      vertexShader: require('./glsl/mesh.vs'),
+      fragmentShader: require('./glsl/mesh.fs'),
     });
 
     // Create Object3D

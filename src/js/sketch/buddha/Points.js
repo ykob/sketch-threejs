@@ -37,8 +37,8 @@ export default class Points {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/points.vs'),
-      fragmentShader: glslify('./glsl/points.fs'),
+      vertexShader: require('./glsl/points.vs'),
+      fragmentShader: require('./glsl/points.fs'),
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,

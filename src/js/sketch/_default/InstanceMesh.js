@@ -31,8 +31,8 @@ export default class InstanceMesh {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/instanceMesh.vs'),
-      fragmentShader: glslify('./glsl/instanceMesh.fs'),
+      vertexShader: require('./glsl/instanceMesh.vs'),
+      fragmentShader: require('./glsl/instanceMesh.fs'),
     });
 
     // Create Object3D

@@ -50,8 +50,8 @@ export default class Clouds {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/clouds.vs'),
-      fragmentShader: glslify('./glsl/clouds.fs'),
+      vertexShader: require('./glsl/clouds.vs'),
+      fragmentShader: require('./glsl/clouds.fs'),
       flatShading: true,
     });
 

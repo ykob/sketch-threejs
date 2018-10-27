@@ -48,8 +48,8 @@ export default class Core {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: glslify('./glsl/core.vs'),
-        fragmentShader: glslify('./glsl/core.fs'),
+        vertexShader: require('./glsl/core.vs'),
+        fragmentShader: require('./glsl/core.fs'),
         transparent: true,
       })
     )

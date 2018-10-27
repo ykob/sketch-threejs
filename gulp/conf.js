@@ -52,25 +52,34 @@ module.exports.scripts = {
     module: {
       rules: [
         {
-          test: /\.m?js$/,
+          test: /\.js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env']
             }
-          }
+          },
         },
         {
-          test: /\.js$/,
-          loader: 'ify-loader',
-          enforce: 'post'
+          test: /\.(glsl|fs|vs)$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'glslify-import-loader',
+          }
         },
         {
           test: /\.(glsl|fs|vs)$/,
           exclude: /(node_modules)/,
           use: {
             loader: 'raw-loader',
+          }
+        },
+        {
+          test: /\.(glsl|fs|vs)$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'glslify-loader',
           }
         }
       ]

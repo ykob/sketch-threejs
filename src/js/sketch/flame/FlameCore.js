@@ -19,8 +19,8 @@ export default class FlameCore {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/flameCore.vs'),
-      fragmentShader: glslify('./glsl/flameCore.fs'),
+      vertexShader: require('./glsl/flameCore.vs'),
+      fragmentShader: require('./glsl/flameCore.fs'),
       flatShading: true,
     });
 

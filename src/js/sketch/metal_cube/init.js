@@ -49,8 +49,8 @@ export default function() {
           value: new THREE.Vector2(window.innerWidth, window.innerHeight)
         }
       },
-      vertexShader: glslify('./glsl/object.vs'),
-      fragmentShader: glslify('./glsl/object.fs'),
+      vertexShader: require('./glsl/object.vs'),
+      fragmentShader: require('./glsl/object.fs'),
       transparent: true
     });
     var mesh = new THREE.Mesh(geometry, material);
@@ -72,8 +72,8 @@ export default function() {
           value: 0
         },
       },
-      vertexShader: glslify('./glsl/background.vs'),
-      fragmentShader: glslify('./glsl/background.fs'),
+      vertexShader: require('./glsl/background.vs'),
+      fragmentShader: require('./glsl/background.fs'),
       flatShading: true,
       side: THREE.BackSide
     });

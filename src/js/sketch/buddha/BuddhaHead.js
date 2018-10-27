@@ -27,8 +27,8 @@ export default class BuddhaHead {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: glslify('./glsl/buddhaHead.vs'),
-      fragmentShader: glslify('./glsl/buddhaHead.fs'),
+      vertexShader: require('./glsl/buddhaHead.vs'),
+      fragmentShader: require('./glsl/buddhaHead.fs'),
       flatShading: true,
     });
 
