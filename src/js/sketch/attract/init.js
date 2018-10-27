@@ -5,7 +5,7 @@ import normalizeVector2 from '../../common/normalizeVector2';
 import PhysicsRenderer from '../../common/PhysicsRenderer';
 
 export default function() {
-  const glslify = require('glslify');
+  
   const Util = require('../../old/util');
   const ForceCamera = require('../../old/ForceCamera');
 

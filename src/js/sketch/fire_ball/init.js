@@ -4,7 +4,7 @@ const debounce = require('js-util/debounce');
 import normalizeVector2 from '../../common/normalizeVector2';
 
 export default function() {
-  const glslify = require('glslify');
+  
   const util = require('../../old/util');
   const Mover = require('../../old/Mover');
   const Points = require('../../old/Points');

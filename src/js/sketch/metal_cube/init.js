@@ -4,7 +4,7 @@ const debounce = require('js-util/debounce');
 import normalizeVector2 from '../../common/normalizeVector2';
 
 export default function() {
-  const glslify = require('glslify');
+  
   const Util = require('../../old/util');
   const Force3 = require('../../old/Force3');
   const ForceCamera = require('../../old/ForceCamera');

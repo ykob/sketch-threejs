@@ -1,5 +1,5 @@
 const THREE = require('three');
-const glslify = require('glslify');
+
 const MathEx = require('js-util/MathEx');
 const SimplexNoise = require('../../vendor/simplex-noise');
 

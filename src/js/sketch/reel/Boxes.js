@@ -1,5 +1,5 @@
 const THREE = require('three/build/three.js');
-const glslify = require('glslify');
+
 const MathEx = require('js-util/MathEx');
 const debounce = require('js-util/debounce');
 

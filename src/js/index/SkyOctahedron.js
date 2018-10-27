@@ -1,5 +1,5 @@
 const THREE = require('three/build/three.js');
-const glslify = require('glslify');
+
 const MathEx = require('js-util/MathEx');
 
 const computeFaceNormal = (v0, v1, v2) => {

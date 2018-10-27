@@ -1,5 +1,5 @@
 const THREE = require('three/build/three.js');
-const glslify = require('glslify');
+
 const SIZE = 280;
 
 export default class Butterfly {
