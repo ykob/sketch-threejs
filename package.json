@@ -14,6 +14,10 @@
   "engines": {
     "node": "8.9.4"
   },
+  "browserslist": [
+    "last 2 version",
+    "IE 11"
+  ],
   "devDependencies": {
     "@babel/core": "^7.0.1",
     "@babel/preset-env": "^7.0.0",
