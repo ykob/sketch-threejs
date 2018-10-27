@@ -1,4 +1,4 @@
-const THREE = require('three/build/three.js');
+const THREE = require('three');
 const Force3 = require('./Force3').default;
 
 export default class ForcePerspectiveCamera extends THREE.PerspectiveCamera {

@@ -1,4 +1,4 @@
-const THREE = require('three/build/three.js');
+const THREE = require('three');
 
 const SIZE = 280;
 

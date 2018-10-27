@@ -1,4 +1,4 @@
-const THREE = require('three/build/three.js');
+const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 import SmoothScrollManager from '../smooth_scroll_manager/SmoothScrollManager';

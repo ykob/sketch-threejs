@@ -1,4 +1,4 @@
-const THREE = require('three/build/three.js');
+const THREE = require('three');
 
 
 import PhysicsRenderer from '../../common/PhysicsRenderer';

@@ -1,5 +1,4 @@
 const THREE = require('three');
-
 const MathEx = require('js-util/MathEx');
 
 const promiseTextureLoader = require('../../common/PromiseTextureLoader').default;

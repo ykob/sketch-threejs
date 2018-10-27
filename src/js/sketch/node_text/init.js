@@ -1,4 +1,4 @@
-const THREE = require('three/build/three.js');
+const THREE = require('three');
 const debounce = require('js-util/debounce');
 const NodeText = require('./NodeText').default;
 const BackgroundSphere = require('./BackgroundSphere').default;

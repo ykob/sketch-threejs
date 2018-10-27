@@ -1,5 +1,4 @@
 const THREE = require('three');
-
 const MathEx = require('js-util/MathEx');
 
 const promiseOBJLoader = require('../../common/PromiseOBJLoader').default;

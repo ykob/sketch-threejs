@@ -1,4 +1,4 @@
-const THREE = require('three/build/three.js');
+const THREE = require('three');
 
 const MathEx = require('js-util/MathEx');
 

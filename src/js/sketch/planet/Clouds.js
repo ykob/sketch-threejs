@@ -1,5 +1,4 @@
 const THREE = require('three');
-
 const MathEx = require('js-util/MathEx');
 
 export default class Clouds {
@@ -16,10 +15,7 @@ export default class Clouds {
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    // const baseGeometry = new THREE.SphereBufferGeometry(2, 6, 18);
     const baseGeometry = new THREE.BoxBufferGeometry(2, 2, 20, 2, 2, 6);
-    // baseGeometry.scale(1, 5, 1);
-    // baseGeometry.rotateX(MathEx.radians(90));
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

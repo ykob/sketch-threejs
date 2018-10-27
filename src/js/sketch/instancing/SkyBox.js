@@ -1,5 +1,4 @@
-const THREE = require('three/build/three.js');
-
+const THREE = require('three');
 
 export default class SkyBox {
   constructor() {
