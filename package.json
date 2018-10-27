@@ -20,9 +20,9 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.0.1",
+    "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.4",
-    "babel-polyfill": "^6.26.0",
     "browser-sync": "^2.23.6",
     "cross-env": "^5.2.0",
     "del": "^3.0.0",

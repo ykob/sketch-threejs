@@ -1,4 +1,4 @@
-require("babel-polyfill");
+require("@babel/polyfill");
 
 const ConsoleSignature = require('./common/ConsoleSignature.js').default;
 const redirectOldSketches = require('./common/redirectOldSketches.js').default;
