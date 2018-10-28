@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class PostEffectBlur {
   constructor(texture, x, y, radius) {
     this.uniforms = {

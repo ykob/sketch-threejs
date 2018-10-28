@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 import PhysicsRenderer from '../../common/PhysicsRenderer';
 
 export default class Points {

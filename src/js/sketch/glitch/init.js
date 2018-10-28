@@ -1,7 +1,7 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-import normalizeVector2 from '../../common/normalizeVector2';
+const normalizeVector2 = require('../../common/normalizeVector2').default;
 import BackgroundImage from './BackgroundImage.js';
 import PostEffect from './PostEffect.js';
 

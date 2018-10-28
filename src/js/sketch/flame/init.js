@@ -3,6 +3,7 @@ const debounce = require('js-util/debounce');
 const MathEx = require('js-util/MathEx');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
+
 const ForcePerspectiveCamera = require('../../common/ForcePerspectiveCamera').default;
 const CameraController = require('./CameraController').default;
 const FlameCore = require('./FlameCore').default;

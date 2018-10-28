@@ -1,10 +1,10 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-import normalizeVector2 from '../../common/normalizeVector2';
+const normalizeVector2 = require('../../common/normalizeVector2').default;
 
 export default function() {
-  
+
   const util = require('../../old/util');
   const Mover = require('../../old/Mover');
   const Points = require('../../old/Points');

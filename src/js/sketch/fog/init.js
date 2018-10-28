@@ -1,5 +1,6 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
+
 const loadTexs = require('../../common/loadTexs').default;
 const Fog = require('./Fog').default;
 

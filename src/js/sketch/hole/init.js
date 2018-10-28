@@ -1,10 +1,9 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-import normalizeVector2 from '../../common/normalizeVector2';
+const normalizeVector2 = require('../../common/normalizeVector2').default;
 
 export default function() {
-  
   const Util = require('../../old/util');
   const Force2 = require('../../old/Force2');
   const ForceCamera = require('../../old/ForceCamera');

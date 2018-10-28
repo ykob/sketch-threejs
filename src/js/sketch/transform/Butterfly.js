@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class Butterfly {
   constructor(i, tex1, tex2) {
     this.size = 280;

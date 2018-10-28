@@ -1,7 +1,7 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-import normalizeVector2 from '../../common/normalizeVector2';
+const normalizeVector2 = require('../../common/normalizeVector2').default;
 import Boxes from './Boxes.js';
 import Floor from './Floor.js';
 import Hill from './Hill.js';

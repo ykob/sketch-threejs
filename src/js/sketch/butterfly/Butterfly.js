@@ -1,5 +1,4 @@
 const THREE = require('three');
-
 const SIZE = 280;
 
 export default class Butterfly {

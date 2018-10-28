@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 import PostEffectBlur from './PostEffectBlur.js';
 
 export default class Floor {

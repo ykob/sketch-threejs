@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class PostEffectBloom {
   constructor(brightMin, texture1, texture2) {
     this.uniforms = {
