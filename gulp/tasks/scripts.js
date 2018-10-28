@@ -9,7 +9,8 @@ const conf = require('../conf').scripts;
 gulp.task('scripts', () => {
   conf.webpack.mode = process.env.NODE_ENV;
   if (conf.webpack.mode == 'development') {
-    return webpackStream(conf.webpack, webpack)
+    gulp.src(conf.src)
+      .pipe(webpackStream(conf.webpack, webpack))
       .pipe(gulp.dest(conf.dest[conf.webpack.mode]));
   } else {
     return webpackStream(conf.webpack, webpack)

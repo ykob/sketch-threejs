@@ -40,6 +40,11 @@ module.exports.serve = {
 };
 
 module.exports.scripts = {
+  src: [
+    `./${DIR.SRC}/**/*.js`,
+    `./${DIR.SRC}/**/*.vs`,
+    `./${DIR.SRC}/**/*.fs`,
+  ],
   dest: {
     development: `./${DIR.DEST}/js/`,
     production: `./${DIR.BUILD}/js/`,
