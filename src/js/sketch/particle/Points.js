@@ -37,10 +37,10 @@ export default class Points {
       vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 10;
     }
     this.physicsRenderer = new PhysicsRenderer(
-      glslify('./glsl/physicsRendererAcceleration.vs'),
-      glslify('./glsl/physicsRendererAcceleration.fs'),
-      glslify('./glsl/physicsRendererVelocity.vs'),
-      glslify('./glsl/physicsRendererVelocity.fs')
+      require('./glsl/physicsRendererAcceleration.vs'),
+      require('./glsl/physicsRendererAcceleration.fs'),
+      require('./glsl/physicsRendererVelocity.vs'),
+      require('./glsl/physicsRendererVelocity.fs')
     );
     this.physicsRenderer.init(renderer, vertices);
     this.physicsRenderer.mergeAUniforms({

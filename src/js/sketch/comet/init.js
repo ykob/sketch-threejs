@@ -4,7 +4,7 @@ const debounce = require('js-util/debounce');
 const normalizeVector2 = require('../../common/normalizeVector2').default;
 
 export default function() {
-  
+
   const Util = require('../../old/util');
   const Force2 = require('../../old/Force2');
   const Mover = require('../../old/Mover');
@@ -232,8 +232,8 @@ export default function() {
     }
     points.init({
       scene: scene,
-      vs: glslify('../../old/glsl/points.vs'),
-      fs: glslify('../../old/glsl/points.fs'),
+      vs: require('../../old/glsl/points.vs'),
+      fs: require('../../old/glsl/points.fs'),
       positions: positions,
       colors: colors,
       opacities: opacities,

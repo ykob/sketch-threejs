@@ -134,8 +134,8 @@ export default function() {
     }
     points.init({
       scene: scene,
-      vs: glslify('../../old/glsl/points.vs'),
-      fs: glslify('../../old/glsl/points.fs'),
+      vs: require('../../old/glsl/points.vs'),
+      fs: require('../../old/glsl/points.fs'),
       positions: positions,
       colors: colors,
       opacities: opacities,
