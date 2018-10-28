@@ -27,7 +27,7 @@ export default class Points {
     this.obj = this.createObj(renderer);
   }
   createObj(renderer) {
-    const detail = (window.innerWidth > 768) ? 7 : 6;
+    const detail = (window.innerWidth > 768) ? 8 : 6;
     const geometry = new THREE.OctahedronBufferGeometry(100, detail);
     const verticesBase = geometry.attributes.position.array;
     const vertices = [];
