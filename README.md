@@ -3,6 +3,11 @@
 Interactive sketches made with three.js.  
 https://ykob.github.io/sketch-threejs/
 
+## Usage
+
+    npm run start
+    npm run build
+
 ## License
 
 Copyright (c) 2018 Yoichi Kobayashi  
