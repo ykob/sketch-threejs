@@ -3,9 +3,9 @@ const THREE = require('three');
 const MathEx = require('js-util/MathEx');
 const debounce = require('js-util/debounce');
 
-import Force3 from '../../common/Force3';
-import Core from './Core';
-import Wire from './Wire';
+const Force3 = require('../../common/Force3').default;
+const Core = require('./Core').default;
+const Wire = require('./Wire').default;
 
 export default class Boxes {
   constructor() {

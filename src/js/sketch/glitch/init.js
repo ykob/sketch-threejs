@@ -2,8 +2,8 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import BackgroundImage from './BackgroundImage.js';
-import PostEffect from './PostEffect.js';
+const BackgroundImage = require('./BackgroundImage.js').default;
+const PostEffect = require('./PostEffect.js').default;
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

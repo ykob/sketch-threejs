@@ -2,10 +2,10 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import PhysicsRenderer from '../../common/PhysicsRenderer';
+const PhysicsRenderer = require('../../common/PhysicsRenderer').default;
 
 export default function() {
-  
+
   const Util = require('../../old/util');
   const ForceCamera = require('../../old/ForceCamera');
 

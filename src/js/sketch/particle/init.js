@@ -2,10 +2,10 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import PostEffectBright from './PostEffectBright.js';
-import PostEffectBlur from './PostEffectBlur.js';
-import PostEffectBloom from './PostEffectBloom.js';
-import Points from './Points';
+const PostEffectBright = require('./PostEffectBright.js').default;
+const PostEffectBlur = require('./PostEffectBlur.js').default;
+const PostEffectBloom = require('./PostEffectBloom.js').default;
+const Points = require('./Points').default;
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

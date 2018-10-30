@@ -1,6 +1,6 @@
 const THREE = require('three');
 
-import PhysicsRenderer from '../../common/PhysicsRenderer';
+const PhysicsRenderer = require('../../common/PhysicsRenderer').default;
 
 export default class Points {
   constructor() {

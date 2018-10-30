@@ -1,7 +1,7 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-import Egg from './Egg.js';
+const Egg = require('./Egg.js').default;
 
 export default function() {
   const resolution = {

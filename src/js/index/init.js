@@ -1,14 +1,14 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-import SmoothScrollManager from '../smooth_scroll_manager/SmoothScrollManager';
-import TitleObject from './TitleObject';
-import FrameObject from './FrameObject';
-import SkyOctahedron from './SkyOctahedron';
-import SkyOctahedronShell from './SkyOctahedronShell';
-import Ground from './Ground';
-import Debris from './Debris';
-import PostEffect from './PostEffect';
+const SmoothScrollManager = require('../smooth_scroll_manager/SmoothScrollManager').default;
+const TitleObject = require('./TitleObject').default;
+const FrameObject = require('./FrameObject').default;
+const SkyOctahedron = require('./SkyOctahedron').default;
+const SkyOctahedronShell = require('./SkyOctahedronShell').default;
+const Ground = require('./Ground').default;
+const Debris = require('./Debris').default;
+const PostEffect = require('./PostEffect').default;
 
 export default function() {
   const scrollManager = new SmoothScrollManager();

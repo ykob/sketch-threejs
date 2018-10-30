@@ -2,7 +2,7 @@ const THREE = require('three');
 
 const MathEx = require('js-util/MathEx');
 
-import Force3 from '../../common/Force3';
+const Force3 = require('../../common/Force3').default;
 
 export default class Wire {
   constructor(instances) {

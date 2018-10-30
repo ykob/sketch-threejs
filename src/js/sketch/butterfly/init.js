@@ -2,12 +2,12 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import Butterfly from './Butterfly';
-import Points from './Points';
-import Floor from './Floor.js';
-import PostEffectBright from './PostEffectBright.js';
-import PostEffectBlur from './PostEffectBlur.js';
-import PostEffectBloom from './PostEffectBloom.js';
+const Butterfly = require('./Butterfly').default;
+const Points = require('./Points').default;
+const Floor = require('./Floor.js').default;
+const PostEffectBright = require('./PostEffectBright.js').default;
+const PostEffectBlur = require('./PostEffectBlur.js').default;
+const PostEffectBloom = require('./PostEffectBloom.js').default;
 
 export default function() {
   const resolution = {

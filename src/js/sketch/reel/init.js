@@ -2,9 +2,9 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import Boxes from './Boxes.js';
-import Floor from './Floor.js';
-import Hill from './Hill.js';
+const Boxes = require('./Boxes.js').default;
+const Floor = require('./Floor.js').default;
+const Hill = require('./Hill.js').default;
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

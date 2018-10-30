@@ -2,11 +2,11 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import ForcePerspectiveCamera from '../../common/ForcePerspectiveCamera';
-import CameraController from './CameraController';
-import Debris from './Debris';
-import SkyBox from './SkyBox';
-import PostEffect from './PostEffect.js';
+const ForcePerspectiveCamera = require('../../common/ForcePerspectiveCamera').default;
+const CameraController = require('./CameraController').default;
+const Debris = require('./Debris').default;
+const SkyBox = require('./SkyBox').default;
+const PostEffect = require('./PostEffect.js').default;
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');

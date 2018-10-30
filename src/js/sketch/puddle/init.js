@@ -2,7 +2,7 @@ const THREE = require('three');
 const debounce = require('js-util/debounce');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
-import Puddle from './Puddle.js';
+const Puddle = require('./Puddle.js').default;
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
