@@ -89,7 +89,7 @@ module.exports.scripts = {
         }
       ]
     }
-  },
+  }
 };
 
 module.exports.pug = {
