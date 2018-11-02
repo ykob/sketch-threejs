@@ -8,7 +8,8 @@
   },
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development gulp",
+    "start": "npm run dev",
+    "dev": "cross-env NODE_ENV=development gulp",
     "build": "cross-env NODE_ENV=production gulp build"
   },
   "engines": {
