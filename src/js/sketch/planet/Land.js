@@ -55,9 +55,7 @@ export default class Land {
           + MathEx.smoothstep(0.1, 0.2, Math.pow(noise1 + noise2 , 2)) * 2
           + MathEx.smoothstep(0.6, 0.7, Math.pow(noise1 + noise2 , 2)) * 6
           + noise3 * 0.2
-        )
-        // + noise3 * 1.5
-        // + noise4 * 0.6;
+        );
       v3.add(v3.clone().normalize().multiplyScalar(h));
 
       geometry.attributes.position.setXYZ(i, v3.x, v3.y, v3.z);
