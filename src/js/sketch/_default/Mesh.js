@@ -13,7 +13,7 @@ export default class Mesh {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.BoxBufferGeometry(100, 100, 100);
+    const geometry = new THREE.BoxBufferGeometry(10, 10, 10);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
