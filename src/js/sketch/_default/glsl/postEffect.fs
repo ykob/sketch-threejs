@@ -14,6 +14,7 @@ float randomNoise(vec2 p) {
 }
 
 void main() {
+  // Convert uv to the other vec2 has a range from -1.0 to 1.0.
   vec2 p = vUv * 2.0 - 1.0;
   vec2 ratio = vUv / resolution;
 

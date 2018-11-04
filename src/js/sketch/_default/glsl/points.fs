@@ -1,7 +1,7 @@
 precision highp float;
 
 void main() {
-  // Convert PointCoord to a range from -1.0 to 1.0
+  // Convert PointCoord to the other vec2 has a range from -1.0 to 1.0.
   vec2 p = gl_PointCoord * 2.0 - 1.0;
 
   // Draw circle
