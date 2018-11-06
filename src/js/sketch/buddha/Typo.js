@@ -3,7 +3,7 @@ const MathEx = require('js-util/MathEx');
 
 const promiseTextureLoader = require('../../common/PromiseTextureLoader').default;
 
-const duration = 4;
+const DURATION = 4;
 let iPositions = undefined;
 let iUvs = undefined;
 let iIds = undefined;
@@ -32,7 +32,7 @@ export default class Typo {
       },
       duration: {
         type: 'f',
-        value: duration
+        value: DURATION
       },
     };
     this.obj = undefined;
@@ -124,7 +124,7 @@ export default class Typo {
     for (var i = 0; i < num; i++) {
       if (iIsAnimated.getX(i) === 0) continue;
       const past =  iTimes.getX(i);
-      if (past > duration) {
+      if (past > DURATION) {
         iIsAnimated.setX(i, 0);
         iTimes.setX(i, 0);
       } else {
