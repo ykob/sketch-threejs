@@ -1,6 +1,8 @@
 const THREE = require('three');
 const MathEx = require('js-util/MathEx');
 
+const NUM = 40;
+
 export default class Clouds {
   constructor() {
     this.uniforms = {
@@ -9,7 +11,6 @@ export default class Clouds {
         value: 0
       },
     };
-    this.num = 40;
     this.obj;
   }
   createObj() {
@@ -21,11 +22,11 @@ export default class Clouds {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    const instanceRotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    const instanceScales = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
-    for ( var i = 0, ul = this.num; i < ul; i++ ) {
+    const instancePositions = new THREE.InstancedBufferAttribute(new Float32Array(NUM * 3), 3);
+    const instanceRotates = new THREE.InstancedBufferAttribute(new Float32Array(NUM * 3), 3);
+    const instanceScales = new THREE.InstancedBufferAttribute(new Float32Array(NUM * 3), 3);
+    const speeds = new THREE.InstancedBufferAttribute(new Float32Array(NUM), 1);
+    for ( var i = 0, ul = NUM; i < ul; i++ ) {
       const rx = MathEx.radians(((Math.random() * 2) - 1) * 30);
       const ry = MathEx.radians(((Math.random() * 2) - 1) * 180);
       const p = MathEx.spherical(
