@@ -7,6 +7,7 @@ const Typo = require('./Typo').default;
 const Wave = require('./Wave').default;
 const Points = require('./Points').default;
 const BackgroundSphere = require('./BackgroundSphere').default;
+const PostEffect = require('./PostEffect').default;
 const Drag = require('./Drag').default;
 
 export default async function() {
@@ -26,6 +27,11 @@ export default async function() {
     autoStart: false
   });
 
+  // For the post effect.
+  const renderTarget = new THREE.WebGLRenderTarget();
+  const scenePE = new THREE.Scene();
+  const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
+
   // ==========
   // Define unique variables
   //
@@ -35,6 +41,11 @@ export default async function() {
   const points = new Points();
   const bg = new BackgroundSphere();
   const dd = new Drag(resolution);
+
+  // For the post effect.
+  const postEffect = new PostEffect(renderTarget.texture);
+  postEffect.createObj();
+  scenePE.add(postEffect.obj);
 
   // ==========
   // Define functions
@@ -46,7 +57,13 @@ export default async function() {
     typo.render(time);
     wave.render(time);
     points.render(time);
-    renderer.render(scene, camera);
+
+    // Render the main scene to frame buffer.
+    renderer.render(scene, camera, renderTarget);
+
+    // Render the post effect.
+    postEffect.render(time);
+    renderer.render(scenePE, cameraPE);
   };
   const renderLoop = () => {
     render();
@@ -63,6 +80,8 @@ export default async function() {
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget.setSize(resolution.x, resolution.y);
+    postEffect.resize(resolution.x, resolution.y);
   };
   const on = () => {
     const touchstart = (e) => {
