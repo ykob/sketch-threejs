@@ -37,7 +37,7 @@ gulp.task('default', ['predefault'], () => {
     [
       `./${DIR.SRC}/**/*.js`,
       `./${DIR.SRC}/**/*.vs`,
-      `./${DIR.SRC}/**/*.fs`,
+      `./${DIR.SRC}/**/*.fs`
     ],
     () => {
       gulp.start(['scripts'])
