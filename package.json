@@ -26,7 +26,6 @@
     "browser-sync": "^2.23.6",
     "cross-env": "^5.2.0",
     "del": "^3.0.0",
-    "event-stream": "^4.0.0",
     "glslify-import-loader": "^0.1.2",
     "glslify-loader": "^1.0.2",
     "gulp": "^3.9.1",
