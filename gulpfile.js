@@ -20,25 +20,21 @@ gulp.task('predefault', cb => {
 
 gulp.task('default', ['predefault'], () => {
   $.watch(
-    [`./${DIR.SRC}/**/*.{scss,sass}`],
+    `./${DIR.SRC}/**/*.{scss,sass}`,
     () => {
       gulp.start(['sass'])
     }
   ).on('change', reload);
 
   $.watch(
-    [`./${DIR.SRC}/**/*.pug`],
+    `./${DIR.SRC}/**/*.pug`,
     () => {
       gulp.start(['pug'])
     }
   ).on('change', reload);
 
   $.watch(
-    [
-      `./${DIR.SRC}/**/*.js`,
-      `./${DIR.SRC}/**/*.vs`,
-      `./${DIR.SRC}/**/*.fs`
-    ],
+    `./${DIR.SRC}/**/*.{js,vs,fs}`,
     () => {
       gulp.start(['scripts'])
     }
