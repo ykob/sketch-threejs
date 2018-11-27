@@ -6,8 +6,8 @@ uniform vec2 resolution;
 
 varying vec2 vUv;
 
-const float strength = 20.0;
-const float nFrag = 1.0 / 60.0;
+const float godrayIteration = 60.0;
+const float godrayStrength = 20.0;
 
 float random2(vec2 c){
   return fract(sin(dot(c.xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -30,20 +30,21 @@ void main() {
   float texColorB = texture2D(texture, vUv).b;
 
   // godray
-  vec3 destColor = vec3(0.0);
-  float totalWeight = 0.0;
+  vec2 godrayCenter = vec2(0.5);
+  vec3 godrayDestColor = vec3(0.0);
+  float godrayTotalWeight = 0.0;
 
   for (float i = 0.0; i < 60.0; i++) {
-    float percent = i * nFrag;
-    float weight = percent - percent * percent;
-    vec2 t = vUv - (vUv - vec2(0.5)) * percent * strength * nFrag;
-    destColor += texture2D(texture, t).rgb * weight;
-    totalWeight += weight;
+    float alpha = i / godrayIteration; // step in loop [0, 1].
+    float weight = alpha - alpha * alpha; // conic curve [0, 0.25, 0].
+    vec2 shiftUv = vUv - (vUv - godrayCenter) * alpha * godrayStrength / godrayIteration; // define a range of to shift UV.
+    godrayDestColor += texture2D(texture, shiftUv).rgb * weight; // draw gradation.
+    godrayTotalWeight += weight;
   }
-  vec3 godray = destColor / totalWeight;
+  vec3 godray = godrayDestColor / godrayTotalWeight;
 
   // Sum total of colors.
-  vec3 color = vec3(texColorR, texColorG, texColorB) + rNoise + godray * 0.5;
+  vec3 color = vec3(texColorR, texColorG, texColorB) + rNoise + godray;
 
   gl_FragColor = vec4(color, 1.0);
 }
