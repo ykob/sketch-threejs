@@ -9,7 +9,7 @@ html(lang="ja")
     include ../_layout/_head.pug
   body
     .l-page(
-      class = (page.color == "white") ?  'l-page--white' : 'l-page--black',
+      class = (page.color == "white") ? 'l-page--white' : 'l-page--black',
       data-id = page.id
     )
       block content
@@ -17,13 +17,21 @@ html(lang="ja")
         .p-utility-menu
           a.c-button(
             href = "/sketch-threejs/",
-            class = (page.color == "white") ?  'c-button--white' : 'c-button--black',
+            class = (page.color == "white") ? 'c-button--white' : 'c-button--black',
             )
             span.c-button__icon.c-button__icon--back(
-              class = (page.color == "white") ?  'c-button__icon--white' : 'c-button__icon--black'
+              class = (page.color == "white") ? 'c-button__icon--white' : 'c-button__icon--black'
               )
             span.c-button__label
               +splitStr('back', 'js-split-str')
+        .p-preloader
+          each val in [1, 2, 3]
+            -
+              var classColor = (page.color == "white") ? 'p-preloader__box--white' : 'p-preloader__box--black';
+              var classNum = `p-preloader__box--0${val}`;
+            .p-preloader__box(
+              class = `${classColor} ${classNum}`,
+              )
     block scripts
     script(src="/sketch-threejs/js/main.js")
     script.
