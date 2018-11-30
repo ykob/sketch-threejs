@@ -1,5 +1,5 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
 
 export default async function() {
   // ==========
