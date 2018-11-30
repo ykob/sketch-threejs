@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+import sleep from 'js-util/sleep';
 import MathEx from 'js-util/MathEx';
 
 import BuddhaHead from './BuddhaHead';
@@ -31,6 +32,9 @@ export default async function() {
   const renderTarget = new THREE.WebGLRenderTarget();
   const scenePE = new THREE.Scene();
   const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
+
+  // For the preloader.
+  const preloader = document.querySelector('.p-preloader');
 
   // ==========
   // Define unique variables
@@ -136,6 +140,9 @@ export default async function() {
 
   on();
   resizeWindow();
+
+  preloader.classList.add('is-hidden');
+  await sleep(200);
 
   clock.start();
   renderLoop();
