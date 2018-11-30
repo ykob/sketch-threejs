@@ -1,5 +1,5 @@
-const THREE = require('three');
-const MathEx = require('js-util/MathEx');
+import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 export default class BackgroundSphere {
   constructor() {

@@ -1,4 +1,4 @@
-const THREE = require('three');
+import * as THREE from 'three';
 
 export default class PostEffect {
   constructor(texture) {

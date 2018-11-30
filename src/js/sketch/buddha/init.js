@@ -1,14 +1,14 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
-const MathEx = require('js-util/MathEx');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
+import MathEx from 'js-util/MathEx';
 
-const BuddhaHead = require('./BuddhaHead').default;
-const Typo = require('./Typo').default;
-const Wave = require('./Wave').default;
-const Points = require('./Points').default;
-const BackgroundSphere = require('./BackgroundSphere').default;
-const PostEffect = require('./PostEffect').default;
-const Drag = require('./Drag').default;
+import BuddhaHead from './BuddhaHead';
+import Typo from './Typo';
+import Wave from './Wave';
+import Points from './Points';
+import BackgroundSphere from './BackgroundSphere';
+import PostEffect from './PostEffect';
+import Drag from './Drag';
 
 export default async function() {
   // ==========
