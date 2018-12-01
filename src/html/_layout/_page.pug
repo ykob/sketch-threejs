@@ -24,14 +24,6 @@ html(lang="ja")
               )
             span.c-button__label
               +splitStr('back', 'js-split-str')
-        .p-preloader
-          each val in [1, 2, 3]
-            -
-              var classColor = (page.color == "white") ? 'p-preloader__box--white' : 'p-preloader__box--black';
-              var classNum = `p-preloader__box--0${val}`;
-            .p-preloader__box(
-              class = `${classColor} ${classNum}`,
-              )
     block scripts
     script(src="/sketch-threejs/js/main.js")
     script.
