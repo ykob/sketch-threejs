@@ -7,6 +7,7 @@ import BuddhaHead from './BuddhaHead';
 import Typo from './Typo';
 import Wave from './Wave';
 import Points from './Points';
+import Aura from './Aura';
 import BackgroundSphere from './BackgroundSphere';
 import PostEffect from './PostEffect';
 import Drag from './Drag';
@@ -43,6 +44,7 @@ export default async function() {
   const typo = new Typo();
   const wave = new Wave();
   const points = new Points();
+  const aura = new Aura();
   const bg = new BackgroundSphere();
   const dd = new Drag(resolution);
 
@@ -61,6 +63,7 @@ export default async function() {
     typo.render(time);
     wave.render(time);
     points.render(time);
+    aura.render(time);
 
     // Render the main scene to frame buffer.
     renderer.render(scene, camera, renderTarget);
@@ -128,6 +131,7 @@ export default async function() {
   await typo.createObj();
   wave.createObj();
   points.createObj();
+  aura.createObj();
   bg.createObj();
 
   typo.obj.renderOrder = 10;
@@ -136,6 +140,7 @@ export default async function() {
   scene.add(typo.obj);
   scene.add(wave.obj);
   scene.add(points.obj);
+  scene.add(aura.obj);
   scene.add(bg.obj);
 
   on();
