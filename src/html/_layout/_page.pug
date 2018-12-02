@@ -9,7 +9,7 @@ html(lang="ja")
     include ../_layout/_head.pug
   body
     .l-page(
-      class = (page.color == "white") ?  'l-page--white' : 'l-page--black',
+      class = (page.color == "white") ? 'l-page--white' : 'l-page--black',
       data-id = page.id
     )
       block content
@@ -17,10 +17,10 @@ html(lang="ja")
         .p-utility-menu
           a.c-button(
             href = "/sketch-threejs/",
-            class = (page.color == "white") ?  'c-button--white' : 'c-button--black',
+            class = (page.color == "white") ? 'c-button--white' : 'c-button--black',
             )
             span.c-button__icon.c-button__icon--back(
-              class = (page.color == "white") ?  'c-button__icon--white' : 'c-button__icon--black'
+              class = (page.color == "white") ? 'c-button__icon--white' : 'c-button__icon--black'
               )
             span.c-button__label
               +splitStr('back', 'js-split-str')

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class Wave {
+export default class Aura {
   constructor() {
     this.uniforms = {
       time: {
@@ -13,24 +13,21 @@ export default class Wave {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(70, 70, 512, 512);
+    const geometry = new THREE.PlaneBufferGeometry(60, 60, 512, 512);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/wave.vs'),
-      fragmentShader: require('./glsl/wave.fs'),
+      vertexShader: require('./glsl/aura.vs'),
+      fragmentShader: require('./glsl/aura.fs'),
       transparent: true,
       flatShading: true,
     });
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
-    this.obj.rotation.set(
-      MathEx.radians(-90),
-      0,
-      0
-    );
+    this.obj.position.y = 16.0;
+    this.obj.position.z = -30.0;
   }
   render(time) {
     this.uniforms.time.value += time;

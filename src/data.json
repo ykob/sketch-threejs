@@ -15,10 +15,10 @@
     "buddha": {
       "title": "buddha",
       "id": "buddha",
-      "description": "It's study to draw metallic color. ",
+      "description": "It's the study to draw metallic color and to attach Godray effect.",
       "path": "/sketch/buddha.html",
       "posted": "2018.10.7",
-      "update": "2018.10.14",
+      "update": "2018.12.2",
       "color": "white"
     },
     "planet": {
@@ -42,7 +42,7 @@
     "webcam": {
       "title": "webcam",
       "id": "webcam",
-      "description": "to process an image of a webcam with a fragment shader and clmtrackr.",
+      "description": "Make a video texture in WebGL with an image from a webcam, and process it using the face tracking and calculating acceleration.",
       "path": "/sketch/webcam.html",
       "posted": "2018.5.29",
       "update": "2018.10.7",

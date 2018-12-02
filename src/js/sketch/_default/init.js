@@ -1,5 +1,5 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
 
 export default async function() {
   // ==========
@@ -34,7 +34,15 @@ export default async function() {
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
-    camera.aspect = resolution.x / resolution.y;
+    camera.setFocalLength(Math.min(resolution.x / 1200, 1) * 35 + 15);
+    camera.setViewOffset(
+      1200,
+      800,
+      (resolution.x - 1200) / -2,
+      (resolution.y - 800) / -2,
+      resolution.x,
+      resolution.y
+    );
     camera.updateProjectionMatrix();
   };
   const resizeWindow = () => {
@@ -53,8 +61,8 @@ export default async function() {
   //
   renderer.setClearColor(0xeeeeee, 1.0);
 
+  camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.setFocalLength(50);
   camera.position.set(0, 0, 300);
   camera.lookAt(new THREE.Vector3());
 

@@ -1,13 +1,16 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
-const MathEx = require('js-util/MathEx');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
+import sleep from 'js-util/sleep';
+import MathEx from 'js-util/MathEx';
 
-const BuddhaHead = require('./BuddhaHead').default;
-const Typo = require('./Typo').default;
-const Wave = require('./Wave').default;
-const Points = require('./Points').default;
-const BackgroundSphere = require('./BackgroundSphere').default;
-const Drag = require('./Drag').default;
+import BuddhaHead from './BuddhaHead';
+import Typo from './Typo';
+import Wave from './Wave';
+import Points from './Points';
+import Aura from './Aura';
+import BackgroundSphere from './BackgroundSphere';
+import PostEffect from './PostEffect';
+import Drag from './Drag';
 
 export default async function() {
   // ==========
@@ -26,6 +29,14 @@ export default async function() {
     autoStart: false
   });
 
+  // For the post effect.
+  const renderTarget = new THREE.WebGLRenderTarget();
+  const scenePE = new THREE.Scene();
+  const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
+
+  // For the preloader.
+  const preloader = document.querySelector('.p-preloader');
+
   // ==========
   // Define unique variables
   //
@@ -33,8 +44,14 @@ export default async function() {
   const typo = new Typo();
   const wave = new Wave();
   const points = new Points();
+  const aura = new Aura();
   const bg = new BackgroundSphere();
   const dd = new Drag(resolution);
+
+  // For the post effect.
+  const postEffect = new PostEffect(renderTarget.texture);
+  postEffect.createObj();
+  scenePE.add(postEffect.obj);
 
   // ==========
   // Define functions
@@ -46,16 +63,30 @@ export default async function() {
     typo.render(time);
     wave.render(time);
     points.render(time);
-    renderer.render(scene, camera);
+    aura.render(time);
+
+    // Render the main scene to frame buffer.
+    renderer.render(scene, camera, renderTarget);
+
+    // Render the post effect.
+    postEffect.render(time);
+    renderer.render(scenePE, cameraPE);
   };
   const renderLoop = () => {
     render();
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
-    camera.aspect = resolution.x / resolution.y;
+    camera.setFocalLength(Math.min(resolution.x / 1200, 1) * 35 + 15);
+    camera.setViewOffset(
+      1200,
+      800,
+      (resolution.x - 1200) / -2,
+      (resolution.y - 800) / -2,
+      resolution.x,
+      resolution.y
+    );
     camera.updateProjectionMatrix();
-    camera.setFocalLength(MathEx.step(1, resolution.y / resolution.x) * 15 + 35);
   };
   const resizeWindow = () => {
     resolution.set(document.body.clientWidth, window.innerHeight);
@@ -63,6 +94,8 @@ export default async function() {
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget.setSize(resolution.x, resolution.y);
+    postEffect.resize(resolution.x, resolution.y);
   };
   const on = () => {
     const touchstart = (e) => {
@@ -81,25 +114,24 @@ export default async function() {
     window.addEventListener('touchmove', touchmove, { passive: false });
     window.addEventListener('touchend', touchend);
 
-    window.addEventListener('resize', debounce(resizeWindow, 1000));
+    window.addEventListener('resize', debounce(resizeWindow, 100));
   };
 
   // ==========
   // Initialize
   //
-  on();
-  resizeWindow();
-
   renderer.setClearColor(0x090909, 1.0);
 
+  camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.position.set(0, 14, 80);
+  camera.position.set(0, 12, 85);
   camera.lookAt(new THREE.Vector3(0, 14, 0));
 
   await buddhaHead.createObj();
   await typo.createObj();
   wave.createObj();
   points.createObj();
+  aura.createObj();
   bg.createObj();
 
   typo.obj.renderOrder = 10;
@@ -108,7 +140,14 @@ export default async function() {
   scene.add(typo.obj);
   scene.add(wave.obj);
   scene.add(points.obj);
+  scene.add(aura.obj);
   scene.add(bg.obj);
+
+  on();
+  resizeWindow();
+
+  preloader.classList.add('is-hidden');
+  await sleep(200);
 
   clock.start();
   renderLoop();

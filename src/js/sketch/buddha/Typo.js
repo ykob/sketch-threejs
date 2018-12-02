@@ -1,7 +1,7 @@
-const THREE = require('three');
-const MathEx = require('js-util/MathEx');
+import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
-const promiseTextureLoader = require('../../common/PromiseTextureLoader').default;
+import promiseTextureLoader from '../../common/PromiseTextureLoader';
 
 const DURATION = 4;
 let iPositions = undefined;

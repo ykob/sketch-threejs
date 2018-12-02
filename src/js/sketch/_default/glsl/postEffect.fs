@@ -16,13 +16,18 @@ float randomNoise(vec2 p) {
 void main() {
   // Convert uv to the other vec2 has a range from -1.0 to 1.0.
   vec2 p = vUv * 2.0 - 1.0;
-  vec2 ratio = vUv / resolution;
+  vec2 ratio = 1.0 / resolution;
 
+  // Random Noise
   float rNoise = randomNoise(vUv);
 
-  float texColorR = texture2D(texture, vUv - vec2(6.0 * ratio.x * p.x, 0.0)).r;
-  float texColorG = texture2D(texture, vUv + vec2(6.0 * ratio.x * p.x, 0.0)).g;
+  // RGB Shift
+  float texColorR = texture2D(texture, vUv - vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).r;
+  float texColorG = texture2D(texture, vUv + vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).g;
   float texColorB = texture2D(texture, vUv).b;
+
+  // Sum total of colors.
+  vec3 color = vec3(texColorR, texColorG, texColorB) + rNoise;
 
   gl_FragColor = vec4(vec3(texColorR, texColorG, texColorB) + rNoise, 1.0);
 }
