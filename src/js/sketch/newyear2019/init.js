@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 import MathEx from 'js-util/MathEx';
+import promiseOBJLoader from '../../common/PromiseOBJLoader';
 
 import BoarHead from './BoarHead';
 import Typo from './Typo';
@@ -100,7 +101,11 @@ export default async function() {
   camera.position.set(0, 0, 120);
   camera.lookAt(new THREE.Vector3());
 
-  await boarHead.createObj();
+  // Load an obj file.
+  const obj = await promiseOBJLoader('/sketch-threejs/model/newyear2019/boar_head.obj');
+  const boarGeometry = obj.children[0].geometry;
+
+  boarHead.createObj(boarGeometry);
   await typo.createObj();
 
   scene.add(boarHead.obj);

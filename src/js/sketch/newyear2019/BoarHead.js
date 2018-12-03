@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-const promiseOBJLoader = require('../../common/PromiseOBJLoader').default;
-
 export default class BoarHead {
   constructor() {
     this.uniforms = {
@@ -13,20 +11,18 @@ export default class BoarHead {
     };
     this.obj;
   }
-  async createObj() {
-    // Load an obj file.
-    const obj = await promiseOBJLoader('/sketch-threejs/model/newyear2019/boar_head.obj');
-
+  createObj(geometry) {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: require('./glsl/boarHead.vs'),
       fragmentShader: require('./glsl/boarHead.fs'),
       flatShading: true,
+      transparent: true,
     });
 
     // Create Object3D
-    this.obj = new THREE.Mesh(obj.children[0].geometry, material);
+    this.obj = new THREE.Mesh(geometry, material);
   }
   render(time, rotateX, rotateY) {
     this.uniforms.time.value += time;

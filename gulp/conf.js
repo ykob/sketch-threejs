@@ -44,6 +44,7 @@ module.exports.scripts = {
     `./${DIR.SRC}/**/*.js`,
     `./${DIR.SRC}/**/*.vs`,
     `./${DIR.SRC}/**/*.fs`,
+    `./${DIR.SRC}/**/*.glsl`,
   ],
   dest: {
     development: `./${DIR.DEST}/js/`,

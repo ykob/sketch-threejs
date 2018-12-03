@@ -9,6 +9,7 @@ uniform mat3 normalMatrix;
 uniform float time;
 
 varying vec3 vPosition;
+varying vec3 vMPosition;
 varying vec2 vUv;
 
 void main(void) {
@@ -16,7 +17,8 @@ void main(void) {
   vec4 mPosition = modelMatrix * vec4(position, 1.0);
   vec4 mvPosition = viewMatrix *mPosition;
 
-  vPosition = mPosition.xyz;
+  vPosition = position;
+  vMPosition = mPosition.xyz;
   vUv = uv;
 
   gl_Position = projectionMatrix * mvPosition;
