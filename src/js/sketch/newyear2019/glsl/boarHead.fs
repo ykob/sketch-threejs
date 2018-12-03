@@ -23,14 +23,14 @@ void main() {
   float glow2A = smoothstep(0.9, 1.0, d2);
   float glow2B = smoothstep(0.8, 1.0, d2);
 
-  // disolve
-  float disolveA = cnoise3(vPosition * 0.06 + time * 0.1) * 0.5 + 0.5;
-  float disolveB = cnoise3(vPosition * 0.35 - time * 0.5) * 0.5 + 0.5;
-  float disolve1 = smoothstep(0.36, 0.361,
-    disolveA * 0.8 + disolveB * 0.2
+  // dissolve
+  float dissolveA = cnoise3(vPosition * 0.06 + time * 0.02) * 0.5 + 0.5;
+  float dissolveB = cnoise3(vPosition * 0.35 - time * 0.12) * 0.5 + 0.5;
+  float dissolve1 = smoothstep(0.41, 0.411,
+    dissolveA * 0.8 + dissolveB * 0.2
   );
-  float disolve2 = 1.0 - smoothstep(0.35, 0.351,
-    disolveA * 0.8 + disolveB * 0.2
+  float dissolve2 = 1.0 - smoothstep(0.4, 0.401,
+    dissolveA * 0.8 + dissolveB * 0.2
   );
 
   // define colors.
@@ -50,5 +50,5 @@ void main() {
   );
   vec3 rgb2 = convertHsvToRgb(hsv2);
 
-  gl_FragColor = vec4(rgb1 * disolve1 + rgb2 * disolve2, 1.0);
+  gl_FragColor = vec4(rgb1 * dissolve1 + rgb2 * dissolve2, 1.0);
 }
