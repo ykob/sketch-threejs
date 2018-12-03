@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
+import MathEx from 'js-util/MathEx';
 
 import BoarHead from './BoarHead';
+import Typo from './Typo';
 import Drag from './Drag';
 
 export default async function() {
@@ -29,6 +31,7 @@ export default async function() {
   // Define unique variables
   //
   const boarHead = new BoarHead();
+  const typo = new Typo();
   const dd = new Drag(resolution);
 
   // ==========
@@ -38,6 +41,7 @@ export default async function() {
     const time = clock.getDelta();
     dd.render(resolution);
     boarHead.render(time, dd.v.y, dd.v.x);
+    typo.render(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -45,7 +49,10 @@ export default async function() {
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
-    camera.setFocalLength(Math.min(resolution.x / 1200, 1) * 35 + 15);
+    camera.setFocalLength(
+      Math.min(resolution.x / 1200, 1) * 50 * MathEx.step(1, resolution.x / resolution.y)
+      + Math.min(resolution.x / 818, 1) * 50 * MathEx.step(1, resolution.y / resolution.x)
+    );
     camera.setViewOffset(
       1200,
       800,
@@ -94,7 +101,10 @@ export default async function() {
   camera.lookAt(new THREE.Vector3());
 
   await boarHead.createObj();
+  await typo.createObj();
+
   scene.add(boarHead.obj);
+  scene.add(typo.obj);
 
   on();
   resizeWindow();
