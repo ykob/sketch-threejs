@@ -39,6 +39,13 @@ gulp.task('default', ['predefault'], () => {
       gulp.start(['scripts'])
     }
   ).on('change', reload);
+
+  $.watch(
+    `./${DIR.SRC}/{img,model}/**/*.*`,
+    () => {
+      gulp.start(['copyToDest'])
+    }
+  ).on('change', reload);
 });
 
 gulp.task('build', cb => {
