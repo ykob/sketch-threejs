@@ -6,6 +6,7 @@ import promiseOBJLoader from '../../common/PromiseOBJLoader';
 
 import BoarHead from './BoarHead';
 import Typo from './Typo';
+import PostEffect from './PostEffect';
 import Drag from './Drag';
 
 export default async function() {
@@ -25,6 +26,11 @@ export default async function() {
     autoStart: false
   });
 
+  // For the post effect.
+  const renderTarget = new THREE.WebGLRenderTarget();
+  const scenePE = new THREE.Scene();
+  const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
+
   // For the preloader.
   const preloader = document.querySelector('.p-preloader');
 
@@ -35,6 +41,9 @@ export default async function() {
   const typo = new Typo();
   const dd = new Drag(resolution);
 
+  // For the post effect.
+  const postEffect = new PostEffect(renderTarget.texture);
+
   // ==========
   // Define functions
   //
@@ -43,7 +52,13 @@ export default async function() {
     dd.render(resolution);
     boarHead.render(time, dd.v.y, dd.v.x);
     typo.render(time);
-    renderer.render(scene, camera);
+
+    // Render the main scene to frame buffer.
+    renderer.render(scene, camera, renderTarget);
+
+    // Render the post effect.
+    postEffect.render(time);
+    renderer.render(scenePE, cameraPE);
   };
   const renderLoop = () => {
     render();
@@ -70,6 +85,8 @@ export default async function() {
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget.setSize(resolution.x, resolution.y);
+    postEffect.resize(resolution.x, resolution.y);
   };
   const on = () => {
     const touchstart = (e) => {
@@ -110,6 +127,10 @@ export default async function() {
 
   scene.add(boarHead.obj);
   scene.add(typo.obj);
+
+  // For the post effect.
+  postEffect.createObj();
+  scenePE.add(postEffect.obj);
 
   on();
   resizeWindow();
