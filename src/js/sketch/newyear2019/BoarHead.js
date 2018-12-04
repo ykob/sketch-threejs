@@ -13,6 +13,9 @@ export default class BoarHead {
         value: 0
       },
     };
+    this.v = new THREE.Vector3(0, 0, 0);
+    this.a = new THREE.Vector3();
+    this.anchor = new THREE.Vector3(0, 0, 0);
     this.obj;
   }
   createObj(geometry) {
@@ -28,12 +31,14 @@ export default class BoarHead {
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
   }
-  render(time, rotateX, rotateY) {
+  rotate(rotateX, rotateY) {
+    this.anchor.set(rotateX, rotateY, 0);
+  }
+  render(time) {
     this.uniforms.time.value += time;
-    this.obj.rotation.set(
-      MathEx.radians(rotateX),
-      MathEx.radians(rotateY),
-      0
-    );
+
+    this.a.copy(this.anchor).sub(this.v).divideScalar(10);
+    this.v.add(this.a);
+    this.obj.rotation.setFromVector3(this.v);
   }
 }

@@ -1,18 +1,20 @@
 import * as THREE from 'three';
+import UaParser from 'ua-parser-js';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 import MathEx from 'js-util/MathEx';
-import promiseOBJLoader from '../../common/PromiseOBJLoader';
 
+import promiseOBJLoader from '../../common/PromiseOBJLoader';
 import BoarHead from './BoarHead';
 import Typo from './Typo';
 import PostEffect from './PostEffect';
-import Drag from './Drag';
 
 export default async function() {
   // ==========
   // Define common variables
   //
+  const uaParser = new UaParser();
+  const os = uaParser.getOS().name;
   const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
@@ -40,7 +42,6 @@ export default async function() {
   //
   const boarHead = new BoarHead();
   const typo = new Typo();
-  const dd = new Drag(resolution);
 
   // For the post effect.
   const postEffect = new PostEffect(
@@ -54,14 +55,16 @@ export default async function() {
   const render = () => {
     const time = clock.getDelta();
 
-    boarHead.uniforms.drawBrightOnly.value = 0;
-    typo.obj.visible = true;
-    dd.render(resolution);
-    boarHead.render(time, dd.v.y, dd.v.x);
+    // Render objects in 3D scene.
+    boarHead.render(time);
     typo.render(time);
 
     // Render the main scene to frame buffer.
+    boarHead.uniforms.drawBrightOnly.value = 0;
+    typo.obj.visible = true;
     renderer.render(scene, camera, renderTarget1);
+
+    // Render the only bright to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 1;
     typo.obj.visible = false;
     renderer.render(scene, camera, renderTarget2);
@@ -99,24 +102,27 @@ export default async function() {
     renderTarget2.setSize(resolution.x, resolution.y);
     postEffect.resize(resolution.x, resolution.y);
   };
-  const on = () => {
-    const touchstart = (e) => {
-      dd.touchStart(e);
-    }
-    const touchmove = (e) => {
-      dd.touchMove(e);
-    }
-    const touchend = (e) => {
-      dd.touchEnd(e);
-    }
-    canvas.addEventListener('mousedown', touchstart, { passive: false });
-    window.addEventListener('mousemove', touchmove, { passive: false });
-    window.addEventListener('mouseup', touchend);
-    canvas.addEventListener('touchstart', touchstart, { passive: false });
-    window.addEventListener('touchmove', touchmove, { passive: false });
-    window.addEventListener('touchend', touchend);
 
+  const on = () => {
     window.addEventListener('resize', debounce(resizeWindow, 100));
+
+    if (os === 'iOS' || os === 'Android') {
+      window.addEventListener('deviceorientation', (event) => {
+        const x = MathEx.radians((-event.beta + 90) * 0.3);
+        const y = MathEx.radians(event.gamma) * Math.cos(MathEx.radians(event.beta));
+        boarHead.rotate(x, y);
+      });
+    } else {
+      window.addEventListener('mousemove', (event) => {
+        boarHead.rotate(
+          MathEx.radians((-(event.clientY / resolution.y * 2.0 - 1.0)) * -20),
+          MathEx.radians((event.clientX / resolution.x * 2.0 - 1.0) * 20)
+        );
+      });
+      window.addEventListener('mouseout', (event) => {
+        boarHead.rotate(0, 0);
+      });
+    }
   };
 
   // ==========
@@ -126,7 +132,7 @@ export default async function() {
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.position.set(0, 0, 120);
+  camera.position.z = 120;
   camera.lookAt(new THREE.Vector3());
 
   // Load an obj file.
