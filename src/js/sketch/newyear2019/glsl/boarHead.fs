@@ -24,17 +24,36 @@ void main() {
   float glow2B = smoothstep(0.8, 1.0, d2);
 
   // dissolve
-  float dissolveA = cnoise3(vPosition * 0.06 + time * 0.02) * 0.5 + 0.5;
-  float dissolveB = cnoise3(vPosition * 0.35 - time * 0.12) * 0.5 + 0.5;
-  float dissolve1 = smoothstep(0.41, 0.411,
-    dissolveA * 0.8 + dissolveB * 0.2
+  float dissolveA = cnoise3(
+    vec3(
+      vPosition.x * 0.04,
+      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 0.12,
+      vPosition.z * 0.04
+    ) + time * 0.02
+  ) * 0.5 + 0.5;
+  float dissolveB = cnoise3(
+    vec3(
+      vPosition.x * 0.2,
+      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 0.4,
+      vPosition.z * 0.2
+    ) + time * 0.04
+  ) * 0.5 + 0.5;
+  float dissolveC = cnoise3(
+    vec3(
+      vPosition.x * 0.5,
+      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 1.2,
+      vPosition.z * 0.5
+    )
+  ) * 0.5 + 0.5;
+  float dissolve1 = smoothstep(0.41, 0.415,
+    dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
   );
-  float dissolve2 = 1.0 - smoothstep(0.4, 0.401,
-    dissolveA * 0.8 + dissolveB * 0.2
+  float dissolve2 = 1.0 - smoothstep(0.4, 0.405,
+    dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
   );
 
   // define colors.
-  float h = cnoise3(vPosition * 0.05 + time * 0.1) * 0.1 + 0.05;
+  float h = dissolveA * 0.24 - 0.1;
   vec3 hsv1 = vec3(
     h,
     (glow1A + glow2A) * 0.8 + 0.2,
