@@ -8,6 +8,10 @@ export default class BoarHead {
         type: 'f',
         value: 0
       },
+      drawBrightOnly: {
+        type: 'f',
+        value: 0
+      },
     };
     this.obj;
   }

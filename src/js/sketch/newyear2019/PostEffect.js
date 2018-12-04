@@ -1,15 +1,19 @@
 import * as THREE from 'three';
 
 export default class PostEffect {
-  constructor(texture) {
+  constructor(texture1, texture2) {
     this.uniforms = {
       time: {
         type: 'f',
         value: 0,
       },
-      texture: {
+      texture1: {
         type: 't',
-        value: texture,
+        value: texture1,
+      },
+      texture2: {
+        type: 't',
+        value: texture2,
       },
       resolution: {
         type: 'v2',

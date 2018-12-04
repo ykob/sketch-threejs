@@ -1,6 +1,7 @@
 precision highp float;
 
 uniform float time;
+uniform float drawBrightOnly;
 
 varying vec3 vPosition;
 varying vec3 vMPosition;
@@ -26,9 +27,9 @@ void main() {
   // dissolve
   float dissolveA = cnoise3(
     vec3(
-      vPosition.x * 0.04,
-      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 0.12,
-      vPosition.z * 0.04
+      vPosition.x * 0.06,
+      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 0.18,
+      vPosition.z * 0.06
     ) + time * 0.02
   ) * 0.5 + 0.5;
   float dissolveB = cnoise3(
@@ -45,10 +46,10 @@ void main() {
       vPosition.z * 0.5
     )
   ) * 0.5 + 0.5;
-  float dissolve1 = smoothstep(0.41, 0.415,
+  float dissolve1 = smoothstep(0.36, 0.365,
     dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
   );
-  float dissolve2 = 1.0 - smoothstep(0.4, 0.405,
+  float dissolve2 = 1.0 - smoothstep(0.35, 0.355,
     dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
   );
 
@@ -65,9 +66,9 @@ void main() {
   vec3 hsv2 = vec3(
     h,
     0.45,
-    (glow1B + glow2B) * 1.4
+    (glow1B + glow2B) * 1.2
   );
   vec3 rgb2 = convertHsvToRgb(hsv2);
 
-  gl_FragColor = vec4(rgb1 * dissolve1 + rgb2 * dissolve2, 1.0);
+  gl_FragColor = vec4(rgb1 * dissolve1 * (1.0 - drawBrightOnly) + rgb2 * dissolve2, 1.0);
 }

@@ -27,7 +27,8 @@ export default async function() {
   });
 
   // For the post effect.
-  const renderTarget = new THREE.WebGLRenderTarget();
+  const renderTarget1 = new THREE.WebGLRenderTarget();
+  const renderTarget2 = new THREE.WebGLRenderTarget();
   const scenePE = new THREE.Scene();
   const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
 
@@ -42,19 +43,28 @@ export default async function() {
   const dd = new Drag(resolution);
 
   // For the post effect.
-  const postEffect = new PostEffect(renderTarget.texture);
+  const postEffect = new PostEffect(
+    renderTarget1.texture,
+    renderTarget2.texture
+  );
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+
+    boarHead.uniforms.drawBrightOnly.value = 0;
+    typo.obj.visible = true;
     dd.render(resolution);
     boarHead.render(time, dd.v.y, dd.v.x);
     typo.render(time);
 
     // Render the main scene to frame buffer.
-    renderer.render(scene, camera, renderTarget);
+    renderer.render(scene, camera, renderTarget1);
+    boarHead.uniforms.drawBrightOnly.value = 1;
+    typo.obj.visible = false;
+    renderer.render(scene, camera, renderTarget2);
 
     // Render the post effect.
     postEffect.render(time);
@@ -85,7 +95,8 @@ export default async function() {
     canvas.height = resolution.y;
     resizeCamera();
     renderer.setSize(resolution.x, resolution.y);
-    renderTarget.setSize(resolution.x, resolution.y);
+    renderTarget1.setSize(resolution.x, resolution.y);
+    renderTarget2.setSize(resolution.x, resolution.y);
     postEffect.resize(resolution.x, resolution.y);
   };
   const on = () => {
@@ -111,7 +122,7 @@ export default async function() {
   // ==========
   // Initialize
   //
-  renderer.setClearColor(0x111111, 1.0);
+  renderer.setClearColor(0x000000, 1.0);
 
   camera.aspect = 3 / 2;
   camera.far = 1000;

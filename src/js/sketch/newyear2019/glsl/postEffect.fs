@@ -1,7 +1,8 @@
 precision highp float;
 
 uniform float time;
-uniform sampler2D texture;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 uniform vec2 resolution;
 
 varying vec2 vUv;
@@ -13,7 +14,7 @@ float random2(vec2 c){
   return fract(sin(dot(c.xy, vec2(12.9898, 78.233))) * 43758.5453);
 }
 float randomNoise(vec2 p) {
-  return (random2(p - vec2(sin(time))) * 2.0 - 1.0) * 0.04;
+  return (random2(p - vec2(sin(time))) * 2.0 - 1.0) * 0.02;
 }
 
 void main() {
@@ -25,9 +26,9 @@ void main() {
   float rNoise = randomNoise(vUv);
 
   // RGB Shift
-  float texColorR = texture2D(texture, vUv - vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).r;
-  float texColorG = texture2D(texture, vUv + vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).g;
-  float texColorB = texture2D(texture, vUv).b;
+  float texColorR = texture2D(texture1, vUv - vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).r;
+  float texColorG = texture2D(texture1, vUv + vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).g;
+  float texColorB = texture2D(texture1, vUv).b;
 
   // godray
   vec2 godrayCenter = vec2(0.5);
@@ -38,7 +39,7 @@ void main() {
     float alpha = i / godrayIteration; // step in loop [0, 1].
     float weight = alpha - alpha * alpha; // conic curve [0, 0.25, 0].
     vec2 shiftUv = vUv - (vUv - godrayCenter) * alpha * godrayStrength / godrayIteration; // define a range of to shift UV.
-    godrayDestColor += texture2D(texture, shiftUv).rgb * weight; // draw gradation.
+    godrayDestColor += texture2D(texture2, shiftUv).rgb * weight; // draw gradation.
     godrayTotalWeight += weight;
   }
   vec3 godray = godrayDestColor / godrayTotalWeight;
