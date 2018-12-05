@@ -8,6 +8,7 @@ import promiseOBJLoader from '../../common/PromiseOBJLoader';
 import BoarHead from './BoarHead';
 import Typo from './Typo';
 import PostEffect from './PostEffect';
+import Hold from './Hold';
 
 export default async function() {
   // ==========
@@ -49,14 +50,20 @@ export default async function() {
     renderTarget2.texture
   );
 
+  // For hold event.
+  const hold = new Hold();
+
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
 
+    // Render the hold acceleration.
+    hold.render(time);
+
     // Render objects in 3D scene.
-    boarHead.render(time);
+    boarHead.render(time, hold.v);
     typo.render(time);
 
     // Render the main scene to frame buffer.
@@ -123,6 +130,25 @@ export default async function() {
         boarHead.rotate(0, 0);
       });
     }
+
+    window.addEventListener('mousedown', (event) => {
+      hold.isHolding = true;
+    });
+    window.addEventListener('mouseup', (event) => {
+      hold.a = 0;
+      hold.isHolding = false;
+    });
+    window.addEventListener('mouseleave', (event) => {
+      hold.a = 0;
+      hold.isHolding = false;
+    });
+    window.addEventListener('touchstart', (event) => {
+      hold.isHolding = true;
+    });
+    window.addEventListener('touchend', (event) => {
+      hold.a = 0;
+      hold.isHolding = false;
+    });
   };
 
   // ==========

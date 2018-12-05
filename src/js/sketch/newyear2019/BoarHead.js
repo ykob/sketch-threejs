@@ -12,6 +12,10 @@ export default class BoarHead {
         type: 'f',
         value: 0
       },
+      dissolveEdge: {
+        type: 'f',
+        value: 0
+      },
     };
     this.v = new THREE.Vector3(0, 0, 0);
     this.a = new THREE.Vector3();
@@ -34,8 +38,9 @@ export default class BoarHead {
   rotate(rotateX, rotateY) {
     this.anchor.set(rotateX, rotateY, 0);
   }
-  render(time) {
+  render(time, holdV) {
     this.uniforms.time.value += time;
+    this.uniforms.dissolveEdge.value = holdV * 0.0065;
 
     this.a.copy(this.anchor).sub(this.v).divideScalar(10);
     this.v.add(this.a);

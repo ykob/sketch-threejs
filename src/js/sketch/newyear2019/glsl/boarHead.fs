@@ -2,6 +2,7 @@ precision highp float;
 
 uniform float time;
 uniform float drawBrightOnly;
+uniform float dissolveEdge;
 
 varying vec3 vPosition;
 varying vec3 vMPosition;
@@ -46,10 +47,10 @@ void main() {
       vPosition.z * 0.5
     )
   ) * 0.5 + 0.5;
-  float dissolve1 = smoothstep(0.36, 0.365,
+  float dissolve1 = smoothstep(0.36 + dissolveEdge, 0.365 + dissolveEdge,
     dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
   );
-  float dissolve2 = 1.0 - smoothstep(0.35, 0.355,
+  float dissolve2 = 1.0 - smoothstep(0.35 + dissolveEdge, 0.355 + dissolveEdge,
     dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
   );
 
