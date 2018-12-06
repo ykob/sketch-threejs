@@ -26,8 +26,7 @@ export default class BackgroundSphere {
     this.obj = new THREE.Mesh(geometry, material);
     this.obj.position.y = 16.0;
   }
-  render(time, force) {
-    this.uniforms.force.value = force;
-    this.uniforms.time.value += time * (force * 1.2);
+  render(time) {
+    this.uniforms.time.value += time;
   }
 }
