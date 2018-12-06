@@ -45,5 +45,10 @@ export default class BoarHead {
     this.a.copy(this.anchor).sub(this.v).divideScalar(10);
     this.v.add(this.a);
     this.obj.rotation.setFromVector3(this.v);
+    this.obj.position.set(
+      (Math.random() * 2 - 1) * holdV * 0.01,
+      (Math.random() * 2 - 1) * holdV * 0.01,
+      (Math.random() * 2 - 1) * holdV * 0.01
+    )
   }
 }
