@@ -8,7 +8,7 @@ uniform vec2 resolution;
 varying vec2 vUv;
 
 const float godrayIteration = 60.0;
-const float godrayStrength = 20.0;
+const float godrayStrength = 24.0;
 
 float random2(vec2 c){
   return fract(sin(dot(c.xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -45,7 +45,7 @@ void main() {
   vec3 godray = godrayDestColor / godrayTotalWeight;
 
   // Sum total of colors.
-  vec3 color = vec3(texColorR, texColorG, texColorB) + rNoise + godray;
+  vec3 color = vec3(texColorR, texColorG, texColorB) + rNoise + godray * 0.8;
 
   gl_FragColor = vec4(color, 1.0);
 }

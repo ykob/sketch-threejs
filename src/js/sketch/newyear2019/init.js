@@ -7,6 +7,7 @@ import MathEx from 'js-util/MathEx';
 import promiseOBJLoader from '../../common/PromiseOBJLoader';
 import BoarHead from './BoarHead';
 import Typo from './Typo';
+import BackgroundSphere from './BackgroundSphere';
 import PostEffect from './PostEffect';
 import Hold from './Hold';
 
@@ -43,6 +44,7 @@ export default async function() {
   //
   const boarHead = new BoarHead();
   const typo = new Typo();
+  const bg = new BackgroundSphere();
 
   // For the post effect.
   const postEffect = new PostEffect(
@@ -65,15 +67,18 @@ export default async function() {
     // Render objects in 3D scene.
     boarHead.render(time, hold.v);
     typo.render(time);
+    bg.render(time);
 
     // Render the main scene to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 0;
     typo.obj.visible = true;
+    bg.obj.visible = true;
     renderer.render(scene, camera, renderTarget1);
 
     // Render the only bright to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 1;
     typo.obj.visible = false;
+    bg.obj.visible = false;
     renderer.render(scene, camera, renderTarget2);
 
     // Render the post effect.
@@ -167,9 +172,11 @@ export default async function() {
 
   boarHead.createObj(boarGeometry);
   await typo.createObj();
+  bg.createObj();
 
   scene.add(boarHead.obj);
   scene.add(typo.obj);
+  scene.add(bg.obj);
 
   // For the post effect.
   postEffect.createObj();

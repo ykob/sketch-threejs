@@ -27,7 +27,7 @@ export default class Typo {
       vertexShader: require('./glsl/typo.vs'),
       fragmentShader: require('./glsl/typo.fs'),
       transparent: true,
-      blending: THREE.AdditiveBlending,
+      // blending: THREE.AdditiveBlending,
     });
     this.uniforms.tex.value = await promiseTextureLoader('/sketch-threejs/img/sketch/newyear2019/typo.png');
 
