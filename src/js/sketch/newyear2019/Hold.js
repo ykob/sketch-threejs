@@ -9,7 +9,7 @@ export default class Hold {
     if (this.isOvered) return;
     // calculate acceleration.
     if (this.isHolding === true) {
-      this.a = this.a * 1.05 + 0.02 * time;
+      this.a = this.a * 1.05 + 0.01 * time;
     } else {
       if (this.v > 0) this.a = this.v * -3 * time;
     }

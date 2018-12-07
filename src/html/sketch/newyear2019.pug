@@ -7,4 +7,11 @@ block vars
 block content
   include ../_modules/_preloader.pug
   include ../_modules/_website-outline.pug
+  .p-hold-button
+    .p-hold-button__label
+      |Hold
+    .p-hold-button__border.p-hold-button__border--out
+    .p-hold-button__border.p-hold-button__border--in
+    .p-hold-button__progress
+      .p-hold-button__progress-in
   canvas(id="canvas-webgl", class="p-canvas-webgl")
