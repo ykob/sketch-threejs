@@ -31,6 +31,7 @@ export default class PostEffect {
 
     // Create Object3D
     this.obj = new THREE.Mesh(geometry, material);
+    this.obj.name = 'PostEffect';
   }
   resize(x, y) {
     this.uniforms.resolution.value.set(x, y);

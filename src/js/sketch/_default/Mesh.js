@@ -23,6 +23,7 @@ export default class Mesh {
     });
 
     // Create Object3D
+    this.obj.name = 'Mesh';
     this.obj = new THREE.Mesh(geometry, material);
   }
   render(time) {
