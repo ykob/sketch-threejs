@@ -54,8 +54,6 @@ export default async function() {
 
   // For hold event.
   const hold = new Hold();
-  const holdBtn = document.querySelector('.p-hold-button');
-  const holdProgress = document.querySelector('.p-hold-button__progress-in');
 
   // ==========
   // Define functions
@@ -82,9 +80,6 @@ export default async function() {
     typo.obj.visible = false;
     bg.obj.visible = false;
     renderer.render(scene, camera, renderTarget2);
-
-    // Update holding progress.
-    holdProgress.style = `transform: skewX(-45deg) translateX(${50 - hold.v}%);`;
 
     // Render the post effect.
     postEffect.render(time);
@@ -141,30 +136,7 @@ export default async function() {
       });
     }
 
-    window.addEventListener('mousedown', (event) => {
-      hold.isHolding = true;
-    });
-    window.addEventListener('mouseup', (event) => {
-      hold.a = 0;
-      hold.isHolding = false;
-    });
-    window.addEventListener('mouseleave', (event) => {
-      hold.a = 0;
-      hold.isHolding = false;
-    });
-    holdBtn.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-      holdBtn.classList.add('is-pressed');
-      holdBtn.classList.remove('is-released');
-      hold.isHolding = true;
-    });
-    holdBtn.addEventListener('touchend', (event) => {
-      event.preventDefault();
-      hold.a = 0;
-      holdBtn.classList.remove('is-pressed');
-      holdBtn.classList.add('is-released');
-      hold.isHolding = false;
-    });
+    hold.on();
   };
 
   // ==========
@@ -198,7 +170,7 @@ export default async function() {
 
   preloader.classList.add('is-hidden');
   await sleep(200);
-  holdBtn.classList.add('is-shown');
+  hold.start();
 
   clock.start();
   renderLoop();
