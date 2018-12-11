@@ -1,9 +1,13 @@
+import * as THREE from 'three';
+
 export default class Hold {
   constructor() {
     this.btn = document.querySelector('.p-hold-button');
     this.progress = document.querySelector('.p-hold-button__progress-in');
     this.v = 0;
     this.a = 0;
+    this.cv = new THREE.Vector2();
+    this.ca = new THREE.Vector2();
     this.isHolding = false;
     this.isOvered = false;
   }
@@ -49,9 +53,19 @@ export default class Hold {
       capture: true
     });
   }
-  render(time) {
+  render(time, mouse) {
+    // calculate cursor velocity.
+    this.ax = mouse.x;
+    this.ay = mouse.y;
+    const dist = Math.sqrt(Math.pow(this.ca.x - this.cv.x, 2) + Math.pow(this.ca.y - this.cv.y, 2));
+    const f = dist * 0.08;
+    this.cv.x += (this.ca.x - this.cv.x === 0) ? 0 : (this.ca.x - this.cv.x) / dist * f;
+    this.cv.y += (this.ca.y - this.cv.y === 0) ? 0 : (this.ca.y - this.cv.y) / dist * f;
+    this.btn.style = `transform: translate3d(${this.vx}px, ${this.vy}px, 0)`;
+
     if (this.isOvered) return;
-    // calculate acceleration.
+
+    // calculate holding acceleration.
     if (this.isHolding === true) {
       this.a = this.a * 1.05 + 0.01 * time;
     } else {
@@ -68,7 +82,6 @@ export default class Hold {
       this.v = 100;
       this.a = 0;
     }
-
     this.progress.style = `transform: skewX(-45deg) translateX(${50 - this.v}%);`;
   }
 }
