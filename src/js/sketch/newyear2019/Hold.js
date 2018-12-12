@@ -1,7 +1,10 @@
 import * as THREE from 'three';
 
+const page = document.querySelector('.l-page');
+
 export default class Hold {
-  constructor() {
+  constructor(os) {
+    this.os = os;
     this.btn = document.querySelector('.p-hold-button');
     this.progress = document.querySelector('.p-hold-button__progress-in');
     this.v = 0;
@@ -12,56 +15,72 @@ export default class Hold {
     this.isOvered = false;
   }
   start() {
-    this.btn.classList.add('is-shown');
+    if (this.os === 'iOS' || this.os === 'Android') {
+      this.btn.classList.add('is-enabled', 'is-shown', 'is-smartphone');
+    } else {
+      this.btn.classList.add('is-pc');
+    }
   }
-  on() {
-    window.addEventListener('mousedown', (event) => {
-      event.preventDefault();
-      this.isHolding = true;
-    }, {
-      capture: true
-    });
-    window.addEventListener('mouseup', (event) => {
-      event.preventDefault();
-      this.a = 0;
-      this.isHolding = false;
-    }, {
-      capture: true
-    });
-    window.addEventListener('mouseleave', (event) => {
-      event.preventDefault();
-      this.a = 0;
-      this.isHolding = false;
-    }, {
-      capture: true
-    });
-    this.btn.addEventListener('touchstart', (event) => {
-      event.preventDefault();
-      this.btn.classList.add('is-pressed');
-      this.btn.classList.remove('is-released');
-      this.isHolding = true;
-    }, {
-      capture: true
-    });
-    this.btn.addEventListener('touchend', (event) => {
-      event.preventDefault();
-      this.a = 0;
-      this.btn.classList.remove('is-pressed');
-      this.btn.classList.add('is-released');
-      this.isHolding = false;
-    }, {
-      capture: true
-    });
+  on(canvas, mouse) {
+    if (this.os === 'iOS' || this.os === 'Android') {
+      this.btn.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        this.btn.classList.add('is-pressed');
+        this.btn.classList.remove('is-released');
+        this.isHolding = true;
+      }, {
+        capture: true
+      });
+      this.btn.addEventListener('touchend', (event) => {
+        event.preventDefault();
+        this.a = 0;
+        this.btn.classList.remove('is-pressed');
+        this.btn.classList.add('is-released');
+        this.isHolding = false;
+      }, {
+        capture: true
+      });
+    } else {
+      canvas.addEventListener('mousedown', (event) => {
+        event.preventDefault();
+        this.btn.classList.add('is-pressed');
+        this.btn.classList.remove('is-released');
+        this.isHolding = true;
+      }, {
+        capture: true
+      });
+      window.addEventListener('mousemove', (event) => {
+        mouse.set(event.clientX, event.clientY);
+      });
+      window.addEventListener('mouseup', (event) => {
+        event.preventDefault();
+        this.a = 0;
+        this.btn.classList.remove('is-pressed');
+        this.btn.classList.add('is-released');
+        this.isHolding = false;
+      }, {
+        capture: true
+      });
+      canvas.addEventListener('mouseenter', () => {
+        this.btn.classList.add('is-shown');
+        this.btn.classList.remove('is-hidden');
+      });
+      page.addEventListener('mouseleave', () => {
+        this.a = 0;
+        this.btn.classList.remove('is-shown');
+        this.btn.classList.add('is-hidden');
+        this.isHolding = false;
+      });
+    }
   }
   render(time, mouse) {
     // calculate cursor velocity.
-    this.ax = mouse.x;
-    this.ay = mouse.y;
-    const dist = Math.sqrt(Math.pow(this.ca.x - this.cv.x, 2) + Math.pow(this.ca.y - this.cv.y, 2));
-    const f = dist * 0.08;
-    this.cv.x += (this.ca.x - this.cv.x === 0) ? 0 : (this.ca.x - this.cv.x) / dist * f;
-    this.cv.y += (this.ca.y - this.cv.y === 0) ? 0 : (this.ca.y - this.cv.y) / dist * f;
-    this.btn.style = `transform: translate3d(${this.vx}px, ${this.vy}px, 0)`;
+    const sub = mouse.clone().sub(this.cv);
+    this.ca.add(sub.divideScalar(10));
+    const drag = this.ca.clone().multiplyScalar(-1).normalize().multiplyScalar(this.ca.length() * 0.3);
+    this.ca.add(drag);
+    this.cv.add(this.ca);
+    this.btn.style = `transform: translate3d(${this.cv.x + 5}px, ${this.cv.y + 5}px, 0)`;
 
     if (this.isOvered) return;
 

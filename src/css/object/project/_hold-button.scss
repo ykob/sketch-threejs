@@ -4,13 +4,18 @@ $holdBtnWidth: 60px;
   width: $holdBtnWidth;
   height: $holdBtnWidth;
   position: fixed;
-  bottom: 35px;
-  right: 0;
-  left: 0;
   z-index: 10;
-  cursor: pointer;
-  margin-right: auto;
-  margin-left: auto;
+  &.is-pc {
+    top: 0; left: 0;
+  }
+  &.is-smartphone {
+    cursor: pointer;
+    bottom: 35px;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
   &__border {
     box-sizing: border-box;
     display: block;
@@ -64,10 +69,9 @@ $holdBtnWidth: 60px;
   }
   &__border {
     opacity: 0;
-    transform: rotate(45deg) scale(0.8);
+    transform: rotate(45deg) scale(0.6);
   }
-  &.is-shown {
-    cursor: pointer;
+  &.is-enabled {
     pointer-events: auto;
   }
   &.is-shown & {
@@ -80,7 +84,8 @@ $holdBtnWidth: 60px;
     &__border {
       opacity: 1;
       transform: rotate(45deg) scale(1);
-      transition-duration: .4s;
+      transition-duration: .8s;
+      transition-timing-function: $easeOutCirc;
       transition-property: opacity, transform;
       &--out {
         transition-delay: .4s;
@@ -106,4 +111,5 @@ $holdBtnWidth: 60px;
       }
     }
   }
+
 }

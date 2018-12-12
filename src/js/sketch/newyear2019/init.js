@@ -18,6 +18,7 @@ export default async function() {
   const uaParser = new UaParser();
   const os = uaParser.getOS().name;
   const resolution = new THREE.Vector2();
+  const mouse = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -53,7 +54,7 @@ export default async function() {
   );
 
   // For hold event.
-  const hold = new Hold();
+  const hold = new Hold(os);
 
   // ==========
   // Define functions
@@ -62,7 +63,7 @@ export default async function() {
     const time = clock.getDelta();
 
     // Render the hold acceleration.
-    hold.render(time);
+    hold.render(time, mouse);
 
     // Render objects in 3D scene.
     boarHead.render(time, hold.v);
@@ -136,7 +137,7 @@ export default async function() {
       });
     }
 
-    hold.on();
+    hold.on(canvas, mouse);
   };
 
   // ==========
