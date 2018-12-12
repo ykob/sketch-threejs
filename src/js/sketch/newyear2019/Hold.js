@@ -43,6 +43,7 @@ export default class Hold {
     } else {
       canvas.addEventListener('mousedown', (event) => {
         event.preventDefault();
+        canvas.style = 'cursor: grabbing;';
         this.btn.classList.add('is-pressed');
         this.btn.classList.remove('is-released');
         this.isHolding = true;
@@ -50,6 +51,7 @@ export default class Hold {
         capture: true
       });
       window.addEventListener('mousemove', (event) => {
+        if (this.isHolding === false) canvas.style = 'cursor: grab;';
         mouse.set(event.clientX, event.clientY);
       });
       window.addEventListener('mouseup', (event) => {
@@ -67,7 +69,7 @@ export default class Hold {
       });
       page.addEventListener('mouseleave', () => {
         this.a = 0;
-        this.btn.classList.remove('is-shown');
+        this.btn.classList.remove('is-shown', 'is-pressed', 'is-released');
         this.btn.classList.add('is-hidden');
         this.isHolding = false;
       });
