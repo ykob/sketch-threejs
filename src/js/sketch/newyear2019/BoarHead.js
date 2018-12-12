@@ -40,7 +40,7 @@ export default class BoarHead {
   }
   render(time, holdV) {
     this.uniforms.time.value += time;
-    this.uniforms.dissolveEdge.value = holdV * 0.0065;
+    this.uniforms.dissolveEdge.value = holdV * 0.0075;
 
     this.a.copy(this.anchor).sub(this.v).divideScalar(10);
     this.v.add(this.a);

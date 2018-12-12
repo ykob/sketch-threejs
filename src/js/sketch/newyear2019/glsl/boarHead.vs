@@ -12,9 +12,15 @@ varying vec3 vPosition;
 varying vec3 vMPosition;
 varying vec2 vUv;
 
+#pragma glslify: ease = require(glsl-easings/exponential-out)
+#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+
 void main(void) {
+  float show = ease(min(time - 1.0, 4.0) / 4.0);
+
   // coordinate transformation
-  vec4 mPosition = modelMatrix * vec4(position, 1.0);
+  mat4 scaleMat = calcScaleMat4(vec3(0.5 + show * 0.5));
+  vec4 mPosition = modelMatrix * scaleMat * vec4(position, 1.0);
   vec4 mvPosition = viewMatrix *mPosition;
 
   vPosition = position;
