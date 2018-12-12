@@ -76,11 +76,11 @@ export default class Hold {
   render(time, mouse) {
     // calculate cursor velocity.
     const sub = mouse.clone().sub(this.cv);
-    this.ca.add(sub.divideScalar(10));
-    const drag = this.ca.clone().multiplyScalar(-1).normalize().multiplyScalar(this.ca.length() * 0.3);
+    this.ca.add(sub.divideScalar(12));
+    const drag = this.ca.clone().multiplyScalar(-1).normalize().multiplyScalar(this.ca.length() * 0.28);
     this.ca.add(drag);
     this.cv.add(this.ca);
-    this.btn.style = `transform: translate3d(${this.cv.x + 5}px, ${this.cv.y + 5}px, 0)`;
+    this.btn.style = `transform: translate3d(${this.cv.x + 8}px, ${this.cv.y + 8}px, 0)`;
 
     if (this.isOvered) return;
 
