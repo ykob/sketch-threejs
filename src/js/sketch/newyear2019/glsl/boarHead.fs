@@ -33,25 +33,19 @@ void main() {
       vPosition.z * 0.06
     ) + time * 0.02
   ) * 0.5 + 0.5;
-  float dissolveB = cnoise3(
-    vec3(
-      vPosition.x * 0.2,
-      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 0.4,
-      vPosition.z * 0.2
-    ) + time * 0.04
-  ) * 0.5 + 0.5;
+
   float dissolveC = cnoise3(
     vec3(
-      vPosition.x * 0.5,
-      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * 1.2,
-      vPosition.z * 0.5
+      vPosition.x * 0.4,
+      (vPosition.y - vPosition.x * 0.5 + vPosition.z * 0.5) * .9,
+      vPosition.z * 0.4
     )
   ) * 0.5 + 0.5;
   float dissolve1 = smoothstep(0.36 + dissolveEdge, 0.365 + dissolveEdge,
-    dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
+    dissolveA * 0.8 + dissolveC * 0.2
   );
   float dissolve2 = 1.0 - smoothstep(0.35 + dissolveEdge, 0.355 + dissolveEdge,
-    dissolveA * 0.7 + dissolveB * 0.2 + dissolveC * 0.1
+    dissolveA * 0.8 + dissolveC * 0.2
   );
 
   // define colors.
