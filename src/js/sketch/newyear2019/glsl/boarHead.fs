@@ -54,12 +54,12 @@ void main() {
     dissolveA * 0.8 + dissolveB * 0.2
   );
   float dissolve3 = smoothstep(
-    show1 - 0.06,
+    show1 - 0.05,
     show1 - 0.04,
     dissolveA * 0.8 + dissolveB * 0.2
   );
   float dissolve4 = smoothstep(
-    show1 - 0.02,
+    show1 - 0.01,
     show1,
     dissolveA * 0.8 + dissolveB * 0.2
   );
@@ -81,7 +81,5 @@ void main() {
   );
   vec3 rgb2 = convertHsvToRgb(hsv2);
 
-  vec3 rgb3 = vec3(0.0);
-
-  gl_FragColor = vec4(rgb1 * dissolve1 * (1.0 - dissolve3) * (1.0 - drawBrightOnly) + rgb2 * (1.0 - dissolve2) + rgb3 * dissolve3, 1.0 - dissolve4);
+  gl_FragColor = vec4(rgb1 * dissolve1 * (1.0 - dissolve3) * (1.0 - drawBrightOnly) + rgb2 * (1.0 - dissolve2) + rgb2 * dissolve3, 1.0 - dissolve4);
 }
