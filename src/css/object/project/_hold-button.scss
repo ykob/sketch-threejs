@@ -78,7 +78,7 @@ $holdBtnWidth: 60px;
     &__label {
       opacity: 1;
       transition-duration: .4s;
-      transition-delay: .6s;
+      transition-delay: .3s;
       transition-property: opacity;
     }
     &__border {
@@ -88,17 +88,31 @@ $holdBtnWidth: 60px;
       transition-timing-function: $easeOutCirc;
       transition-property: opacity, transform;
       &--out {
-        transition-delay: .4s;
+        transition-delay: .1s;
       }
       &--in {
-        transition-delay: .5s;
+        transition-delay: .2s;
       }
+    }
+  }
+  &.is-hidden & {
+    &__label {
+      opacity: 0;
+      transition-duration: .4s;
+      transition-property: opacity;
+    }
+    &__border {
+      opacity: 0;
+      transform: rotate(45deg) scale(0.8);
+      transition-duration: .8s;
+      transition-timing-function: $easeOutCirc;
+      transition-property: opacity, transform;
     }
   }
   &.is-pressed & {
     &__border {
       &--out {
-        transform: rotate(45deg) scale(1.08);
+        transform: rotate(45deg) scale(1.12);
         transition-delay: 0s;
       }
     }
