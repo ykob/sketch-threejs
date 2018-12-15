@@ -179,7 +179,7 @@ export default async function() {
 
   preloader.classList.add('is-hidden');
   await sleep(200);
-  hold.start();
+  hold.start(resolution);
 
   clock.start();
   renderLoop();

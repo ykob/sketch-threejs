@@ -14,10 +14,11 @@ export default class Hold {
     this.isHolding = false;
     this.isOvered = false;
   }
-  start() {
+  start(resolution) {
     if (this.os === 'iOS' || this.os === 'Android') {
       this.btn.classList.add('is-enabled', 'is-shown', 'is-smartphone');
     } else {
+      this.cv.set(resolution.x / 2, resolution.y);
       this.btn.classList.add('is-pc');
     }
   }
