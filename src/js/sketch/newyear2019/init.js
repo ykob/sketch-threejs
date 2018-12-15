@@ -117,6 +117,14 @@ export default async function() {
   };
 
   const on = () => {
+    window.addEventListener('blur', () => {
+      // this window is inactive.
+      clock.stop();
+    });
+    window.addEventListener('focus', () => {
+      // this window is inactive.
+      clock.start();
+    });
     window.addEventListener('resize', debounce(resizeWindow, 100));
 
     if (os === 'iOS' || os === 'Android') {
