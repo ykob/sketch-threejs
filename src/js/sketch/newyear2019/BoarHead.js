@@ -6,7 +6,7 @@ export default class BoarHead {
     this.uniforms = {
       time: {
         type: 'f',
-        value: 0
+        value: -2
       },
       drawBrightOnly: {
         type: 'f',
