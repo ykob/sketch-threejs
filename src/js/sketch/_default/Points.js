@@ -24,6 +24,7 @@ export default class Points {
 
     // Create Object3D
     this.obj = new THREE.Points(geometry, material);
+    this.obj.name = 'Points';
   }
   render(time) {
     this.uniforms.time.value += time;
