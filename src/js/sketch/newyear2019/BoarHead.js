@@ -21,6 +21,7 @@ export default class BoarHead {
     this.a = new THREE.Vector3();
     this.anchor = new THREE.Vector3(0, 0, 0);
     this.obj;
+    this.isOvered = false;
   }
   createObj(geometry) {
     // Define Material
@@ -40,15 +41,22 @@ export default class BoarHead {
   }
   render(time, holdV) {
     this.uniforms.time.value += time;
-    this.uniforms.dissolveEdge.value = holdV * 0.0075;
+    this.uniforms.dissolveEdge.value = holdV * 0.0055;
 
     this.a.copy(this.anchor).sub(this.v).divideScalar(10);
     this.v.add(this.a);
     this.obj.rotation.setFromVector3(this.v);
-    this.obj.position.set(
-      (Math.random() * 2 - 1) * holdV * 0.01,
-      (Math.random() * 2 - 1) * holdV * 0.01,
-      (Math.random() * 2 - 1) * holdV * 0.01
-    )
+    if (this.isOvered === false) {
+      this.obj.position.set(
+        (Math.random() * 2 - 1) * holdV * 0.01,
+        (Math.random() * 2 - 1) * holdV * 0.01,
+        (Math.random() * 2 - 1) * holdV * 0.01
+      )
+    } else {
+      this.obj.position.set(0, 0, 0);
+    }
+  }
+  over() {
+    this.isOvered = true;
   }
 }

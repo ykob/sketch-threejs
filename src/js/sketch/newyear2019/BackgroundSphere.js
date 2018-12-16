@@ -10,6 +10,7 @@ export default class BackgroundSphere {
       },
     };
     this.obj;
+    this.isOvered = false;
   }
   createObj() {
     const geometry = new THREE.SphereBufferGeometry(100, 128, 128);
@@ -27,6 +28,11 @@ export default class BackgroundSphere {
     this.obj.position.y = 16.0;
   }
   render(time) {
-    this.uniforms.time.value += time;
+    if (this.isOvered === true) {
+      this.uniforms.time.value += time;
+    }
+  }
+  over() {
+    this.isOvered = true;
   }
 }

@@ -76,7 +76,7 @@ export default class Hold {
       });
     }
   }
-  render(time, mouse) {
+  async render(time, mouse) {
     // calculate cursor velocity.
     const sub = mouse.clone().sub(this.cv);
     this.ca.add(sub.divideScalar(12));
@@ -85,7 +85,9 @@ export default class Hold {
     this.cv.add(this.ca);
     this.btn.style = `transform: translate3d(${this.cv.x + 8}px, ${this.cv.y + 8}px, 0)`;
 
-    if (this.isOvered) return;
+    if (this.isOvered === true) {
+      return false
+    }
 
     // calculate holding acceleration.
     if (this.isHolding === true) {
@@ -105,5 +107,12 @@ export default class Hold {
       this.a = 0;
     }
     this.progress.style = `transform: skewX(-45deg) translateX(${50 - this.v}%);`;
+
+    if (this.v === 100) {
+      this.isOvered = true;
+      return true;
+    } else {
+      return false;
+    }
   }
 }

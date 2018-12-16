@@ -8,15 +8,17 @@ uniform float time;
 varying vec3 vColor;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: ease = require(glsl-easings/exponential-out)
 
 void main(void) {
   vec2 p = uv * 2.0 - 1.0;
+  float show = ease(min(time, 0.8) / 0.8);
 
   // calculate gradation
   vec3 hsv = vec3(
-    p.y * 0.1 + 0.1,
-    1.0,
-    0.1
+    p.y * 0.1 + 0.07,
+    1.0 - show * 0.2,
+    0.1 + show * 0.8
   );
   vec3 rgb = convertHsvToRgb(hsv);
 

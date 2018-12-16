@@ -63,7 +63,12 @@ export default async function() {
     const time = clock.getDelta();
 
     // Render the hold acceleration.
-    hold.render(time, mouse);
+    hold.render(time, mouse).then((isOvered) => {
+      if (isOvered) {
+        boarHead.over();
+        bg.over();
+      }
+    });
 
     // Render objects in 3D scene.
     boarHead.render(time, hold.v);
