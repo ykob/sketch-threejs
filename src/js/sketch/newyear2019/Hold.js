@@ -13,8 +13,10 @@ export default class Hold {
     this.ca = new THREE.Vector2();
     this.isHolding = false;
     this.isOvered = false;
+    this.isEnabled = false;
   }
   start(resolution) {
+    this.isEnabled = true;
     if (this.os === 'iOS' || this.os === 'Android') {
       this.btn.classList.add('is-enabled', 'is-shown', 'is-smartphone');
     } else {
@@ -77,6 +79,8 @@ export default class Hold {
     }
   }
   async render(time, mouse) {
+    if (this.isEnabled === false) return;
+
     // calculate cursor velocity.
     const sub = mouse.clone().sub(this.cv);
     this.ca.add(sub.divideScalar(12));

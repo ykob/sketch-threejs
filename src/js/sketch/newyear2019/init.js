@@ -127,10 +127,12 @@ export default async function() {
     window.addEventListener('blur', () => {
       // this window is inactive.
       clock.stop();
+      hold.isEnabled = false;
     });
     window.addEventListener('focus', () => {
       // this window is inactive.
       clock.start();
+      hold.isEnabled = true;
     });
     window.addEventListener('resize', debounce(resizeWindow, 100));
 
