@@ -60,6 +60,8 @@ export default async function() {
   // Define functions
   //
   const render = () => {
+    if (clock.running === false) return;
+
     const time = clock.getDelta();
 
     // Render the hold acceleration.
