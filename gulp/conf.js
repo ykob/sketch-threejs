@@ -149,9 +149,9 @@ module.exports.sprite = {
   }
 };
 
-module.exports.minifyCss = {
-  src: `${DIR.DEST}/css/main.css`,
-  dest: `${DIR.BUILD}/css`
+module.exports.cleanCss = {
+  src: `${DIR.DEST}${DIR.PATH}/css/main.css`,
+  dest: `${DIR.BUILD}${DIR.PATH}/css`,
 };
 
 module.exports.uglify = {
