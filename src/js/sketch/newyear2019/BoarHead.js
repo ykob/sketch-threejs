@@ -25,6 +25,7 @@ export default class BoarHead {
     this.sanchor = new THREE.Vector3(0, 0, 0);
     this.obj;
     this.isOvered = false;
+    this.isCoolDowned = false;
   }
   createObj(geometry) {
     // Define Material
@@ -46,23 +47,36 @@ export default class BoarHead {
     this.uniforms.time.value += time;
     this.uniforms.dissolveEdge.value = holdV * 0.0055;
 
+    // rotate
     this.a.copy(this.anchor).sub(this.v).divideScalar(10);
     this.v.add(this.a);
+    this.obj.rotation.setFromVector3(this.v);
+
+    // shake and scale
     this.sa.copy(this.sanchor).sub(this.sv).divideScalar(10);
     if (this.isOvered === false) this.sa.addScalar(holdV * 0.2);
     this.sv.add(this.sa);
 
     const shake = (this.sv.length() + 1) * 0.01;
     const scale = this.sv.length() * 0.001 + 1;
-    this.obj.rotation.setFromVector3(this.v);
-    this.obj.scale.set(scale, scale, scale);
-    this.obj.position.set(
-      (Math.random() * 2 - 1) * shake,
-      (Math.random() * 2 - 1) * shake,
-      (Math.random() * 2 - 1) * shake
-    );
+
+    if (this.isCoolDowned === false) {
+      this.obj.scale.set(scale, scale, scale);
+      this.obj.position.set(
+        (Math.random() * 2 - 1) * shake,
+        (Math.random() * 2 - 1) * shake,
+        (Math.random() * 2 - 1) * shake
+      );
+    }
   }
   over() {
     this.isOvered = true;
+  }
+  coolDown() {
+    this.isOvered = false;
+    this.isCoolDowned = true;
+  }
+  returnFirstState() {
+    this.isCoolDowned = false;
   }
 }

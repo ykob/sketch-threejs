@@ -12,7 +12,7 @@ varying vec3 vColor;
 
 void main(void) {
   vec2 p = uv * 2.0 - 1.0;
-  float show = ease(min(time, 0.8) / 0.8);
+  float show = min(time, 0.2) / 0.2;
 
   // calculate gradation
   vec3 hsv = vec3(

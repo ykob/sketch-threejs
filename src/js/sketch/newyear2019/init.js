@@ -65,10 +65,20 @@ export default async function() {
     const time = clock.getDelta();
 
     // Render the hold acceleration.
-    hold.render(time, mouse).then((isOvered) => {
-      if (isOvered) {
-        boarHead.over();
-        bg.over();
+    hold.render(time, mouse).then((isOver) => {
+      switch (isOver) {
+        case 1:
+          boarHead.over();
+          bg.over();
+          break;
+        case 3:
+          boarHead.coolDown();
+          bg.coolDown();
+          break;
+        case 5:
+          boarHead.returnFirstState();
+        default:
+          break;
       }
     });
 

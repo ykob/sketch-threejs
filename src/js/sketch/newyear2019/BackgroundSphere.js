@@ -30,9 +30,17 @@ export default class BackgroundSphere {
   render(time) {
     if (this.isOvered === true) {
       this.uniforms.time.value += time;
+    } else {
+      this.uniforms.time.value -= time;
     }
+    this.uniforms.time.value = MathEx.clamp(this.uniforms.time.value, 0, 0.8);
   }
   over() {
+    this.uniforms.time.value = 0;
     this.isOvered = true;
+  }
+  coolDown() {
+    this.uniforms.time.value = 0.2;
+    this.isOvered = false;
   }
 }

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 const page = document.querySelector('.l-page');
 
@@ -11,8 +12,9 @@ export default class Hold {
     this.a = 0;
     this.cv = new THREE.Vector2();
     this.ca = new THREE.Vector2();
+    this.timeOver = 0;
+    this.state = 0;
     this.isHolding = false;
-    this.isOvered = false;
     this.isEnabled = false;
   }
   start(resolution) {
@@ -89,32 +91,53 @@ export default class Hold {
     this.cv.add(this.ca);
     this.btn.style = `transform: translate3d(${this.cv.x + 8}px, ${this.cv.y + 8}px, 0)`;
 
-    if (this.isOvered === true) return false
-
     // calculate holding acceleration.
-    if (this.isHolding === true) {
-      this.a = this.a * 1.05 + 0.01 * time;
-    } else {
-      if (this.v > 0) this.a = this.v * -3 * time;
+    if (this.state === 0 || this.state === 2) {
+      if (this.isHolding === true) {
+        this.a = this.a * 1.05 + 0.01 * time;
+      } else {
+        if (this.v > 0) this.a = this.v * -3 * time;
+      }
+      // add acceleration to velocity.
+      this.v += this.a;
+      // ceil
+      this.v = MathEx.clamp(this.v, 0, 100);
+      // update the progress cursor style.
+      this.progress.style = `transform: skewX(-45deg) translateX(${50 - this.v}%);`;
     }
-    // add acceleration to velocity.
-    this.v += this.a;
-    // ceil
-    if (this.v < 0) {
-      this.v = 0;
-      this.a = 0;
-    }
-    if (this.v >= 100) {
-      this.v = 100;
-      this.a = 0;
-    }
-    this.progress.style = `transform: skewX(-45deg) translateX(${50 - this.v}%);`;
+    console.log(this.v)
 
-    if (this.v === 100) {
-      this.isOvered = true;
-      return true;
-    } else {
-      return false;
+    switch (this.state) {
+      case 0:
+        if (this.v < 100) {
+          // Hold is not over.
+          return 0;
+        } else {
+          // Hold is over now.
+          this.state = 1;
+          return 1;
+        }
+      case 1:
+        this.timeOver += time;
+        if (this.timeOver < 5) {
+          // Hold is over.
+          return 2;
+        } else {
+          // Hold cooldowned now.
+          this.timeOver = 0;
+          this.state = 2;
+          return 3;
+        }
+      case 2:
+        if (this.v > 1) {
+          // Hold cooldowned.
+          return 4;
+        } else {
+          // Return to the first state.
+          this.state = 0;
+          return 5;
+        }
+      default:
     }
   }
 }
