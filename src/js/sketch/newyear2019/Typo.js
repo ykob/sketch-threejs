@@ -19,7 +19,7 @@ export default class Typo {
   }
   async createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(32, 32);
+    const geometry = new THREE.PlaneBufferGeometry(36, 36);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

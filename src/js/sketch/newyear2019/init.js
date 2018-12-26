@@ -164,7 +164,7 @@ export default async function() {
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.position.z = 120;
+  camera.position.z = 140;
   camera.lookAt(new THREE.Vector3());
 
   // Load an obj file.

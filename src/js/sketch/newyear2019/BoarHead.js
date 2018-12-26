@@ -20,6 +20,9 @@ export default class BoarHead {
     this.v = new THREE.Vector3(0, 0, 0);
     this.a = new THREE.Vector3();
     this.anchor = new THREE.Vector3(0, 0, 0);
+    this.sv = new THREE.Vector3(0, 0, 0);
+    this.sa = new THREE.Vector3();
+    this.sanchor = new THREE.Vector3(0, 0, 0);
     this.obj;
     this.isOvered = false;
   }
@@ -45,16 +48,19 @@ export default class BoarHead {
 
     this.a.copy(this.anchor).sub(this.v).divideScalar(10);
     this.v.add(this.a);
+    this.sa.copy(this.sanchor).sub(this.sv).divideScalar(10);
+    if (this.isOvered === false) this.sa.addScalar(holdV * 0.2);
+    this.sv.add(this.sa);
+
+    const shake = (this.sv.length() + 1) * 0.01;
+    const scale = this.sv.length() * 0.001 + 1;
     this.obj.rotation.setFromVector3(this.v);
-    if (this.isOvered === false) {
-      this.obj.position.set(
-        (Math.random() * 2 - 1) * holdV * 0.01,
-        (Math.random() * 2 - 1) * holdV * 0.01,
-        (Math.random() * 2 - 1) * holdV * 0.01
-      )
-    } else {
-      this.obj.position.set(0, 0, 0);
-    }
+    this.obj.scale.set(scale, scale, scale);
+    this.obj.position.set(
+      (Math.random() * 2 - 1) * shake,
+      (Math.random() * 2 - 1) * shake,
+      (Math.random() * 2 - 1) * shake
+    );
   }
   over() {
     this.isOvered = true;

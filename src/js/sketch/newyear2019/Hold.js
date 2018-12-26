@@ -89,9 +89,7 @@ export default class Hold {
     this.cv.add(this.ca);
     this.btn.style = `transform: translate3d(${this.cv.x + 8}px, ${this.cv.y + 8}px, 0)`;
 
-    if (this.isOvered === true) {
-      return false
-    }
+    if (this.isOvered === true) return false
 
     // calculate holding acceleration.
     if (this.isHolding === true) {
