@@ -97,6 +97,14 @@ $holdBtnWidth: 60px;
         transition-delay: .2s;
       }
     }
+    &__progress {
+      opacity: 1;
+      transform: rotate(45deg) scale(1);
+      transition-duration: .4s;
+      transition-delay: .3s;
+      transition-timing-function: $easeOutCirc;
+      transition-property: opacity, transform;
+    }
   }
   &.is-hidden & {
     &__label {
@@ -107,6 +115,13 @@ $holdBtnWidth: 60px;
     &__border {
       opacity: 0;
       transform: rotate(45deg) scale(0.8);
+      transition-duration: .8s;
+      transition-timing-function: $easeOutCirc;
+      transition-property: opacity, transform;
+    }
+    &__progress {
+      opacity: 0;
+      transform: rotate(45deg) scale(0.5);
       transition-duration: .8s;
       transition-timing-function: $easeOutCirc;
       transition-property: opacity, transform;
