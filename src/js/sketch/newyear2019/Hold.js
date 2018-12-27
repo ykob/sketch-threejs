@@ -95,9 +95,9 @@ export default class Hold {
     // calculate holding acceleration.
     if (this.state === 0 || this.state === 2) {
       if (this.isHolding === true) {
-        this.a = this.a * 1.05 + 0.01 * time;
+        this.a = (this.v * 1.4 + 1) * time;
       } else {
-        if (this.v > 0) this.a = this.v * -3 * time;
+        this.a = this.v * -3 * time;
       }
       // add acceleration to velocity.
       this.v += this.a;
@@ -106,7 +106,6 @@ export default class Hold {
       // update the progress cursor style.
       this.progress.style = `transform: skewX(-45deg) translateX(${50 - this.v}%);`;
     }
-    console.log(this.v)
 
     switch (this.state) {
       case 0:
@@ -134,12 +133,14 @@ export default class Hold {
           return 3;
         }
       case 2:
-        if (this.v > 1) {
+        if (this.v > 0.1) {
           // Hold cooldowned.
           return 4;
         } else {
           // Return to the first state.
           this.state = 0;
+          this.v = 0;
+          this.a = 0;
           return 5;
         }
       default:
