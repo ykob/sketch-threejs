@@ -116,6 +116,10 @@ export default class Hold {
         } else {
           // Hold is over now.
           this.state = 1;
+          this.a = 0;
+          this.btn.classList.remove('is-pressed');
+          this.btn.classList.add('is-released');
+          this.isHolding = false;
           return 1;
         }
       case 1:
