@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "easing-js": "^1.1.2",
     "gl-matrix": "^2.4.0",
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",
