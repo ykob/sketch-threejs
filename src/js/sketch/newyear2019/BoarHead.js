@@ -57,8 +57,8 @@ export default class BoarHead {
     if (this.isOvered === false) this.sa.addScalar(holdV * 0.2);
     this.sv.add(this.sa);
 
-    const shake = (this.sv.length() + 1) * 0.01;
-    const scale = this.sv.length() * 0.001 + 1;
+    const shake = (this.sv.length() + 1) * 0.005;
+    const scale = this.sv.length() * 0.0005 + 1;
 
     if (this.isCoolDowned === false) {
       this.obj.scale.set(scale, scale, scale);
@@ -77,6 +77,8 @@ export default class BoarHead {
     this.isCoolDowned = true;
   }
   returnFirstState() {
+    this.sv.set(0, 0, 0);
+    this.sa.set(0, 0, 0);
     this.isCoolDowned = false;
   }
 }
