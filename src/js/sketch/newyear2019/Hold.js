@@ -48,6 +48,7 @@ export default class Hold {
     } else {
       canvas.addEventListener('mousedown', (event) => {
         event.preventDefault();
+        if (this.state !== 0) return;
         canvas.style = 'cursor: grabbing;';
         this.btn.classList.add('is-pressed');
         this.btn.classList.remove('is-released');
