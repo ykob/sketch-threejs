@@ -18,6 +18,10 @@ export default class Typo {
         type: 't',
         value: null
       },
+      drawBrightOnly: {
+        type: 'f',
+        value: 0
+      },
     };
     this.isOver = false;
     this.obj;

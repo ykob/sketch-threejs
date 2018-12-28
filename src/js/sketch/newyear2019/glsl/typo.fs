@@ -2,6 +2,7 @@ precision highp float;
 
 uniform float time;
 uniform sampler2D tex;
+uniform float drawBrightOnly;
 
 varying vec3 vPosition;
 varying vec2 vUv;
@@ -28,5 +29,10 @@ void main() {
   vec4 color4 = vec4(vec3(1.0, 1.0, 0.9), 0.05) * opacity4;
 
   if (texColor.a < 0.5) discard;
-  gl_FragColor = (color1 + color2 + color3 + color4) * vec4(vec3(1.0), texColor.a);
+  gl_FragColor =
+    (
+      (color1 + color2 + color3 + color4) * (1.0 - drawBrightOnly)
+      + vec4(vec3(0.0), 1.0) * drawBrightOnly
+    )
+    * vec4(vec3(1.0), texColor.a);
 }

@@ -96,14 +96,14 @@ export default async function() {
 
     // Render the main scene to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 0;
-    typo.obj.visible = true;
+    typo.uniforms.drawBrightOnly.value = 0;
     confetti.obj.visible = true;
     bg.obj.visible = true;
     renderer.render(scene, camera, renderTarget1);
 
     // Render the only bright to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 1;
-    typo.obj.visible = false;
+    typo.uniforms.drawBrightOnly.value = 1;
     confetti.obj.visible = false;
     bg.obj.visible = false;
     renderer.render(scene, camera, renderTarget2);
