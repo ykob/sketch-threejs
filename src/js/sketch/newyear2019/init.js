@@ -7,6 +7,7 @@ import MathEx from 'js-util/MathEx';
 import promiseOBJLoader from '../../common/PromiseOBJLoader';
 import BoarHead from './BoarHead';
 import Typo from './Typo';
+import Confetti from './Confetti';
 import BackgroundSphere from './BackgroundSphere';
 import PostEffect from './PostEffect';
 import Hold from './Hold';
@@ -45,6 +46,7 @@ export default async function() {
   //
   const boarHead = new BoarHead();
   const typo = new Typo();
+  const confetti = new Confetti();
   const bg = new BackgroundSphere();
 
   // For the post effect.
@@ -60,7 +62,7 @@ export default async function() {
   // Define functions
   //
   const render = () => {
-    if (clock.running === false) return;
+    // if (clock.running === false) return;
 
     const time = clock.getDelta();
 
@@ -85,17 +87,20 @@ export default async function() {
     // Render objects in 3D scene.
     boarHead.render(time, hold.v);
     typo.render(time);
+    confetti.render(time);
     bg.render(time);
 
     // Render the main scene to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 0;
     typo.obj.visible = true;
+    confetti.obj.visible = true;
     bg.obj.visible = true;
     renderer.render(scene, camera, renderTarget1);
 
     // Render the only bright to frame buffer.
     boarHead.uniforms.drawBrightOnly.value = 1;
     typo.obj.visible = false;
+    confetti.obj.visible = false;
     bg.obj.visible = false;
     renderer.render(scene, camera, renderTarget2);
 
@@ -183,10 +188,12 @@ export default async function() {
 
   boarHead.createObj(boarGeometry);
   await typo.createObj();
+  confetti.createObj();
   bg.createObj();
 
   scene.add(boarHead.obj);
   scene.add(typo.obj);
+  scene.add(confetti.obj);
   scene.add(bg.obj);
 
   // For the post effect.

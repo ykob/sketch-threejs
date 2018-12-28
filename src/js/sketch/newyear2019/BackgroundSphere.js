@@ -21,6 +21,7 @@ export default class BackgroundSphere {
       vertexShader: require('./glsl/backgroundSphere.vs'),
       fragmentShader: require('./glsl/backgroundSphere.fs'),
       side: THREE.BackSide,
+      depthWrite: false,
     });
 
     // Object3Dを作成
