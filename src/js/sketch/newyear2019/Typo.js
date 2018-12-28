@@ -10,11 +10,16 @@ export default class Typo {
         type: 'f',
         value: 0
       },
+      time2: {
+        type: 'f',
+        value: 0
+      },
       tex: {
         type: 't',
         value: null
       },
     };
+    this.isOver = false;
     this.obj;
   }
   async createObj() {
@@ -37,5 +42,13 @@ export default class Typo {
   }
   render(time) {
     this.uniforms.time.value += time;
+    if (this.isOver === true) this.uniforms.time2.value += time;
+  }
+  over(time) {
+    this.uniforms.time2.value = 0;
+    this.isOver = true;
+  }
+  coolDown() {
+    this.isOver = false;
   }
 }

@@ -17,7 +17,7 @@ varying vec4 vColor;
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 #pragma glslify: ease = require(glsl-easings/exponential-out)
 
-const float DURATION = 5.0;
+const float DURATION = 5.5;
 
 void main(void) {
   float alpha = clamp(time, 0.0, DURATION) / DURATION;
