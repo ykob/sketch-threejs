@@ -3,6 +3,7 @@
   top: 50%;
   left: 50%;
   z-index: 100;
+  pointer-events: none;
   @include l-more-than-mobile {
     width: 60px;
     height: 60px;
