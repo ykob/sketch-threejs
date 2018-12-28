@@ -9,13 +9,14 @@ export default class Confetti {
         value: 0
       },
     };
-    this.num = 800;
+    this.num = 600;
+    this.isOver = false;
     this.obj;
   }
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1, 1);
+    const baseGeometry = new THREE.PlaneBufferGeometry(1.2, 1.2);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
@@ -32,7 +33,7 @@ export default class Confetti {
         i,
         Math.cos(radians) * radius,
         Math.sin(radians) * radius,
-        Math.random() * 150 - 100
+        Math.random() * 250 - 150
       );
       if (i % 2 === 1) {
         ibaColors.setXYZ(i, 0.8, 0.1, 0.1);
@@ -58,6 +59,7 @@ export default class Confetti {
       vertexShader: require('./glsl/confetti.vs'),
       fragmentShader: require('./glsl/confetti.fs'),
       side: THREE.DoubleSide,
+      transparent: true,
     });
 
     // Create Object3D
@@ -66,6 +68,13 @@ export default class Confetti {
     this.obj.frustumCulled = false;
   }
   render(time) {
-    this.uniforms.time.value += time;
+    if (this.isOver === true) this.uniforms.time.value += time;
+  }
+  over(time) {
+    this.uniforms.time.value = 0;
+    this.isOver = true;
+  }
+  coolDown() {
+    this.isOver = false;
   }
 }

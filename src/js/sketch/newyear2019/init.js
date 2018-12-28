@@ -71,10 +71,12 @@ export default async function() {
       switch (isOver) {
         case 1:
           boarHead.over();
+          confetti.over();
           bg.over();
           break;
         case 3:
           boarHead.coolDown();
+          confetti.coolDown();
           bg.coolDown();
           break;
         case 5:
