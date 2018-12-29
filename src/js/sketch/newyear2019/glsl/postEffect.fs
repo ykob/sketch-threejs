@@ -25,10 +25,8 @@ void main() {
   // Random Noise
   float rNoise = randomNoise(vUv);
 
-  // RGB Shift
-  float texColorR = texture2D(texture1, vUv - vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).r;
-  float texColorG = texture2D(texture1, vUv + vec2((2.0 * abs(p.x) + 1.0) * ratio.x, 0.0)).g;
-  float texColorB = texture2D(texture1, vUv).b;
+  // get texture color.
+  vec4 texColor = texture2D(texture1, vUv);
 
   // godray
   vec2 godrayCenter = vec2(0.5);
@@ -45,7 +43,7 @@ void main() {
   vec3 godray = godrayDestColor / godrayTotalWeight;
 
   // Sum total of colors.
-  vec3 color = vec3(texColorR, texColorG, texColorB) + rNoise + godray * 0.8;
+  vec3 color = texColor.rgb + rNoise + godray * 0.5;
 
   gl_FragColor = vec4(color, 1.0);
 }
