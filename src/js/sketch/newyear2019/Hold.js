@@ -30,6 +30,7 @@ export default class Hold {
     if (this.os === 'iOS' || this.os === 'Android') {
       this.btn.addEventListener('touchstart', (event) => {
         event.preventDefault();
+        if (this.state !== 0) return;
         this.btn.classList.add('is-pressed');
         this.btn.classList.remove('is-released');
         this.isHolding = true;
@@ -133,7 +134,7 @@ export default class Hold {
           return 3;
         }
       case 2:
-        if (this.v > 0.1) {
+        if (this.v > 0.5) {
           // Hold cooldowned.
           return 4;
         } else {
