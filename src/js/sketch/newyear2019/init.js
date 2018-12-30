@@ -206,6 +206,7 @@ export default async function() {
 
   on();
   resizeWindow();
+  mouse.set(resolution.x / 2, resolution.y * 1.5);
 
   preloader.classList.add('is-hidden');
   await sleep(200);
