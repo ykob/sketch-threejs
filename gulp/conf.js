@@ -151,8 +151,8 @@ module.exports.sprite = {
 };
 
 module.exports.cleanCss = {
-  src: `${DIR.DEST}${DIR.PATH}/css/main.css`,
-  dest: `${DIR.BUILD}${DIR.PATH}/css`,
+  src: `${DIR.DEST}/css/main.css`,
+  dest: `${DIR.BUILD}/css`,
 };
 
 module.exports.uglify = {
