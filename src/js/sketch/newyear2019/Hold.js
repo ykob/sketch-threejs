@@ -86,12 +86,14 @@ export default class Hold {
     if (this.isEnabled === false) return;
 
     // calculate cursor velocity.
-    const sub = mouse.clone().sub(this.cv);
-    this.ca.add(sub.divideScalar(12));
-    const drag = this.ca.clone().multiplyScalar(-1).normalize().multiplyScalar(this.ca.length() * 0.28);
-    this.ca.add(drag);
-    this.cv.add(this.ca);
-    this.btn.style = `transform: translate3d(${this.cv.x + 8}px, ${this.cv.y + 8}px, 0)`;
+    if (this.os !== 'iOS' && this.os !== 'Android') {
+      const sub = mouse.clone().sub(this.cv);
+      this.ca.add(sub.divideScalar(12));
+      const drag = this.ca.clone().multiplyScalar(-1).normalize().multiplyScalar(this.ca.length() * 0.28);
+      this.ca.add(drag);
+      this.cv.add(this.ca);
+      this.btn.style = `transform: translate3d(${this.cv.x + 8}px, ${this.cv.y + 8}px, 0)`;
+    }
 
     // calculate holding acceleration.
     if (this.state === 0 || this.state === 2) {
