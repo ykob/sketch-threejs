@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class DnaHerix {
+export default class DnaHelix {
   constructor() {
     this.uniforms = {
       time: {
@@ -46,8 +46,8 @@ export default class DnaHerix {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/dnaHerix.vs'),
-      fragmentShader: require('./glsl/dnaHerix.fs'),
+      vertexShader: require('./glsl/DnaHelix.vs'),
+      fragmentShader: require('./glsl/DnaHelix.fs'),
       transparent: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false,

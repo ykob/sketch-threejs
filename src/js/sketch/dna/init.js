@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 
-import DnaHerix from './DnaHerix';
+import DnaHelix from './DnaHelix';
 import PostEffect from './PostEffect';
 
 export default async function() {
@@ -33,7 +33,7 @@ export default async function() {
   // ==========
   // Define unique variables
   //
-  const dnaHerix = new DnaHerix();
+  const dnaHelix = new DnaHelix();
 
   // For the post effect.
   const postEffect = new PostEffect(renderTarget.texture);
@@ -46,7 +46,7 @@ export default async function() {
   const render = () => {
     const time = clock.getDelta();
 
-    dnaHerix.render(time);
+    dnaHelix.render(time);
 
     // Render the main scene to frame buffer.
     renderer.render(scene, camera, renderTarget);
@@ -102,9 +102,9 @@ export default async function() {
   camera.position.set(-130, -100, 70);
   camera.lookAt(new THREE.Vector3(-20, 0, 0));
 
-  dnaHerix.createObj();
+  dnaHelix.createObj();
 
-  scene.add(dnaHerix.obj);
+  scene.add(dnaHelix.obj);
 
   on();
   resizeWindow();
