@@ -9,7 +9,7 @@ export default class DnaHerix {
         value: 0
       },
     };
-    this.num = 800;
+    this.num = 6000;
     this.obj;
   }
   createObj() {
@@ -22,19 +22,20 @@ export default class DnaHerix {
     const baRadiuses = new THREE.BufferAttribute(new Float32Array(this.num), 1);
     const baDelays = new THREE.BufferAttribute(new Float32Array(this.num), 1);
     for ( var i = 0, ul = this.num; i < ul; i++ ) {
+      const random = Math.random();
       const diff = {
-        x: (Math.random() * 2 - 1) * 1.2,
-        y: (Math.random() * 2 - 1) * 1.2,
-        z: (Math.random() * 2 - 1) * 1.2,
+        x: (Math.random() * 2 - 1) * random * 6,
+        y: (Math.random() * 2 - 1) * random * 6,
+        z: (Math.random() * 2 - 1) * random * 6,
       };
       baPositions.setXYZ(
         i,
-        ((i / this.num) * 2 - 1) * 100 + diff.x,
+        ((i / this.num) * 2 - 1) * 150 + diff.x,
         diff.y,
         diff.z
       );
-      baRadians.setX(i, MathEx.radians(i / this.num * 1200 + i % 2 * 180));
-      baRadiuses.setX(i, 20);
+      baRadians.setX(i, MathEx.radians(i / this.num * 900 + i % 2 * 180));
+      baRadiuses.setX(i, 18);
       baDelays.setX(i, MathEx.radians(Math.random() * 360));
     }
     geometry.addAttribute('position', baPositions);
@@ -49,6 +50,7 @@ export default class DnaHerix {
       fragmentShader: require('./glsl/dnaHerix.fs'),
       transparent: true,
       blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
 
     // Create Object3D

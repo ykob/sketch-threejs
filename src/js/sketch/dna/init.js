@@ -99,8 +99,8 @@ export default async function() {
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.position.set(0, 0, 300);
-  camera.lookAt(new THREE.Vector3());
+  camera.position.set(-130, -100, 70);
+  camera.lookAt(new THREE.Vector3(-20, 0, 0));
 
   dnaHerix.createObj();
 
