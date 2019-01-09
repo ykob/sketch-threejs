@@ -60,7 +60,7 @@ export default async function() {
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
-    camera.setFocalLength(Math.min(resolution.x / 1200, 1) * 35 + 15);
+    camera.setFocalLength(50);
     camera.setViewOffset(
       1200,
       800,
