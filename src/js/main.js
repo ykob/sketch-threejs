@@ -20,6 +20,7 @@ if (pageId == 'index') {
   });
 
   switch (pageId) {
+    case 'dna':         require('./sketch/dna/init.js').default(); break;
     case 'newyear2019': require('./sketch/newyear2019/init.js').default(); break;
     case 'buddha':      require('./sketch/buddha/init.js').default(); break;
     case 'planet':      require('./sketch/planet/init.js').default(); break;

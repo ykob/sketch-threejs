@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "dna": {
+      "title": "dna",
+      "id": "dna",
+      "description": "drawing DNA Helix with particles only.",
+      "path": "/sketch/dna.html",
+      "posted": "2019.1.10",
+      "update": "",
+      "color": "white"
+    },
     "newyear2019": {
       "title": "New Year 2019",
       "id": "newyear2019",
