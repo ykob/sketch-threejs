@@ -44,7 +44,7 @@ export default async function() {
   // ==========
   // Define unique variables
   //
-  const boarHead = new BoarHead();
+  let boarHead = null;
   const typo = new Typo();
   const confetti = new Confetti();
   const bg = new BackgroundSphere();
@@ -95,17 +95,17 @@ export default async function() {
     bg.render(time);
 
     // Render the main scene to frame buffer.
-    boarHead.uniforms.drawBrightOnly.value = 0;
-    typo.uniforms.drawBrightOnly.value = 0;
-    confetti.obj.visible = true;
-    bg.obj.visible = true;
+    boarHead.material.uniforms.drawBrightOnly.value = 0;
+    typo.material.uniforms.drawBrightOnly.value = 0;
+    confetti.visible = true;
+    bg.visible = true;
     renderer.render(scene, camera, renderTarget1);
 
     // Render the only bright to frame buffer.
-    boarHead.uniforms.drawBrightOnly.value = 1;
-    typo.uniforms.drawBrightOnly.value = 1;
-    confetti.obj.visible = false;
-    bg.obj.visible = false;
+    boarHead.material.uniforms.drawBrightOnly.value = 1;
+    typo.material.uniforms.drawBrightOnly.value = 1;
+    confetti.visible = false;
+    bg.visible = false;
     renderer.render(scene, camera, renderTarget2);
 
     // Render the post effect.
@@ -190,19 +190,16 @@ export default async function() {
   const obj = await promiseOBJLoader('/sketch-threejs/model/newyear2019/boar_head.obj');
   const boarGeometry = obj.children[0].geometry;
 
-  boarHead.createObj(boarGeometry);
-  await typo.createObj();
-  confetti.createObj();
-  bg.createObj();
+  boarHead = new BoarHead(boarGeometry);
+  await typo.loadTexture();
 
-  scene.add(boarHead.obj);
-  scene.add(typo.obj);
-  scene.add(confetti.obj);
-  scene.add(bg.obj);
+  scene.add(boarHead);
+  scene.add(typo);
+  scene.add(confetti);
+  scene.add(bg);
 
   // For the post effect.
-  postEffect.createObj();
-  scenePE.add(postEffect.obj);
+  scenePE.add(postEffect);
 
   on();
   resizeWindow();

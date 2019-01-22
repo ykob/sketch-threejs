@@ -1,19 +1,8 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class Confetti {
+export default class Confetti extends THREE.Mesh {
   constructor() {
-    this.uniforms = {
-      time: {
-        type: 'f',
-        value: 0
-      },
-    };
-    this.num = 600;
-    this.isOver = false;
-    this.obj;
-  }
-  createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
     const baseGeometry = new THREE.PlaneBufferGeometry(1.2, 1.2);
@@ -22,11 +11,12 @@ export default class Confetti {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const ibaPositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    const ibaColors = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    const ibaRotates = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    const ibaDelays = new THREE.InstancedBufferAttribute(new Float32Array(this.num), 1);
-    for ( var i = 0, ul = this.num; i < ul; i++ ) {
+    const NUM = 600;
+    const ibaPositions = new THREE.InstancedBufferAttribute(new Float32Array(NUM * 3), 3);
+    const ibaColors = new THREE.InstancedBufferAttribute(new Float32Array(NUM * 3), 3);
+    const ibaRotates = new THREE.InstancedBufferAttribute(new Float32Array(NUM * 3), 3);
+    const ibaDelays = new THREE.InstancedBufferAttribute(new Float32Array(NUM), 1);
+    for ( var i = 0, ul = NUM; i < ul; i++ ) {
       const radians = MathEx.radians(Math.random() * 360);
       const radius = Math.random() * 50 + 25;
       ibaPositions.setXYZ(
@@ -55,7 +45,12 @@ export default class Confetti {
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
-      uniforms: this.uniforms,
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+      },
       vertexShader: require('./glsl/confetti.vs'),
       fragmentShader: require('./glsl/confetti.fs'),
       side: THREE.DoubleSide,
@@ -63,15 +58,16 @@ export default class Confetti {
     });
 
     // Create Object3D
-    this.obj = new THREE.Mesh(geometry, material);
-    this.obj.name = 'InstanceMesh';
-    this.obj.frustumCulled = false;
+    super(geometry, material);
+    this.name = 'InstanceMesh';
+    this.frustumCulled = false;
+    this.isOver = false;
   }
   render(time) {
-    if (this.isOver === true) this.uniforms.time.value += time;
+    if (this.isOver === true) this.material.uniforms.time.value += time;
   }
   over(time) {
-    this.uniforms.time.value = 0;
+    this.material.uniforms.time.value = 0;
     this.isOver = true;
   }
   coolDown() {
