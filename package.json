@@ -42,7 +42,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-pngquant": "^6.0.0",
+    "imagemin-pngquant": "^7.0.0",
     "node-sass": "^4.7.2",
     "pump": "^3.0.0",
     "raw-loader": "^1.0.0",
@@ -56,7 +56,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "easing-js": "^1.1.2",
-    "gl-matrix": "^2.4.0",
+    "gl-matrix": "^3.0.0",
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",
     "glsl-inverse": "^1.0.0",
