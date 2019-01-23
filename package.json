@@ -42,7 +42,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-pngquant": "^6.0.0",
+    "imagemin-pngquant": "^7.0.0",
     "node-sass": "^4.7.2",
     "pump": "^3.0.0",
     "raw-loader": "^1.0.0",

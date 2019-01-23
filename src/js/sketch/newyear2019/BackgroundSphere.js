@@ -1,47 +1,44 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class BackgroundSphere {
+export default class BackgroundSphere extends THREE.Mesh {
   constructor() {
-    this.uniforms = {
-      time: {
-        type: 'f',
-        value: 0
-      },
-    };
-    this.obj;
-    this.isOvered = false;
-  }
-  createObj() {
+    // Define the geometry.
     const geometry = new THREE.SphereBufferGeometry(100, 128, 128);
 
-    // Materialを定義
+    // Define the material.
     const material = new THREE.RawShaderMaterial({
-      uniforms: this.uniforms,
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+      },
       vertexShader: require('./glsl/backgroundSphere.vs'),
       fragmentShader: require('./glsl/backgroundSphere.fs'),
       side: THREE.BackSide,
       depthWrite: false,
     });
 
-    // Object3Dを作成
-    this.obj = new THREE.Mesh(geometry, material);
-    this.obj.position.y = 16.0;
+    // Create Object3D.
+    super(geometry, material);
+    this.position.y = 16.0;
+    this.isOvered = false;
   }
   render(time) {
     if (this.isOvered === true) {
-      this.uniforms.time.value += time;
+      this.material.uniforms.time.value += time;
     } else {
-      this.uniforms.time.value -= time;
+      this.material.uniforms.time.value -= time;
     }
-    this.uniforms.time.value = MathEx.clamp(this.uniforms.time.value, 0, 0.8);
+    this.material.uniforms.time.value = MathEx.clamp(this.material.uniforms.time.value, 0, 0.8);
   }
   over() {
-    this.uniforms.time.value = 0;
+    this.material.uniforms.time.value = 0;
     this.isOvered = true;
   }
   coolDown() {
-    this.uniforms.time.value = 0.2;
+    this.material.uniforms.time.value = 0.2;
     this.isOvered = false;
   }
 }

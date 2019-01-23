@@ -1,18 +1,8 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class InstanceMesh {
+export default class InstanceMesh extends THREE.Mesh {
   constructor() {
-    this.uniforms = {
-      time: {
-        type: 'f',
-        value: 0
-      },
-    };
-    this.num = 1000;
-    this.obj;
-  }
-  createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
     const baseGeometry = new THREE.BoxBufferGeometry(10, 10, 10);
@@ -21,25 +11,31 @@ export default class InstanceMesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const ibaPositions = new THREE.InstancedBufferAttribute(new Float32Array(this.num * 3), 3);
-    for ( var i = 0, ul = this.num; i < ul; i++ ) {
+    const num = 1000;
+    const ibaPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
+    for (var i = 0, ul = num; i < ul; i++) {
       ibaPositions.setXYZ(i, 0, 0, 0);
     }
     geometry.addAttribute('iPosition', ibaPositions);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
-      uniforms: this.uniforms,
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+      },
       vertexShader: require('./glsl/instanceMesh.vs'),
       fragmentShader: require('./glsl/instanceMesh.fs'),
     });
 
     // Create Object3D
-    this.obj = new THREE.Mesh(geometry, material);
-    this.obj.name = 'InstanceMesh';
-    this.obj.frustumCulled = false;
+    super(geometry, material);
+    this.name = 'InstanceMesh';
+    this.frustumCulled = false;
   }
   render(time) {
-    this.uniforms.time.value += time;
+    this.material.uniforms.time.value += time;
   }
 }

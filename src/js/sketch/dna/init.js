@@ -102,9 +102,7 @@ export default async function() {
   camera.position.set(-110, -75, 45);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-  dnaHelix.createObj();
-
-  scene.add(dnaHelix.obj);
+  scene.add(dnaHelix);
 
   on();
   resizeWindow();

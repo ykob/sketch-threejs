@@ -1,17 +1,8 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class DnaHelix {
+export default class DnaHelix extends THREE.Points {
   constructor() {
-    this.uniforms = {
-      time: {
-        type: 'f',
-        value: 0
-      },
-    };
-    this.obj;
-  }
-  createObj() {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
 
@@ -69,7 +60,12 @@ export default class DnaHelix {
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
-      uniforms: this.uniforms,
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+      },
       vertexShader: require('./glsl/DnaHelix.vs'),
       fragmentShader: require('./glsl/DnaHelix.fs'),
       transparent: true,
@@ -78,10 +74,10 @@ export default class DnaHelix {
     });
 
     // Create Object3D
-    this.obj = new THREE.Points(geometry, material);
-    this.obj.name = 'DNA Herix';
+    super(geometry, material);
+    this.name = 'DNA Herix';
   }
   render(time) {
-    this.uniforms.time.value += time;
+    this.material.uniforms.time.value += time;
   }
 }
