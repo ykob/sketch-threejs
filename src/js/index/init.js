@@ -61,8 +61,10 @@ export default function() {
     for (var i = 0; i < debris.length; i++) {
       debris[i].render(time);
     }
-    renderer.render(sceneBack, cameraBack, renderBack);
+    renderer.setRenderTarget(renderBack);
+    renderer.render(sceneBack, cameraBack);
     postEffect.render(time);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
