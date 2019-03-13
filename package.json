@@ -25,7 +25,7 @@
     "babel-loader": "^8.0.4",
     "browser-sync": "^2.23.6",
     "cross-env": "^5.2.0",
-    "del": "^3.0.0",
+    "del": "^4.0.0",
     "glslify-import-loader": "^0.1.2",
     "glslify-loader": "^2.0.0",
     "gulp": "^4.0.0",
@@ -51,7 +51,7 @@
     "vinyl-source-stream": "^2.0.0",
     "webpack": "^4.20.2",
     "webpack-stream": "^5.1.1",
-    "yargs": "^12.0.1"
+    "yargs": "^13.2.2"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -64,7 +64,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.100.0",
+    "three": "^0.102.1",
     "vue": "^2.5.16"
   }
 }
