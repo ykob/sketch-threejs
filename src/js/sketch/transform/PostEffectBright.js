@@ -31,9 +31,10 @@ export default class PostEffectBright {
     this.obj = new THREE.Mesh(geometry, material);
     this.obj.visible = false;
   }
-  render(renderer, scene, camera, renderTarget) {
+  render(renderer, scene, camera, renderTarget = null) {
     this.obj.visible = true;
-    renderer.render(scene, camera, renderTarget);
+    renderer.setRenderTarget(renderTarget);
+    renderer.render(scene, camera);
     this.obj.visible = false;
   }
 }

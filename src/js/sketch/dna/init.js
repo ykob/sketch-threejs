@@ -49,10 +49,12 @@ export default async function() {
     dnaHelix.render(time);
 
     // Render the main scene to frame buffer.
-    renderer.render(scene, camera, renderTarget);
+    renderer.setRenderTarget(renderTarget);
+    renderer.render(scene, camera);
 
     // Render the post effect.
     postEffect.render(time);
+    renderer.setRenderTarget(null);
     renderer.render(scenePE, cameraPE);
   };
   const renderLoop = () => {

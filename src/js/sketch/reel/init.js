@@ -52,6 +52,7 @@ export default function() {
     boxes.render(time);
     floor.render(renderer, scene, time);
     hill.render(renderer, scene, time);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {

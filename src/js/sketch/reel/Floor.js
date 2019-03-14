@@ -52,7 +52,8 @@ export default class Floor {
     this.uniforms.time.value += time;
     this.updateTextureMatrix();
     this.obj.visible = false;
-    renderer.render(scene, this.mirrorCamera, this.mirrorRender);
+    renderer.setRenderTarget(this.mirrorRender);
+    renderer.render(scene, this.mirrorCamera);
     this.obj.visible = true;
   }
   resize() {

@@ -88,7 +88,8 @@ export default function() {
     }
     points.render(time);
     floor.render(renderer, scene, sceneBack, camera, time);
-    renderer.render(sceneBack, cameraBack, renderBack1);
+    renderer.setRenderTarget(renderBack1);
+    renderer.render(sceneBack, cameraBack);
 
     // render post effects
     postEffectBright.render(renderer, scene, camera, renderBack2);
