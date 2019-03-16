@@ -23,10 +23,13 @@ export default class BackgroundImage {
     loader.load(
       '/sketch-threejs/img/sketch/glitch/osaka.jpg',
       (tex) => {
-      this.uniforms.texture.value = tex;
-      this.obj = this.createObj();
-      callback();
-    })
+        tex.magFilter = THREE.NearestFilter;
+        tex.minFilter = THREE.NearestFilter;
+        this.uniforms.texture.value = tex;
+        this.obj = this.createObj();
+        callback();
+      }
+    )
   }
   createObj() {
     return new THREE.Mesh(
