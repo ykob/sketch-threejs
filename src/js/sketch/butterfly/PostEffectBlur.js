@@ -36,9 +36,10 @@ export default class PostEffectBlur {
   resize(resolution) {
     this.uniforms.resolution.value.set(resolution.x, resolution.y);
   }
-  render(renderer, scene, camera, renderTarget) {
+  render(renderer, scene, camera, renderTarget = null) {
     this.obj.visible = true;
-    renderer.render(scene, camera, renderTarget);
+    renderer.setRenderTarget(renderTarget);
+    renderer.render(scene, camera);
     this.obj.visible = false;
   }
 }

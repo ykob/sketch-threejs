@@ -27,7 +27,8 @@ export default class PostEffectBright {
   }
   render(renderer, scene, camera, renderTarget) {
     this.obj.visible = true;
-    renderer.render(scene, camera, renderTarget);
+    renderer.setRenderTarget(renderTarget);
+    renderer.render(scene, camera);
     this.obj.visible = false;
   }
 }

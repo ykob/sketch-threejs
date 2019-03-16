@@ -46,8 +46,10 @@ export default function() {
   }
   const render = () => {
     const time = clock.getDelta();
-    renderer.render(sceneBack, cameraBack, renderBack1);
+    renderer.setRenderTarget(renderBack1);
+    renderer.render(sceneBack, cameraBack);
     postEffect.render(time);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
