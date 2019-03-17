@@ -58,7 +58,9 @@ export default function() {
     postEffect.render(now);
     postEffect.uniforms.strengthZoom.value = cameraController.computeZoomLength();
     postEffect.uniforms.strengthGlitch.value = cameraController.computeAcceleration();
-    renderer.render(sceneBack, cameraBack, renderBack);
+    renderer.setRenderTarget(renderBack);
+    renderer.render(sceneBack, cameraBack);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {

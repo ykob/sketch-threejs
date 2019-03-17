@@ -125,6 +125,7 @@ export default function() {
     camera.force.look.applyDrag(0.4);
     camera.force.look.updateVelocity();
     camera.updateLook();
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {

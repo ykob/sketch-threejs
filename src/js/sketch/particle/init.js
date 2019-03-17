@@ -56,17 +56,22 @@ export default function() {
   const render = () => {
     const time = clock.getDelta();
     points.render(renderer, time);
-    renderer.render(sceneBack, cameraBack, renderBack1);
+    renderer.setRenderTarget(renderBack1);
+    renderer.render(sceneBack, cameraBack);
     scene.add(postEffectBright.obj);
-    renderer.render(scene, cameraBack, renderBack2);
+    renderer.setRenderTarget(renderBack2);
+    renderer.render(scene, cameraBack);
     scene.remove(postEffectBright.obj);
     scene.add(postEffectBlurX.obj);
-    renderer.render(scene, cameraBack, renderBack3);
+    renderer.setRenderTarget(renderBack3);
+    renderer.render(scene, cameraBack);
     scene.remove(postEffectBlurX.obj);
     scene.add(postEffectBlurY.obj);
-    renderer.render(scene, cameraBack, renderBack2);
+    renderer.setRenderTarget(renderBack2);
+    renderer.render(scene, cameraBack);
     scene.remove(postEffectBlurY.obj);
     scene.add(postEffectBloom.obj);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
     scene.remove(postEffectBloom.obj);
   }

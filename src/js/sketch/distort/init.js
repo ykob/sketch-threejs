@@ -165,7 +165,9 @@ export default function() {
     camera.force.look.updateVelocity();
     camera.lookAt(camera.force.look.velocity);
 
-    renderer.render(sub_scene, sub_camera, render_target);
+    renderer.setRenderTarget(render_target);
+    renderer.render(sub_scene, sub_camera);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {

@@ -311,8 +311,11 @@ export default function() {
     sub_camera2.force.look.applyDrag(0.4);
     sub_camera2.force.look.updateVelocity();
     sub_camera2.updateLook();
-    renderer.render(sub_scene2, sub_camera2, render_target2);
-    renderer.render(sub_scene, sub_camera, render_target);
+    renderer.setRenderTarget(render_target2);
+    renderer.render(sub_scene2, sub_camera2);
+    renderer.setRenderTarget(render_target);
+    renderer.render(sub_scene, sub_camera);
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
