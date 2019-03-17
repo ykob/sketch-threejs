@@ -141,7 +141,6 @@ export default function() {
     force.applyHook(0, force.k);
     force.applyDrag(force.d);
     force.updateVelocity();
-    // console.log(force.acceleration.length());
     sphere.material.uniforms.time.value += time_unit;
     sphere.material.uniforms.radius.value = force.velocity.x;
     sphere.material.uniforms.distort.value = force.velocity.x / 2 - 0.1;
