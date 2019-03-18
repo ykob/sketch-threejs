@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "dissolve": {
+      "title": "dissolve",
+      "id": "dissolve",
+      "description": "",
+      "path": "/sketch/dissolve.html",
+      "posted": "2019.x.x",
+      "update": "",
+      "color": "white"
+    },
     "dna": {
       "title": "dna",
       "id": "dna",
