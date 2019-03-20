@@ -1,0 +1,46 @@
+import * as THREE from 'three';
+
+export default class Mesh extends THREE.Mesh {
+  constructor() {
+    // Define Geometry
+    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+    // Define Material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
+        resolution: {
+          type: 'v2',
+          value: new THREE.Vector2(),
+        },
+        imageResolution: {
+          type: 'v2',
+          value: new THREE.Vector2(2048, 1356),
+        },
+        textures: {
+          type: 'f',
+          value: 0
+        },
+      },
+      vertexShader: require('./glsl/image.vs'),
+      fragmentShader: require('./glsl/image.fs'),
+    });
+
+    // Create Object3D
+    super(geometry, material);
+    this.name = 'Mesh';
+  }
+  start(resolution, textures) {
+    this.resize(resolution);
+    this.material.uniforms.textures.value = textures;
+  }
+  update(time) {
+    this.material.uniforms.time.value += time;
+  }
+  resize(resolution) {
+    this.material.uniforms.resolution.value.copy(resolution);
+  }
+}

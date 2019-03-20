@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
+import Image from './Image';
+
 export default async function() {
   // ==========
   // Define common variables
@@ -25,12 +28,14 @@ export default async function() {
   // ==========
   // Define unique variables
   //
+  const image = new Image();
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    image.update(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -80,6 +85,18 @@ export default async function() {
 
   on();
   resizeWindow();
+
+  await Promise.all([
+    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka01.jpg'),
+    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka02.jpg'),
+    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka03.jpg'),
+    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka04.jpg'),
+    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka05.jpg'),
+  ]).then((response) => {
+    image.start(resolution, response);
+  });
+
+  scene.add(image);
 
   preloader.classList.add('is-hidden');
   await sleep(200);
