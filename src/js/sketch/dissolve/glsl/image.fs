@@ -1,5 +1,8 @@
 precision highp float;
 
+uniform float time;
+uniform float interval;
+uniform float duration;
 uniform sampler2D textures[5];
 
 varying vec2 vUv;
@@ -15,5 +18,8 @@ vec4 getTexColor(float index, vec2 uv) {
 }
 
 void main(void) {
-  gl_FragColor = getTexColor(0.0, vUv);
+  float alpha = mod(time, interval) / interval;
+  float index = floor(mod(time, interval * 5.0) / interval);
+
+  gl_FragColor = getTexColor(index, vUv);
 }

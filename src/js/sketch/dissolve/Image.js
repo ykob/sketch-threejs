@@ -12,6 +12,14 @@ export default class Mesh extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        interval: {
+          type: 'f',
+          value: 5
+        },
+        duration: {
+          type: 'f',
+          value: 1
+        },
         resolution: {
           type: 'v2',
           value: new THREE.Vector2(),
