@@ -61,14 +61,14 @@ export default async function() {
     renderer.setSize(resolution.x, resolution.y);
   };
   const on = () => {
-    window.addEventListener('blur', () => {
-      // this window is inactive.
-      clock.stop();
-    });
-    window.addEventListener('focus', () => {
-      // this window is inactive.
-      clock.start();
-    });
+    // window.addEventListener('blur', () => {
+    //   // this window is inactive.
+    //   clock.stop();
+    // });
+    // window.addEventListener('focus', () => {
+    //   // this window is inactive.
+    //   clock.start();
+    // });
     window.addEventListener('resize', debounce(resizeWindow, 1000));
   };
 

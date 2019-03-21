@@ -7,6 +7,9 @@ uniform sampler2D textures[5];
 
 varying vec2 vUv;
 
+#pragma glslify: ease = require(glsl-easings/exponential-in-out)
+#pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
+
 vec4 getTexColor(float index, vec2 uv) {
   vec4 color;
   color += texture2D(textures[0], uv) * (1.0 - step(0.9, index));
@@ -18,8 +21,19 @@ vec4 getTexColor(float index, vec2 uv) {
 }
 
 void main(void) {
-  float alpha = mod(time, interval) / interval;
-  float index = floor(mod(time, interval * 5.0) / interval);
+  float alpha = ease(clamp(mod(time, interval) / interval, 0.0, 1.0));
+  float noise1 = cnoise3(vec3(vUv * vec2(8.0, 12.0), time * 0.1));
+  float noise2 = cnoise3(vec3(vUv * vec2(52.0), time));
+  float noise = noise1 * 0.85 + noise2 * 0.15;
 
-  gl_FragColor = getTexColor(index, vUv);
+  vec2 uvPrev = vUv + vec2(0.3, 0.0) * noise * alpha;
+  vec2 uvNext = vUv + vec2(0.3, 0.0) * noise * (1.0 - alpha);
+
+  float indexPrev = floor(mod(time - interval, interval * 5.0) / interval);
+  float indexNext = floor(mod(time, interval * 5.0) / interval);
+
+  vec4 texColorPrev = getTexColor(indexPrev, uvPrev) * (1.0 - alpha);
+  vec4 texColorNext = getTexColor(indexNext, uvNext) * alpha;
+
+  gl_FragColor = texColorPrev + texColorNext;
 }
