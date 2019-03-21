@@ -22,7 +22,9 @@ export default class Points extends THREE.Points {
     super(geometry, material);
     this.name = 'Points';
   }
-  render(time) {
+  start() {
+  }
+  update(time) {
     this.material.uniforms.time.value += time;
   }
 }

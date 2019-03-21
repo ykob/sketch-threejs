@@ -35,7 +35,9 @@ export default class InstanceMesh extends THREE.Mesh {
     this.name = 'InstanceMesh';
     this.frustumCulled = false;
   }
-  render(time) {
+  start() {
+  }
+  update(time) {
     this.material.uniforms.time.value += time;
   }
 }

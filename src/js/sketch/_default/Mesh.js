@@ -22,7 +22,9 @@ export default class Mesh extends THREE.Mesh {
     super(geometry, material);
     this.name = 'Mesh';
   }
-  render(time) {
+  start() {
+  }
+  update(time) {
     this.material.uniforms.time.value += time;
   }
 }

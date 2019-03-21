@@ -29,10 +29,12 @@ export default class PostEffect extends THREE.Mesh {
     super(geometry, material);
     this.name = 'PostEffect';
   }
+  start() {
+  }
+  update(time) {
+    this.material.uniforms.time.value += time;
+  }
   resize(x, y) {
     this.material.uniforms.resolution.value.set(x, y);
-  }
-  render(time) {
-    this.material.uniforms.time.value += time;
   }
 }
