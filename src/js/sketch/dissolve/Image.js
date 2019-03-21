@@ -35,6 +35,10 @@ export default class Mesh extends THREE.Mesh {
   }
   start(resolution, textures) {
     this.resize(resolution);
+    for (var i = 0; i < textures.length; i++) {
+      textures[i].magFilter = THREE.NearestFilter;
+      textures[i].minFilter = THREE.NearestFilter;
+    }
     this.material.uniforms.textures.value = textures;
   }
   update(time) {
