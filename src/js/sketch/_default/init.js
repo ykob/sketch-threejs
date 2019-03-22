@@ -71,7 +71,7 @@ export default async function() {
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.position.set(0, 0, 300);
+  camera.position.set(0, 0, 100);
   camera.lookAt(new THREE.Vector3());
 
   on();
