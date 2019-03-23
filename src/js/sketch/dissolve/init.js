@@ -58,6 +58,7 @@ export default async function() {
     canvas.width = resolution.x;
     canvas.height = resolution.y;
     resizeCamera();
+    image.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   };
   const on = () => {

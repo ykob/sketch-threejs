@@ -34,8 +34,8 @@ void main(void) {
   float mask1 = smoothstep(0.5, 1.0, mask);
   float mask2 = smoothstep(0.0, 0.5, mask);
 
-  vec2 uvPrev = (vUv + p * 0.12 * alpha) + vec2(0.2) * vec2(noiseA, noiseB) * length(p) * alpha;
-  vec2 uvNext = (vUv - p * 0.12 * (1.0 - alpha)) + vec2(0.2) * vec2(noiseA, noiseB) * length(p) * (1.0 - alpha);
+  vec2 uvPrev = (vUv + p * 0.15 * alpha) + vec2(0.2) * vec2(noiseA, noiseB) * length(p) * alpha;
+  vec2 uvNext = (vUv - p * 0.15 * (1.0 - alpha)) + vec2(0.2) * vec2(noiseA, noiseB) * length(p) * (1.0 - alpha);
 
   float indexPrev = floor(mod(time - interval, interval * 5.0) / interval);
   float indexNext = floor(mod(time, interval * 5.0) / interval);
