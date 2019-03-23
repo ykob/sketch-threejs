@@ -18,7 +18,7 @@ export default class Mesh extends THREE.Mesh {
         },
         duration: {
           type: 'f',
-          value: 5
+          value: 3
         },
         resolution: {
           type: 'v2',

@@ -21,7 +21,7 @@ vec4 getTexColor(float index, vec2 uv) {
 }
 
 void main(void) {
-  float alpha = ease(clamp(mod(time, interval) / interval, 0.0, 1.0));
+  float alpha = ease(clamp(mod(time, interval) / duration, 0.0, 1.0));
   float noise1 = cnoise3(vec3(vUv * vec2(8.0, 12.0), time * 0.1));
   float noise2 = cnoise3(vec3(vUv * vec2(52.0), time));
   float noise = noise1 * 0.85 + noise2 * 0.15;
