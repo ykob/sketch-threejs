@@ -15,9 +15,9 @@
     "dissolve": {
       "title": "dissolve",
       "id": "dissolve",
-      "description": "",
+      "description": "It attaches the dissolve effect made with Noise calculation and UV animation to the simple slideshow.",
       "path": "/sketch/dissolve.html",
-      "posted": "2019.x.x",
+      "posted": "2019.3.25",
       "update": "",
       "color": "white"
     },
