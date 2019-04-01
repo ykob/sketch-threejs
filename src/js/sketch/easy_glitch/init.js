@@ -3,6 +3,7 @@ import debounce from 'js-util/debounce';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Typo from './Typo';
+import Background from './Background';
 
 export default async function() {
   // ==========
@@ -25,6 +26,7 @@ export default async function() {
   // Define unique variables
   //
   const typo = new Typo();
+  const bg = new Background();
 
   let textures;
 
@@ -34,6 +36,7 @@ export default async function() {
   const render = () => {
     const time = clock.getDelta();
     typo.update(time);
+    bg.update(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -100,6 +103,10 @@ export default async function() {
 
     scene.add(typo);
   }
+
+  bg.start();
+
+  scene.add(bg);
 
   on();
   resizeWindow();
