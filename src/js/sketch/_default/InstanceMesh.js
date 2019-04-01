@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
+import vs from './glsl/instanceMesh.vs';
+import fs from './glsl/instanceMesh.fs';
+
 export default class InstanceMesh extends THREE.Mesh {
   constructor() {
     // Define Geometries
@@ -26,8 +29,8 @@ export default class InstanceMesh extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/instanceMesh.vs').default,
-      fragmentShader: require('./glsl/instanceMesh.fs').default,
+      vertexShader: vs,
+      fragmentShader: fs,
     });
 
     // Create Object3D

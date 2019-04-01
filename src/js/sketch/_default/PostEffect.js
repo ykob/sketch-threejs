@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+import vs from './glsl/postEffect.vs';
+import fs from './glsl/postEffect.fs';
+
 export default class PostEffect extends THREE.Mesh {
   constructor(texture) {
     // Define Geometry
@@ -21,8 +24,8 @@ export default class PostEffect extends THREE.Mesh {
           value: new THREE.Vector2(),
         },
       },
-      vertexShader: require('./glsl/postEffect.vs').default,
-      fragmentShader: require('./glsl/postEffect.fs').default,
+      vertexShader: vs,
+      fragmentShader: fs,
     });
 
     // Create Object3D
