@@ -46,7 +46,7 @@
     "merge-stream": "^1.0.1",
     "node-sass": "^4.7.2",
     "pump": "^3.0.0",
-    "raw-loader": "^1.0.0",
+    "raw-loader": "^2.0.0",
     "require-dir": "^1.0.0",
     "slash": "^2.0.0",
     "vinyl-source-stream": "^2.0.0",
@@ -65,7 +65,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.102.1",
+    "three": "^0.103.0",
     "vue": "^2.5.16"
   }
 }
