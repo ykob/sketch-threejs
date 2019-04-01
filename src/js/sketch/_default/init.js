@@ -34,7 +34,6 @@ export default async function() {
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
-    camera.setFocalLength(Math.min(resolution.x / 1200, 1) * 35 + 15);
     camera.setViewOffset(
       1200,
       800,
@@ -71,7 +70,8 @@ export default async function() {
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
-  camera.position.set(0, 0, 100);
+  camera.setFocalLength(50);
+  camera.position.set(0, 0, 50);
   camera.lookAt(new THREE.Vector3());
 
   on();
