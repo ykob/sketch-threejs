@@ -15,9 +15,9 @@
     "easyGlitch": {
       "title": "Easy Glitch",
       "id": "easy_glitch",
-      "description": "",
+      "description": "It attaches a simple glitch effect with only using a noise image and adjusting texCoord.",
       "path": "/sketch/easy_glitch.html",
-      "posted": "2019.x.x",
+      "posted": "2019.4.2",
       "update": "",
       "color": "white"
     },
