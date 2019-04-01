@@ -3,6 +3,7 @@ import debounce from 'js-util/debounce';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Typo from './Typo';
+import Debris from './Debris';
 import Background from './Background';
 
 export default async function() {
@@ -26,6 +27,7 @@ export default async function() {
   // Define unique variables
   //
   const typo = new Typo();
+  const debris = new Debris();
   const bg = new Background();
 
   let textures;
@@ -36,6 +38,7 @@ export default async function() {
   const render = () => {
     const time = clock.getDelta();
     typo.update(time);
+    debris.update(time);
     bg.update(time);
     renderer.render(scene, camera);
   };
@@ -104,8 +107,10 @@ export default async function() {
     scene.add(typo);
   }
 
+  debris.start();
   bg.start();
 
+  scene.add(debris);
   scene.add(bg);
 
   on();

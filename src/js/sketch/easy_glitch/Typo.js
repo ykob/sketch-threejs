@@ -28,11 +28,12 @@ export default class Typo extends THREE.Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       transparent: true,
+      blending: THREE.AdditiveBlending,
     });
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Mesh';
+    this.name = 'Typo';
   }
   start(texture, textureNoise) {
     this.material.uniforms.texture.value = texture;

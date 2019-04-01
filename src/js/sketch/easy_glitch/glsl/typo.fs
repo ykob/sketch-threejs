@@ -36,6 +36,9 @@ void main() {
   vec4 r = getGlitchColor(uvR, force) * vec4(1.0, 0.0, 0.0, 1.0);
   vec4 g = getGlitchColor(uvG, force) * vec4(0.0, 1.0, 0.0, 1.0);
   vec4 b = getGlitchColor(uvB, force) * vec4(0.0, 0.0, 1.0, 1.0);
+  vec4 color = r + g + b;
 
-  gl_FragColor = r + g + b;
+  if (color.a < 0.1) discard;
+
+  gl_FragColor = color;
 }
