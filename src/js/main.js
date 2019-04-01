@@ -20,7 +20,7 @@ if (pageId == 'index') {
   });
 
   switch (pageId) {
-    case 'easyGlitch':  require('./sketch/easy_glitch/init.js').default(); break;
+    case 'easy_glitch': require('./sketch/easy_glitch/init.js').default(); break;
     case 'dissolve':    require('./sketch/dissolve/init.js').default(); break;
     case 'dna':         require('./sketch/dna/init.js').default(); break;
     case 'newyear2019': require('./sketch/newyear2019/init.js').default(); break;
