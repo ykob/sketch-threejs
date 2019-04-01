@@ -25,8 +25,8 @@ export default class PostEffect {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/postEffect.vs'),
-      fragmentShader: require('./glsl/postEffect.fs'),
+      vertexShader: require('./glsl/postEffect.vs').default,
+      fragmentShader: require('./glsl/postEffect.fs').default,
     });
 
     // Create Object3D

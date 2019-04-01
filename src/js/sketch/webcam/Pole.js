@@ -47,8 +47,8 @@ export default class Pole {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/pole.vs'),
-      fragmentShader: require('./glsl/pole.fs'),
+      vertexShader: require('./glsl/pole.vs').default,
+      fragmentShader: require('./glsl/pole.fs').default,
       flatShading: true,
       transparent: true,
       depthWrite: false,

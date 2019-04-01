@@ -19,8 +19,8 @@ export default class Ground {
       new THREE.PlaneBufferGeometry(1024, 1024, 32, 32),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/ground.vs'),
-        fragmentShader: require('./glsl/ground.fs'),
+        vertexShader: require('./glsl/ground.vs').default,
+        fragmentShader: require('./glsl/ground.fs').default,
         transparent: true,
         wireframe: true
       })

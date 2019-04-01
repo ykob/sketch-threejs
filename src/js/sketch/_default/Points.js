@@ -14,8 +14,8 @@ export default class Points extends THREE.Points {
           value: 0
         },
       },
-      vertexShader: require('./glsl/points.vs'),
-      fragmentShader: require('./glsl/points.fs'),
+      vertexShader: require('./glsl/points.vs').default,
+      fragmentShader: require('./glsl/points.fs').default,
     });
 
     // Create Object3D

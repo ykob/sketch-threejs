@@ -36,8 +36,8 @@ export default class BackgroundImage {
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/backgroundImage.vs'),
-        fragmentShader: require('./glsl/backgroundImage.fs'),
+        vertexShader: require('./glsl/backgroundImage.vs').default,
+        fragmentShader: require('./glsl/backgroundImage.fs').default,
       })
     );
   }

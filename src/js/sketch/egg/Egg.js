@@ -48,8 +48,8 @@ export default class Egg {
       new THREE.PlaneBufferGeometry(640, 640),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/egg.vs'),
-        fragmentShader: require('./glsl/egg.fs'),
+        vertexShader: require('./glsl/egg.vs').default,
+        fragmentShader: require('./glsl/egg.fs').default,
         transparent: true
       })
     );

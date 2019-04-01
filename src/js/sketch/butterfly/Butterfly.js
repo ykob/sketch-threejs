@@ -34,8 +34,8 @@ export default class Butterfly {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/butterfly.vs'),
-        fragmentShader: require('./glsl/butterfly.fs'),
+        vertexShader: require('./glsl/butterfly.vs').default,
+        fragmentShader: require('./glsl/butterfly.fs').default,
         side: THREE.DoubleSide,
         transparent: true,
       })

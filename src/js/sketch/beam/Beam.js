@@ -41,8 +41,8 @@ export default class Beam {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/beam.vs'),
-      fragmentShader: require('./glsl/beam.fs'),
+      vertexShader: require('./glsl/beam.vs').default,
+      fragmentShader: require('./glsl/beam.fs').default,
       depthWrite: false,
       transparent: true,
       side: THREE.DoubleSide,

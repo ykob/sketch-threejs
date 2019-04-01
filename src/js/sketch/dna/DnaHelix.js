@@ -66,8 +66,8 @@ export default class DnaHelix extends THREE.Points {
           value: 0
         },
       },
-      vertexShader: require('./glsl/DnaHelix.vs'),
-      fragmentShader: require('./glsl/DnaHelix.fs'),
+      vertexShader: require('./glsl/DnaHelix.vs').default,
+      fragmentShader: require('./glsl/DnaHelix.fs').default,
       transparent: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false,

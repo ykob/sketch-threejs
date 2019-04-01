@@ -19,8 +19,8 @@ export default class PostEffectBloom {
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/postEffect.vs'),
-        fragmentShader: require('./glsl/postEffectBloom.fs'),
+        vertexShader: require('./glsl/postEffect.vs').default,
+        fragmentShader: require('./glsl/postEffectBloom.fs').default,
       })
     );
   }

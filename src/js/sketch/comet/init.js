@@ -232,8 +232,8 @@ export default function() {
     }
     points.init({
       scene: scene,
-      vs: require('../../old/glsl/points.vs'),
-      fs: require('../../old/glsl/points.fs'),
+      vs: require('../../old/glsl/points.vs').default,
+      fs: require('../../old/glsl/points.fs').default,
       positions: positions,
       colors: colors,
       opacities: opacities,

@@ -37,10 +37,10 @@ export default class Points {
       vertices[i + 2] = verticesBase[i + 2] + (Math.random() * 2 - 1) * 10;
     }
     this.physicsRenderer = new PhysicsRenderer(
-      require('./glsl/physicsRendererAcceleration.vs'),
-      require('./glsl/physicsRendererAcceleration.fs'),
-      require('./glsl/physicsRendererVelocity.vs'),
-      require('./glsl/physicsRendererVelocity.fs')
+      require('./glsl/physicsRendererAcceleration.vs').default,
+      require('./glsl/physicsRendererAcceleration.fs').default,
+      require('./glsl/physicsRendererVelocity.vs').default,
+      require('./glsl/physicsRendererVelocity.fs').default,
     );
     this.physicsRenderer.init(renderer, vertices);
     this.physicsRenderer.mergeAUniforms({
@@ -56,8 +56,8 @@ export default class Points {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/points.vs'),
-        fragmentShader: require('./glsl/points.fs'),
+        vertexShader: require('./glsl/points.vs').default,
+        fragmentShader: require('./glsl/points.fs').default,
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending,

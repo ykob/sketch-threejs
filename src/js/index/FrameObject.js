@@ -31,8 +31,8 @@ export default class FrameObject {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/frameObject.vs'),
-        fragmentShader: require('./glsl/frameObject.fs'),
+        vertexShader: require('./glsl/frameObject.vs').default,
+        fragmentShader: require('./glsl/frameObject.fs').default,
       })
     )
   }

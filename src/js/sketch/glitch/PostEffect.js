@@ -23,8 +23,8 @@ export default class PostEffect {
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/postEffect.vs'),
-        fragmentShader: require('./glsl/postEffect.fs'),
+        vertexShader: require('./glsl/postEffect.vs').default,
+        fragmentShader: require('./glsl/postEffect.fs').default,
       })
     );
   }

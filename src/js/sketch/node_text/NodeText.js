@@ -96,24 +96,24 @@ export default class Node {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/nodeText.vs'),
-      fragmentShader: require('./glsl/nodeText.fs'),
+      vertexShader: require('./glsl/nodeText.vs').default,
+      fragmentShader: require('./glsl/nodeText.fs').default,
       depthWrite: false,
       transparent: true,
       flatShading: true,
     });
     const materialWire = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/nodeText.vs'),
-      fragmentShader: require('./glsl/nodeTextWire.fs'),
+      vertexShader: require('./glsl/nodeText.vs').default,
+      fragmentShader: require('./glsl/nodeTextWire.fs').default,
       depthWrite: false,
       transparent: true,
       wireframe: true,
     });
     const materialPoints = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/nodeTextPoints.vs'),
-      fragmentShader: require('./glsl/nodeTextPoints.fs'),
+      vertexShader: require('./glsl/nodeTextPoints.vs').default,
+      fragmentShader: require('./glsl/nodeTextPoints.fs').default,
       depthWrite: false,
       transparent: true,
     });

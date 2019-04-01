@@ -23,8 +23,8 @@ export default class SkyBox {
       new THREE.BoxBufferGeometry(30000, 30000, 30000, 1, 1, 1),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/skybox.vs'),
-        fragmentShader: require('./glsl/skybox.fs'),
+        vertexShader: require('./glsl/skybox.vs').default,
+        fragmentShader: require('./glsl/skybox.fs').default,
         side: THREE.BackSide,
       })
     )

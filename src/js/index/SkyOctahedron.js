@@ -58,8 +58,8 @@ export default class SkyOctahedron {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/skyOctahedron.vs'),
-        fragmentShader: require('./glsl/skyOctahedron.fs'),
+        vertexShader: require('./glsl/skyOctahedron.vs').default,
+        fragmentShader: require('./glsl/skyOctahedron.fs').default,
         flatShading: true,
         transparent: true,
         side: THREE.DoubleSide

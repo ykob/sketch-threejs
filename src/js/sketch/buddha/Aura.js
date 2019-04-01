@@ -18,8 +18,8 @@ export default class Aura {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/aura.vs'),
-      fragmentShader: require('./glsl/aura.fs'),
+      vertexShader: require('./glsl/aura.vs').default,
+      fragmentShader: require('./glsl/aura.fs').default,
       transparent: true,
       flatShading: true,
     });

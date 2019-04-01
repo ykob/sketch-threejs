@@ -24,8 +24,8 @@ export default class Puddle {
       new THREE.PlaneBufferGeometry(1500, 1500),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/puddle.vs'),
-        fragmentShader: require('./glsl/puddle.fs'),
+        vertexShader: require('./glsl/puddle.vs').default,
+        fragmentShader: require('./glsl/puddle.fs').default,
         transparent: true
       })
     )

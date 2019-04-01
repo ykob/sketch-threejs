@@ -21,8 +21,8 @@ export default class PostEffect extends THREE.Mesh {
           value: new THREE.Vector2(),
         },
       },
-      vertexShader: require('./glsl/postEffect.vs'),
-      fragmentShader: require('./glsl/postEffect.fs'),
+      vertexShader: require('./glsl/postEffect.vs').default,
+      fragmentShader: require('./glsl/postEffect.fs').default,
     });
 
     // Create Object3D

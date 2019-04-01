@@ -26,8 +26,8 @@ export default class Points {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/points.vs'),
-      fragmentShader: require('./glsl/points.fs'),
+      vertexShader: require('./glsl/points.vs').default,
+      fragmentShader: require('./glsl/points.fs').default,
       transparent: true,
     });
     this.uniforms.tex.value = tex;

@@ -54,8 +54,8 @@ export default class GUI {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/gui.vs'),
-      fragmentShader: require('./glsl/gui.fs'),
+      vertexShader: require('./glsl/gui.vs').default,
+      fragmentShader: require('./glsl/gui.fs').default,
       transparent: true,
       blending: THREE.AdditiveBlending,
     });

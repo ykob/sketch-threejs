@@ -26,8 +26,8 @@ export default class InstanceMesh extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/instanceMesh.vs'),
-      fragmentShader: require('./glsl/instanceMesh.fs'),
+      vertexShader: require('./glsl/instanceMesh.vs').default,
+      fragmentShader: require('./glsl/instanceMesh.fs').default,
     });
 
     // Create Object3D

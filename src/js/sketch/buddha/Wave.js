@@ -18,8 +18,8 @@ export default class Wave {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/wave.vs'),
-      fragmentShader: require('./glsl/wave.fs'),
+      vertexShader: require('./glsl/wave.vs').default,
+      fragmentShader: require('./glsl/wave.fs').default,
       transparent: true,
       flatShading: true,
     });

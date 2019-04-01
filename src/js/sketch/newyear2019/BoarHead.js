@@ -19,8 +19,8 @@ export default class BoarHead extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/boarHead.vs'),
-      fragmentShader: require('./glsl/boarHead.fs'),
+      vertexShader: require('./glsl/boarHead.vs').default,
+      fragmentShader: require('./glsl/boarHead.fs').default,
       flatShading: true,
       transparent: true,
     });

@@ -51,8 +51,8 @@ export default class Confetti extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/confetti.vs'),
-      fragmentShader: require('./glsl/confetti.fs'),
+      vertexShader: require('./glsl/confetti.vs').default,
+      fragmentShader: require('./glsl/confetti.fs').default,
       side: THREE.DoubleSide,
       transparent: true,
     });

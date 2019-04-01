@@ -48,8 +48,8 @@ export default class FlameStone {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/flameStone.vs'),
-      fragmentShader: require('./glsl/flameStone.fs'),
+      vertexShader: require('./glsl/flameStone.vs').default,
+      fragmentShader: require('./glsl/flameStone.fs').default,
       flatShading: true,
     });
 

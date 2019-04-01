@@ -36,8 +36,8 @@ export default class TitleObject {
       new THREE.PlaneBufferGeometry(256, 64, 40, 10),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/titleObject.vs'),
-        fragmentShader: require('./glsl/titleObject.fs'),
+        vertexShader: require('./glsl/titleObject.vs').default,
+        fragmentShader: require('./glsl/titleObject.fs').default,
         transparent: true,
       })
     )

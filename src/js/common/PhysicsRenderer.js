@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class PhysicsRenderer {
   constructor(aVertexShader, aFragmentShader, vVertexShader, vFragmentShader) {
     this.side = 0;
@@ -137,8 +136,8 @@ export default class PhysicsRenderer {
             value: this.vUniforms.velocityInit.value,
           },
         },
-        vertexShader: require('./glsl/physicsRenderer.vs'),
-        fragmentShader: require('./glsl/physicsRendererVelocityInit.fs'),
+        vertexShader: require('./glsl/physicsRenderer.vs').default,
+        fragmentShader: require('./glsl/physicsRendererVelocityInit.fs').default,
       })
     );
     for (var i = 0; i < 2; i++) {

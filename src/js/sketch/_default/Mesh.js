@@ -14,8 +14,8 @@ export default class Mesh extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/mesh.vs'),
-      fragmentShader: require('./glsl/mesh.fs'),
+      vertexShader: require('./glsl/mesh.vs').default,
+      fragmentShader: require('./glsl/mesh.fs').default,
     });
 
     // Create Object3D

@@ -14,8 +14,8 @@ export default class BackgroundSphere extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/backgroundSphere.vs'),
-      fragmentShader: require('./glsl/backgroundSphere.fs'),
+      vertexShader: require('./glsl/backgroundSphere.vs').default,
+      fragmentShader: require('./glsl/backgroundSphere.fs').default,
       side: THREE.BackSide,
       depthWrite: false,
     });

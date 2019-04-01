@@ -20,8 +20,8 @@ export default class Node {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/node.vs'),
-      fragmentShader: require('./glsl/node.fs'),
+      vertexShader: require('./glsl/node.vs').default,
+      fragmentShader: require('./glsl/node.fs').default,
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,
@@ -29,8 +29,8 @@ export default class Node {
     });
     const materialWire = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/node.vs'),
-      fragmentShader: require('./glsl/nodeWire.fs'),
+      vertexShader: require('./glsl/node.vs').default,
+      fragmentShader: require('./glsl/nodeWire.fs').default,
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,
@@ -38,8 +38,8 @@ export default class Node {
     });
     const materialPoints = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/nodePoints.vs'),
-      fragmentShader: require('./glsl/nodePoints.fs'),
+      vertexShader: require('./glsl/nodePoints.vs').default,
+      fragmentShader: require('./glsl/nodePoints.fs').default,
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,

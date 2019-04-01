@@ -20,8 +20,8 @@ export default class BackgroundSphere {
 
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/backgroundSphere.vs'),
-      fragmentShader: require('./glsl/backgroundSphere.fs'),
+      vertexShader: require('./glsl/backgroundSphere.vs').default,
+      fragmentShader: require('./glsl/backgroundSphere.fs').default,
       side: THREE.BackSide,
     });
 

@@ -22,8 +22,8 @@ export default class Water {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/water.vs'),
-      fragmentShader: require('./glsl/water.fs'),
+      vertexShader: require('./glsl/water.vs').default,
+      fragmentShader: require('./glsl/water.fs').default,
       flatShading: true,
       transparent: true,
     });

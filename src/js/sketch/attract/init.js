@@ -62,8 +62,8 @@ export default function() {
           value: new THREE.Texture()
         }
       },
-      vertexShader: require('./glsl/points.vs'),
-      fragmentShader: require('./glsl/points.fs'),
+      vertexShader: require('./glsl/points.vs').default,
+      fragmentShader: require('./glsl/points.fs').default,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
@@ -87,10 +87,10 @@ export default function() {
 
   const initSketch = () => {
     physics_renderer = new PhysicsRenderer(
-      require('./glsl/physicsRendererAcceleration.vs'),
-      require('./glsl/physicsRendererAcceleration.fs'),
-      require('./glsl/physicsRendererVelocity.vs'),
-      require('./glsl/physicsRendererVelocity.fs')
+      require('./glsl/physicsRendererAcceleration.vs').default,
+      require('./glsl/physicsRendererAcceleration.fs').default,
+      require('./glsl/physicsRendererVelocity.vs').default,
+      require('./glsl/physicsRendererVelocity.fs').default,
     );
     physics_renderer.init(renderer, createPointsIntVelocity());
     physics_renderer.accelerationMesh.material.uniforms.anchor = {

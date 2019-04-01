@@ -58,8 +58,8 @@ export default function() {
           }
         }
       ]),
-      vertexShader: require('./glsl/object.vs'),
-      fragmentShader: require('./glsl/object.fs'),
+      vertexShader: require('./glsl/object.vs').default,
+      fragmentShader: require('./glsl/object.fs').default,
       lights: true,
     });
     return new THREE.Mesh(geometry, material);
@@ -96,8 +96,8 @@ export default function() {
           value: render_target,
         },
       },
-      vertexShader: require('./glsl/posteffect.vs'),
-      fragmentShader: require('./glsl/posteffect.fs'),
+      vertexShader: require('./glsl/posteffect.vs').default,
+      fragmentShader: require('./glsl/posteffect.fs').default,
     });
     return new THREE.Mesh(geometry, material);
   }

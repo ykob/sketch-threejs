@@ -75,8 +75,8 @@ export default class Land {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/land.vs'),
-      fragmentShader: require('./glsl/land.fs'),
+      vertexShader: require('./glsl/land.vs').default,
+      fragmentShader: require('./glsl/land.fs').default,
       flatShading: true,
     });
 

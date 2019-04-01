@@ -31,8 +31,8 @@ export default class Hill {
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/hill.vs'),
-        fragmentShader: require('./glsl/hill.fs'),
+        vertexShader: require('./glsl/hill.vs').default,
+        fragmentShader: require('./glsl/hill.fs').default,
         flatShading: true,
       })
     )

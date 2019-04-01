@@ -22,8 +22,8 @@ export default class Debris {
       new THREE.BoxBufferGeometry(100, 100, 100),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
-        vertexShader: require('./glsl/debris.vs'),
-        fragmentShader: require('./glsl/debris.fs'),
+        vertexShader: require('./glsl/debris.vs').default,
+        fragmentShader: require('./glsl/debris.fs').default,
         transparent: true,
         wireframe: true
       })

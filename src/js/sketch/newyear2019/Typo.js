@@ -28,8 +28,8 @@ export default class Typo extends THREE.Mesh {
           value: 0
         },
       },
-      vertexShader: require('./glsl/typo.vs'),
-      fragmentShader: require('./glsl/typo.fs'),
+      vertexShader: require('./glsl/typo.vs').default,
+      fragmentShader: require('./glsl/typo.fs').default,
       transparent: true,
     });
 

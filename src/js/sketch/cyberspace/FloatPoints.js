@@ -36,8 +36,8 @@ export default class FloatPoints {
     // Materialを定義
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
-      vertexShader: require('./glsl/floatPoints.vs'),
-      fragmentShader: require('./glsl/floatPoints.fs'),
+      vertexShader: require('./glsl/floatPoints.vs').default,
+      fragmentShader: require('./glsl/floatPoints.fs').default,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
