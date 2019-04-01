@@ -100,7 +100,7 @@ export default async function() {
     confetti.visible = true;
     bg.visible = true;
     renderer.setRenderTarget(renderTarget1);
-    renderer.render(scene, camera, renderTarget1);
+    renderer.render(scene, camera);
 
     // Render the only bright to frame buffer.
     boarHead.material.uniforms.drawBrightOnly.value = 1;
