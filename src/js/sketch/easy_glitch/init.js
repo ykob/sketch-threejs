@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
+
+import Typo from './Typo';
 
 export default async function() {
   // ==========
@@ -21,12 +24,16 @@ export default async function() {
   // ==========
   // Define unique variables
   //
+  const typo = new Typo();
+
+  let textures;
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    typo.update(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -66,13 +73,33 @@ export default async function() {
   // ==========
   // Initialize
   //
-  renderer.setClearColor(0xeeeeee, 1.0);
+  renderer.setClearColor(0x111111, 1.0);
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
   camera.setFocalLength(50);
   camera.position.set(0, 0, 50);
   camera.lookAt(new THREE.Vector3());
+
+  await Promise.all([
+    PromiseTextureLoader('../img/sketch/easy_glitch/typo.png'),
+    PromiseTextureLoader('../img/sketch/easy_glitch/noise.png'),
+  ]).then(response => {
+    textures = response;
+  });
+
+  if (textures) {
+    textures[0].wrapS = THREE.RepeatWrapping;
+    textures[0].wrapT = THREE.RepeatWrapping;
+    textures[1].wrapS = THREE.RepeatWrapping;
+    textures[1].wrapT = THREE.RepeatWrapping;
+    textures[1].minFilter = THREE.NearestFilter;
+    textures[1].magFilter = THREE.NearestFilter;
+
+    typo.start(textures[0], textures[1]);
+
+    scene.add(typo);
+  }
 
   on();
   resizeWindow();
