@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+import sleep from 'js-util/sleep';
 
 export default async function() {
   // ==========
