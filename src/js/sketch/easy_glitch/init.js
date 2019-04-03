@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+import sleep from 'js-util/sleep';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Typo from './Typo';
@@ -23,6 +24,9 @@ export default async function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
+
+  // For the preloader.
+  const preloader = document.querySelector('.p-preloader');
 
   // ==========
   // Define unique variables
@@ -127,6 +131,9 @@ export default async function() {
 
   on();
   resizeWindow();
+
+  preloader.classList.add('is-hidden');
+  await sleep(200);
 
   clock.start();
   renderLoop();
