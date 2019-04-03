@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "sun": {
+      "title": "sun",
+      "id": "sun",
+      "description": "",
+      "path": "/sketch/sun.html",
+      "posted": "2019.4.x",
+      "update": "",
+      "color": "black"
+    },
     "easyGlitch": {
       "title": "Easy Glitch",
       "id": "easy_glitch",
