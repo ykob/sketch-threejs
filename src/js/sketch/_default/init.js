@@ -14,6 +14,7 @@ export default async function() {
   });
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera();
+  const cameraResolution = new THREE.Vector2();
   const clock = new THREE.Clock({
     autoStart: false
   });
@@ -34,11 +35,22 @@ export default async function() {
     requestAnimationFrame(renderLoop);
   };
   const resizeCamera = () => {
+    if (resolution.x > resolution.y) {
+      cameraResolution.set(
+        (resolution.x >= 1200) ? 1200 : resolution.x,
+        (resolution.x >= 1200) ? 800 : resolution.x * 0.66,
+      );
+    } else {
+      cameraResolution.set(
+        ((resolution.y >= 1200) ? 800 : resolution.y * 0.66) * 0.6,
+        ((resolution.y >= 1200) ? 1200 : resolution.y) * 0.6,
+      );
+    }
     camera.setViewOffset(
-      1200,
-      800,
-      (resolution.x - 1200) / -2,
-      (resolution.y - 800) / -2,
+      cameraResolution.x,
+      cameraResolution.y,
+      (resolution.x - cameraResolution.x) / -2,
+      (resolution.y - cameraResolution.y) / -2,
       resolution.x,
       resolution.y
     );
