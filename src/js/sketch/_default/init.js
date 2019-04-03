@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+import sleep from 'js-util/sleep';
 
 export default async function() {
   // ==========
@@ -18,6 +19,9 @@ export default async function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
+
+  // For the preloader.
+  const preloader = document.querySelector('.p-preloader');
 
   // ==========
   // Define unique variables
@@ -88,6 +92,9 @@ export default async function() {
 
   on();
   resizeWindow();
+
+  // For the preloader.
+  const preloader = document.querySelector('.p-preloader');
 
   clock.start();
   renderLoop();
