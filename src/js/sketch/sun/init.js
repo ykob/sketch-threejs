@@ -1,6 +1,11 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
+
+import Sun from './Sun';
+import Core from './Core';
+import Shell from './Shell';
 
 export default async function() {
   // ==========
@@ -26,12 +31,20 @@ export default async function() {
   // ==========
   // Define unique variables
   //
+  const sun = new Sun();
+  const core = new Core();
+  const shell = new Shell();
+
+  let textures;
 
   // ==========
   // Define functions
   //
   const render = () => {
     const time = clock.getDelta();
+    sun.update(time);
+    core.update(time);
+    shell.update(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -92,6 +105,24 @@ export default async function() {
 
   on();
   resizeWindow();
+
+  await Promise.all([
+    PromiseTextureLoader('../img/sketch/sun/core.png'),
+  ]).then(response => {
+    textures = response;
+  });
+
+  if (textures) {
+    textures[0].wrapS = THREE.RepeatWrapping;
+    textures[0].wrapT = THREE.RepeatWrapping;
+
+    core.start(textures[0]);
+  }
+
+  sun.add(core);
+  // sun.add(shell);
+
+  scene.add(sun);
 
   preloader.classList.add('is-hidden');
   await sleep(200);

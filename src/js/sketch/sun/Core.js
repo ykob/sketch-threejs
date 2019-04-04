@@ -7,7 +7,7 @@ import fs from './glsl/core.fs';
 export default class Core extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BoxBufferGeometry(10, 10, 10);
+    const geometry = new THREE.SphereBufferGeometry(5, 32, 32);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -15,6 +15,10 @@ export default class Core extends THREE.Mesh {
         time: {
           type: 'f',
           value: 0
+        },
+        texture: {
+          type: 't',
+          value: null
         },
       },
       vertexShader: vs,
@@ -25,7 +29,8 @@ export default class Core extends THREE.Mesh {
     super(geometry, material);
     this.name = 'Core';
   }
-  start() {
+  start(texture) {
+    this.material.uniforms.texture.value = texture;
   }
   update(time) {
     this.material.uniforms.time.value += time;
