@@ -108,6 +108,7 @@ export default async function() {
 
   await Promise.all([
     PromiseTextureLoader('../img/sketch/sun/core.png'),
+    PromiseTextureLoader('../img/sketch/sun/core_normal.png'),
   ]).then(response => {
     textures = response;
   });
@@ -115,8 +116,10 @@ export default async function() {
   if (textures) {
     textures[0].wrapS = THREE.RepeatWrapping;
     textures[0].wrapT = THREE.RepeatWrapping;
+    textures[1].wrapS = THREE.RepeatWrapping;
+    textures[1].wrapT = THREE.RepeatWrapping;
 
-    core.start(textures[0]);
+    core.start(textures[0], textures[1]);
   }
 
   sun.add(core);

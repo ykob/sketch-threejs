@@ -20,6 +20,10 @@ export default class Core extends THREE.Mesh {
           type: 't',
           value: null
         },
+        textureNormal: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -29,8 +33,9 @@ export default class Core extends THREE.Mesh {
     super(geometry, material);
     this.name = 'Core';
   }
-  start(texture) {
+  start(texture, textureNormal) {
     this.material.uniforms.texture.value = texture;
+    this.material.uniforms.textureNormal.value = textureNormal;
   }
   update(time) {
     this.material.uniforms.time.value += time;
