@@ -7,7 +7,7 @@ import fs from './glsl/sunshine.fs';
 export default class SunShine extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BoxBufferGeometry(10, 10, 10);
+    const geometry = new THREE.RingBufferGeometry(4, 18, 64);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -16,16 +16,23 @@ export default class SunShine extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        texture: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
     });
 
     // Create Object3D
     super(geometry, material);
+    this.position.z = -5;
     this.name = 'SunShine';
   }
-  start() {
+  start(texture) {
+    this.material.uniforms.texture.value = texture;
   }
   update(time) {
     this.material.uniforms.time.value += time;

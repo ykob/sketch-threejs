@@ -6,6 +6,7 @@ import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Sun from './Sun';
 import Core from './Core';
 import Shell from './Shell';
+import SunShine from './SunShine';
 import Background from './Background';
 
 export default async function() {
@@ -35,6 +36,7 @@ export default async function() {
   const sun = new Sun();
   const core = new Core();
   const shell = new Shell();
+  const sunShine = new SunShine();
   const bg = new Background();
 
   let textures;
@@ -47,6 +49,7 @@ export default async function() {
     sun.update(time);
     core.update(time);
     shell.update(time);
+    sunShine.update(time);
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -111,6 +114,7 @@ export default async function() {
   await Promise.all([
     PromiseTextureLoader('../img/sketch/sun/core.png'),
     PromiseTextureLoader('../img/sketch/sun/core_normal.png'),
+    PromiseTextureLoader('../img/sketch/sun/sunshine.png'),
   ]).then(response => {
     textures = response;
   });
@@ -123,12 +127,14 @@ export default async function() {
 
     core.start(textures[0], textures[1]);
     shell.start(textures[0], textures[1]);
+    sunShine.start(textures[2]);
   }
 
   sun.add(core);
   sun.add(shell);
 
   scene.add(sun);
+  scene.add(sunShine);
   scene.add(bg);
 
   preloader.classList.add('is-hidden');

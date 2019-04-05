@@ -5,6 +5,7 @@ uniform sampler2D texture;
 uniform sampler2D textureNormal;
 
 varying vec2 vUv;
+varying vec3 vColor;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
 
@@ -25,5 +26,5 @@ void main() {
     );
   vec3 rgb = convertHsvToRgb(hsv);
 
-  gl_FragColor = vec4(rgb, 1.0);
+  gl_FragColor = vec4(rgb + vColor, 1.0);
 }
