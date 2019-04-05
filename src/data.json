@@ -15,9 +15,9 @@
     "sun": {
       "title": "sun",
       "id": "sun",
-      "description": "",
+      "description": "Creating the sun using some textures. It isn't depending on the Noise calculation.",
       "path": "/sketch/sun.html",
-      "posted": "2019.4.x",
+      "posted": "2019.4.6",
       "update": "",
       "color": "white"
     },
