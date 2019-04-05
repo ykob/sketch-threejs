@@ -16,8 +16,8 @@ void main() {
 
   float l = length(vPosition);
   vec2 rotateMask = (calcRotateMat3(time * -0.02) * vec3(p, 1.0)).xy;
-  float opacityIn = pow(1.0 - smoothstep(5.5, 8.0, l), 2.0);
-  float opacityOut = 1.0 - smoothstep(8.0, 18.0, l);
+  float opacityIn = pow(1.0 - smoothstep(6.0, 10.0, l), 2.0);
+  float opacityOut = 1.0 - smoothstep(8.0, 24.0, l);
   float opacityRay = sin(acos(dot(normalize(rotateMask), vec2(1.0, 0.0))) * 2.4 + time) * 0.4 + 0.6;
   float opacity = opacityIn * 0.7 + opacityOut * 0.1 + opacityRay * texColor.r;
 
