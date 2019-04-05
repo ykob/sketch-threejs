@@ -16,7 +16,7 @@ export default class Sun extends THREE.Group {
     this.rotation.set(
       0,
       MathEx.radians(this.time * 8),
-      MathEx.radians(45)
+      0
     );
   }
 }
