@@ -6,6 +6,7 @@ import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Sun from './Sun';
 import Core from './Core';
 import Shell from './Shell';
+import Points from './Points';
 import SunShine from './SunShine';
 import Background from './Background';
 
@@ -36,6 +37,7 @@ export default async function() {
   const sun = new Sun();
   const core = new Core();
   const shell = new Shell();
+  const points = new Points();
   const sunShine = new SunShine();
   const bg = new Background();
 
@@ -49,6 +51,7 @@ export default async function() {
     sun.update(time);
     core.update(time);
     shell.update(time);
+    points.update(time);
     sunShine.update(time);
     renderer.render(scene, camera);
   };
@@ -134,6 +137,7 @@ export default async function() {
   sun.add(shell);
 
   scene.add(sun);
+  scene.add(points);
   scene.add(sunShine);
   scene.add(bg);
 
