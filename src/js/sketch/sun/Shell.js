@@ -28,6 +28,8 @@ export default class Shell extends THREE.Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
     });
 
     // Create Object3D

@@ -14,8 +14,8 @@ void main() {
 
   vec2 normal = texture2D(textureNormal, vUv + vec2(0.5, 0.0)).xy;
   vec2 updateUv = vUv + vec2(
-    cos(radians(normal.x * 360.0 + time * 60.0)) * 0.014,
-    sin(radians(normal.y * 360.0 + time * 60.0)) * 0.014
+    cos(radians(normal.x * 360.0 + time * 60.0)) * 0.018,
+    sin(radians(normal.y * 360.0 + time * 60.0)) * 0.018
     );
 
   vec4 texColor = texture2D(texture, updateUv);
@@ -27,5 +27,5 @@ void main() {
     );
   vec3 rgb = convertHsvToRgb(hsv);
 
-  gl_FragColor = vec4(rgb, smoothstep(0.4, 0.6, opacity) * 0.9);
+  gl_FragColor = vec4(rgb, smoothstep(0.4, 0.9, opacity) * 0.9);
 }

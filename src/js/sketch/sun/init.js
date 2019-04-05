@@ -6,6 +6,7 @@ import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Sun from './Sun';
 import Core from './Core';
 import Shell from './Shell';
+import Background from './Background';
 
 export default async function() {
   // ==========
@@ -34,6 +35,7 @@ export default async function() {
   const sun = new Sun();
   const core = new Core();
   const shell = new Shell();
+  const bg = new Background();
 
   let textures;
 
@@ -98,7 +100,7 @@ export default async function() {
   renderer.setClearColor(0xeeeeee, 1.0);
 
   camera.aspect = 3 / 2;
-  camera.far = 10000;
+  camera.far = 1000;
   camera.setFocalLength(50);
   camera.position.set(0, 0, 50);
   camera.lookAt(new THREE.Vector3());
@@ -127,6 +129,7 @@ export default async function() {
   sun.add(shell);
 
   scene.add(sun);
+  scene.add(bg);
 
   preloader.classList.add('is-hidden');
   await sleep(200);
