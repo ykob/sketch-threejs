@@ -98,7 +98,7 @@ export default async function() {
   renderer.setClearColor(0xeeeeee, 1.0);
 
   camera.aspect = 3 / 2;
-  camera.far = 1000;
+  camera.far = 10000;
   camera.setFocalLength(50);
   camera.position.set(0, 0, 50);
   camera.lookAt(new THREE.Vector3());
@@ -120,10 +120,11 @@ export default async function() {
     textures[1].wrapT = THREE.RepeatWrapping;
 
     core.start(textures[0], textures[1]);
+    shell.start(textures[0], textures[1]);
   }
 
   sun.add(core);
-  // sun.add(shell);
+  sun.add(shell);
 
   scene.add(sun);
 

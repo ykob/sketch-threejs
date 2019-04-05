@@ -4,7 +4,6 @@ uniform float time;
 uniform sampler2D texture;
 uniform sampler2D textureNormal;
 
-varying vec3 vPosition;
 varying vec2 vUv;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)

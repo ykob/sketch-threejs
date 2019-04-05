@@ -7,7 +7,7 @@ import fs from './glsl/shell.fs';
 export default class Shell extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BoxBufferGeometry(10, 10, 10);
+    const geometry = new THREE.SphereBufferGeometry(6, 128, 128);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -16,16 +16,27 @@ export default class Shell extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        texture: {
+          type: 't',
+          value: null
+        },
+        textureNormal: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Shell';
   }
-  start() {
+  start(texture, textureNormal) {
+    this.material.uniforms.texture.value = texture;
+    this.material.uniforms.textureNormal.value = textureNormal;
   }
   update(time) {
     this.material.uniforms.time.value += time;
