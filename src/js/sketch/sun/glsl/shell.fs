@@ -27,5 +27,5 @@ void main() {
     );
   vec3 rgb = convertHsvToRgb(hsv);
 
-  gl_FragColor = vec4(rgb, smoothstep(0.4, 0.9, opacity) * 0.9);
+  gl_FragColor = vec4(rgb, smoothstep(0.3, 0.9, opacity) * 0.9);
 }

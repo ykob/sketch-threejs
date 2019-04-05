@@ -7,7 +7,7 @@ import fs from './glsl/shell.fs';
 export default class Shell extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.SphereBufferGeometry(6, 128, 128);
+    const geometry = new THREE.SphereBufferGeometry(6.5, 128, 128);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
