@@ -7,7 +7,7 @@ varying vec3 vColor;
 
 #pragma glslify: random = require(glsl-util/random);
 
-const vec3 rgb1 = vec3(12.0 / 255.0, 21.0 / 255.0, 60.0 / 255.0);
+const vec3 rgb1 = vec3(24.0 / 255.0, 32.0 / 255.0, 76.0 / 255.0);
 const vec3 rgb2 = vec3(5.0 / 255.0, 6.0 / 255.0, 15.0 / 255.0);
 
 void main() {
