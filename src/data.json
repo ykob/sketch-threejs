@@ -22,7 +22,7 @@
       "color": "white"
     },
     "easyGlitch": {
-      "title": "Easy Glitch",
+      "title": "easy glitch",
       "id": "easy_glitch",
       "description": "It attaches a simple glitch effect with only using a noise image and adjusting texCoord.",
       "path": "/sketch/easy_glitch.html",
