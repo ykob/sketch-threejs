@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "crystal": {
+      "title": "crystal",
+      "id": "crystal",
+      "description": "",
+      "path": "/sketch/crystal.html",
+      "posted": "2019.x.x",
+      "update": "",
+      "color": "white"
+    },
     "sun": {
       "title": "sun",
       "id": "sun",
