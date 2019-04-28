@@ -5,8 +5,23 @@ https://ykob.github.io/sketch-threejs/
 
 ## Usage
 
-    npm run start
-    npm run build
+1. Install the necessary node modules.
+
+```
+npm i
+```
+
+2. Run the npm script `start` to start development.
+
+```
+npm run start
+```
+
+3. When finishing development, run the npm script `build` to make the compressed files.
+
+```
+npm run build
+```
 
 ## License
 
