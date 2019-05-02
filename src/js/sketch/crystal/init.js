@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 
+import Crystal from './Crystal';
+import CrystalSparkle from './CrystalSparkle';
+import Background from './Background';
+
 export default async function() {
   // ==========
   // Define common variables
@@ -26,6 +30,13 @@ export default async function() {
   // ==========
   // Define unique variables
   //
+  const COUNT = 6;
+  const crystals = [];
+  const crystalSparkles = [];
+  for (var i = 0; i < COUNT; i++) {
+    crystals[i] = new Crystal();
+    crystalSparkles[i] = new CrystalSparkle();
+  }
 
   // ==========
   // Define functions
@@ -89,6 +100,11 @@ export default async function() {
   camera.setFocalLength(50);
   camera.position.set(0, 0, 50);
   camera.lookAt(new THREE.Vector3());
+
+  for (var i = 0; i < crystals.length; i++) {
+    scene.add(crystals[i]);
+    scene.add(crystalSparkles[i]);
+  }
 
   on();
   resizeWindow();
