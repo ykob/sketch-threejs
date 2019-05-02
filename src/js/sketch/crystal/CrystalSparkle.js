@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-import vs from './glsl/points.vs';
-import fs from './glsl/points.fs';
+import vs from './glsl/crystalSparkle.vs';
+import fs from './glsl/crystalSparkle.fs';
 
-export default class Points extends THREE.Points {
+export default class CrystalSparkle extends THREE.Points {
   constructor() {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
