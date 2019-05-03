@@ -109,8 +109,7 @@ export default async function() {
   on();
   resizeWindow();
 
-  // For the preloader.
-  const preloader = document.querySelector('.p-preloader');
+  preloader.classList.add('is-hidden');
 
   clock.start();
   renderLoop();
