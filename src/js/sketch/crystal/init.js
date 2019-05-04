@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+import MathEx from 'js-util/MathEx';
 import sleep from 'js-util/sleep';
+
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
+import PromiseOBJLoader from '../../common/PromiseOBJLoader';
 
 import Crystal from './Crystal';
 import CrystalSparkle from './CrystalSparkle';
@@ -30,13 +34,9 @@ export default async function() {
   // ==========
   // Define unique variables
   //
-  const COUNT = 6;
+  const COUNT = 24;
   const crystals = [];
   const crystalSparkles = [];
-  for (var i = 0; i < COUNT; i++) {
-    crystals[i] = new Crystal();
-    crystalSparkles[i] = new CrystalSparkle();
-  }
 
   // ==========
   // Define functions
@@ -93,17 +93,39 @@ export default async function() {
   // ==========
   // Initialize
   //
-  renderer.setClearColor(0xeeeeee, 1.0);
+  renderer.setClearColor(0x0e0e0e, 1.0);
 
   camera.aspect = 3 / 2;
   camera.far = 1000;
   camera.setFocalLength(50);
-  camera.position.set(0, 0, 50);
-  camera.lookAt(new THREE.Vector3());
+  camera.position.set(0, 0, 0);
+  camera.lookAt(new THREE.Vector3(
+    Math.cos(0),
+    0,
+    Math.sin(0)
+  ));
 
-  for (var i = 0; i < crystals.length; i++) {
+  let crystalGeometries;
+
+  await Promise.all([
+    PromiseOBJLoader('/sketch-threejs/model/crystal/crystal.obj'),
+  ]).then((response) => {
+    crystalGeometries = response[0].children.map((mesh) => {
+      return mesh.geometry;
+    });
+  });
+
+  for (var i = 0; i < COUNT; i++) {
+    const radian = MathEx.radians(i / COUNT * 360);
+    crystals[i] = new Crystal(crystalGeometries[i % 3]);
+    crystals[i].position.set(
+      Math.cos(radian) * 45,
+      0,
+      Math.sin(radian) * 45
+    );
     scene.add(crystals[i]);
-    scene.add(crystalSparkles[i]);
+    // crystalSparkles[i] = new CrystalSparkle();
+    // scene.add(crystalSparkles[i]);
   }
 
   on();

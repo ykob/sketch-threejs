@@ -5,10 +5,7 @@ import vs from './glsl/crystal.vs';
 import fs from './glsl/crystal.fs';
 
 export default class Crystal extends THREE.Mesh {
-  constructor() {
-    // Define Geometry
-    const geometry = new THREE.BoxBufferGeometry(10, 10, 10);
-
+  constructor(geometry) {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
@@ -19,6 +16,7 @@ export default class Crystal extends THREE.Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
+      flatShading: true,
     });
 
     // Create Object3D
