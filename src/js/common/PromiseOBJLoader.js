@@ -1,4 +1,4 @@
-const THREE = require('three');
+import * as THREE from 'three';
 
 require('../vendor/OBJLoader.js');
 

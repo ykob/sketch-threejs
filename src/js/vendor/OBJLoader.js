@@ -1,8 +1,8 @@
-const THREE = require('three');
-
 /**
  * @author mrdoob / http://mrdoob.com/
  */
+
+import * as THREE from 'three';
 
 THREE.OBJLoader = ( function () {
 
