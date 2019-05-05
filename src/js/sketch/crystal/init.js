@@ -132,7 +132,7 @@ export default async function() {
       0,
       Math.sin(radian) * 30
     );
-    crystals[i].start(crystalNormalMap, crystalSurfaceTex);
+    crystals[i].start(i / COUNT, crystalNormalMap, crystalSurfaceTex);
     scene.add(crystals[i]);
     // crystalSparkles[i] = new CrystalSparkle();
     // scene.add(crystalSparkles[i]);
