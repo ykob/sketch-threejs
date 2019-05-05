@@ -110,15 +110,18 @@ export default async function() {
 
   let crystalGeometries;
   let crystalNormalMap;
+  let crystalSurfaceTex;
 
   await Promise.all([
     PromiseOBJLoader('/sketch-threejs/model/crystal/crystal.obj'),
     PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/normal.jpg'),
+    PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/surface.jpg'),
   ]).then((response) => {
     crystalGeometries = response[0].children.map((mesh) => {
       return mesh.geometry;
     });
     crystalNormalMap = response[1];
+    crystalSurfaceTex = response[2];
   });
 
   for (var i = 0; i < COUNT; i++) {
@@ -129,7 +132,7 @@ export default async function() {
       0,
       Math.sin(radian) * 30
     );
-    crystals[i].start(crystalNormalMap);
+    crystals[i].start(crystalNormalMap, crystalSurfaceTex);
     scene.add(crystals[i]);
     // crystalSparkles[i] = new CrystalSparkle();
     // scene.add(crystalSparkles[i]);

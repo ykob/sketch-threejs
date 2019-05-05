@@ -17,6 +17,10 @@ export default class Crystal extends THREE.Mesh {
           type: 't',
           value: null
         },
+        surfaceTex: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -28,8 +32,9 @@ export default class Crystal extends THREE.Mesh {
     this.name = 'Mesh';
     this.rotation.z = MathEx.radians(10);
   }
-  start(normalMap) {
+  start(normalMap, surfaceTex) {
     this.material.uniforms.normalMap.value = normalMap;
+    this.material.uniforms.surfaceTex.value = surfaceTex;
   }
   update(time) {
     this.material.uniforms.time.value += time;
