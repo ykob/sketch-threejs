@@ -34,7 +34,7 @@ export default async function() {
   // ==========
   // Define unique variables
   //
-  const COUNT = 24;
+  const COUNT = 12;
   const crystals = [];
   const crystalSparkles = [];
 
@@ -43,6 +43,9 @@ export default async function() {
   //
   const render = () => {
     const time = clock.getDelta();
+    for (var i = 0; i < crystals.length; i++) {
+      crystals[i].update(time);
+    }
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -122,9 +125,9 @@ export default async function() {
     const radian = MathEx.radians(i / COUNT * 360);
     crystals[i] = new Crystal(crystalGeometries[i % 3]);
     crystals[i].position.set(
-      Math.cos(radian) * 45,
+      Math.cos(radian) * 30,
       0,
-      Math.sin(radian) * 45
+      Math.sin(radian) * 30
     );
     crystals[i].start(crystalNormalMap);
     scene.add(crystals[i]);

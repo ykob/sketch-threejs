@@ -26,11 +26,13 @@ export default class Crystal extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Mesh';
+    this.rotation.z = MathEx.radians(10);
   }
   start(normalMap) {
     this.material.uniforms.normalMap.value = normalMap;
   }
   update(time) {
     this.material.uniforms.time.value += time;
+    this.rotation.y += time * 0.1;
   }
 }
