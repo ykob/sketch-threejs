@@ -1,3 +1,5 @@
+const THREE = require('three');
+
 /**
  * @author Rich Tibbett / https://github.com/richtr
  * @author mrdoob / http://mrdoob.com/
@@ -5,8 +7,6 @@
  * @author Takahiro / https://github.com/takahirox
  * @author Don McCurdy / https://www.donmccurdy.com
  */
-
-import * as THREE from 'three';
 
 THREE.GLTFLoader = ( function () {
 

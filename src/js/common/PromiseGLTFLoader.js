@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+const THREE = require('three');
 
 require('../vendor/GLTFLoader.js');
 
