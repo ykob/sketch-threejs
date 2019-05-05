@@ -13,6 +13,10 @@ export default class Crystal extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        normalMap: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -23,7 +27,8 @@ export default class Crystal extends THREE.Mesh {
     super(geometry, material);
     this.name = 'Mesh';
   }
-  start() {
+  start(normalMap) {
+    this.material.uniforms.normalMap.value = normalMap;
   }
   update(time) {
     this.material.uniforms.time.value += time;
