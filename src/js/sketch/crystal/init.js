@@ -6,6 +6,7 @@ import sleep from 'js-util/sleep';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import PromiseOBJLoader from '../../common/PromiseOBJLoader';
 
+import ForcePerspectiveCamera from './ForcePerspectiveCamera';
 import Crystal from './Crystal';
 import CrystalSparkle from './CrystalSparkle';
 import Background from './Background';
@@ -22,7 +23,7 @@ export default async function() {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera();
+  const camera = new ForcePerspectiveCamera();
   const cameraResolution = new THREE.Vector2();
   const clock = new THREE.Clock({
     autoStart: false
@@ -46,6 +47,7 @@ export default async function() {
     for (var i = 0; i < crystals.length; i++) {
       crystals[i].update(time);
     }
+    camera.update();
     renderer.render(scene, camera);
   };
   const renderLoop = () => {
@@ -101,12 +103,6 @@ export default async function() {
   camera.aspect = 3 / 2;
   camera.far = 1000;
   camera.setFocalLength(50);
-  camera.position.set(0, 0, 0);
-  camera.lookAt(new THREE.Vector3(
-    Math.cos(0),
-    0,
-    Math.sin(0)
-  ));
 
   let crystalGeometries;
   let crystalNormalMap;
@@ -140,6 +136,13 @@ export default async function() {
 
   on();
   resizeWindow();
+
+  let index = 0;
+  camera.lookAnchor.copy(crystals[index % COUNT].position);
+  setInterval(() => {
+    index++;
+    camera.lookAnchor.copy(crystals[index % COUNT].position);
+  }, 3000);
 
   preloader.classList.add('is-hidden');
 
