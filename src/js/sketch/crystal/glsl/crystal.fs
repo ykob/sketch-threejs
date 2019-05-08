@@ -21,7 +21,7 @@ void main() {
   // the pointyness color
   vec3 surface = texture2D(surfaceTex, vUv).xyz;
 
-  vec3 rgb = convertHsvToRgb(hsv) + surface * 0.4 + diff;
+  vec3 rgb = convertHsvToRgb(hsv + vec3(0.0, (1.0 - surface.r) * 0.2, diff));
   vec3 color = rgb;
 
   gl_FragColor = vec4(color, 1.0);

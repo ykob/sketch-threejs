@@ -37,7 +37,7 @@ export default class Crystal extends THREE.Mesh {
     this.rotation.z = MathEx.radians(10);
   }
   start(hex, normalMap, surfaceTex) {
-    this.material.uniforms.hsv.value.set(hex, 1, 0.7);
+    this.material.uniforms.hsv.value.set(hex, 0.65, 0.0);
     this.material.uniforms.normalMap.value = normalMap;
     this.material.uniforms.surfaceTex.value = surfaceTex;
   }
