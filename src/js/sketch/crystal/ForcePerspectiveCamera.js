@@ -41,13 +41,13 @@ export default class ForcePerspectiveCamera extends THREE.PerspectiveCamera {
     this.hook = new THREE.Vector3();
 
     this.k = 0.02;
-    this.d = 0.2;
+    this.d = 0.3;
     this.velocity = new THREE.Vector3();
     this.acceleration = new THREE.Vector3();
     this.anchor = new THREE.Vector3();
 
     this.lookK = 0.02;
-    this.lookD = 0.2;
+    this.lookD = 0.3;
     this.lookVelocity = new THREE.Vector3();
     this.lookAcceleration = new THREE.Vector3();
     this.lookAnchor = new THREE.Vector3();
