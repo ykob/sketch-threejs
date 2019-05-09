@@ -1,31 +1,16 @@
 import * as THREE from 'three';
 
 const updateVelocity = (velocity, acceleration, mass) => {
-  // glMatrix.vec3.scale(acceleration, acceleration, 1 / mass);
-  // glMatrix.vec3.add(velocity, velocity, acceleration);
   acceleration.multiplyScalar(1 / mass);
   velocity.add(acceleration);
 }
 const applyDrag = (acceleration, value, drag) => {
-  // const drag = [0, 0, 0];
-  // glMatrix.vec3.scale(drag, acceleration, -1);
-  // glMatrix.vec3.normalize(drag, drag);
-  // glMatrix.vec3.scale(drag, drag, glMatrix.vec3.length(acceleration) * value);
-  // glMatrix.vec3.add(acceleration, acceleration, drag);
-
   drag.copy(acceleration.clone().multiplyScalar(-1))
     .normalize()
     .multiplyScalar(acceleration.length() * (value));
   acceleration.add(drag);
 }
 const applyHook = (velocity, acceleration, anchor, restLength, k, hook) => {
-  // const hook = [0, 0, 0];
-  // glMatrix.vec3.sub(hook, velocity, anchor);
-  // const distance = glMatrix.vec3.length(hook) - restLength;
-  // glMatrix.vec3.normalize(hook, hook);
-  // glMatrix.vec3.scale(hook, hook, -1 * k * distance);
-  // glMatrix.vec3.add(acceleration, acceleration, hook);
-
   hook.copy(velocity.clone().sub(anchor));
   const distance = hook.length() - restLength;
   hook.normalize()
