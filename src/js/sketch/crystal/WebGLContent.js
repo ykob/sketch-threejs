@@ -26,9 +26,6 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 
-// For the preloader.
-const preloader = document.querySelector('.p-preloader');
-
 // ==========
 // Define unique variables
 //
