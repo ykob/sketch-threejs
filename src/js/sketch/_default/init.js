@@ -14,11 +14,9 @@ export default async function() {
   };
   const on = () => {
     window.addEventListener('blur', () => {
-      // this window is inactive.
       webglContent.pause();
     });
     window.addEventListener('focus', () => {
-      // this window is inactive.
       webglContent.play();
     });
     window.addEventListener('resize', debounce(resizeWindow, 100));
