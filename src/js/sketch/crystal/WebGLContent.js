@@ -32,6 +32,10 @@ const clock = new THREE.Clock({
 const COUNT = 12;
 const crystals = [];
 const crystalSparkles = [];
+const lookPosition = new THREE.Vector3();
+const panPosition = new THREE.Vector3();
+let lookIndex = 0;
+let lookTimer = 0;
 
 // ==========
 // Define functions
@@ -99,12 +103,7 @@ export default class WebGLContent {
       // scene.add(crystalSparkles[i]);
     }
 
-    let index = 0;
-    camera.lookAnchor.copy(crystals[index % COUNT].position);
-    setInterval(() => {
-      index++;
-      camera.lookAnchor.copy(crystals[index % COUNT].position);
-    }, 3000);
+    lookPosition.copy(crystals[lookIndex].position);
   }
   start() {
     this.play();
@@ -126,6 +125,19 @@ export default class WebGLContent {
     for (var i = 0; i < crystals.length; i++) {
       crystals[i].update(time);
     }
+
+    // Update the camera.
+    lookTimer += time;
+    if (lookTimer > 2) {
+      lookIndex = (lookIndex + 1) % COUNT;
+      lookTimer = 0;
+      lookPosition.copy(crystals[lookIndex].position);
+    }
+    camera.lookAnchor.copy(
+      lookPosition.clone().add(
+        panPosition.clone().applyQuaternion(camera.quaternion)
+      )
+    );
     camera.update();
 
     // Render the 3D scene.
@@ -144,5 +156,8 @@ export default class WebGLContent {
     canvas.height = resolution.y;
     resizeCamera(resolution);
     renderer.setSize(resolution.x, resolution.y);
+  }
+  pan(v) {
+    panPosition.copy(v);
   }
 }

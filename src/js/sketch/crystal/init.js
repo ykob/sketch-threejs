@@ -6,6 +6,7 @@ import WebGLContent from './WebGLContent';
 export default async function() {
   const webglContent = new WebGLContent();
   const resolution = new THREE.Vector2();
+  const panPosition = new THREE.Vector3();
   const preloader = document.querySelector('.p-preloader');
 
   const resizeWindow = () => {
@@ -13,13 +14,17 @@ export default async function() {
     webglContent.resize(resolution);
   };
   const on = () => {
-    window.addEventListener('blur', () => {
-      // this window is inactive.
-      webglContent.pause();
+    window.addEventListener('mousemove', (e) => {
+      panPosition.set(
+        e.clientX / resolution.x * 2 - 1,
+        -e.clientY / resolution.y * 2 + 1,
+        0
+      );
+      webglContent.pan(panPosition);
     });
-    window.addEventListener('focus', () => {
-      // this window is inactive.
-      webglContent.play();
+    document.addEventListener('mouseleave', (e) => {
+      panPosition.set(0, 0, 0);
+      webglContent.pan(panPosition);
     });
     window.addEventListener('resize', debounce(resizeWindow, 100));
   };
