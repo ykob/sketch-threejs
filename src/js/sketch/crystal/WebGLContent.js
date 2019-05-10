@@ -29,7 +29,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
-const COUNT = 12;
+const CRYSTALS_COUNT = 12;
 const crystals = [];
 const crystalSparkles = [];
 const lookPosition = new THREE.Vector3();
@@ -89,15 +89,15 @@ export default class WebGLContent {
       crystalSurfaceTex = response[2];
     });
 
-    for (var i = 0; i < COUNT; i++) {
-      const radian = MathEx.radians(i / COUNT * 360);
+    for (var i = 0; i < CRYSTALS_COUNT; i++) {
+      const radian = MathEx.radians(i / CRYSTALS_COUNT * 360);
       crystals[i] = new Crystal(crystalGeometries[i % 3]);
       crystals[i].position.set(
         Math.cos(radian) * 30,
         0,
         Math.sin(radian) * 30
       );
-      crystals[i].start(i / COUNT, crystalNormalMap, crystalSurfaceTex);
+      crystals[i].start(i / CRYSTALS_COUNT, crystalNormalMap, crystalSurfaceTex);
       scene.add(crystals[i]);
       // crystalSparkles[i] = new CrystalSparkle();
       // scene.add(crystalSparkles[i]);
@@ -129,7 +129,7 @@ export default class WebGLContent {
     // Update the camera.
     lookTimer += time;
     if (lookTimer > 2) {
-      lookIndex = (lookIndex + 1) % COUNT;
+      lookIndex = (lookIndex + 1) % CRYSTALS_COUNT;
       lookTimer = 0;
       lookPosition.copy(crystals[lookIndex].position);
     }
