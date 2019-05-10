@@ -37,6 +37,8 @@ const panPosition = new THREE.Vector3();
 let lookIndex = 0;
 let lookTimer = 0;
 
+const bg = new Background();
+
 // ==========
 // Define functions
 //
@@ -102,6 +104,8 @@ export default class WebGLContent {
       // crystalSparkles[i] = new CrystalSparkle();
       // scene.add(crystalSparkles[i]);
     }
+
+    scene.add(bg);
 
     lookPosition.copy(crystals[lookIndex].position);
   }
