@@ -63,20 +63,16 @@ extend default class WebGLContent {
     clock.stop();
   }
   update() {
+    // When the clock is stopped, it stops the all rendering too.
+    if (clock.running === false) return;
+
+    // Calculate msec for this frame.
     const time = clock.getDelta();
 
     // Update each objects.
 
     // Render the 3D scene.
     renderer.render(scene, camera);
-
-    // When the clock is stopped, it stops the all rendering too.
-    if (clock.running === false) return;
-
-    // Iterate the rendering.
-    requestAnimationFrame(() => {
-      this.update();
-    });
   }
   resize(resolution) {
     canvas.width = resolution.x;
