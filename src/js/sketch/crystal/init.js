@@ -28,6 +28,10 @@ export default async function() {
     });
     window.addEventListener('resize', debounce(resizeWindow, 100));
   };
+  const render = () => {
+    webglContent.update();
+    requestAnimationFrame(render);
+  };
 
   on();
   resizeWindow();
@@ -35,6 +39,6 @@ export default async function() {
   await webglContent.init();
 
   preloader.classList.add('is-hidden');
-
   webglContent.start();
+  render();
 }
