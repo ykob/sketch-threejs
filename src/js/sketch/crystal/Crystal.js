@@ -25,6 +25,10 @@ export default class Crystal extends THREE.Mesh {
           type: 't',
           value: null
         },
+        fogTex: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -36,10 +40,12 @@ export default class Crystal extends THREE.Mesh {
     this.name = 'Mesh';
     this.rotation.z = MathEx.radians(10);
   }
-  start(hex, normalMap, surfaceTex) {
+  start(hex, normalMap, surfaceTex, fogTex) {
     this.material.uniforms.hsv.value.set(hex, 0.65, 0.0);
     this.material.uniforms.normalMap.value = normalMap;
     this.material.uniforms.surfaceTex.value = surfaceTex;
+    this.material.uniforms.fogTex.value = fogTex;
+    console.log(fogTex)
   }
   update(time) {
     this.material.uniforms.time.value += time;

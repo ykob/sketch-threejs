@@ -78,17 +78,24 @@ export default class WebGLContent {
     let crystalGeometries;
     let crystalNormalMap;
     let crystalSurfaceTex;
+    let crystalFogTex;
 
     await Promise.all([
       PromiseOBJLoader('/sketch-threejs/model/crystal/crystal.obj'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/normal.jpg'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/surface.jpg'),
+      PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/fog.jpg'),
     ]).then((response) => {
       crystalGeometries = response[0].children.map((mesh) => {
         return mesh.geometry;
       });
       crystalNormalMap = response[1];
       crystalSurfaceTex = response[2];
+      crystalFogTex = response[3];
+      crystalFogTex.wrapS = THREE.RepeatWrapping;
+      crystalFogTex.wrapT = THREE.RepeatWrapping;
+    }).catch((error) => {
+      console.log(error)
     });
 
     for (var i = 0; i < CRYSTALS_COUNT; i++) {
@@ -99,7 +106,7 @@ export default class WebGLContent {
         0,
         Math.sin(radian) * 30
       );
-      crystals[i].start(i / CRYSTALS_COUNT, crystalNormalMap, crystalSurfaceTex);
+      crystals[i].start(i / CRYSTALS_COUNT, crystalNormalMap, crystalSurfaceTex, crystalFogTex);
       scene.add(crystals[i]);
       // crystalSparkles[i] = new CrystalSparkle();
       // scene.add(crystalSparkles[i]);
