@@ -16,6 +16,14 @@ export default class Background extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        hexNext: {
+          type: 'f',
+          value: 0
+        },
+        hexPrev: {
+          type: 'f',
+          value: 0
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -30,5 +38,13 @@ export default class Background extends THREE.Mesh {
   }
   update(time) {
     this.material.uniforms.time.value += time;
+  }
+  setHex(hexNext) {
+    let hexPrev = this.material.uniforms.hexNext.value;
+    if (Math.abs(hexNext - hexPrev) > 0.5) hexPrev -= 1;
+
+    this.material.uniforms.time.value = 0;
+    this.material.uniforms.hexPrev.value = hexPrev;
+    this.material.uniforms.hexNext.value = hexNext;
   }
 }

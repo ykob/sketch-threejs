@@ -33,11 +33,10 @@ export default async function() {
     requestAnimationFrame(render);
   };
 
-  on();
-  resizeWindow();
-
   await webglContent.init();
 
+  on();
+  resizeWindow();
   preloader.classList.add('is-hidden');
   webglContent.start();
   render();
