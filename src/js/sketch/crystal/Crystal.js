@@ -45,7 +45,6 @@ export default class Crystal extends THREE.Mesh {
     this.material.uniforms.normalMap.value = normalMap;
     this.material.uniforms.surfaceTex.value = surfaceTex;
     this.material.uniforms.fogTex.value = fogTex;
-    console.log(fogTex)
   }
   update(time) {
     this.material.uniforms.time.value += time;
