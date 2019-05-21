@@ -13,6 +13,15 @@
       "color": "white"
     },
     "sun": {
+      "title": "node",
+      "id": "node",
+      "description": "",
+      "path": "/sketch/node.html",
+      "posted": "2019.5.x",
+      "update": "",
+      "color": "white"
+    },
+    "sun": {
       "title": "sun",
       "id": "sun",
       "description": "Creating the sun using some textures. It isn't depending on the Noise calculation.",
