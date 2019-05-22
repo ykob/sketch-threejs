@@ -6,7 +6,9 @@ void main() {
 
   // Draw circle
   float radius = length(p);
-  float opacity = (1.0 - smoothstep(0.5, 1.0, radius));
+  float opacity = (1.0 - smoothstep(0.9, 1.0, radius));
 
-  gl_FragColor = vec4(1.0);
+  vec3 color = vec3(0.0);
+
+  gl_FragColor = vec4(color, opacity);
 }

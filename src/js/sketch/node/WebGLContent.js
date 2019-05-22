@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
+import NodePoints from './NodePoints';
+
 const canvas = document.getElementById('canvas-webgl');
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
@@ -13,6 +15,8 @@ const cameraResolution = new THREE.Vector2();
 const clock = new THREE.Clock({
   autoStart: false
 });
+
+const nodePoints = new NodePoints();
 
 const resizeCamera = (resolution) => {
   if (resolution.x > resolution.y) {
@@ -48,6 +52,8 @@ export default class WebGLContent {
     camera.setFocalLength(50);
     camera.position.set(0, 0, 50);
     camera.lookAt(new THREE.Vector3());
+
+    scene.add(nodePoints);
   }
   start() {
     this.play();
@@ -70,6 +76,7 @@ export default class WebGLContent {
     const time = clock.getDelta();
 
     // Update each objects.
+    nodePoints.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
