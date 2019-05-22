@@ -16,28 +16,10 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 
-const nodePoints = new NodePoints();
+let nodePoints;
 
 const resizeCamera = (resolution) => {
-  if (resolution.x > resolution.y) {
-    cameraResolution.set(
-      (resolution.x >= 1200) ? 1200 : resolution.x,
-      (resolution.x >= 1200) ? 800 : resolution.x * 0.66,
-    );
-  } else {
-    cameraResolution.set(
-      ((resolution.y >= 1200) ? 800 : resolution.y * 0.66) * 0.6,
-      ((resolution.y >= 1200) ? 1200 : resolution.y) * 0.6,
-    );
-  }
-  camera.setViewOffset(
-    cameraResolution.x,
-    cameraResolution.y,
-    (resolution.x - cameraResolution.x) / -2,
-    (resolution.y - cameraResolution.y) / -2,
-    resolution.x,
-    resolution.y
-  );
+  camera.aspect = resolution.x / resolution.y;
   camera.updateProjectionMatrix();
 };
 
@@ -53,6 +35,8 @@ export default class WebGLContent {
     camera.position.set(0, 0, 50);
     camera.lookAt(new THREE.Vector3());
 
+    nodePoints = new NodePoints(camera);
+
     scene.add(nodePoints);
   }
   start() {
@@ -63,7 +47,6 @@ export default class WebGLContent {
   }
   play() {
     clock.start();
-    this.update();
   }
   pause() {
     clock.stop();
@@ -76,7 +59,7 @@ export default class WebGLContent {
     const time = clock.getDelta();
 
     // Update each objects.
-    nodePoints.update(time);
+    nodePoints.update(time, camera);
 
     // Render the 3D scene.
     renderer.render(scene, camera);

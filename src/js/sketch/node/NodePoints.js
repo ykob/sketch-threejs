@@ -5,9 +5,20 @@ import vs from './glsl/NodePoints.vs';
 import fs from './glsl/NodePoints.fs';
 
 const NUM = 100;
+const R = new THREE.Vector2();
+const V = new THREE.Vector3();
+const A = new THREE.Vector3();
+
+const getViewSize = (camera) => {
+  const fovInRadians = (camera.fov * Math.PI) / 180;
+  const height = Math.abs(
+    camera.position.z * Math.tan(fovInRadians / 2) * 2
+  );
+  R.set(height * camera.aspect, height);
+}
 
 export default class NodePoints extends THREE.Points {
-  constructor() {
+  constructor(camera) {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
 
@@ -18,13 +29,20 @@ export default class NodePoints extends THREE.Points {
     // baPositions.setDynamic(true);
     // baAcceralations.setDynamic(true);
 
+    getViewSize(camera);
+
     for (var i = 0; i < NUM; i++) {
-      baPositions.setXYZ(i, 0, 0, 0);
+      baPositions.setXYZ(
+        i,
+        R.x * (Math.random() - 0.5),
+        R.y * (Math.random() - 0.5),
+        0
+      );
       baAcceralations.setXYZ(
         i,
-        Math.random() * 2 - 1,
-        Math.random() * 2 - 1,
-        Math.random() * 2 - 1
+        (Math.random() * 2 - 1) * 0.1,
+        (Math.random() * 2 - 1) * 0.1,
+        0
       );
     }
 
@@ -53,11 +71,9 @@ export default class NodePoints extends THREE.Points {
   start() {
 
   }
-  update(time) {
-    // this.material.uniforms.time.value += time;
+  update(time, camera) {
+    getViewSize(camera);
 
-    const V = new THREE.Vector3();
-    const A = new THREE.Vector3();
     for (var i = 0; i < NUM; i++) {
       V.set(
         this.geometry.attributes.position.getX(i),
@@ -71,6 +87,9 @@ export default class NodePoints extends THREE.Points {
       );
 
       V.add(A);
+
+      if (Math.abs(V.x) >= R.x / 2) V.x *= -1;
+      if (Math.abs(V.y) >= R.y / 2) V.y *= -1;
 
       this.geometry.attributes.position.setXYZ(i, V.x, V.y, V.z);
       this.geometry.attributes.acceralation.setXYZ(i, A.x, A.y, A.z);
