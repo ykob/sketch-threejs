@@ -12,7 +12,7 @@
       "path": "/",
       "color": "white"
     },
-    "sun": {
+    "node": {
       "title": "node",
       "id": "node",
       "description": "",
