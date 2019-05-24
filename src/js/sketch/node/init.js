@@ -23,7 +23,7 @@ export default async function() {
   on();
   resizeWindow();
 
-  await webglContent.init();
+  await webglContent.init(resolution);
 
   preloader.classList.add('is-hidden');
   webglContent.start();

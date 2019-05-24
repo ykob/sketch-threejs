@@ -28,7 +28,7 @@ const resizeCamera = (resolution) => {
 export default class WebGLContent {
   constructor() {
   }
-  async init() {
+  async init(resolution) {
     renderer.setClearColor(0xffc600, 1.0);
 
     camera.aspect = 3 / 2;
@@ -42,6 +42,8 @@ export default class WebGLContent {
 
     scene.add(nodePoints);
     scene.add(nodeLine);
+
+    this.resize(resolution);
   }
   start() {
     this.play();
