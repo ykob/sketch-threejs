@@ -4,21 +4,34 @@ import MathEx from 'js-util/MathEx';
 import vs from './glsl/NodeLine.vs';
 import fs from './glsl/NodeLine.fs';
 
-export default class NodeLine extends THREE.Line {
+const NUM = 1000;
+const V1 = new THREE.Vector3();
+const V2 = new THREE.Vector3();
+
+export default class NodeLine extends THREE.LineSegments {
   constructor() {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
 
+    const baPositions = new THREE.BufferAttribute(new Float32Array(NUM * 3 * 2), 3);
+    const baOpacity = new THREE.BufferAttribute(new Float32Array(NUM * 2), 1);
+    const indeces = [];
+
+    for (var i = 0; i < NUM * 2; i++) {
+      indeces.push(i);
+    }
+
+    geometry.addAttribute('position', baPositions);
+    geometry.addAttribute('opacity', baOpacity);
+    geometry.setIndex(new THREE.BufferAttribute(new Uint16Array(indeces), 1));
+
     // Define Material
     const material = new THREE.RawShaderMaterial({
-      uniforms: {
-        time: {
-          type: 'f',
-          value: 0
-        },
-      },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
+      depthTest: false,
+      linewidth: 5,
     });
 
     // Create Object3D
@@ -27,7 +40,38 @@ export default class NodeLine extends THREE.Line {
   }
   start() {
   }
-  update(time) {
-    this.material.uniforms.time.value += time;
+  update(points) {
+    let lineIndex = 0;
+    for (var i = 0; i < points.geometry.attributes.position.count; i++) {
+      for (var j = i + 1; j < points.geometry.attributes.position.count; j++) {
+        V1.set(
+          points.geometry.attributes.position.getX(i),
+          points.geometry.attributes.position.getY(i),
+          points.geometry.attributes.position.getZ(i)
+        );
+        V2.set(
+          points.geometry.attributes.position.getX(j),
+          points.geometry.attributes.position.getY(j),
+          points.geometry.attributes.position.getZ(j)
+        );
+        if (V1.distanceTo(V2) < 3) {
+          this.geometry.attributes.position.setXYZ(
+            lineIndex * 2, V1.x, V1.y, V1.z
+          );
+          this.geometry.attributes.position.setXYZ(
+            lineIndex * 2 + 1, V2.x, V2.y, V2.z
+          );
+          lineIndex++;
+        }
+        if (lineIndex >= NUM) continue;
+      }
+    }
+    for (var k = (lineIndex + 1) * 2; k < this.geometry.attributes.position.count; k++) {
+      this.geometry.attributes.position.setXYZ(
+        k, 0, 0, 0
+      );
+    }
+    this.geometry.attributes.position.needsUpdate = true;
+    this.geometry.attributes.opacity.needsUpdate = true;
   }
 }

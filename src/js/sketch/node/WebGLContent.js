@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
 import NodePoints from './NodePoints';
+import NodeLine from './NodeLine';
 
 const canvas = document.getElementById('canvas-webgl');
 const renderer = new THREE.WebGLRenderer({
@@ -17,6 +18,7 @@ const clock = new THREE.Clock({
 });
 
 let nodePoints;
+let nodeLine;
 
 const resizeCamera = (resolution) => {
   camera.aspect = resolution.x / resolution.y;
@@ -36,8 +38,10 @@ export default class WebGLContent {
     camera.lookAt(new THREE.Vector3());
 
     nodePoints = new NodePoints(camera);
+    nodeLine = new NodeLine();
 
     scene.add(nodePoints);
+    scene.add(nodeLine);
   }
   start() {
     this.play();
@@ -60,6 +64,7 @@ export default class WebGLContent {
 
     // Update each objects.
     nodePoints.update(time, camera);
+    nodeLine.update(nodePoints);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
