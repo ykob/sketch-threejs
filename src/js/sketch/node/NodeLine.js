@@ -5,8 +5,17 @@ import vs from './glsl/NodeLine.vs';
 import fs from './glsl/NodeLine.fs';
 
 const NUM = 1000;
+const R = new THREE.Vector2();
 const V1 = new THREE.Vector3();
 const V2 = new THREE.Vector3();
+
+const getViewSize = (camera) => {
+  const fovInRadians = (camera.fov * Math.PI) / 180;
+  const height = Math.abs(
+    camera.position.z * Math.tan(fovInRadians / 2) * 2
+  );
+  R.set(height * camera.aspect, height);
+}
 
 export default class NodeLine extends THREE.LineSegments {
   constructor() {
@@ -40,7 +49,9 @@ export default class NodeLine extends THREE.LineSegments {
   }
   start() {
   }
-  update(points) {
+  update(points, camera) {
+    getViewSize(camera);
+
     let lineIndex = 0;
     for (var i = 0; i < points.geometry.attributes.position.count; i++) {
       for (var j = i + 1; j < points.geometry.attributes.position.count; j++) {
@@ -55,7 +66,7 @@ export default class NodeLine extends THREE.LineSegments {
           points.geometry.attributes.position.getZ(j)
         );
         const d = V1.distanceTo(V2);
-        if (d < 3) {
+        if (d < R.y * 0.15) {
           this.geometry.attributes.position.setXYZ(
             lineIndex * 2, V1.x, V1.y, V1.z
           );

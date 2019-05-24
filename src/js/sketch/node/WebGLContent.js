@@ -66,7 +66,7 @@ export default class WebGLContent {
 
     // Update each objects.
     nodePoints.update(time, camera);
-    nodeLine.update(nodePoints);
+    nodeLine.update(nodePoints, camera);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
