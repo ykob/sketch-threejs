@@ -88,8 +88,16 @@ export default class NodePoints extends THREE.Points {
 
       V.add(A);
 
-      if (Math.abs(V.x) >= R.x / 2) V.x *= -1;
-      if (Math.abs(V.y) >= R.y / 2) V.y *= -1;
+      if (V.x >= R.x * 0.6) {
+        V.x = -R.x * 0.6;
+      } else if (V.x < R.x * -0.6) {
+        V.x = R.x * 0.6;
+      }
+      if (V.y >= R.y * 0.6) {
+        V.y = -R.y * 0.6;
+      } else if (V.y < R.y * -0.6) {
+        V.y = R.y * 0.6;
+      }
 
       this.geometry.attributes.position.setXYZ(i, V.x, V.y, V.z);
       this.geometry.attributes.acceralation.setXYZ(i, A.x, A.y, A.z);
