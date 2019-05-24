@@ -8,7 +8,7 @@ void main() {
   float radius = length(p);
   float opacity = (1.0 - smoothstep(0.9, 1.0, radius));
 
-  vec3 color = vec3(0.0);
+  vec3 color = vec3(0.1);
 
   gl_FragColor = vec4(color, opacity);
 }

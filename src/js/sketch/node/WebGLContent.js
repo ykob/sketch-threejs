@@ -29,7 +29,7 @@ export default class WebGLContent {
   constructor() {
   }
   async init() {
-    renderer.setClearColor(0xeeeeee, 1.0);
+    renderer.setClearColor(0xffc600, 1.0);
 
     camera.aspect = 3 / 2;
     camera.far = 1000;
