@@ -31,7 +31,7 @@ export default class NodeLine extends THREE.LineSegments {
       fragmentShader: fs,
       transparent: true,
       depthTest: false,
-      linewidth: 5,
+      linewidth: 1,
     });
 
     // Create Object3D
