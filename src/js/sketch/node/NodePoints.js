@@ -66,7 +66,7 @@ export default class NodePoints extends THREE.Points {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Points';
+    this.name = 'NodePoints';
   }
   start() {
 
