@@ -54,12 +54,19 @@ export default class NodeLine extends THREE.LineSegments {
           points.geometry.attributes.position.getY(j),
           points.geometry.attributes.position.getZ(j)
         );
-        if (V1.distanceTo(V2) < 3) {
+        const d = V1.distanceTo(V2);
+        if (d < 3) {
           this.geometry.attributes.position.setXYZ(
             lineIndex * 2, V1.x, V1.y, V1.z
           );
           this.geometry.attributes.position.setXYZ(
             lineIndex * 2 + 1, V2.x, V2.y, V2.z
+          );
+          this.geometry.attributes.opacity.setXYZ(
+            lineIndex * 2, (3 - d)
+          );
+          this.geometry.attributes.opacity.setXYZ(
+            lineIndex * 2 + 1, (3 - d)
           );
           lineIndex++;
         }
