@@ -35,12 +35,15 @@ export default class NodePoints extends THREE.Points {
         R.y * (Math.random() - 0.5),
         0
       );
+      const size = Math.random() * 6 + 1;
+      const radians = MathEx.radians(Math.random() * 360);
       baAcceralations.setXYZ(
         i,
-        (Math.random() * 2 - 1) * 0.1,
-        (Math.random() * 2 - 1) * 0.1,
+        Math.cos(radians) * (0.1 - size * 0.01),
+        Math.sin(radians) * (0.1 - size * 0.01),
         0
       );
+      baSizes.setX(i, size);
     }
 
     geometry.addAttribute('position', baPositions);

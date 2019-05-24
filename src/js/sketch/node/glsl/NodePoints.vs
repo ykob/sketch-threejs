@@ -1,4 +1,5 @@
 attribute vec3 position;
+attribute float size;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -9,5 +10,5 @@ void main() {
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
 
   gl_Position = projectionMatrix * mvPosition;
-  gl_PointSize = 10.0;
+  gl_PointSize = 5.0 + size;
 }
