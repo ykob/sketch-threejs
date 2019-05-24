@@ -25,9 +25,6 @@ export default class NodePoints extends THREE.Points {
     const baPositions = new THREE.BufferAttribute(new Float32Array(NUM * 3), 3);
     const baAcceralations = new THREE.BufferAttribute(new Float32Array(NUM * 3), 3);
     const baSizes = new THREE.BufferAttribute(new Float32Array(NUM), 1);
-    //
-    // baPositions.setDynamic(true);
-    // baAcceralations.setDynamic(true);
 
     getViewSize(camera);
 
