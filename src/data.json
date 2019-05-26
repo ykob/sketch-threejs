@@ -15,10 +15,10 @@
     "node": {
       "title": "node",
       "id": "node",
-      "description": "",
+      "description": "It is the first step of Interactive Coding.",
       "path": "/sketch/node.html",
       "posted": "2019.5.26",
-      "update": "It is the first step of Interactive Coding.",
+      "update": "",
       "color": "black"
     },
     "sun": {
