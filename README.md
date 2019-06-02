@@ -3,6 +3,13 @@
 Interactive sketches made with three.js.  
 https://ykob.github.io/sketch-threejs/
 
+This code is released under the MIT license.
+If you want to use some code, you can use these freely by adding license notation.
+
+Also, I'm accepting donations through Paypal.
+If you can support my project, please consider that.
+https://www.paypal.me/ykob
+
 ## Usage
 
 1. Install the necessary node modules.
