@@ -20,8 +20,8 @@
     "IE 11"
   ],
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.5",
     "cross-env": "^5.2.0",
@@ -33,8 +33,8 @@
     "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.1",
     "gulp-data": "^1.3.1",
-    "gulp-imagemin": "^5.0.3",
-    "gulp-load-plugins": "^1.5.0",
+    "gulp-imagemin": "^6.0.0",
+    "gulp-load-plugins": "^1.6.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-pug": "^4.0.1",
@@ -42,15 +42,15 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
     "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-pngquant": "^7.0.0",
-    "merge-stream": "^1.0.1",
+    "imagemin-pngquant": "^8.0.0",
+    "merge-stream": "^2.0.0",
     "node-sass": "^4.12.0",
     "pump": "^3.0.0",
-    "raw-loader": "^2.0.0",
+    "raw-loader": "^3.0.0",
     "require-dir": "^1.2.0",
     "slash": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
-    "webpack": "^4.31.0",
+    "webpack": "^4.33.0",
     "webpack-stream": "^5.2.1",
     "yargs": "^13.2.4"
   },
@@ -65,7 +65,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.104.0",
+    "three": "^0.105.2",
     "vue": "^2.6.10"
   }
 }
