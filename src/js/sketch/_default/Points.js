@@ -9,6 +9,14 @@ export default class Points extends THREE.Points {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
 
+    // Define attributes of the geometry
+    const num = 1000;
+    const baPositions = new THREE.BufferAttribute(new Float32Array(num * 3), 3);
+    for (var i = 0, ul = num; i < ul; i++) {
+      baPositions.setXYZ(i, 0, 0, 0);
+    }
+    geometry.addAttribute('position', baPositions);
+
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
