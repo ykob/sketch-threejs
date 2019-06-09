@@ -4,7 +4,7 @@ import vs from './glsl/postEffect.vs';
 import fs from './glsl/postEffect.fs';
 
 export default class PostEffect extends THREE.Mesh {
-  constructor(texture) {
+  constructor() {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(2, 2);
 
@@ -17,7 +17,7 @@ export default class PostEffect extends THREE.Mesh {
         },
         texture: {
           type: 't',
-          value: texture,
+          value: ,
         },
         resolution: {
           type: 'v2',
@@ -32,7 +32,8 @@ export default class PostEffect extends THREE.Mesh {
     super(geometry, material);
     this.name = 'PostEffect';
   }
-  start() {
+  start(texture) {
+    this.uniforms.texture.value = texture;
   }
   update(time) {
     this.material.uniforms.time.value += time;
