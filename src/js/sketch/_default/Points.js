@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-import vs from './glsl/points.vs';
-import fs from './glsl/points.fs';
+import vs from './glsl/Points.vs';
+import fs from './glsl/Points.fs';
 
 export default class Points extends THREE.Points {
   constructor() {

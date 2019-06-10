@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import vs from './glsl/postEffect.vs';
-import fs from './glsl/postEffect.fs';
+import vs from './glsl/PostEffect.vs';
+import fs from './glsl/PostEffect.fs';
 
 export default class PostEffect extends THREE.Mesh {
   constructor() {
