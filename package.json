@@ -13,7 +13,7 @@
     "build": "cross-env NODE_ENV=production gulp build"
   },
   "engines": {
-    "node": "8.9.4"
+    "node": "10.16.0"
   },
   "browserslist": [
     "last 2 version",
