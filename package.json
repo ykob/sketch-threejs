@@ -23,7 +23,7 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
-    "browser-sync": "^2.26.5",
+    "browser-sync": "^2.26.7",
     "cross-env": "^5.2.0",
     "del": "^4.1.1",
     "glslify-import-loader": "^0.1.2",
