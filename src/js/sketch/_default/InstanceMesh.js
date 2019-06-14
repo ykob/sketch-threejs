@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-import vs from './glsl/instanceMesh.vs';
-import fs from './glsl/instanceMesh.fs';
+import vs from './glsl/InstanceMesh.vs';
+import fs from './glsl/InstanceMesh.fs';
 
 export default class InstanceMesh extends THREE.Mesh {
   constructor() {

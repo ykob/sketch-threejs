@@ -3,10 +3,32 @@
 Interactive sketches made with three.js.  
 https://ykob.github.io/sketch-threejs/
 
+This code is released under the MIT license.  
+If you want to use some code, you can use these freely by adding license notation.
+
+Also, I'm accepting donations through Paypal.  
+If you can support my project, please consider that.  
+https://www.paypal.me/ykob
+
 ## Usage
 
-    npm run start
-    npm run build
+1. Install the necessary node modules.
+
+```
+npm i
+```
+
+2. Run the npm script `start` to start development.
+
+```
+npm run start
+```
+
+3. When finishing development, run the npm script `build` to make the compressed files.
+
+```
+npm run build
+```
 
 ## License
 
