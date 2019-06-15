@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Mesh.vs';
 import fs from './glsl/Mesh.fs';
