@@ -33,7 +33,7 @@ gulp.task('watch', () => {
 
   gulp.watch(
     [
-      `./${DIR.SRC}/{img,model}/**/*.*`,
+      `./${DIR.SRC}/{img,model,json}/**/*.*`,
     ],
     gulp.series('copyToDest', reload)
   );
