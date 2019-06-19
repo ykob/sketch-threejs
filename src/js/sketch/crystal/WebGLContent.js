@@ -29,7 +29,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
-const CRYSTALS_COUNT = 12;
+const CRYSTALS_COUNT = 20;
 const crystals = [];
 const crystalSparkles = [];
 const lookPosition = new THREE.Vector3();
@@ -102,9 +102,9 @@ export default class WebGLContent {
       const radian = MathEx.radians(i / CRYSTALS_COUNT * 360);
       crystals[i] = new Crystal(crystalGeometries[i % 3]);
       crystals[i].position.set(
-        Math.cos(radian) * 30,
+        Math.cos(radian) * 35,
         0,
-        Math.sin(radian) * 30
+        Math.sin(radian) * 35
       );
       crystals[i].start(i / CRYSTALS_COUNT, crystalNormalMap, crystalSurfaceTex, crystalFogTex);
       scene.add(crystals[i]);
