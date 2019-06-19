@@ -19,6 +19,7 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true,
   canvas: canvas,
 });
+renderer.setPixelRatio(window.devicePixelRatio);
 const scene = new THREE.Scene();
 const camera = new ForcePerspectiveCamera();
 const cameraResolution = new THREE.Vector2();
