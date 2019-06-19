@@ -50,8 +50,8 @@ const resizeCamera = (resolution) => {
     );
   } else {
     cameraResolution.set(
-      ((resolution.y >= 1200) ? 800 : resolution.y * 0.66) * 0.6,
-      ((resolution.y >= 1200) ? 1200 : resolution.y) * 0.6,
+      ((resolution.y >= 1200) ? 800 : resolution.y * 0.66) * 0.8,
+      ((resolution.y >= 1200) ? 1200 : resolution.y) * 0.8,
     );
   }
   camera.setViewOffset(
