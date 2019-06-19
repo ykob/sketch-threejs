@@ -22,10 +22,12 @@ void main() {
 
   // the pointyness color
   vec3 surface = texture2D(surfaceTex, vUv).rgb;
-  vec4 fog1 = texture2D(fogTex, vUv + vec2(0.0, time * 0.05));
-  vec4 fog2 = texture2D(fogTex, vUv + vec2(0.0, time * -0.02));
+  vec4 fog1 = texture2D(fogTex, vUv + vec2(0.0, time * 0.06));
+  vec4 fog2 = texture2D(fogTex, vUv + vec2(0.0, time * -0.03));
+  vec4 fog3 = texture2D(fogTex, vUv + vec2(0.0, time * 0.03));
+  vec4 fog4 = texture2D(fogTex, vUv + vec2(0.0, time * -0.06));
 
-  vec3 rgb = convertHsvToRgb(hsv + vec3(0.0, 1.0 - surface.r, surface.r + (fog1.r * fog2.g) * 2.0));
+  vec3 rgb = convertHsvToRgb(hsv + vec3((fog3.r + fog4.r - 1.0) * 0.16, (1.0 - surface.r) * 0.4, surface.r + (fog1.r + fog2.g - 1.0) + 0.5));
   vec3 color = rgb;
 
   gl_FragColor = vec4(color, 1.0);
