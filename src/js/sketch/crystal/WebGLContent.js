@@ -141,7 +141,13 @@ export default class WebGLContent {
     for (var i = 0; i < crystals.length; i++) {
       crystals[i].update(time);
     }
-    bg.update(time)
+    bg.update(
+      time,
+      Math.atan2(
+        camera.lookVelocity.z,
+        camera.lookVelocity.x
+      ) / MathEx.radians(360)
+    );
 
     // Update the camera.
     lookTimer += time;
@@ -149,7 +155,6 @@ export default class WebGLContent {
       lookIndex = (lookIndex + 1) % CRYSTALS_COUNT;
       lookTimer = 0;
       lookPosition.copy(crystals[lookIndex].position);
-      bg.setHex((lookIndex) / CRYSTALS_COUNT);
     }
     camera.lookAnchor.copy(
       lookPosition.clone().add(
