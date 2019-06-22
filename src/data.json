@@ -15,10 +15,10 @@
     "crystal": {
       "title": "crystal",
       "id": "crystal",
-      "description": "",
+      "description": "make the crystal that has the aura inside of self.",
       "path": "/sketch/crystal.html",
       "posted": "2019.6.23",
-      "update": "make the crystal that has the aura inside of self.",
+      "update": "",
       "color": "white"
     },
     "node": {
