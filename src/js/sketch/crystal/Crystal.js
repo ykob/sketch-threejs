@@ -38,7 +38,14 @@ export default class Crystal extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Mesh';
-    this.rotation.z = MathEx.radians(10);
+
+    this.rotation.set(
+      MathEx.radians((Math.random() * 2 - 1) * 30),
+      0,
+      MathEx.radians((Math.random() * 2 - 1) * 30)
+    );
+    this.axisBodyRotate = new THREE.Vector3().copy(this.up).applyEuler(this.rotation);
+    this.quaternionPrev = new THREE.Quaternion();
   }
   start(hex, normalMap, surfaceTex, fogTex) {
     this.material.uniforms.hsv.value.set(hex, 0.65, 0.0);
@@ -48,6 +55,7 @@ export default class Crystal extends THREE.Mesh {
   }
   update(time) {
     this.material.uniforms.time.value += time;
-    this.rotation.y += time * 0.1;
+    this.quaternionPrev.copy(this.quaternion);
+    this.quaternion.setFromAxisAngle(this.axisBodyRotate, time * 0.1).multiply(this.quaternionPrev);
   }
 }
