@@ -1,0 +1,11 @@
+extends ../_layout/_page.pug
+
+block vars
+  -
+    var page = data.pages.crystal;
+
+block content
+  include ../_modules/_preloader.pug
+  include ../_modules/_website-outline.pug
+  include ../_modules/_sketch-outline.pug
+  canvas(id="canvas-webgl", class="p-canvas-webgl")

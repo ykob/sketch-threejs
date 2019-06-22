@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "crystal": {
+      "title": "crystal",
+      "id": "crystal",
+      "description": "",
+      "path": "/sketch/crystal.html",
+      "posted": "2019.6.23",
+      "update": "make the crystal that has the aura inside of self.",
+      "color": "white"
+    },
     "node": {
       "title": "node",
       "id": "node",

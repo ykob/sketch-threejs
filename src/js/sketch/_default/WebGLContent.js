@@ -38,7 +38,7 @@ const resizeCamera = (resolution) => {
   camera.updateProjectionMatrix();
 };
 
-export default class WebGLContent {
+extend default class WebGLContent {
   constructor() {
   }
   async init() {
