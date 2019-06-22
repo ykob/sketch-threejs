@@ -1,12 +1,16 @@
 precision highp float;
 
+uniform sampler2D texture;
+
+varying vec3 vColor;
+varying float vOpacity;
+
 void main() {
-  // Convert PointCoord to the other vec2 has a range from -1.0 to 1.0.
+  // convert PointCoord to range from -1.0 to 1.0
   vec2 p = gl_PointCoord * 2.0 - 1.0;
 
-  // Draw circle
-  float radius = length(p);
-  float opacity = (1.0 - smoothstep(0.5, 1.0, radius));
+  // draw double circle
+  float r = (1.0 - smoothstep(0.95, 1.0, length(p)));
 
-  gl_FragColor = vec4(1.0);
+  gl_FragColor = vec4(vColor * r, vOpacity);
 }

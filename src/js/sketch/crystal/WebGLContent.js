@@ -109,8 +109,11 @@ export default class WebGLContent {
       );
       crystals[i].start(i / CRYSTALS_COUNT, crystalNormalMap, crystalSurfaceTex, crystalFogTex);
       scene.add(crystals[i]);
-      // crystalSparkles[i] = new CrystalSparkle();
-      // scene.add(crystalSparkles[i]);
+
+      crystalSparkles[i] = new CrystalSparkle();
+      crystalSparkles[i].position.copy(crystals[i].position);
+      crystalSparkles[i].start(i / CRYSTALS_COUNT);
+      scene.add(crystalSparkles[i]);
     }
 
     scene.add(bg);
@@ -140,6 +143,7 @@ export default class WebGLContent {
     // Update each objects.
     for (var i = 0; i < crystals.length; i++) {
       crystals[i].update(time);
+      crystalSparkles[i].update(time);
     }
     bg.update(
       time,
