@@ -25,6 +25,6 @@ void main(void) {
     * rotateSelf
     * vec4(position + normalize(position) * offset, 1.0);
   vPosition = (modelMatrix * updatePosition).xyz;
-  vNormal = (modelMatrix * rotateWorld * rotateSelf * vec4(normal, 1.0)).xyz;
+  vNormal = (modelMatrix * rotateWorld * rotateSelf * vec4(normal, 0.0)).xyz;
   gl_Position = projectionMatrix * modelViewMatrix * updatePosition;
 }
