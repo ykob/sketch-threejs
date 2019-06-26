@@ -6,7 +6,7 @@ import fs from './glsl/Fog.fs';
 export default class Fog extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(30, 10, 10);
+    const geometry = new THREE.PlaneBufferGeometry(60, 60);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -15,26 +15,34 @@ export default class Fog extends THREE.Mesh {
           type: 'f',
           value: 0
         },
-        maskTex: {
+        hsv: {
+          type: 'v3',
+          value: new THREE.Vector3()
+        },
+        fogTex: {
           type: 't',
           value: null
         },
-        fogTex: {
+        maskTex: {
           type: 't',
           value: null
         },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Fog';
   }
-  start(maskTex, fogTex) {
-    this.material.uniforms.maskTex.value = maskTex;
+  start(hex, fogTex, maskTex) {
+    this.material.uniforms.hsv.value.set(hex, 0.65, 0.5);
     this.material.uniforms.fogTex.value = fogTex;
+    this.material.uniforms.maskTex.value = maskTex;
   }
   update(time) {
     this.material.uniforms.time.value += time;

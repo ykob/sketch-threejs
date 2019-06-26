@@ -8,6 +8,7 @@ import PromiseOBJLoader from '../../common/PromiseOBJLoader';
 import ForcePerspectiveCamera from './ForcePerspectiveCamera';
 import Crystal from './Crystal';
 import CrystalSparkle from './CrystalSparkle';
+import Fog from './Fog';
 import Background from './Background';
 
 // ==========
@@ -31,8 +32,10 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const CRYSTALS_COUNT = 20;
+const FOGS_COUNT = 30;
 const crystals = [];
 const crystalSparkles = [];
+const fogs = [];
 const lookPosition = new THREE.Vector3();
 const panPosition = new THREE.Vector3();
 let lookIndex = 0;
@@ -115,6 +118,20 @@ export default class WebGLContent {
       crystalSparkles[i].start(i / CRYSTALS_COUNT);
       scene.add(crystalSparkles[i]);
     }
+    for (var i = 0; i < FOGS_COUNT; i++) {
+      const radian1 = MathEx.radians(i / FOGS_COUNT * 360);
+      const radian2 = MathEx.radians(i / FOGS_COUNT * -360 - 90);
+      const radius = 80;
+      fogs[i] = new Fog();
+      fogs[i].position.set(
+        Math.cos(radian1) * radius,
+        -6 - Math.random() * 10,
+        Math.sin(radian1) * radius
+      );
+      fogs[i].rotation.set(0, radian2, 0);
+      fogs[i].start(i / FOGS_COUNT, crystalFogTex);
+      scene.add(fogs[i]);
+    }
 
     scene.add(bg);
 
@@ -144,6 +161,9 @@ export default class WebGLContent {
     for (var i = 0; i < crystals.length; i++) {
       crystals[i].update(time);
       crystalSparkles[i].update(time);
+    }
+    for (var i = 0; i < fogs.length; i++) {
+      fogs[i].update(time);
     }
     bg.update(
       time,
