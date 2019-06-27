@@ -32,7 +32,7 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const CRYSTALS_COUNT = 20;
-const FOGS_COUNT = 30;
+const FOGS_COUNT = 40;
 const crystals = [];
 const crystalSparkles = [];
 const fogs = [];
@@ -125,7 +125,7 @@ export default class WebGLContent {
       fogs[i] = new Fog();
       fogs[i].position.set(
         Math.cos(radian1) * radius,
-        -12 - i % 2 * 8,
+        -18 - Math.sin(MathEx.radians(i / FOGS_COUNT * 360 * 8)) * 8,
         Math.sin(radian1) * radius
       );
       fogs[i].rotation.set(0, radian2, 0);
