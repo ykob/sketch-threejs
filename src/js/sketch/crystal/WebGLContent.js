@@ -32,7 +32,7 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const CRYSTALS_COUNT = 20;
-const FOGS_COUNT = 16;
+const FOGS_COUNT = 30;
 const crystals = [];
 const crystalSparkles = [];
 const fogs = [];
