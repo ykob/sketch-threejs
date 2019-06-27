@@ -1,7 +1,7 @@
 precision highp float;
 
 uniform float time;
-uniform vec3 hsv;
+uniform float hex;
 uniform sampler2D fogTex;
 
 varying vec3 vPosition;
@@ -22,8 +22,9 @@ void main() {
       sin(radians(fog1.g * 360.0)) * 0.01 * cos(radians(fog1.b * 360.0))
     )
   );
-  float opacity = (pow(fog2.r, 2.0) - smoothstep(0.4, 1.0, abs(p.x)) - smoothstep(0.2, 1.0, abs(p.y))) * 0.4;
+  float opacity = (pow(fog2.r, 2.0) - smoothstep(0.5, 1.0, abs(p.x)) - smoothstep(0.25, 1.0, abs(p.y)));
 
+  vec3 hsv = vec3(hex + fog2.b * 0.12, 0.8, 0.4);
   vec3 rgb = convertHsvToRgb(hsv);
 
   gl_FragColor = vec4(rgb, opacity);

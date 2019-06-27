@@ -15,9 +15,9 @@ export default class Fog extends THREE.Mesh {
           type: 'f',
           value: 0
         },
-        hsv: {
-          type: 'v3',
-          value: new THREE.Vector3()
+        hex: {
+          type: 'f',
+          value: 0
         },
         fogTex: {
           type: 't',
@@ -40,7 +40,7 @@ export default class Fog extends THREE.Mesh {
     this.name = 'Fog';
   }
   start(hex, fogTex, maskTex) {
-    this.material.uniforms.hsv.value.set(hex, 0.65, 0.5);
+    this.material.uniforms.hex.value = hex;
     this.material.uniforms.fogTex.value = fogTex;
     this.material.uniforms.maskTex.value = maskTex;
   }

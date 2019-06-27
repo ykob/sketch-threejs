@@ -24,6 +24,7 @@ export default class Background extends THREE.Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       side: THREE.BackSide,
+      depthTest: false,
     });
 
     // Create Object3D
