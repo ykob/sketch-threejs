@@ -10,6 +10,9 @@ import Crystal from './Crystal';
 import CrystalSparkle from './CrystalSparkle';
 import Fog from './Fog';
 import Background from './Background';
+import PostEffectBright from './PostEffectBright';
+import PostEffectBlur from './PostEffectBlur';
+import PostEffectBloom from './PostEffectBloom';
 
 // ==========
 // Define common variables
@@ -28,6 +31,13 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 
+// For the post effect.
+const renderTarget1 = new THREE.WebGLRenderTarget();
+const renderTarget2 = new THREE.WebGLRenderTarget();
+const renderTarget3 = new THREE.WebGLRenderTarget();
+const scenePE = new THREE.Scene();
+const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
+
 // ==========
 // Define unique variables
 //
@@ -42,6 +52,16 @@ let lookIndex = 0;
 let lookTimer = 0;
 
 const bg = new Background();
+
+// For the post effect.
+const postEffectBright = new PostEffectBright();
+const postEffectBlurX = new PostEffectBlur();
+const postEffectBlurY = new PostEffectBlur();
+const postEffectBloom = new PostEffectBloom();
+postEffectBright.start(renderTarget1.texture);
+postEffectBlurX.start(renderTarget2.texture, 1, 0);
+postEffectBlurY.start(renderTarget3.texture, 0, 1);
+postEffectBloom.start(renderTarget1.texture, renderTarget2.texture);
 
 // ==========
 // Define functions
@@ -187,14 +207,38 @@ export default class WebGLContent {
     );
     camera.update();
 
-    // Render the 3D scene.
+    // Render the main scene to frame buffer.
+    renderer.setRenderTarget(renderTarget1);
     renderer.render(scene, camera);
+
+    // // Render the post effect.
+    scenePE.add(postEffectBright);
+    renderer.setRenderTarget(renderTarget2);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBright);
+    scenePE.add(postEffectBlurX);
+    renderer.setRenderTarget(renderTarget3);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBlurX);
+    scenePE.add(postEffectBlurY);
+    renderer.setRenderTarget(renderTarget2);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBlurY);
+    scenePE.add(postEffectBloom);
+    renderer.setRenderTarget(null);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBloom);
   }
   resize(resolution) {
     canvas.width = resolution.x;
     canvas.height = resolution.y;
     resizeCamera(resolution);
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget1.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    renderTarget2.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    renderTarget3.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    postEffectBlurY.resize(resolution.x / 4, resolution.y / 4);
+    postEffectBlurX.resize(resolution.x / 4, resolution.y / 4);
   }
   pan(v) {
     panPosition.copy(v);
