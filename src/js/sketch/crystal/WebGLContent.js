@@ -8,18 +8,16 @@ import PromiseOBJLoader from '../../common/PromiseOBJLoader';
 import ForcePerspectiveCamera from './ForcePerspectiveCamera';
 import Crystal from './Crystal';
 import CrystalSparkle from './CrystalSparkle';
+import Fog from './Fog';
 import Background from './Background';
+import PostEffectBright from './PostEffectBright';
+import PostEffectBlur from './PostEffectBlur';
+import PostEffectBloom from './PostEffectBloom';
 
 // ==========
 // Define common variables
 //
-const canvas = document.getElementById('canvas-webgl');
-const renderer = new THREE.WebGLRenderer({
-  alpha: true,
-  antialias: true,
-  canvas: canvas,
-});
-renderer.setPixelRatio(window.devicePixelRatio);
+let renderer;
 const scene = new THREE.Scene();
 const camera = new ForcePerspectiveCamera();
 const cameraResolution = new THREE.Vector2();
@@ -27,18 +25,37 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 
+// For the post effect.
+const renderTarget1 = new THREE.WebGLRenderTarget();
+const renderTarget2 = new THREE.WebGLRenderTarget();
+const renderTarget3 = new THREE.WebGLRenderTarget();
+const scenePE = new THREE.Scene();
+const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
+
 // ==========
 // Define unique variables
 //
 const CRYSTALS_COUNT = 20;
+const FOGS_COUNT = 40;
 const crystals = [];
 const crystalSparkles = [];
+const fogs = [];
 const lookPosition = new THREE.Vector3();
 const panPosition = new THREE.Vector3();
 let lookIndex = 0;
 let lookTimer = 0;
 
 const bg = new Background();
+
+// For the post effect.
+const postEffectBright = new PostEffectBright();
+const postEffectBlurX = new PostEffectBlur();
+const postEffectBlurY = new PostEffectBlur();
+const postEffectBloom = new PostEffectBloom();
+postEffectBright.start(renderTarget1.texture);
+postEffectBlurX.start(renderTarget2.texture, 1, 0);
+postEffectBlurY.start(renderTarget3.texture, 0, 1);
+postEffectBloom.start(renderTarget1.texture, renderTarget2.texture);
 
 // ==========
 // Define functions
@@ -63,11 +80,18 @@ const resizeCamera = (resolution) => {
     resolution.x,
     resolution.y
   );
+  console.log(camera)
   camera.updateProjectionMatrix();
 };
 
 export default class WebGLContent {
-  constructor() {
+  constructor(canvas) {
+    renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      canvas: canvas,
+    });
+    renderer.setPixelRatio(window.devicePixelRatio);
   }
   async init() {
     renderer.setClearColor(0x0e0e0e, 1.0);
@@ -115,25 +139,39 @@ export default class WebGLContent {
       crystalSparkles[i].start(i / CRYSTALS_COUNT);
       scene.add(crystalSparkles[i]);
     }
+    for (var i = 0; i < FOGS_COUNT; i++) {
+      const radian1 = MathEx.radians(i / FOGS_COUNT * 360);
+      const radian2 = MathEx.radians(i / FOGS_COUNT * -360 - 90);
+      const radius = 100;
+      fogs[i] = new Fog();
+      fogs[i].position.set(
+        Math.cos(radian1) * radius,
+        -18 - Math.sin(MathEx.radians(i / FOGS_COUNT * 360 * 8)) * 8,
+        Math.sin(radian1) * radius
+      );
+      fogs[i].rotation.set(0, radian2, 0);
+      fogs[i].start(i / FOGS_COUNT, crystalFogTex);
+      scene.add(fogs[i]);
+    }
 
     scene.add(bg);
 
     lookPosition.copy(crystals[lookIndex].position);
   }
-  start() {
-    this.play();
+  start(dd) {
+    this.play(dd);
   }
   stop() {
     this.pause();
   }
-  play() {
+  play(dd) {
     clock.start();
-    this.update();
+    this.update(dd);
   }
   pause() {
     clock.stop();
   }
-  update() {
+  update(dd) {
     // When the clock is stopped, it stops the all rendering too.
     if (clock.running === false) return;
 
@@ -145,6 +183,9 @@ export default class WebGLContent {
       crystals[i].update(time);
       crystalSparkles[i].update(time);
     }
+    for (var i = 0; i < fogs.length; i++) {
+      fogs[i].update(time);
+    }
     bg.update(
       time,
       Math.atan2(
@@ -153,13 +194,11 @@ export default class WebGLContent {
       ) / MathEx.radians(360)
     );
 
-    // Update the camera.
-    lookTimer += time;
-    if (lookTimer > 2) {
-      lookIndex = (lookIndex + 1) % CRYSTALS_COUNT;
-      lookTimer = 0;
-      lookPosition.copy(crystals[lookIndex].position);
-    }
+    lookPosition.set(
+      Math.cos(MathEx.radians(-dd.anchor.x * 0.6)),
+      0,
+      Math.sin(MathEx.radians(-dd.anchor.x * 0.6)),
+    );
     camera.lookAnchor.copy(
       lookPosition.clone().add(
         panPosition.clone().applyQuaternion(camera.quaternion)
@@ -167,14 +206,36 @@ export default class WebGLContent {
     );
     camera.update();
 
-    // Render the 3D scene.
+    // Render the main scene to frame buffer.
+    renderer.setRenderTarget(renderTarget1);
     renderer.render(scene, camera);
+
+    // // Render the post effect.
+    scenePE.add(postEffectBright);
+    renderer.setRenderTarget(renderTarget2);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBright);
+    scenePE.add(postEffectBlurX);
+    renderer.setRenderTarget(renderTarget3);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBlurX);
+    scenePE.add(postEffectBlurY);
+    renderer.setRenderTarget(renderTarget2);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBlurY);
+    scenePE.add(postEffectBloom);
+    renderer.setRenderTarget(null);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBloom);
   }
   resize(resolution) {
-    canvas.width = resolution.x;
-    canvas.height = resolution.y;
     resizeCamera(resolution);
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget1.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    renderTarget2.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    renderTarget3.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    postEffectBlurY.resize(resolution.x / 3, resolution.y / 3);
+    postEffectBlurX.resize(resolution.x / 3, resolution.y / 3);
   }
   pan(v) {
     panPosition.copy(v);

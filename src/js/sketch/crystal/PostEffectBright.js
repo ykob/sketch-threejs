@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
 import vs from './glsl/PostEffect.vs';
-import fs from './glsl/PostEffect.fs';
+import fs from './glsl/PostEffectBright.fs';
 
-export default class PostEffect extends THREE.Mesh {
+export default class PostEffectBright extends THREE.Mesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(2, 2);
@@ -11,17 +11,13 @@ export default class PostEffect extends THREE.Mesh {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
-        time: {
+        minBright: {
           type: 'f',
-          value: 0,
+          value: 0.5
         },
         texture: {
           type: 't',
-          value: null,
-        },
-        resolution: {
-          type: 'v2',
-          value: new THREE.Vector2(),
+          value: null
         },
       },
       vertexShader: vs,
@@ -30,15 +26,9 @@ export default class PostEffect extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'PostEffect';
+    this.name = 'PostEffectBright';
   }
   start(texture) {
     this.material.uniforms.texture.value = texture;
-  }
-  update(time) {
-    this.material.uniforms.time.value += time;
-  }
-  resize(x, y) {
-    this.material.uniforms.resolution.value.set(x, y);
   }
 }

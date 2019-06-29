@@ -4,17 +4,18 @@ import MathEx from 'js-util/MathEx';
 import vs from './glsl/crystalSparkle.vs';
 import fs from './glsl/crystalSparkle.fs';
 
+const NUM = 500;
+
 export default class CrystalSparkle extends THREE.Points {
   constructor() {
     // Define Geometry
     const geometry = new THREE.BufferGeometry();
 
     // Define attributes of the instancing geometry
-    const num = 300;
-    const baPositions = new THREE.BufferAttribute(new Float32Array(num * 3), 3);
-    const baDelay = new THREE.BufferAttribute(new Float32Array(num), 1, 1);
-    const baSpeed = new THREE.BufferAttribute(new Float32Array(num), 1, 1);
-    for (var i = 0, ul = num; i < ul; i++) {
+    const baPositions = new THREE.BufferAttribute(new Float32Array(NUM * 3), 3);
+    const baDelay = new THREE.BufferAttribute(new Float32Array(NUM), 1, 1);
+    const baSpeed = new THREE.BufferAttribute(new Float32Array(NUM), 1, 1);
+    for (var i = 0, ul = NUM; i < ul; i++) {
       const radian1 = MathEx.radians(MathEx.randomArbitrary(0, 150) - 75);
       const radian2 = MathEx.radians(MathEx.randomArbitrary(0, 360));
       const radius = Math.random() * Math.random() * 4 + 2;
@@ -33,6 +34,10 @@ export default class CrystalSparkle extends THREE.Points {
         time: {
           type: 'f',
           value: 0
+        },
+        pixelRatio: {
+          type: 'f',
+          value: window.devicePixelRatio
         },
         hex: {
           type: 'f',
