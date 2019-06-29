@@ -35,6 +35,10 @@ export default class CrystalSparkle extends THREE.Points {
           type: 'f',
           value: 0
         },
+        pixelRatio: {
+          type: 'f',
+          value: window.devicePixelRatio
+        },
         hex: {
           type: 'f',
           value: 0

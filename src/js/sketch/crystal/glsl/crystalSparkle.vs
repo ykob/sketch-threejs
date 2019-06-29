@@ -5,6 +5,7 @@ attribute float speed;
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform float time;
+uniform float pixelRatio;
 uniform float hex;
 
 varying vec3 vColor;
@@ -37,7 +38,7 @@ void main() {
 
   // coordinate transformation
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(position, 1.0);
-  float distanceFromCamera = 16.0 / length(mvPosition.xyz);
+  float distanceFromCamera = pixelRatio * 17.5 / length(mvPosition.xyz);
 
   vColor = rgb;
   vOpacity = blink * clamp(distanceFromCamera, 0.5, 1.0);
