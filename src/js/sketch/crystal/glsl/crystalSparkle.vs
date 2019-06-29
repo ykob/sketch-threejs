@@ -21,7 +21,7 @@ void main() {
   float interval = mod(time + delay * duration, duration) / duration;
 
   // update position and size
-  float size = 10.0 * sin(interval * 4.0);
+  float size = 3.0 * sin(interval * 4.0);
   float blink = max(
     (sin(interval * 4.0) + cos(interval * 27.0) * 0.3 + cos(interval * 36.0) * 0.2) / 1.5 * 2.0 - 1.0,
     0.0
@@ -38,11 +38,11 @@ void main() {
 
   // coordinate transformation
   vec4 mvPosition = modelViewMatrix * rotateMat * vec4(position, 1.0);
-  float distanceFromCamera = pixelRatio * 17.5 / length(mvPosition.xyz);
+  float distanceFromCamera = 35.0 / length(mvPosition.xyz);
 
   vColor = rgb;
   vOpacity = blink * clamp(distanceFromCamera, 0.5, 1.0);
 
   gl_Position = projectionMatrix * mvPosition;
-  gl_PointSize = distanceFromCamera * size;
+  gl_PointSize = distanceFromCamera * pixelRatio * size;
 }
