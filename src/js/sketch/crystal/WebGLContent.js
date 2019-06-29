@@ -17,13 +17,7 @@ import PostEffectBloom from './PostEffectBloom';
 // ==========
 // Define common variables
 //
-const canvas = document.getElementById('canvas-webgl');
-const renderer = new THREE.WebGLRenderer({
-  alpha: true,
-  antialias: true,
-  canvas: canvas,
-});
-renderer.setPixelRatio(window.devicePixelRatio);
+let renderer;
 const scene = new THREE.Scene();
 const camera = new ForcePerspectiveCamera();
 const cameraResolution = new THREE.Vector2();
@@ -86,11 +80,18 @@ const resizeCamera = (resolution) => {
     resolution.x,
     resolution.y
   );
+  console.log(camera)
   camera.updateProjectionMatrix();
 };
 
 export default class WebGLContent {
-  constructor() {
+  constructor(canvas) {
+    renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      canvas: canvas,
+    });
+    renderer.setPixelRatio(window.devicePixelRatio);
   }
   async init() {
     renderer.setClearColor(0x0e0e0e, 1.0);
@@ -157,20 +158,20 @@ export default class WebGLContent {
 
     lookPosition.copy(crystals[lookIndex].position);
   }
-  start() {
-    this.play();
+  start(dd) {
+    this.play(dd);
   }
   stop() {
     this.pause();
   }
-  play() {
+  play(dd) {
     clock.start();
-    this.update();
+    this.update(dd);
   }
   pause() {
     clock.stop();
   }
-  update() {
+  update(dd) {
     // When the clock is stopped, it stops the all rendering too.
     if (clock.running === false) return;
 
@@ -193,13 +194,11 @@ export default class WebGLContent {
       ) / MathEx.radians(360)
     );
 
-    // Update the camera.
-    lookTimer += time;
-    if (lookTimer > 2) {
-      lookIndex = (lookIndex + 1) % CRYSTALS_COUNT;
-      lookTimer = 0;
-      lookPosition.copy(crystals[lookIndex].position);
-    }
+    lookPosition.set(
+      Math.cos(MathEx.radians(-dd.anchor.x * 0.6)),
+      0,
+      Math.sin(MathEx.radians(-dd.anchor.x * 0.6)),
+    );
     camera.lookAnchor.copy(
       lookPosition.clone().add(
         panPosition.clone().applyQuaternion(camera.quaternion)
@@ -230,15 +229,13 @@ export default class WebGLContent {
     scenePE.remove(postEffectBloom);
   }
   resize(resolution) {
-    canvas.width = resolution.x;
-    canvas.height = resolution.y;
     resizeCamera(resolution);
     renderer.setSize(resolution.x, resolution.y);
     renderTarget1.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
     renderTarget2.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
     renderTarget3.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
-    postEffectBlurY.resize(resolution.x / 4, resolution.y / 4);
-    postEffectBlurX.resize(resolution.x / 4, resolution.y / 4);
+    postEffectBlurY.resize(resolution.x / 3, resolution.y / 3);
+    postEffectBlurX.resize(resolution.x / 3, resolution.y / 3);
   }
   pan(v) {
     panPosition.copy(v);
