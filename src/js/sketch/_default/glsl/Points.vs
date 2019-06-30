@@ -6,9 +6,11 @@ uniform mat4 modelMatrix;
 uniform float pixelRatio;
 
 void main() {
-  // coordinate transformation
+  // Coordinate transformation
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
   float distanceFromCamera = length(mvPosition.xyz);
+
+  // Define the point size.
   float pointSize = pixelRatio * 100.0 / distanceFromCamera;
 
   gl_Position = projectionMatrix * mvPosition;
