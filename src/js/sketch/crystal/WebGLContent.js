@@ -80,7 +80,6 @@ const resizeCamera = (resolution) => {
     resolution.x,
     resolution.y
   );
-  console.log(camera)
   camera.updateProjectionMatrix();
 };
 
