@@ -11,6 +11,13 @@ export default class Drag {
     this.anchor = new THREE.Vector2();
     this.isTouched = false;
   }
+  update() {
+    this.a.set(
+      (this.anchor.x - this.v.x) / 10,
+      (this.anchor.y - this.v.y) / 10
+    );
+    this.v.add(this.a);
+  }
   touchStart(e) {
     // If be using PC, event.preventDefault runs at first.
     if (!e.touches) e.preventDefault();
@@ -40,12 +47,5 @@ export default class Drag {
   touchEnd(e) {
     this.isTouched = false;
     this.isDraging = false;
-  }
-  update() {
-    this.a.set(
-      (this.anchor.x - this.v.x) / 10,
-      (this.anchor.y - this.v.y) / 10
-    );
-    this.v.add(this.a);
   }
 }

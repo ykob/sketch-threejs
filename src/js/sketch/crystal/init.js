@@ -5,10 +5,10 @@ import WebGLContent from './WebGLContent';
 import Drag from './Drag';
 
 export default async function() {
-  const canvas = document.getElementById('canvas-webgl');
-  const webglContent = new WebGLContent(canvas);
+  const webglContent = new WebGLContent();
   const resolution = new THREE.Vector2();
   const panPosition = new THREE.Vector3();
+  const canvas = document.getElementById('canvas-webgl');
   const preloader = document.querySelector('.p-preloader');
   const dd = new Drag(resolution);
 
@@ -48,17 +48,17 @@ export default async function() {
     window.addEventListener('touchend', touchend);
     window.addEventListener('resize', debounce(resizeWindow, 100));
   };
-  const render = () => {
+  const update = () => {
     dd.update(resolution);
     webglContent.update(dd);
-    requestAnimationFrame(render);
+    requestAnimationFrame(update);
   };
 
-  await webglContent.init();
+  await webglContent.start(canvas);
 
   on();
   resizeWindow();
   preloader.classList.add('is-hidden');
-  webglContent.start(dd);
-  render();
+  webglContent.play(dd);
+  update();
 }

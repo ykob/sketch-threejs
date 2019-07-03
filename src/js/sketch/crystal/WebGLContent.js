@@ -84,15 +84,15 @@ const resizeCamera = (resolution) => {
 };
 
 export default class WebGLContent {
-  constructor(canvas) {
+  constructor() {
+  }
+  async start(canvas) {
     renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
       canvas: canvas,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-  }
-  async init() {
     renderer.setClearColor(0x0e0e0e, 1.0);
 
     camera.aspect = 3 / 2;
@@ -156,9 +156,6 @@ export default class WebGLContent {
     scene.add(bg);
 
     lookPosition.copy(crystals[lookIndex].position);
-  }
-  start(dd) {
-    this.play(dd);
   }
   stop() {
     this.pause();
