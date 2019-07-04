@@ -20,7 +20,6 @@ import PostEffectBloom from './PostEffectBloom';
 let renderer;
 const scene = new THREE.Scene();
 const camera = new ForcePerspectiveCamera();
-const cameraResolution = new THREE.Vector2();
 const clock = new THREE.Clock({
   autoStart: false
 });
@@ -52,36 +51,6 @@ const postEffectBright = new PostEffectBright();
 const postEffectBlurX = new PostEffectBlur();
 const postEffectBlurY = new PostEffectBlur();
 const postEffectBloom = new PostEffectBloom();
-postEffectBright.start(renderTarget1.texture);
-postEffectBlurX.start(renderTarget2.texture, 1, 0);
-postEffectBlurY.start(renderTarget3.texture, 0, 1);
-postEffectBloom.start(renderTarget1.texture, renderTarget2.texture);
-
-// ==========
-// Define functions
-//
-const resizeCamera = (resolution) => {
-  if (resolution.x > resolution.y) {
-    cameraResolution.set(
-      (resolution.x >= 1200) ? 1200 : resolution.x,
-      (resolution.x >= 1200) ? 800 : resolution.x * 0.66,
-    );
-  } else {
-    cameraResolution.set(
-      ((resolution.y >= 1200) ? 800 : resolution.y * 0.66) * 0.8,
-      ((resolution.y >= 1200) ? 1200 : resolution.y) * 0.8,
-    );
-  }
-  camera.setViewOffset(
-    cameraResolution.x,
-    cameraResolution.y,
-    (resolution.x - cameraResolution.x) / -2,
-    (resolution.y - cameraResolution.y) / -2,
-    resolution.x,
-    resolution.y
-  );
-  camera.updateProjectionMatrix();
-};
 
 export default class WebGLContent {
   constructor() {
@@ -95,9 +64,12 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
 
-    camera.aspect = 3 / 2;
-    camera.far = 1000;
-    camera.setFocalLength(50);
+    camera.start();
+
+    postEffectBright.start(renderTarget1.texture);
+    postEffectBlurX.start(renderTarget2.texture, 1, 0);
+    postEffectBlurY.start(renderTarget3.texture, 0, 1);
+    postEffectBloom.start(renderTarget1.texture, renderTarget2.texture);
 
     let crystalGeometries;
     let crystalNormalMap;
@@ -109,7 +81,8 @@ export default class WebGLContent {
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/normal.jpg'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/surface.jpg'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/fog.jpg'),
-    ]).then((response) => {
+    ])
+    .then((response) => {
       crystalGeometries = response[0].children.map((mesh) => {
         return mesh.geometry;
       });
@@ -118,7 +91,8 @@ export default class WebGLContent {
       crystalFogTex = response[3];
       crystalFogTex.wrapS = THREE.RepeatWrapping;
       crystalFogTex.wrapT = THREE.RepeatWrapping;
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.log(error)
     });
 
@@ -225,7 +199,7 @@ export default class WebGLContent {
     scenePE.remove(postEffectBloom);
   }
   resize(resolution) {
-    resizeCamera(resolution);
+    camera.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
     renderTarget1.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
     renderTarget2.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
