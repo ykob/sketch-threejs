@@ -3,11 +3,7 @@ import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
 
-const renderer = new THREE.WebGLRenderer({
-  alpha: true,
-  antialias: true,
-  canvas: canvas,
-});
+let renderer;
 const scene = new THREE.Scene();
 const camera = new THREE.Camera();
 const clock = new THREE.Clock({
