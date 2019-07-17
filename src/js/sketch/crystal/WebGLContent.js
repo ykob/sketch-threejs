@@ -5,7 +5,7 @@ import sleep from 'js-util/sleep';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import PromiseOBJLoader from '../../common/PromiseOBJLoader';
 
-import ForcePerspectiveCamera from './ForcePerspectiveCamera';
+import Camera from './Camera';
 import Crystal from './Crystal';
 import CrystalSparkle from './CrystalSparkle';
 import Fog from './Fog';
@@ -19,7 +19,7 @@ import PostEffectBloom from './PostEffectBloom';
 //
 let renderer;
 const scene = new THREE.Scene();
-const camera = new ForcePerspectiveCamera();
+const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
