@@ -3,6 +3,9 @@ import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
 
+// ==========
+// Define common variables
+//
 let renderer;
 const scene = new THREE.Scene();
 const camera = new THREE.Camera();
@@ -10,6 +13,13 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 
+// ==========
+// Define unique variables
+//
+
+// ==========
+// Define WebGLContent Class.
+//
 extend default class WebGLContent {
   constructor() {
   }
