@@ -34,6 +34,6 @@ export default async function() {
   on();
   resizeWindow();
   preloader.classList.add('is-hidden');
-  webglContent.play(dd);
+  webglContent.play();
   update();
 }

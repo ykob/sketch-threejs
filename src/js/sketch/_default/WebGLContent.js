@@ -8,7 +8,7 @@ import Camera from './Camera';
 //
 let renderer;
 const scene = new THREE.Scene();
-const camera = new THREE.Camera();
+const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
@@ -20,7 +20,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define WebGLContent Class.
 //
-extend default class WebGLContent {
+export default class WebGLContent {
   constructor() {
   }
   start(canvas) {
@@ -54,8 +54,6 @@ extend default class WebGLContent {
     renderer.render(scene, camera);
   }
   resize(resolution) {
-    canvas.width = resolution.x;
-    canvas.height = resolution.y;
     camera.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
