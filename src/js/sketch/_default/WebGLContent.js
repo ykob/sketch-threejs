@@ -48,6 +48,9 @@ export default class WebGLContent {
     // Calculate msec for this frame.
     const time = clock.getDelta();
 
+    // Update Camera.
+    camera.update(time);
+
     // Update each objects.
 
     // Render the 3D scene.

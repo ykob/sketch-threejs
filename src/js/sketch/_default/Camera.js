@@ -13,7 +13,7 @@ export default class Camera extends THREE.PerspectiveCamera {
     this.position.set(0, 0, 50);
     this.lookAt(new THREE.Vector3());
   }
-  update() {
+  update(time) {
   }
   resize(resolution) {
     if (resolution.x > resolution.y) {
