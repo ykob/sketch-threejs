@@ -24,6 +24,8 @@ export default class Drag {
     this.isTouched = true;
   }
   touchMove(e) {
+    e.preventDefault();
+
     const x = (e.touches) ? e.touches[0].clientX : e.clientX;
     const y = (e.touches) ? e.touches[0].clientY : e.clientY;
 
@@ -33,13 +35,9 @@ export default class Drag {
       (x - this.vTouchStart.x) / (this.resolution.x / 200) + this.vPrev.x,
       MathEx.clamp((y - this.vTouchStart.y) / (this.resolution.y / 200) + this.vPrev.y, -90, 90)
     );
-
-    // If be using Mobile, event.preventDefault runs when start to drag.
-    if (e.touches) e.preventDefault();
   }
   touchEnd(e) {
     this.isTouched = false;
-    this.isDraging = false;
   }
   render() {
     this.a.set(
