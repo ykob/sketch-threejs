@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "burn": {
+      "title": "burn",
+      "id": "burn",
+      "description": "",
+      "path": "/sketch/burn.html",
+      "posted": "2019.x.x",
+      "update": "",
+      "color": "white"
+    },
     "crystal": {
       "title": "crystal",
       "id": "crystal",
