@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
+import Plane from './Plane';
 
 // ==========
 // Define common variables
@@ -16,6 +17,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
+const plane = new Plane();
 
 // ==========
 // Define WebGLContent Class.
@@ -31,6 +33,8 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
+
+    scene.add(plane);
 
     camera.start();
   }
@@ -59,5 +63,6 @@ export default class WebGLContent {
   resize(resolution) {
     camera.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
+    plane.resize(camera, resolution);
   }
 }
