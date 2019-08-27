@@ -18,6 +18,10 @@ export default class Plane extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        imgRatio: {
+          type: 'v2',
+          value: new THREE.Vector2()
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -40,8 +44,8 @@ export default class Plane extends THREE.Mesh {
     const width = height * camera.aspect;
 
     margin.set(
-      (resolution.x > resolution.y) ? resolution.x * 0.25 : resolution.y * 0.15,
-      (resolution.x > resolution.y) ? resolution.x * 0.15 : resolution.y * 0.25
+      (resolution.x > resolution.y) ? resolution.x * 0.3 : resolution.x * 0.2,
+      (resolution.x > resolution.y) ? resolution.y * 0.2 : resolution.y * 0.3
     );
 
     this.size.set(
@@ -49,6 +53,11 @@ export default class Plane extends THREE.Mesh {
       height * (resolution.y - margin.y) / resolution.y,
       1
     );
+    this.material.uniforms.imgRatio.value.set(
+      Math.min(1, this.size.x / this.size.y),
+      Math.min(1, this.size.y / this.size.x)
+    );
+
     this.scale.copy(this.size);
   }
 }
