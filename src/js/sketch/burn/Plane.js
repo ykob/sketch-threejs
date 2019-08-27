@@ -4,6 +4,8 @@ import MathEx from 'js-util/MathEx';
 import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
 
+const margin = new THREE.Vector2();
+
 export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
@@ -37,9 +39,14 @@ export default class Plane extends THREE.Mesh {
     );
     const width = height * camera.aspect;
 
+    margin.set(
+      (resolution.x > resolution.y) ? resolution.x * 0.25 : resolution.y * 0.15,
+      (resolution.x > resolution.y) ? resolution.x * 0.15 : resolution.y * 0.25
+    );
+
     this.size.set(
-      width * (resolution.x - 100) / resolution.x,
-      height * (resolution.y - 100) / resolution.y,
+      width * (resolution.x - margin.x) / resolution.x,
+      height * (resolution.y - margin.y) / resolution.y,
       1
     );
     this.scale.copy(this.size);
