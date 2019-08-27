@@ -18,6 +18,10 @@ export default class Plane extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        texNoise: {
+          type: 't',
+          value: null
+        },
         imgRatio: {
           type: 'v2',
           value: new THREE.Vector2()
@@ -32,7 +36,8 @@ export default class Plane extends THREE.Mesh {
     this.name = 'Mesh';
     this.size = new THREE.Vector3();
   }
-  start() {
+  start(texNoise) {
+    this.material.uniforms.texNoise.value = texNoise;
   }
   update(time) {
     this.material.uniforms.time.value += time;

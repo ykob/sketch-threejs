@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import Plane from './Plane';
 
@@ -25,7 +26,7 @@ const plane = new Plane();
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
+  async start(canvas) {
     renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -34,7 +35,14 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
 
-    scene.add(plane);
+    await Promise.all([
+      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/noise.png'),
+    ]).then((response) => {
+      plane.start(
+        response[0]
+      );
+      scene.add(plane);
+    });
 
     camera.start();
   }
