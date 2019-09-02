@@ -38,9 +38,12 @@ export default class WebGLContent {
     await Promise.all([
       PromiseTextureLoader('/sketch-threejs/img/sketch/burn/noise.png'),
     ]).then((response) => {
-      plane.start(
-        response[0]
-      );
+      const noiseTex = response[0];
+
+      noiseTex.wrapS = THREE.RepeatWrapping;
+      noiseTex.wrapT = THREE.RepeatWrapping;
+
+      plane.start(noiseTex);
       scene.add(plane);
     });
 
