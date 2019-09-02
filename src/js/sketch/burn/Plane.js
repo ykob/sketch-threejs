@@ -18,6 +18,10 @@ export default class Plane extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        duration: {
+          type: 'f',
+          value: 4
+        },
         texNoise: {
           type: 't',
           value: null
