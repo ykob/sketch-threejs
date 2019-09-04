@@ -7,10 +7,9 @@ uniform sampler2D texNoise;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying float vTime;
 
 void main() {
-  float t = mod(time / duration, 1.0);
-
   vec2 updateUv = vUv * imgRatio + vec2(
     (1.0 - imgRatio.x) * 0.5,
     (1.0 - imgRatio.y) * 0.5
@@ -20,9 +19,9 @@ void main() {
   float noiseG = texture2D(texNoise, updateUv + vec2(time * 0.2, 0.0)).g;
   float slide = texture2D(texNoise, vUv * vec2(0.998) + 0.001).b;
 
-  float mask = t * 1.08 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
+  float mask = vTime * 1.12 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
   float maskPrev = 1.0 - smoothstep(0.0, 0.04, mask);
-  float maskNext = smoothstep(0.04, 0.08, mask);
+  float maskNext = smoothstep(0.08, 0.12, mask);
 
   vec3 color1 = vec3(1.0, 0.0, 0.0) * maskPrev;
   vec3 color2 = vec3(0.0, 1.0, 0.0) * maskNext;

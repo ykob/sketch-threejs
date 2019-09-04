@@ -9,7 +9,7 @@ const margin = new THREE.Vector2();
 export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(1, 1);
+    const geometry = new THREE.PlaneBufferGeometry(1, 1, 64, 64);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
