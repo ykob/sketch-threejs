@@ -11,10 +11,12 @@ uniform sampler2D texNoise;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying float vOpacity;
 varying float vTime;
 
 void main(void) {
   float t = mod(time / duration, 1.0);
+  vec2 p = uv * 2.0 - 1.0;
 
   vec2 updateUv = uv * imgRatio + vec2(
     (1.0 - imgRatio.x) * 0.5,
@@ -28,13 +30,16 @@ void main(void) {
   float mask = t * 1.12 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
   float maskPrev = smoothstep(0.0, 0.04, mask);
   float maskNext = 1.0 - smoothstep(0.0, 0.2, mask);
-  float height = maskNext * 14.0;
+  float height = maskNext * 24.0 * (1.0 - abs(p.x) * 0.8);
 
   // coordinate transformation
   vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, 0.0, height), 1.0);
 
+  float opacity = smoothstep(1.0 * (1.0 - abs(p.x) * 0.8), 2.0 * (1.0 - abs(p.x) * 0.8), height) * (1.0 - smoothstep(8.0 * (1.0 - abs(p.x) * 0.8), 24.0 * (1.0 - abs(p.x) * 0.8), height));
+
   vPosition = mPosition.xyz;
   vUv = uv;
+  vOpacity = opacity;
   vTime = t;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;

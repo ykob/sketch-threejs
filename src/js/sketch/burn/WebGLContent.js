@@ -48,7 +48,7 @@ export default class WebGLContent {
       plane.start(noiseTex);
       fire.start(noiseTex);
 
-      fire.position.z = -0.1;
+      fire.position.z = -0.02;
 
       scene.add(plane);
       scene.add(fire);

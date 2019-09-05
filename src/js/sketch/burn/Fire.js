@@ -19,7 +19,7 @@ export default class Fire extends THREE.Mesh {
         },
         duration: {
           type: 'f',
-          value: 2
+          value: 1.6
         },
         texNoise: {
           type: 't',

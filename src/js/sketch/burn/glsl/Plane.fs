@@ -23,8 +23,8 @@ void main() {
   float maskPrev = 1.0 - smoothstep(0.1, 0.14, mask);
   float maskNext = smoothstep(0.18, 0.22, mask);
 
-  vec3 color1 = vec3(1.0, 0.0, 0.0) * maskPrev;
-  vec3 color2 = vec3(0.0, 1.0, 0.0) * maskNext;
+  vec3 color1 = vec3(0.0, 0.2, 0.6) * maskPrev;
+  vec3 color2 = vec3(0.0, 0.6, 0.2) * maskNext;
 
   gl_FragColor = vec4(color1 + color2, 1.0);
 }
