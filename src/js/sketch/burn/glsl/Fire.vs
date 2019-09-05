@@ -30,12 +30,12 @@ void main(void) {
   float mask = t * 1.12 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
   float maskPrev = smoothstep(0.0, 0.04, mask);
   float maskNext = 1.0 - smoothstep(0.0, 0.2, mask);
-  float height = maskNext * 24.0 * (1.0 - abs(p.x) * 0.8);
+  float height = maskNext * 32.0 * (1.0 - abs(p.x) * 0.8);
 
   // coordinate transformation
-  vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, 0.0, height), 1.0);
+  vec4 mPosition = modelMatrix * vec4(position + vec3(p * 0.04, height), 1.0);
 
-  float opacity = smoothstep(1.0 * (1.0 - abs(p.x) * 0.8), 2.0 * (1.0 - abs(p.x) * 0.8), height) * (1.0 - smoothstep(8.0 * (1.0 - abs(p.x) * 0.8), 24.0 * (1.0 - abs(p.x) * 0.8), height));
+  float opacity = smoothstep(1.0 * (1.0 - abs(p.x) * 0.8), 8.0 * (1.0 - abs(p.x) * 0.8), height) * (1.0 - smoothstep(18.0 * (1.0 - abs(p.x) * 0.8), 32.0 * (1.0 - abs(p.x) * 0.8), height));
 
   vPosition = mPosition.xyz;
   vUv = uv;
