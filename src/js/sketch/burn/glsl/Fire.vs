@@ -25,15 +25,15 @@ void main(void) {
   float noiseG = texture2D(texNoise, updateUv + vec2(time * 0.2, 0.0)).g;
   float slide = texture2D(texNoise, uv * vec2(0.998) + 0.001).b;
 
-  float mask = t * 1.6 - slide;
-  float maskPrev = smoothstep(0.0, 0.3, mask);
-  float maskNext = 1.0 - smoothstep(0.3, 0.6, mask);
-  float height = maskPrev * maskNext * 3.0;
+  float mask = t * 1.12 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
+  float maskPrev = smoothstep(0.0, 0.04, mask);
+  float maskNext = 1.0 - smoothstep(0.0, 0.2, mask);
+  float height = maskNext * 14.0;
 
   // coordinate transformation
   vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, 0.0, height), 1.0);
 
-  vPosition = position;
+  vPosition = mPosition.xyz;
   vUv = uv;
   vTime = t;
 

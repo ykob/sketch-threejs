@@ -4,6 +4,7 @@ import sleep from 'js-util/sleep';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import Plane from './Plane';
+import Fire from './Fire';
 
 // ==========
 // Define common variables
@@ -19,6 +20,7 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const plane = new Plane();
+const fire = new Fire();
 
 // ==========
 // Define WebGLContent Class.
@@ -44,7 +46,12 @@ export default class WebGLContent {
       noiseTex.wrapT = THREE.RepeatWrapping;
 
       plane.start(noiseTex);
+      fire.start(noiseTex);
+
+      fire.position.z = -0.1;
+
       scene.add(plane);
+      scene.add(fire);
     });
 
     camera.start();
@@ -68,6 +75,7 @@ export default class WebGLContent {
 
     // Update each objects.
     plane.update(time);
+    fire.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
@@ -76,5 +84,6 @@ export default class WebGLContent {
     camera.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
     plane.resize(camera, resolution);
+    fire.resize(camera, resolution);
   }
 }

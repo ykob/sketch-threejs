@@ -17,14 +17,8 @@ void main() {
 
   float noiseR = texture2D(texNoise, updateUv + vec2(time * 0.1, 0.0)).r;
   float noiseG = texture2D(texNoise, updateUv + vec2(time * 0.2, 0.0)).g;
-  float slide = texture2D(texNoise, vUv * vec2(0.998) + 0.001).b;
 
-  float mask = vTime * 1.12 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
-  float maskPrev = 1.0 - smoothstep(0.1, 0.14, mask);
-  float maskNext = smoothstep(0.18, 0.22, mask);
+  float opacity = smoothstep(1.0, 2.0, vPosition.z) * (1.0 - smoothstep(4.0, 14.0, vPosition.z));
 
-  vec3 color1 = vec3(1.0, 0.0, 0.0) * maskPrev;
-  vec3 color2 = vec3(0.0, 1.0, 0.0) * maskNext;
-
-  gl_FragColor = vec4(color1 + color2, 1.0);
+  gl_FragColor = vec4(0.0, 0.0, 1.0, opacity * smoothstep(0.4, 0.6, noiseR));
 }
