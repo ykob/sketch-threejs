@@ -19,5 +19,5 @@ void main() {
   float noiseR = texture2D(texNoise, updateUv + vec2(time * 0.1, 0.0)).r;
   float noiseG = texture2D(texNoise, updateUv + vec2(time * 0.2, 0.0)).g;
 
-  gl_FragColor = vec4(1.0, 0.35, 0.0, vOpacity * smoothstep(0.2, 0.8, noiseR));
+  gl_FragColor = vec4(1.0, 0.38, 0.0, vOpacity * smoothstep(0.3, 0.6, noiseR));
 }

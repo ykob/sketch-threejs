@@ -5,6 +5,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float time;
+uniform float easeTransition;
 uniform float duration;
 uniform vec2 imgRatio;
 uniform sampler2D texNoise;
@@ -17,6 +18,7 @@ varying float vTime;
 void main(void) {
   float t = mod(time / duration, 1.0);
   vec2 p = uv * 2.0 - 1.0;
+  float edge = abs(p.x);
 
   vec2 updateUv = uv * imgRatio + vec2(
     (1.0 - imgRatio.x) * 0.5,
@@ -27,20 +29,18 @@ void main(void) {
   float noiseG = texture2D(texNoise, updateUv + vec2(time * 0.2, 0.0)).g;
   float slide = texture2D(texNoise, uv * vec2(0.998) + 0.001).b;
 
-  float mask = t * 1.12 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
-  float maskPrev = smoothstep(0.0, 0.04, mask);
-  float maskNext = 1.0 - smoothstep(0.0, 0.2, mask);
-  float height = maskNext * 32.0 * (1.0 - abs(p.x) * 0.8);
+  float mask = easeTransition * 1.16 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
+  float h = (1.0 - smoothstep(0.0, 0.16, mask)) * 22.0;
 
   // coordinate transformation
-  vec4 mPosition = modelMatrix * vec4(position + vec3(p * 0.04, height), 1.0);
+  vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, h * 0.006, h), 1.0);
 
-  float opacity = smoothstep(1.0 * (1.0 - abs(p.x) * 0.8), 8.0 * (1.0 - abs(p.x) * 0.8), height) * (1.0 - smoothstep(18.0 * (1.0 - abs(p.x) * 0.8), 32.0 * (1.0 - abs(p.x) * 0.8), height));
+  float opacity = smoothstep(0.0, 4.0, h) * (1.0 - smoothstep(16.0, 22.0, h)) * (1.0 - edge);
 
   vPosition = mPosition.xyz;
   vUv = uv;
   vOpacity = opacity;
-  vTime = t;
+  vTime = easeTransition;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
 }

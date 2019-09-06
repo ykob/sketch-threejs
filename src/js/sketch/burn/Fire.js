@@ -1,14 +1,16 @@
 import * as THREE from 'three';
+import { easeOutQuint } from 'easing-js';
 import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Fire.vs';
 import fs from './glsl/Fire.fs';
 
+const DURATION = 2.4;
 
 export default class Fire extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(1, 1, 64, 64);
+    const geometry = new THREE.PlaneBufferGeometry(1, 1, 128, 128);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -17,9 +19,13 @@ export default class Fire extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        easeTransition: {
+          type: 'f',
+          value: 0
+        },
         duration: {
           type: 'f',
-          value: 1.6
+          value: DURATION
         },
         texNoise: {
           type: 't',
@@ -33,6 +39,7 @@ export default class Fire extends THREE.Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       transparent: true,
+      blending: THREE.AdditiveBlending,
     });
 
     // Create Object3D
@@ -40,12 +47,16 @@ export default class Fire extends THREE.Mesh {
     this.name = 'Fire';
     this.size = new THREE.Vector3();
     this.margin = new THREE.Vector2();
+    this.timeTransition = 0;
   }
   start(texNoise) {
     this.material.uniforms.texNoise.value = texNoise;
   }
   update(time) {
     this.material.uniforms.time.value += time;
+    this.timeTransition += time;
+    this.material.uniforms.easeTransition.value = easeOutQuint(Math.min(this.timeTransition / DURATION, 1.0));
+    if (this.timeTransition / DURATION >= 1) this.timeTransition = 0;
   }
   resize(camera, resolution) {
     const height = Math.abs(

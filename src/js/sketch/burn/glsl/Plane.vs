@@ -5,6 +5,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float time;
+uniform float easeTransition;
 uniform float duration;
 uniform vec2 imgRatio;
 uniform sampler2D texNoise;
@@ -14,8 +15,6 @@ varying vec2 vUv;
 varying float vTime;
 
 void main(void) {
-  float t = mod(time / duration, 1.0);
-
   vec2 updateUv = uv * imgRatio + vec2(
     (1.0 - imgRatio.x) * 0.5,
     (1.0 - imgRatio.y) * 0.5
@@ -25,9 +24,9 @@ void main(void) {
   float noiseG = texture2D(texNoise, updateUv + vec2(time * 0.2, 0.0)).g;
   float slide = texture2D(texNoise, uv * vec2(0.998) + 0.001).b;
 
-  float mask = t * 1.6 - slide;
-  float maskPrev = smoothstep(0.0, 0.3, mask);
-  float maskNext = 1.0 - smoothstep(0.3, 0.6, mask);
+  float mask = easeTransition * 1.4 - slide;
+  float maskPrev = smoothstep(0.0, 0.2, mask);
+  float maskNext = 1.0 - smoothstep(0.2, 0.4, mask);
   float height = maskPrev * maskNext * 3.0;
 
   // coordinate transformation
@@ -35,7 +34,7 @@ void main(void) {
 
   vPosition = position;
   vUv = uv;
-  vTime = t;
+  vTime = easeTransition;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
 }
