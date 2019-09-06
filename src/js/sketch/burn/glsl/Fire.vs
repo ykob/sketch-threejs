@@ -30,12 +30,12 @@ void main(void) {
   float slide = texture2D(texNoise, uv * vec2(0.998) + 0.001).b;
 
   float mask = easeTransition * 1.16 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
-  float h = (1.0 - smoothstep(0.0, 0.16, mask)) * 22.0;
+  float h = (1.0 - smoothstep(0.0, 0.16, mask)) * 20.0;
 
   // coordinate transformation
   vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, h * 0.006, h), 1.0);
 
-  float opacity = smoothstep(0.0, 4.0, h) * (1.0 - smoothstep(16.0, 22.0, h)) * (1.0 - edge);
+  float opacity = smoothstep(0.0, 1.0, h) * (1.0 - smoothstep(19.0, 20.0, h)) * (1.0 - edge);
 
   vPosition = mPosition.xyz;
   vUv = uv;
