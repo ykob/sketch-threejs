@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { easeOutCirc } from 'easing-js';
+import { easeInOutQuad } from 'easing-js';
 import MathEx from 'js-util/MathEx';
 
 import Image from './Image';
@@ -18,12 +18,12 @@ export default class ImageGroup extends THREE.Group {
     this.image;
     this.imageFire;
   }
-  start(texNoise) {
+  start(noiseTex, imgTexes) {
     const image = new Image();
     const imageFire = new ImageFire();
 
-    image.start(texNoise);
-    imageFire.start(texNoise);
+    image.start(noiseTex, imgTexes);
+    imageFire.start(noiseTex);
 
     this.add(image);
     this.add(imageFire);
@@ -31,12 +31,16 @@ export default class ImageGroup extends THREE.Group {
   update(time) {
     this.timeTransition += time;
 
-    const easeStep = easeOutCirc(Math.min(this.timeTransition / DURATION, 1.0));
-
-    this.children[0].update(time, easeStep);
-    this.children[1].update(time, easeStep);
     if (this.timeTransition / DURATION >= 1) {
       this.timeTransition = 0;
+      this.children[0].changeTex();
+      this.children[0].update(time, 0);
+      this.children[1].update(time, 0);
+    } else {
+      const easeStep = easeInOutQuad(Math.min(this.timeTransition / DURATION, 1.0));
+
+      this.children[0].update(time, easeStep);
+      this.children[1].update(time, easeStep);
     }
   }
   resize(camera, resolution) {

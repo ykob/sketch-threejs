@@ -37,13 +37,17 @@ export default class WebGLContent {
 
     await Promise.all([
       PromiseTextureLoader('/sketch-threejs/img/sketch/burn/noise.png'),
+      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/image01.jpg'),
+      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/image02.jpg'),
+      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/image03.jpg'),
     ]).then((response) => {
       const noiseTex = response[0];
+      const imgTexes = response.slice(1);
 
       noiseTex.wrapS = THREE.RepeatWrapping;
       noiseTex.wrapT = THREE.RepeatWrapping;
 
-      imageGroup.start(noiseTex);
+      imageGroup.start(noiseTex, imgTexes);
 
       scene.add(imageGroup);
     });

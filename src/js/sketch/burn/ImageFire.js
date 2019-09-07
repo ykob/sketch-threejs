@@ -20,7 +20,7 @@ export default class ImageFire extends THREE.Mesh {
           type: 'f',
           value: 0
         },
-        texNoise: {
+        noiseTex: {
           type: 't',
           value: null
         },
@@ -39,8 +39,8 @@ export default class ImageFire extends THREE.Mesh {
     super(geometry, material);
     this.name = 'ImageFire';
   }
-  start(texNoise) {
-    this.material.uniforms.texNoise.value = texNoise;
+  start(noiseTex) {
+    this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time, easeStep) {
     this.material.uniforms.time.value += time;

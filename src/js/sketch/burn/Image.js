@@ -20,7 +20,15 @@ export default class Image extends THREE.Mesh {
           type: 'f',
           value: 0
         },
-        texNoise: {
+        noiseTex: {
+          type: 't',
+          value: null
+        },
+        imgPrevTex: {
+          type: 't',
+          value: null
+        },
+        imgNextTex: {
           type: 't',
           value: null
         },
@@ -36,9 +44,14 @@ export default class Image extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Image';
+    this.imgIndexPrev = 0;
+    this.imgIndexNext = 1;
   }
-  start(texNoise, easeTransition) {
-    this.material.uniforms.texNoise.value = texNoise;
+  start(noiseTex, imgTexes) {
+    this.imgTexes = imgTexes;
+    this.material.uniforms.noiseTex.value = noiseTex;
+    this.material.uniforms.imgPrevTex.value = this.imgTexes[this.imgIndexPrev];
+    this.material.uniforms.imgNextTex.value = this.imgTexes[this.imgIndexNext];
   }
   update(time, easeStep) {
     this.material.uniforms.time.value += time;
@@ -50,5 +63,13 @@ export default class Image extends THREE.Mesh {
       Math.min(1, size.y / size.x)
     );
     this.scale.copy(size);
+  }
+  changeTex() {
+    this.imgIndexPrev = this.imgIndexNext;
+    this.imgIndexNext = (this.imgIndexNext + 1 >= this.imgTexes.length)
+      ? 0
+      : this.imgIndexNext + 1;
+    this.material.uniforms.imgPrevTex.value = this.imgTexes[this.imgIndexPrev];
+    this.material.uniforms.imgNextTex.value = this.imgTexes[this.imgIndexNext];
   }
 }
