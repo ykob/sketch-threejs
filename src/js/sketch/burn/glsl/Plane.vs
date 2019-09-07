@@ -6,7 +6,6 @@ uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float time;
 uniform float easeTransition;
-uniform float duration;
 uniform vec2 imgRatio;
 uniform sampler2D texNoise;
 

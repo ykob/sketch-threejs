@@ -6,7 +6,6 @@ uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float time;
 uniform float easeTransition;
-uniform float duration;
 uniform vec2 imgRatio;
 uniform sampler2D texNoise;
 
@@ -16,7 +15,6 @@ varying float vOpacity;
 varying float vTime;
 
 void main(void) {
-  float t = mod(time / duration, 1.0);
   vec2 p = uv * 2.0 - 1.0;
   float edge = abs(p.x);
 
@@ -35,7 +33,7 @@ void main(void) {
   // coordinate transformation
   vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, h * 0.006, h), 1.0);
 
-  float opacity = smoothstep(0.0, 1.0, h) * (1.0 - smoothstep(16.0, 18.0, h)) * (1.0 - edge);
+  float opacity = smoothstep(0.0, 1.0, h) * (1.0 - smoothstep(16.0, 18.0, h)) * (1.0 - pow(edge, 2.0));
 
   vPosition = mPosition.xyz;
   vUv = uv;
