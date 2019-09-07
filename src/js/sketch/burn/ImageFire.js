@@ -1,11 +1,8 @@
 import * as THREE from 'three';
-import { easeOutCirc } from 'easing-js';
 import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/ImageFire.vs';
 import fs from './glsl/ImageFire.fs';
-
-const DURATION = 2.4;
 
 export default class ImageFire extends THREE.Mesh {
   constructor() {
@@ -41,40 +38,19 @@ export default class ImageFire extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'ImageFire';
-    this.size = new THREE.Vector3();
-    this.margin = new THREE.Vector2();
-    this.timeTransition = 0;
   }
   start(texNoise) {
     this.material.uniforms.texNoise.value = texNoise;
   }
-  update(time) {
+  update(time, easeStep) {
     this.material.uniforms.time.value += time;
-    this.timeTransition += time;
-    this.material.uniforms.easeTransition.value = easeOutCirc(Math.min(this.timeTransition / DURATION, 1.0));
-    if (this.timeTransition / DURATION >= 1) this.timeTransition = 0;
+    this.material.uniforms.easeTransition.value = easeStep;
   }
-  resize(camera, resolution) {
-    const height = Math.abs(
-      (camera.position.z - this.position.z) * Math.tan(MathEx.radians(camera.fov) / 2) * 2
-    );
-    const width = height * camera.aspect;
-
-    this.margin.set(
-      (resolution.x > resolution.y) ? resolution.x * 0.3 : resolution.x * 0.2,
-      (resolution.x > resolution.y) ? resolution.y * 0.2 : resolution.y * 0.3
-    );
-
-    this.size.set(
-      width * (resolution.x - this.margin.x) / resolution.x,
-      height * (resolution.y - this.margin.y) / resolution.y,
-      1
-    );
+  resize(size) {
     this.material.uniforms.imgRatio.value.set(
-      Math.min(1, this.size.x / this.size.y),
-      Math.min(1, this.size.y / this.size.x)
+      Math.min(1, size.x / size.y),
+      Math.min(1, size.y / size.x)
     );
-
-    this.scale.copy(this.size);
+    this.scale.copy(size);
   }
 }
