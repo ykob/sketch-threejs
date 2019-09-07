@@ -11,6 +11,7 @@ uniform sampler2D noiseTex;
 
 varying vec3 vPosition;
 varying vec2 vUv;
+varying vec2 vUpdateUv;
 varying float vTime;
 
 void main(void) {
@@ -33,6 +34,7 @@ void main(void) {
 
   vPosition = position;
   vUv = uv;
+  vUpdateUv = updateUv;
   vTime = easeTransition;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
