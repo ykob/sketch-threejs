@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import { easeOutQuint } from 'easing-js';
+import { easeOutCirc } from 'easing-js';
 import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Fire.vs';
 import fs from './glsl/Fire.fs';
 
-const DURATION = 2.4;
+const DURATION = 2;
 
 export default class Fire extends THREE.Mesh {
   constructor() {
@@ -55,7 +55,7 @@ export default class Fire extends THREE.Mesh {
   update(time) {
     this.material.uniforms.time.value += time;
     this.timeTransition += time;
-    this.material.uniforms.easeTransition.value = easeOutQuint(Math.min(this.timeTransition / DURATION, 1.0));
+    this.material.uniforms.easeTransition.value = easeOutCirc(Math.min(this.timeTransition / DURATION, 1.0));
     if (this.timeTransition / DURATION >= 1) this.timeTransition = 0;
   }
   resize(camera, resolution) {
