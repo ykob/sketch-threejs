@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { easeOutCirc } from 'easing-js';
 import MathEx from 'js-util/MathEx';
 
-import vs from './glsl/Figure.vs';
-import fs from './glsl/Figure.fs';
+import vs from './glsl/Image.vs';
+import fs from './glsl/Image.fs';
 
 const DURATION = 2.4;
 
-export default class Figure extends THREE.Mesh {
+export default class Image extends THREE.Mesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(1, 1, 64, 64);
@@ -38,7 +38,7 @@ export default class Figure extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Figure';
+    this.name = 'Image';
     this.size = new THREE.Vector3();
     this.margin = new THREE.Vector2();
     this.timeTransition = 0;

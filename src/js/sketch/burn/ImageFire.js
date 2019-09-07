@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { easeOutCirc } from 'easing-js';
 import MathEx from 'js-util/MathEx';
 
-import vs from './glsl/FigureFire.vs';
-import fs from './glsl/FigureFire.fs';
+import vs from './glsl/ImageFire.vs';
+import fs from './glsl/ImageFire.fs';
 
 const DURATION = 2.4;
 
-export default class FigureFire extends THREE.Mesh {
+export default class ImageFire extends THREE.Mesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(1, 1, 128, 128);
@@ -40,7 +40,7 @@ export default class FigureFire extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'FigureFire';
+    this.name = 'ImageFire';
     this.size = new THREE.Vector3();
     this.margin = new THREE.Vector2();
     this.timeTransition = 0;
