@@ -4,8 +4,9 @@ import MathEx from 'js-util/MathEx';
 
 import Image from './Image';
 import ImageFire from './ImageFire';
+import ImagePoints from './ImagePoints';
 
-const DURATION = 2.4;
+const DURATION = 3;
 
 export default class ImageGroup extends THREE.Group {
   constructor() {
@@ -14,19 +15,21 @@ export default class ImageGroup extends THREE.Group {
     this.size = new THREE.Vector3();
     this.margin = new THREE.Vector2();
     this.timeTransition = 0;
-
-    this.image;
-    this.imageFire;
   }
   start(noiseTex, imgTexes) {
     const image = new Image();
     const imageFire = new ImageFire();
+    const imagePoints = new ImagePoints();
 
     image.start(noiseTex, imgTexes);
     imageFire.start(noiseTex);
+    imagePoints.start(noiseTex);
+
+    imageFire.renderOrder = 10;
 
     this.add(image);
     this.add(imageFire);
+    this.add(imagePoints);
   }
   update(time) {
     this.timeTransition += time;
@@ -36,11 +39,13 @@ export default class ImageGroup extends THREE.Group {
       this.children[0].changeTex();
       this.children[0].update(time, 0);
       this.children[1].update(time, 0);
+      this.children[2].update(time, 0);
     } else {
       const easeStep = easeInOutQuad(Math.min(this.timeTransition / DURATION, 1.0));
 
       this.children[0].update(time, easeStep);
       this.children[1].update(time, easeStep);
+      this.children[2].update(time, easeStep);
     }
   }
   resize(camera, resolution) {
@@ -60,5 +65,6 @@ export default class ImageGroup extends THREE.Group {
     );
     this.children[0].resize(this.size);
     this.children[1].resize(this.size);
+    this.children[2].resize(this.size);
   }
 }
