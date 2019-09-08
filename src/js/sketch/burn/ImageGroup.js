@@ -56,8 +56,8 @@ export default class ImageGroup extends THREE.Group {
     const width = height * camera.aspect;
 
     this.margin.set(
-      (resolution.x > resolution.y) ? resolution.y * 0.2 : resolution.x * 0.3,
-      (resolution.x > resolution.y) ? resolution.y * 0.2 : resolution.x * 0.3
+      (resolution.x > resolution.y) ? resolution.y * 0.2 : resolution.x * 0.1,
+      (resolution.x > resolution.y) ? resolution.y * 0.2 : resolution.y * 0.333
     );
     this.size.set(
       width * (resolution.x - this.margin.x) / resolution.x,
