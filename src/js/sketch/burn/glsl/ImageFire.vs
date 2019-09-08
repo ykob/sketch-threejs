@@ -27,13 +27,20 @@ void main(void) {
   float noiseG = texture2D(noiseTex, updateUv + vec2(time * 0.2, 0.0)).g;
   float slide = texture2D(noiseTex, uv * vec2(0.998) + 0.001).b;
 
-  float mask = easeTransition * 1.16 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
-  float h = (1.0 - smoothstep(0.0, 0.16, mask)) * 16.0;
+  float mask = easeTransition * 1.24 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
+  float h1 = (1.0 - smoothstep(0.14, 0.24, mask)) * 12.0;
+
+  float mask2 = easeTransition * 1.6 - slide;
+  float maskPrev = smoothstep(0.0, 0.3, mask2);
+  float maskNext = 1.0 - smoothstep(0.3, 0.6, mask2);
+  float h2 = maskPrev * maskNext * 8.0;
+
+  float h = h1 + h2;
 
   // coordinate transformation
-  vec4 mPosition = modelMatrix * vec4(position + vec3(0.0, h * 0.006, h), 1.0);
+  vec4 mPosition = modelMatrix * vec4(position + vec3(slide * 0.2, slide * 0.2 + h * 0.006, h), 1.0);
 
-  float opacity = smoothstep(0.0, 1.0, h) * (1.0 - smoothstep(8.0, 16.0, h)) * (1.0 - pow(edge, 2.0));
+  float opacity = smoothstep(0.0, 2.0, h1) * (1.0 - smoothstep(8.0, 12.0, h1)) * (1.0 - pow(edge, 2.0));
 
   vPosition = mPosition.xyz;
   vUv = uv;

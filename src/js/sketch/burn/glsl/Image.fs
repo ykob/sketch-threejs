@@ -1,6 +1,7 @@
 precision highp float;
 
 uniform float time;
+uniform float easeTransition;
 uniform vec2 imgRatio;
 uniform sampler2D noiseTex;
 uniform sampler2D imgPrevTex;
@@ -28,10 +29,13 @@ void main() {
   float mask = vTime * 1.24 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
   float maskPrev = 1.0 - smoothstep(0.12, 0.16, mask);
   float maskNext = smoothstep(0.16, 0.2, mask);
-  float maskEdge = smoothstep(0.08, 0.14, mask) * (1.0 - smoothstep(0.18, 0.24, mask));
+  float maskEdge = smoothstep(0.04, 0.12, mask) * (1.0 - smoothstep(0.2, 0.28, mask));
 
-  vec4 imgPrev = texture2D(imgPrevTex, imgUv);
-  vec4 imgNext = texture2D(imgNextTex, imgUv);
+  vec4 imgPrev = texture2D(imgPrevTex, imgUv * (0.95 - 0.05 * easeTransition) + 0.025 + 0.025 * easeTransition);
+  vec4 imgNext = texture2D(imgNextTex, imgUv * (1.0 - 0.05 * easeTransition) + 0.025 * easeTransition);
+
+  // 0.9 - 0.8
+  // 1.0 - 0.9
 
   vec3 color1 = imgPrev.rgb * maskPrev;
   vec3 color2 = imgNext.rgb * maskNext;
