@@ -20,11 +20,11 @@
     "IE 11"
   ],
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "del": "^5.1.0",
     "glslify-import-loader": "^0.1.2",
     "glslify-loader": "^2.0.0",
@@ -55,7 +55,7 @@
     "yargs": "^14.0.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
+    "@babel/polyfill": "^7.6.0",
     "easing-js": "git://github.com/danro/easing-js.git",
     "gl-matrix": "^3.1.0",
     "glsl-easings": "^1.0.0",
