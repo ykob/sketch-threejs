@@ -8,16 +8,11 @@ uniform float time;
 uniform float easeTransition;
 uniform vec2 imgRatio;
 uniform sampler2D noiseTex;
+uniform float pixelRatio;
 
-varying vec3 vPosition;
-varying vec2 vUv;
 varying float vOpacity;
-varying float vTime;
 
 void main(void) {
-  vec2 p = uv * 2.0 - 1.0;
-  float edge = abs(p.x);
-
   vec2 updateUv = uv * imgRatio + vec2(
     (1.0 - imgRatio.x) * 0.5,
     (1.0 - imgRatio.y) * 0.5
@@ -30,6 +25,8 @@ void main(void) {
   float mask = easeTransition * 1.24 - (slide * 0.6 + noiseR * 0.2 + noiseG * 0.2);
   float h = (easeTransition - slide) * 30.0;
 
+  float opacity = smoothstep(0.3, 0.5, easeTransition * 2.0 - slide) * (1.0 - smoothstep(0.8, 1.0, easeTransition * 2.0 - slide)) * 0.8;
+
   // coordinate transformation
   vec4 mPosition = modelMatrix * vec4(position + vec3(
     cos(radians(noiseR * 360.0 + time * 200.0)) * 0.1,
@@ -37,13 +34,11 @@ void main(void) {
     h
     ), 1.0);
 
-  float opacity = smoothstep(0.3, 0.5, easeTransition * 2.0 - slide) * (1.0 - smoothstep(0.8, 1.0, easeTransition * 2.0 - slide)) * 0.8;
+  float distanceFromCamera = length((viewMatrix * mPosition).xyz);
+  float pointSize = pixelRatio * 50.0 / distanceFromCamera * 4.0;
 
-  vPosition = mPosition.xyz;
-  vUv = uv;
   vOpacity = opacity;
-  vTime = easeTransition;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
-  gl_PointSize = 5.0;
+  gl_PointSize = pointSize;
 }

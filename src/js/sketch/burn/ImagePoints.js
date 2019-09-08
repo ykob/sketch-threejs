@@ -31,6 +31,10 @@ export default class ImagePoints extends THREE.Points {
           type: 'v2',
           value: new THREE.Vector2()
         },
+        pixelRatio: {
+          type: 'f',
+          value: window.devicePixelRatio
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
