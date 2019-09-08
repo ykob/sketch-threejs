@@ -10,15 +10,9 @@ uniform vec2 imgRatio;
 uniform sampler2D noiseTex;
 uniform float pixelRatio;
 
-varying vec3 vPosition;
-varying vec2 vUv;
 varying float vOpacity;
-varying float vTime;
 
 void main(void) {
-  vec2 p = uv * 2.0 - 1.0;
-  float edge = abs(p.x);
-
   vec2 updateUv = uv * imgRatio + vec2(
     (1.0 - imgRatio.x) * 0.5,
     (1.0 - imgRatio.y) * 0.5
@@ -43,10 +37,7 @@ void main(void) {
   float distanceFromCamera = length((viewMatrix * mPosition).xyz);
   float pointSize = pixelRatio * 50.0 / distanceFromCamera * 4.0;
 
-  vPosition = mPosition.xyz;
-  vUv = uv;
   vOpacity = opacity;
-  vTime = easeTransition;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
   gl_PointSize = pointSize;
