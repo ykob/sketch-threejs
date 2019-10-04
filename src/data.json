@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "float": {
+      "title": "float",
+      "id": "float",
+      "description": "moving the particles with only textures look like floating these.",
+      "path": "/sketch/float.html",
+      "posted": "2019.10.x",
+      "update": "",
+      "color": "white"
+    },
     "burn": {
       "title": "burn",
       "id": "burn",
