@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
+import Points from './Points';
 
 // ==========
 // Define common variables
@@ -16,6 +17,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
+const points = new Points();
 
 // ==========
 // Define WebGLContent Class.
@@ -33,6 +35,8 @@ export default class WebGLContent {
     renderer.setClearColor(0x0e0e0e, 1.0);
 
     camera.start();
+
+    scene.add(points);
   }
   play() {
     clock.start();
@@ -52,6 +56,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    points.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
