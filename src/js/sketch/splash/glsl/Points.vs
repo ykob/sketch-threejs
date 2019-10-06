@@ -8,6 +8,10 @@ uniform float alpha;
 uniform float pixelRatio;
 uniform sampler2D noiseTex;
 
+varying vec3 vColor;
+
+#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+
 void main() {
   // Coordinate transformation
   float addUv = (0.25 + alpha * 0.2);
@@ -34,6 +38,14 @@ void main() {
 
   // Define the point size.
   float pointSize = pixelRatio * 100.0 / distanceFromCamera;
+
+  vColor = convertHsvToRgb(
+    vec3(
+      (noiseX.r + noiseX.g + noiseX.b) * 0.3 + time * 0.1,
+      0.8,
+      0.6
+      )
+    );
 
   gl_Position = projectionMatrix * mvPosition;
   gl_PointSize = pointSize;
