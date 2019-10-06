@@ -10,24 +10,24 @@ uniform sampler2D noiseTex;
 
 void main() {
   // Coordinate transformation
-  float addUv = (0.2 + alpha * 0.2);
+  float addUv = (0.25 + alpha * 0.2);
   vec4 noiseX = texture2D(
     noiseTex,
-    position.yz * addUv + time * 0.01
+    position.yz * addUv + time * 0.1
     );
   vec4 noiseY = texture2D(
     noiseTex,
-    position.zx * addUv + time * 0.01
+    position.zx * addUv - time * 0.1
     );
   vec4 noiseZ = texture2D(
     noiseTex,
-    position.xy * addUv + time * 0.01
+    position.xy * addUv + time * 0.1
     );
-  float addMove = (1.0 - alpha * 0.7);
+  float addMove = (2.0 - alpha * 1.99);
   vec3 noisePosition = vec3(
-    ((noiseX.r + noiseX.g + noiseX.b) * 2.0 - 3.0) * addMove,
-    ((noiseY.r + noiseY.g + noiseY.b) * 2.0 - 3.0) * addMove,
-    ((noiseZ.r + noiseZ.g + noiseZ.b) * 2.0 - 3.0) * addMove
+    ((noiseX.r + noiseX.g + noiseX.b) - 1.5) * addMove,
+    ((noiseY.r + noiseY.g + noiseY.b) - 1.5) * addMove,
+    ((noiseZ.r + noiseZ.g + noiseZ.b) - 1.5) * addMove
     );
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(position + noisePosition, 1.0);
   float distanceFromCamera = length(mvPosition.xyz);

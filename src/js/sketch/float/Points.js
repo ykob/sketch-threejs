@@ -53,9 +53,9 @@ export default class Points extends THREE.Points {
 
     const alpha = (this.time % 2) / 2;
     this.scale.set(
-      alpha * 15,
-      alpha * 15,
-      alpha * 15
+      alpha * 25,
+      alpha * 25,
+      alpha * 25
     );
 
     this.material.uniforms.time.value = this.time;
