@@ -10,7 +10,11 @@ void main() {
 
   // Draw circle
   float radius = length(p);
-  float opacity = (1.0 - smoothstep(0.2, 1.0, radius)) * 0.5
+  float opacity =
+    (
+      (1.0 - smoothstep(0.1, 0.2, radius)) * 0.2
+      + (1.0 - smoothstep(0.2, 1.0, radius)) * 0.1
+    )
     * smoothstep(0.0, 0.1, alpha)
     * (1.0 - smoothstep(0.2, 1.0, alpha));
 

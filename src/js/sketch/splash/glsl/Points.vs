@@ -37,13 +37,13 @@ void main() {
   float distanceFromCamera = length(mvPosition.xyz);
 
   // Define the point size.
-  float pointSize = pixelRatio * 100.0 / distanceFromCamera;
+  float pointSize = pixelRatio * 400.0 / distanceFromCamera;
 
   vColor = convertHsvToRgb(
     vec3(
       (noiseX.r + noiseX.g + noiseX.b) * 0.3 + time * 0.1,
       0.8,
-      0.6
+      0.4
       )
     );
 
