@@ -36,7 +36,7 @@ export default class WebGLContent {
     renderer.setClearColor(0x0e0e0e, 1.0);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/float/noise.png'),
+      PromiseTextureLoader('/sketch-threejs/img/sketch/splash/noise.png'),
     ]).then((response) => {
       const noiseTex = response[0];
 
