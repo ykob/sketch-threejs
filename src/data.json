@@ -12,12 +12,12 @@
       "path": "/",
       "color": "white"
     },
-    "float": {
-      "title": "float",
-      "id": "float",
-      "description": "moving the particles with only textures look like floating these.",
-      "path": "/sketch/float.html",
-      "posted": "2019.10.x",
+    "splash": {
+      "title": "splash",
+      "id": "splash",
+      "description": "Move the particles with only the texture so that they look like splashes.",
+      "path": "/sketch/splash.html",
+      "posted": "2019.10.7",
       "update": "",
       "color": "white"
     },
