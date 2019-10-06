@@ -3,28 +3,10 @@ import * as THREE from 'three';
 import vs from './glsl/Points.vs';
 import fs from './glsl/Points.fs';
 
-const SIDE_NUM = 20;
-
 export default class Points extends THREE.Points {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BufferGeometry();
-
-    // Define attributes of the geometry
-    const baPositions = new THREE.BufferAttribute(new Float32Array(Math.pow(SIDE_NUM, 3) * 3), 3);
-    for (var i = 0; i <= SIDE_NUM; i++) {
-      for (var j = 0; j <= SIDE_NUM; j++) {
-        for (var k = 0; k <= SIDE_NUM; k++) {
-          baPositions.setXYZ(
-            i * SIDE_NUM * SIDE_NUM + j * SIDE_NUM + k,
-            (i / SIDE_NUM * 2 - 1) * 4,
-            (j / SIDE_NUM * 2 - 1) * 4,
-            (k / SIDE_NUM * 2 - 1) * 4
-          );
-        }
-      }
-    }
-    geometry.addAttribute('position', baPositions);
+    const geometry = new THREE.IcosahedronBufferGeometry(1, 6);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -33,22 +15,50 @@ export default class Points extends THREE.Points {
           type: 'f',
           value: 0
         },
+        alpha: {
+          type: 'f',
+          value: 0
+        },
         pixelRatio: {
           type: 'f',
           value: window.devicePixelRatio
         },
+        noiseTex: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Points';
+    this.time = 0;
+    this.scale.set(
+      10,
+      10,
+      10
+    );
   }
-  start() {
+  start(noiseTex) {
+    this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time) {
-    this.material.uniforms.time.value += time;
+    this.time += time;
+
+    const alpha = (this.time % 2) / 2;
+    this.scale.set(
+      alpha * 15,
+      alpha * 15,
+      alpha * 15
+    );
+
+    this.material.uniforms.time.value = this.time;
+    this.material.uniforms.alpha.value = alpha;
   }
 }

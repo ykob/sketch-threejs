@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import Points from './Points';
 
@@ -25,7 +26,7 @@ const points = new Points();
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
+  async start(canvas) {
     renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -34,9 +35,20 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
 
-    camera.start();
+    await Promise.all([
+      PromiseTextureLoader('/sketch-threejs/img/sketch/float/noise.png'),
+    ]).then((response) => {
+      const noiseTex = response[0];
 
-    scene.add(points);
+      noiseTex.wrapS = THREE.RepeatWrapping;
+      noiseTex.wrapT = THREE.RepeatWrapping;
+
+      points.start(noiseTex);
+
+      scene.add(points);
+    });
+
+    camera.start();
   }
   play() {
     clock.start();
