@@ -64,6 +64,9 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    blob.update(time);
+    floor.update(time);
+    light.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);

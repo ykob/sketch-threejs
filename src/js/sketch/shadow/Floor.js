@@ -35,6 +35,6 @@ export default class Floor extends THREE.Mesh {
   start() {
   }
   update(time) {
-    this.material.uniforms.time.value += time;
+    // this.material.uniforms.time.value += time;
   }
 }
