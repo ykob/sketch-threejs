@@ -16,12 +16,6 @@ export default async function() {
     webglContent.resize(resolution);
   };
   const on = () => {
-    window.addEventListener('blur', () => {
-      webglContent.pause();
-    });
-    window.addEventListener('focus', () => {
-      webglContent.play();
-    });
     window.addEventListener('resize', debounce(resizeWindow, 100));
   };
   const update = () => {

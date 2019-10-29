@@ -18,7 +18,9 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
-const points = new Points();
+const points1 = new Points();
+const points2 = new Points();
+const points3 = new Points();
 
 // ==========
 // Define WebGLContent Class.
@@ -43,9 +45,13 @@ export default class WebGLContent {
       noiseTex.wrapS = THREE.RepeatWrapping;
       noiseTex.wrapT = THREE.RepeatWrapping;
 
-      points.start(noiseTex);
+      points1.start(noiseTex);
+      points2.start(noiseTex, 0.33);
+      points3.start(noiseTex, 0.66);
 
-      scene.add(points);
+      scene.add(points1);
+      scene.add(points2);
+      scene.add(points3);
     });
 
     camera.start();
@@ -68,7 +74,9 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
-    points.update(time);
+    points1.update(time);
+    points2.update(time);
+    points3.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);

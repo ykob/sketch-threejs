@@ -14,34 +14,28 @@ varying vec3 vColor;
 
 void main() {
   // Coordinate transformation
-  float addUv = (0.25 + alpha * 0.2);
-  vec4 noiseX = texture2D(
+  float noiseR = texture2D(
     noiseTex,
-    position.yz * addUv + time * 0.1
-    );
-  vec4 noiseY = texture2D(
+    position.yz * 0.4 + vec2(time * 0.1, 0.0)
+    ).r * 2.0 - 1.0;
+  float noiseG = texture2D(
     noiseTex,
-    position.zx * addUv - time * 0.1
-    );
-  vec4 noiseZ = texture2D(
+    position.zx * 0.4 + vec2(0.0, time * 0.1)
+    ).g * 2.0 - 1.0;
+  float noiseB = texture2D(
     noiseTex,
-    position.xy * addUv + time * 0.1
-    );
-  float addMove = (2.0 - alpha * 1.99);
-  vec3 noisePosition = vec3(
-    ((noiseX.r + noiseX.g + noiseX.b) - 1.5) * addMove,
-    ((noiseY.r + noiseY.g + noiseY.b) - 1.5) * addMove,
-    ((noiseZ.r + noiseZ.g + noiseZ.b) - 1.5) * addMove
-    );
+    position.xy * 0.4 - time * 0.1
+    ).b * 2.0 - 1.0;
+  vec3 noisePosition = vec3(noiseR, noiseG, noiseB) * (alpha * 0.6 + 0.6);
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(position + noisePosition, 1.0);
   float distanceFromCamera = length(mvPosition.xyz);
 
   // Define the point size.
-  float pointSize = pixelRatio * 400.0 / distanceFromCamera;
+  float pointSize = pixelRatio * 240.0 / distanceFromCamera;
 
   vColor = convertHsvToRgb(
     vec3(
-      (noiseX.r + noiseX.g + noiseX.b) * 0.3 + time * 0.1,
+      (noiseR + noiseG + noiseB) * 0.2 + time * 0.1,
       0.8,
       0.4
       )

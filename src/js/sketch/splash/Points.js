@@ -1,12 +1,15 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Points.vs';
 import fs from './glsl/Points.fs';
 
+const DURATION = 4;
+
 export default class Points extends THREE.Points {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.IcosahedronBufferGeometry(1, 6);
+    const geometry = new THREE.IcosahedronBufferGeometry(1, 5);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -45,20 +48,18 @@ export default class Points extends THREE.Points {
       10
     );
   }
-  start(noiseTex) {
+  start(noiseTex, diff = 0) {
+    this.time = diff * -DURATION;
     this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time) {
     this.time += time;
 
-    const alpha = (this.time % 2) / 2;
-    this.scale.set(
-      alpha * 25,
-      alpha * 25,
-      alpha * 25
-    );
+    const alpha = (this.time % DURATION) / DURATION;
+    const scale = alpha * 30;
+    this.scale.set(scale, scale, scale);
 
-    this.material.uniforms.time.value = this.time;
+    this.material.uniforms.time.value += time;
     this.material.uniforms.alpha.value = alpha;
   }
 }
