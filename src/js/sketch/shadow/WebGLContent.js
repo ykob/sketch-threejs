@@ -4,6 +4,7 @@ import sleep from 'js-util/sleep';
 import Camera from './Camera';
 import Blob from './Blob';
 import Floor from './Floor';
+import Light from './Light';
 
 // ==========
 // Define common variables
@@ -20,6 +21,7 @@ const clock = new THREE.Clock({
 //
 const blob = new Blob();
 const floor = new Floor();
+const light = new Light();
 
 // ==========
 // Define WebGLContent Class.
@@ -35,9 +37,12 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     scene.add(blob);
     scene.add(floor);
+    scene.add(light);
 
     camera.start();
   }

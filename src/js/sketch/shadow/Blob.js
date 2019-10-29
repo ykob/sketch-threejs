@@ -10,21 +10,28 @@ export default class Blob extends THREE.Mesh {
     const geometry = new THREE.IcosahedronBufferGeometry(4, 4);
 
     // Define Material
-    const material = new THREE.RawShaderMaterial({
-      uniforms: {
-        time: {
-          type: 'f',
-          value: 0
-        },
-      },
-      vertexShader: vs,
-      fragmentShader: fs,
-    });
+    // const material = new THREE.RawShaderMaterial({
+    //   uniforms: {
+    //     time: {
+    //       type: 'f',
+    //       value: 0
+    //     },
+    //   },
+    //   vertexShader: vs,
+    //   fragmentShader: fs,
+    // });
+    const material = new THREE.MeshStandardMaterial(
+      {
+        color: 0xff0000
+      }
+    );
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Blob';
     this.position.set(-5, 10, 0);
+    this.castShadow = true;
+    this.receiveShadow = false;
   }
   start() {
   }
