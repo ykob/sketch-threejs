@@ -10,21 +10,22 @@ export default class Floor extends THREE.Mesh {
     const geometry = new THREE.PlaneBufferGeometry(30, 30);
 
     // Define Material
-    // const material = new THREE.RawShaderMaterial({
-    //   uniforms: {
-    //     time: {
-    //       type: 'f',
-    //       value: 0
-    //     },
-    //   },
-    //   vertexShader: vs,
-    //   fragmentShader: fs,
-    // });
-    const material = new THREE.MeshStandardMaterial(
-      {
-        color: 0x00ff00
-      }
-    );
+    const material = new THREE.RawShaderMaterial({
+      uniforms: {
+        ...THREE.UniformsLib['lights'],
+        time: {
+          type: 'f',
+          value: 0
+        },
+      },
+      vertexShader: vs,
+      fragmentShader: fs,
+    });
+    // const material = new THREE.MeshStandardMaterial(
+    //   {
+    //     color: 0x00ff00
+    //   }
+    // );
 
     // Create Object3D
     super(geometry, material);
@@ -33,6 +34,7 @@ export default class Floor extends THREE.Mesh {
     this.receiveShadow = true;
   }
   start() {
+    console.log(this.material.uniforms)
   }
   update(time) {
     // this.material.uniforms.time.value += time;

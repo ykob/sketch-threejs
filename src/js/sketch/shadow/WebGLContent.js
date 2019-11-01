@@ -41,6 +41,7 @@ export default class WebGLContent {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     blob.start();
+    floor.start();
 
     scene.add(blob);
     scene.add(floor);

@@ -31,7 +31,6 @@ export default class Blob extends THREE.Mesh {
     this.receiveShadow = false;
   }
   start() {
-    console.log(this.material.uniforms)
   }
   update(time) {
     this.material.uniforms.time.value += time;
