@@ -7,7 +7,7 @@ import fs from './glsl/Blob.fs';
 export default class Blob extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.IcosahedronBufferGeometry(4, 4);
+    const geometry = new THREE.TorusKnotBufferGeometry(2.4, 0.8, 200, 32);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -26,13 +26,19 @@ export default class Blob extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Blob';
-    this.position.set(-5, 10, 0);
+    this.position.set(0, 8, 0);
     this.castShadow = true;
     this.receiveShadow = false;
   }
   start() {
+    console.log(this.material.uniforms)
   }
   update(time) {
     this.material.uniforms.time.value += time;
+    this.rotation.set(
+      this.material.uniforms.time.value,
+      this.material.uniforms.time.value,
+      0
+    );
   }
 }

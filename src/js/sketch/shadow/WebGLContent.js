@@ -40,6 +40,8 @@ export default class WebGLContent {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+    blob.start();
+
     scene.add(blob);
     scene.add(floor);
     scene.add(light);
