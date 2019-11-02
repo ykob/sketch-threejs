@@ -19,7 +19,14 @@ void main() {
   vec3 normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
   float diff = (dot(normal, directionalLights[0].direction) + 1.0) / 2.0;
 
-  vec4 shadow = texture2DProj(directionalShadowMap[0], vDirectionalShadowCoord[0]);
+  vec4 shadow;
 
-  gl_FragColor = vec4(vec3(diff * shadow.a), 1.0);
+  #if NUM_DIR_LIGHT_SHADOWS > 0
+    #pragma unroll_loop
+    for ( int i = 0; i < NUM_DIR_LIGHT_SHADOWS; i ++ ) {
+      shadow += texture2DProj(directionalShadowMap[ i ], vDirectionalShadowCoord[ i ]);
+    }
+  #endif
+
+  gl_FragColor = shadow * vec4(vec3(diff), 1.0);
 }
