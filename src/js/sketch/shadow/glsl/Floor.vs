@@ -5,6 +5,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat4 directionalShadowMatrix[NUM_DIR_LIGHT_SHADOWS];
+uniform float time;
 
 varying vec3 vPosition;
 varying vec2 vUv;
@@ -12,9 +13,9 @@ varying vec4 vDirectionalShadowCoord[NUM_DIR_LIGHT_SHADOWS];
 
 void main(void) {
   // coordinate transformation
-  vec4 mPosition = modelMatrix * vec4(position, 1.0);
+  vec4 mPosition = modelMatrix * vec4(position + sin((uv.x + uv.y) * 10.0 + time) * 0.5, 1.0);
 
-  vPosition = position;
+  vPosition = mPosition.xyz;
   vUv = uv;
 
   #if NUM_DIR_LIGHT_SHADOWS > 0
