@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export default class DirectionalLight extends THREE.DirectionalLight {
   constructor() {
-    super(0xffff00, 0.8);
+    super(0xffff00, 0.5);
     this.name = 'Light';
     this.castShadow = true;
     this.shadow.camera.left = this.shadow.camera.bottom = -10;

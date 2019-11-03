@@ -18,14 +18,25 @@ varying mat4 invertMatrix;
 
 void main() {
   // Phong Shading
-  vec3 invLight = normalize(invertMatrix * vec4(directionalLights[0].direction, 0.0)).xyz;
-  vec3 invEye = normalize(invertMatrix * vec4(cameraPosition, 0.0)).xyz;
-  float diffuse = clamp(dot(vNormal, invLight), 0.0, 1.0);
+  vec3 diff;
+  vec3 specular;
+  vec3 invLight;
+  vec3 invEye;
+  vec3 halfLE;
 
-  vec3 halfLE = normalize(invLight + invEye);
-  vec3 specular = directionalLights[0].color * pow(max(dot(vNormal, halfLE), 0.0), 30.0);
+  #if NUM_DIR_LIGHT_SHADOWS > 0
+    #pragma unroll_loop
+    for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
+      invLight = normalize(invertMatrix * vec4(directionalLights[ i ].direction, 0.0)).xyz;
+      invEye = normalize(invertMatrix * vec4(cameraPosition, 0.0)).xyz;
+      diff += clamp(dot(vNormal, invLight), 0.0, 1.0);
 
-  vec4 destColor = vec4(vColor * diffuse + specular, 1.0);
+      halfLE = normalize(invLight + invEye);
+      specular += directionalLights[ i ].color * pow(max(dot(vNormal, halfLE), 0.0), 30.0);
+    }
+  #endif
+
+  vec4 destColor = vec4(vColor * diff + specular, 1.0);
 
   gl_FragColor    = destColor;
 }

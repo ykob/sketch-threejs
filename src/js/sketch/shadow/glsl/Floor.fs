@@ -15,9 +15,19 @@ varying vec2 vUv;
 varying vec4 vDirectionalShadowCoord[NUM_DIR_LIGHT_SHADOWS];
 
 void main() {
-  // Flat Shading
-  vec3 normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
-  float diff = (dot(normal, directionalLights[0].direction) + 1.0) / 2.0;
+  // Phong Shading
+  vec3 normal;
+  vec3 diff;
+  vec3 lightColor;
+
+  #if NUM_DIR_LIGHT_SHADOWS > 0
+    #pragma unroll_loop
+    for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
+      normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
+      diff += (dot(normal, directionalLights[ i ].direction) + 1.0) / 2.0;
+      lightColor += directionalLights[ i ].color;
+    }
+  #endif
 
   vec4 shadow;
 
@@ -28,5 +38,5 @@ void main() {
     }
   #endif
 
-  gl_FragColor = shadow * vec4(vec3(diff), 1.0);
+  gl_FragColor = vec4(lightColor * diff, 1.0) * shadow;
 }

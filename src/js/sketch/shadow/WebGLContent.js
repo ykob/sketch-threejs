@@ -21,7 +21,8 @@ const clock = new THREE.Clock({
 //
 const blob = new Blob();
 const floor = new Floor();
-const dirLight = new DirectionalLight();
+const dirLight1 = new DirectionalLight();
+const dirLight2 = new DirectionalLight();
 
 // ==========
 // Define WebGLContent Class.
@@ -43,11 +44,13 @@ export default class WebGLContent {
     blob.start();
     floor.start();
 
-    dirLight.position.set(-10, 16, 0);
+    dirLight1.position.set(-10, 16, 10);
+    dirLight2.position.set(10, 16, -10);
 
     scene.add(blob);
     scene.add(floor);
-    scene.add(dirLight);
+    scene.add(dirLight1);
+    scene.add(dirLight2);
 
     camera.start();
   }
@@ -71,7 +74,8 @@ export default class WebGLContent {
     // Update each objects.
     blob.update(time);
     floor.update(time);
-    dirLight.update(time);
+    dirLight1.update(time);
+    dirLight2.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
