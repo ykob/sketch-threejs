@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "shadow": {
+      "title": "shadow",
+      "id": "shadow",
+      "description": "I never tried primary Depth Buffer Shadow, but I tried it finally.",
+      "path": "/sketch/shadow.html",
+      "posted": "2019.10.x",
+      "update": "",
+      "color": "white"
+    },
     "splash": {
       "title": "splash",
       "id": "splash",
