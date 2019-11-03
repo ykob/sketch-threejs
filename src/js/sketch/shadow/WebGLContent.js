@@ -4,7 +4,7 @@ import sleep from 'js-util/sleep';
 import Camera from './Camera';
 import Blob from './Blob';
 import Floor from './Floor';
-import Light from './Light';
+import DirectionalLight from './DirectionalLight';
 
 // ==========
 // Define common variables
@@ -21,7 +21,7 @@ const clock = new THREE.Clock({
 //
 const blob = new Blob();
 const floor = new Floor();
-const light = new Light();
+const dirLight = new DirectionalLight();
 
 // ==========
 // Define WebGLContent Class.
@@ -43,9 +43,11 @@ export default class WebGLContent {
     blob.start();
     floor.start();
 
+    dirLight.position.set(-10, 16, 0);
+
     scene.add(blob);
     scene.add(floor);
-    scene.add(light);
+    scene.add(dirLight);
 
     camera.start();
   }
@@ -69,7 +71,7 @@ export default class WebGLContent {
     // Update each objects.
     blob.update(time);
     floor.update(time);
-    light.update(time);
+    dirLight.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
