@@ -28,7 +28,7 @@ block content
     .p-sketch-index
       - var count = 0;
       each item in data.pages
-        if (item.title !== '')
+        if (item.title !== '' && item.title !== 'shadow')
           .p-sketch-index__item(
             class = 'js-smooth-item js-scroll-item',
           )
