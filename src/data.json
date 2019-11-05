@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "aura": {
+      "title": "aura",
+      "id": "aura",
+      "description": "",
+      "path": "/sketch/aura.html",
+      "posted": "2019.11.x",
+      "update": "",
+      "color": "white"
+    },
     "shadow": {
       "title": "shadow",
       "id": "shadow",
