@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
+import CameraAura from './CameraAura';
 import AuraObject from './AuraObject';
 
 // ==========
@@ -13,6 +14,8 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+const sceneAura = new THREE.Scene();
+const cameraAura = new CameraAura();
 
 // ==========
 // Define unique variables
@@ -36,13 +39,14 @@ export default class WebGLContent {
       canvas: canvas,
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(0x0e0e0e, 1.0);
+    renderer.setClearColor(0x000000, 1.0);
 
     for (var i = 0; i < auraObjs.length; i++) {
       scene.add(auraObjs[i]);
     }
 
     camera.start();
+    cameraAura.start();
     for (var i = 0; i < auraObjs.length; i++) {
       auraObjs[i].start();
     }
@@ -63,10 +67,11 @@ export default class WebGLContent {
 
     // Update Camera.
     camera.update(time);
+    cameraAura.update(camera);
 
     // Update each objects.
     for (var i = 0; i < auraObjs.length; i++) {
-      auraObjs[i].update(time, camera);
+      auraObjs[i].update(time, renderer, sceneAura, camera, cameraAura);
     }
 
     // Render the 3D scene.

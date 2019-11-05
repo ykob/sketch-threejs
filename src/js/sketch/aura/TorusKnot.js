@@ -16,6 +16,10 @@ export default class TorusKnot extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        scale: {
+          type: 'f',
+          value: 0
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -23,7 +27,7 @@ export default class TorusKnot extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Mesh';
+    this.name = 'TorusKnot';
     this.isActive = false;
   }
   start() {
@@ -34,13 +38,13 @@ export default class TorusKnot extends THREE.Mesh {
       MathEx.radians(Math.random() * 360)
     );
   }
-  update(time) {
+  update(time, camera) {
     if (this.isActive === false) return;
-    this.material.uniforms.time.value += time;
     this.rotation.set(
       this.rotation.x + time,
       this.rotation.y + time,
       this.rotation.z
     );
+    this.material.uniforms.time.value += time;
   }
 }

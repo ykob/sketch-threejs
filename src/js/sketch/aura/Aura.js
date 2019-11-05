@@ -16,27 +16,28 @@ export default class Aura extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        objOutline: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
     });
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Mesh';
+    this.name = 'Aura';
     this.isActive = false;
   }
-  start() {
+  start(objOutline) {
     this.isActive = true;
+    this.material.uniforms.objOutline.value = objOutline;
   }
   update(time, camera) {
     if (this.isActive === false) return;
     this.rotation.copy(camera.rotation);
     this.material.uniforms.time.value += time;
-  }
-  resize(camera) {
-    const height = Math.abs(
-      (camera.position.z - this.position.z) * Math.tan(MathEx.radians(camera.fov) / 2) * 2
-    );
   }
 }
