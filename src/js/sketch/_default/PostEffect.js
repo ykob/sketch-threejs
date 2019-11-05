@@ -31,11 +31,14 @@ export default class PostEffect extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'PostEffect';
+    this.isActive = false;
   }
   start(texture) {
     this.material.uniforms.texture.value = texture;
+    this.isActive = true;
   }
   update(time) {
+    if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
   }
   resize(x, y) {

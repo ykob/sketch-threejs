@@ -23,10 +23,13 @@ export default class Mesh extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Mesh';
+    this.isActive = false;
   }
   start() {
+    this.isActive = true;
   }
   update(time) {
+    if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
   }
 }
