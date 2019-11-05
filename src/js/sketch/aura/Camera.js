@@ -4,7 +4,6 @@ export default class Camera extends THREE.PerspectiveCamera {
   constructor(fov, aspect, near, far) {
     super(fov, aspect, near, far);
 
-    this.cameraResolution = new THREE.Vector2();
     this.time = 0;
     this.isActive = false;
   }
@@ -12,7 +11,7 @@ export default class Camera extends THREE.PerspectiveCamera {
     this.aspect = 3 / 2;
     this.far = 1000;
     this.setFocalLength(50);
-    this.position.set(0, 0, 50);
+    this.position.set(0, 20, 50);
     this.lookAt(new THREE.Vector3());
     this.isActive = true;
   }

@@ -2,8 +2,7 @@ import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
-import TorusKnot from './TorusKnot';
-import Aura from './Aura';
+import AuraObject from './AuraObject';
 
 // ==========
 // Define common variables
@@ -18,8 +17,11 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
-const torusKnot = new TorusKnot();
-const aura = new Aura();
+const auraObjs = new Array(3);
+for (var i = 0; i < auraObjs.length; i++) {
+  const alpha = i / auraObjs.length;
+  auraObjs[i] = new AuraObject(alpha);
+}
 
 // ==========
 // Define WebGLContent Class.
@@ -36,10 +38,14 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
 
-    scene.add(torusKnot);
-    scene.add(aura);
+    for (var i = 0; i < auraObjs.length; i++) {
+      scene.add(auraObjs[i]);
+    }
 
     camera.start();
+    for (var i = 0; i < auraObjs.length; i++) {
+      auraObjs[i].start();
+    }
   }
   play() {
     clock.start();
@@ -59,13 +65,18 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    for (var i = 0; i < auraObjs.length; i++) {
+      auraObjs[i].update(time, camera);
+    }
 
     // Render the 3D scene.
     renderer.render(scene, camera);
   }
   resize(resolution) {
     camera.resize(resolution);
-    aura.resize(camera);
+    for (var i = 0; i < auraObjs.length; i++) {
+      auraObjs[i].resize(camera);
+    }
     renderer.setSize(resolution.x, resolution.y);
   }
 }

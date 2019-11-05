@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/TorusKnot.vs';
 import fs from './glsl/TorusKnot.fs';
@@ -6,7 +7,7 @@ import fs from './glsl/TorusKnot.fs';
 export default class TorusKnot extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.TorusKnotBufferGeometry(2.4, 0.8, 200, 32);
+    const geometry = new THREE.TorusKnotBufferGeometry(0.6 * 3, 0.6, 200, 32);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -27,9 +28,19 @@ export default class TorusKnot extends THREE.Mesh {
   }
   start() {
     this.isActive = true;
+    this.rotation.set(
+      MathEx.radians(Math.random() * 360),
+      MathEx.radians(Math.random() * 360),
+      MathEx.radians(Math.random() * 360)
+    );
   }
   update(time) {
     if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
+    this.rotation.set(
+      this.rotation.x + time,
+      this.rotation.y + time,
+      this.rotation.z
+    );
   }
 }

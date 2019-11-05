@@ -29,8 +29,9 @@ export default class Aura extends THREE.Mesh {
   start() {
     this.isActive = true;
   }
-  update(time) {
+  update(time, camera) {
     if (this.isActive === false) return;
+    this.rotation.copy(camera.rotation);
     this.material.uniforms.time.value += time;
   }
   resize(camera) {
