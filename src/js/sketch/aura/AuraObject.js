@@ -26,23 +26,29 @@ export default class AuraObject extends THREE.Group {
   update(time, renderer, scene, camera, cameraAura) {
     if (this.isActive === false) return;
 
+    // update the attributes of this group.
     this.time += time;
     this.radian += time;
 
+    // update children.
     this.obj.update(time, camera);
     this.aura.update(time, camera);
 
+    // processing before rendering the aura as texture.
     renderer.setRenderTarget(this.renderTarget);
     scene.add(this.obj);
     this.obj.material.uniforms.scale.value = 1;
 
+    // rendering the aura as texture.
     renderer.render(scene, cameraAura);
 
+    // processing after rendering the aura as texture.
     renderer.setRenderTarget(null);
     scene.remove(this.obj);
     this.add(this.obj);
     this.obj.material.uniforms.scale.value = 0;
 
+    // update the position of this group.
     this.position.set(
       Math.cos(this.radian) * 10,
       0,
