@@ -20,7 +20,7 @@ const cameraAura = new CameraAura();
 // ==========
 // Define unique variables
 //
-const auraObjs = new Array(3);
+const auraObjs = new Array(6);
 for (var i = 0; i < auraObjs.length; i++) {
   const alpha = i / auraObjs.length;
   auraObjs[i] = new AuraObject(alpha);
