@@ -16,6 +16,10 @@ export default class Aura extends THREE.Mesh {
           type: 'f',
           value: 0
         },
+        alpha: {
+          type: 'f',
+          value: 0
+        },
         outlineTex: {
           type: 't',
           value: null
@@ -35,8 +39,9 @@ export default class Aura extends THREE.Mesh {
     this.name = 'Aura';
     this.isActive = false;
   }
-  start(outlineTex, noiseTex) {
+  start(alpha, outlineTex, noiseTex) {
     this.isActive = true;
+    this.material.uniforms.alpha.value = alpha;
     this.material.uniforms.outlineTex.value = outlineTex;
     this.material.uniforms.noiseTex.value = noiseTex;
   }

@@ -14,13 +14,14 @@ export default class AuraObject extends THREE.Group {
     this.add(this.obj);
 
     this.renderTarget = new THREE.WebGLRenderTarget(512, 512);
+    this.alpha = alpha;
     this.radian = MathEx.radians(alpha * 360);
     this.time = 0;
     this.isActive = false;
   }
   start(noiseTex) {
     this.obj.start();
-    this.aura.start(this.renderTarget.texture, noiseTex);
+    this.aura.start(this.alpha, this.renderTarget.texture, noiseTex);
     this.isActive = true;
   }
   update(time, renderer, scene, camera, cameraAura) {
