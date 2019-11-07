@@ -51,9 +51,9 @@ export default class AuraObject extends THREE.Group {
 
     // update the position of this group.
     this.position.set(
-      Math.cos(this.radian) * 10,
+      Math.cos(this.radian) * 11,
       0,
-      Math.sin(this.radian) * 10,
+      Math.sin(this.radian) * 11,
     );
   }
   resize(camera) {

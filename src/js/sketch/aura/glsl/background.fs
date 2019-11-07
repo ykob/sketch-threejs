@@ -12,7 +12,7 @@ void main() {
   vec3 rgb = mix(
     convertHsvToRgb(vec3(0.5, 0.8, 0.05)),
     convertHsvToRgb(vec3(0.0, 0.4, 0.4)),
-    vUv.y * 4.0 - 1.25
+    vUv.y * 4.0 - 1.15
     );
 
   gl_FragColor = vec4(rgb, 1.0);
