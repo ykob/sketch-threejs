@@ -6,14 +6,14 @@ uniform sampler2D objOutline;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-const float blurIteration = 12.0;
+const float blurIteration = 8.0;
 
 void main() {
   // calculate blur mask.
   vec4 destColor = vec4(0.0);
   for (float i = 0.0; i < blurIteration; i++) {
     for (float j = 0.0; j < blurIteration; j++) {
-      vec2 p = (vec2(i, j) / blurIteration * 2.0 - 1.0) / 512.0 * 80.0;
+      vec2 p = (vec2(i, j) / blurIteration * 2.0 - 1.0) / 512.0 * 60.0;
       destColor += texture2D(objOutline, vUv + p) / pow(blurIteration, 2.0);
     }
   }
