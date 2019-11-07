@@ -11,7 +11,7 @@ export default class Camera extends THREE.PerspectiveCamera {
     this.aspect = 3 / 2;
     this.far = 1000;
     this.setFocalLength(50);
-    this.position.set(0, 10, 50);
+    this.position.set(0, 12, 45);
     this.lookAt(new THREE.Vector3());
     this.isActive = true;
   }
