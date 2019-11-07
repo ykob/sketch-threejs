@@ -15,9 +15,9 @@
     "aura": {
       "title": "aura",
       "id": "aura",
-      "description": "",
+      "description": "Drawing the aura along the outline of the any meshes.",
       "path": "/sketch/aura.html",
-      "posted": "2019.11.x",
+      "posted": "2019.11.8",
       "update": "",
       "color": "white"
     },
