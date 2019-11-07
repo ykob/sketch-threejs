@@ -7,7 +7,7 @@ import fs from './glsl/TorusKnot.fs';
 export default class TorusKnot extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.TorusKnotBufferGeometry(0.6 * 3, 0.6, 200, 32);
+    const geometry = new THREE.TorusKnotBufferGeometry(2.0, 0.5, 80, 4);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -16,13 +16,18 @@ export default class TorusKnot extends THREE.Mesh {
           type: 'f',
           value: 0
         },
-        scale: {
+        alpha: {
+          type: 'f',
+          value: 0
+        },
+        renderOutline: {
           type: 'f',
           value: 0
         },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      flatShading: true,
     });
 
     // Create Object3D
@@ -30,13 +35,14 @@ export default class TorusKnot extends THREE.Mesh {
     this.name = 'TorusKnot';
     this.isActive = false;
   }
-  start() {
+  start(alpha) {
     this.isActive = true;
     this.rotation.set(
       MathEx.radians(Math.random() * 360),
       MathEx.radians(Math.random() * 360),
       MathEx.radians(Math.random() * 360)
     );
+    this.material.uniforms.alpha.value = alpha;
   }
   update(time, camera) {
     if (this.isActive === false) return;

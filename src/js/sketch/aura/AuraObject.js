@@ -20,7 +20,7 @@ export default class AuraObject extends THREE.Group {
     this.isActive = false;
   }
   start(noiseTex) {
-    this.obj.start();
+    this.obj.start(this.alpha);
     this.aura.start(this.alpha, this.renderTarget.texture, noiseTex);
     this.isActive = true;
   }
@@ -38,7 +38,7 @@ export default class AuraObject extends THREE.Group {
     // processing before rendering the aura as texture.
     renderer.setRenderTarget(this.renderTarget);
     scene.add(this.obj);
-    this.obj.material.uniforms.scale.value = 1;
+    this.obj.material.uniforms.renderOutline.value = 1;
 
     // rendering the aura as texture.
     renderer.render(scene, cameraAura);
@@ -47,7 +47,7 @@ export default class AuraObject extends THREE.Group {
     renderer.setRenderTarget(null);
     scene.remove(this.obj);
     this.add(this.obj);
-    this.obj.material.uniforms.scale.value = 0;
+    this.obj.material.uniforms.renderOutline.value = 0;
 
     // update the position of this group.
     this.position.set(
