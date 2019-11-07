@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import sleep from 'js-util/sleep';
 
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import CameraAura from './CameraAura';
 import AuraObject from './AuraObject';
@@ -20,7 +21,7 @@ const cameraAura = new CameraAura();
 // ==========
 // Define unique variables
 //
-const auraObjs = new Array(6);
+const auraObjs = new Array(5);
 for (var i = 0; i < auraObjs.length; i++) {
   const alpha = i / auraObjs.length;
   auraObjs[i] = new AuraObject(alpha);
@@ -32,7 +33,7 @@ for (var i = 0; i < auraObjs.length; i++) {
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
+  async start(canvas) {
     renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -41,15 +42,21 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 1.0);
 
-    for (var i = 0; i < auraObjs.length; i++) {
-      scene.add(auraObjs[i]);
-    }
+    await Promise.all([
+      PromiseTextureLoader('/sketch-threejs/img/sketch/splash/noise.png'),
+    ]).then((response) => {
+      const noiseTex = response[0];
 
-    camera.start();
-    cameraAura.start();
-    for (var i = 0; i < auraObjs.length; i++) {
-      auraObjs[i].start();
-    }
+      noiseTex.wrapS = THREE.RepeatWrapping;
+      noiseTex.wrapT = THREE.RepeatWrapping;
+
+      camera.start();
+      cameraAura.start();
+      for (var i = 0; i < auraObjs.length; i++) {
+        auraObjs[i].start(noiseTex);
+        scene.add(auraObjs[i]);
+      }
+    });
   }
   play() {
     clock.start();

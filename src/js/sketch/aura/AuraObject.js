@@ -18,9 +18,9 @@ export default class AuraObject extends THREE.Group {
     this.time = 0;
     this.isActive = false;
   }
-  start() {
+  start(noiseTex) {
     this.obj.start();
-    this.aura.start(this.renderTarget.texture);
+    this.aura.start(this.renderTarget.texture, noiseTex);
     this.isActive = true;
   }
   update(time, renderer, scene, camera, cameraAura) {
