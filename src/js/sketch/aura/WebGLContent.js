@@ -5,6 +5,7 @@ import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import CameraAura from './CameraAura';
 import AuraObject from './AuraObject';
+import Background from './Background';
 
 // ==========
 // Define common variables
@@ -26,6 +27,7 @@ for (var i = 0; i < auraObjs.length; i++) {
   const alpha = i / auraObjs.length;
   auraObjs[i] = new AuraObject(alpha);
 }
+const bg = new Background();
 
 // ==========
 // Define WebGLContent Class.
@@ -56,6 +58,8 @@ export default class WebGLContent {
         auraObjs[i].start(noiseTex);
         scene.add(auraObjs[i]);
       }
+      bg.start();
+      scene.add(bg);
     });
   }
   play() {

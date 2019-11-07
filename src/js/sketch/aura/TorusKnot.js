@@ -7,7 +7,7 @@ import fs from './glsl/TorusKnot.fs';
 export default class TorusKnot extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.TorusKnotBufferGeometry(2.0, 0.5, 80, 4);
+    const geometry = new THREE.TorusKnotBufferGeometry(2.0, 0.5, 60, 4);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
