@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "aura": {
+      "title": "aura",
+      "id": "aura",
+      "description": "Drawing the aura along the outline of any meshes.",
+      "path": "/sketch/aura.html",
+      "posted": "2019.11.8",
+      "update": "",
+      "color": "white"
+    },
     "shadow": {
       "title": "shadow",
       "id": "shadow",
