@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "patch": {
+      "title": "patch",
+      "id": "patch",
+      "description": "",
+      "path": "/sketch/patch.html",
+      "posted": "2019.11.x",
+      "update": "",
+      "color": "white"
+    },
     "aura": {
       "title": "aura",
       "id": "aura",
