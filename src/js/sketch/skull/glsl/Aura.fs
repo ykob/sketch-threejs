@@ -21,7 +21,7 @@ void main() {
     }
   }
 
-  float noise1 = texture2D(noiseTex, vUv - vec2(0.0, time * 0.1)).r;
+  float noise1 = texture2D(noiseTex, vUv - vec2(0.0, time * 0.2)).r;
   float noise2 = texture2D(noiseTex, vUv * 2.0 - vec2(0.0, time * 0.4)).g;
   float noise3 = texture2D(noiseTex, vUv * 3.0 - vec2(0.0, time * 0.8)).b;
   float noise = noise1 * 0.65 + noise2 * 0.3 + noise3 * 0.05;

@@ -45,8 +45,8 @@ export default class WebGLContent {
       promiseOBJLoader('/sketch-threejs/model/skull/SkullHead.obj'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/splash/noise.png'),
     ]).then((response) => {
-      const geometrySkullHead = response[0].children[0].geometry;
-      const geometrySkullJaw = response[0].children[1].geometry;
+      const geometrySkullHead = response[0].children[1].geometry;
+      const geometrySkullJaw = response[0].children[0].geometry;
       const noiseTex = response[1];
 
       noiseTex.wrapS = THREE.RepeatWrapping;

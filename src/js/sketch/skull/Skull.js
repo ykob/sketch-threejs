@@ -45,5 +45,7 @@ export default class Skull extends THREE.Group {
   update(time, camera) {
     if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
+    this.head.rotation.set(MathEx.radians(-(Math.sin(this.material.uniforms.time.value) * 0.5 + 0.5) * 8), 0, 0);
+    this.jaw.rotation.set(MathEx.radians((Math.sin(this.material.uniforms.time.value) * 0.5 + 0.5) * 8), 0, 0);
   }
 }
