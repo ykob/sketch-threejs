@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "skull": {
+      "title": "skull",
+      "id": "skull",
+      "description": "",
+      "path": "/sketch/skull.html",
+      "posted": "2019.11.x",
+      "update": "",
+      "color": "white"
+    },
     "aura": {
       "title": "aura",
       "id": "aura",

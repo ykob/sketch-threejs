@@ -20,6 +20,7 @@ if (pageId == 'index') {
   });
 
   switch (pageId) {
+    case 'skull':       require('./sketch/skull/init.js').default(); break;
     case 'aura':        require('./sketch/aura/init.js').default(); break;
     case 'shadow':      require('./sketch/shadow/init.js').default(); break;
     case 'splash':      require('./sketch/splash/init.js').default(); break;
