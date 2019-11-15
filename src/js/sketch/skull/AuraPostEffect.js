@@ -21,7 +21,7 @@ export default class AuraPostEffect extends THREE.Mesh {
         },
         radius: {
           type: 'f',
-          value: 4
+          value: 1
         },
         texture: {
           type: 't',

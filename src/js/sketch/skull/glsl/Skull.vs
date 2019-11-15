@@ -13,7 +13,7 @@ varying vec2 vUv;
 
 void main(void) {
   // coordinate transformation
-  vec4 mPosition = modelMatrix * vec4(position + normal * renderOutline * 0.4, 1.0);
+  vec4 mPosition = modelMatrix * vec4(position + normal * renderOutline * 0.5, 1.0);
 
   vPosition = mPosition.xyz;
   vUv = uv;

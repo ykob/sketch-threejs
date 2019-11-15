@@ -16,10 +16,6 @@ export default class Skull extends THREE.Group {
           type: 'f',
           value: 0
         },
-        alpha: {
-          type: 'f',
-          value: 0
-        },
         renderOutline: {
           type: 'f',
           value: 0
