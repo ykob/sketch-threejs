@@ -81,7 +81,7 @@ export default class WebGLContent {
     cameraAura.update(camera);
 
     // Update each objects.
-    auraSkull.update(time, renderer, sceneAura, camera, cameraAura);
+    auraSkull.update(time, renderer, camera, sceneAura, cameraAura);
 
     // Render the 3D scene.
     renderer.render(scene, camera);

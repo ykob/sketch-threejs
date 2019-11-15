@@ -16,7 +16,7 @@ export default class Aura extends THREE.Mesh {
           type: 'f',
           value: 0
         },
-        outlineTex: {
+        postEffectTex: {
           type: 't',
           value: null
         },
@@ -35,9 +35,9 @@ export default class Aura extends THREE.Mesh {
     this.name = 'Aura';
     this.isActive = false;
   }
-  start(outlineTex, noiseTex) {
+  start(postEffectTex, noiseTex) {
     this.isActive = true;
-    this.material.uniforms.outlineTex.value = outlineTex;
+    this.material.uniforms.postEffectTex.value = postEffectTex;
     this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time, camera) {
