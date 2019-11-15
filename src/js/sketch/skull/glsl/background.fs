@@ -10,8 +10,8 @@ varying vec3 vColor;
 
 void main() {
   vec3 rgb = mix(
-    convertHsvToRgb(vec3(0.5, 0.8, 0.05)),
-    convertHsvToRgb(vec3(0.0, 0.4, 0.4)),
+    convertHsvToRgb(vec3(0.5, 0.8, 0.7)),
+    convertHsvToRgb(vec3(0.0, 0.2, 0.95)),
     vUv.y * 4.0 - 1.15
     );
 

@@ -12,8 +12,8 @@ export default class AuraSkull extends THREE.Group {
     this.skull;
     this.auraPostEffect;
     this.aura;
-    this.renderTarget1 = new THREE.WebGLRenderTarget(512, 512);
-    this.renderTarget2 = new THREE.WebGLRenderTarget(512, 512);
+    this.renderTarget1 = new THREE.WebGLRenderTarget(256, 256);
+    this.renderTarget2 = new THREE.WebGLRenderTarget(256, 256);
     this.time = 0;
     this.isActive = false;
   }
