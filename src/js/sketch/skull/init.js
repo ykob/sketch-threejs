@@ -2,12 +2,14 @@ import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 
 import WebGLContent from './WebGLContent';
+import Drag from './Drag';
 
 export default async function() {
   const webglContent = new WebGLContent();
   const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
   const preloader = document.querySelector('.p-preloader');
+  const dd = new Drag(resolution);
 
   const resizeWindow = () => {
     resolution.set(document.body.clientWidth, window.innerHeight);
@@ -16,6 +18,22 @@ export default async function() {
     webglContent.resize(resolution);
   };
   const on = () => {
+    const touchstart = (e) => {
+      dd.touchStart(e);
+    }
+    const touchmove = (e) => {
+      dd.touchMove(e);
+    }
+    const touchend = (e) => {
+      dd.touchEnd(e);
+    }
+    canvas.addEventListener('mousedown', touchstart, { passive: false });
+    window.addEventListener('mousemove', touchmove, { passive: false });
+    window.addEventListener('mouseup', touchend);
+    canvas.addEventListener('touchstart', touchstart, { passive: false });
+    window.addEventListener('touchmove', touchmove, { passive: false });
+    window.addEventListener('touchend', touchend);
+
     window.addEventListener('blur', () => {
       webglContent.pause();
     });
@@ -25,7 +43,8 @@ export default async function() {
     window.addEventListener('resize', debounce(resizeWindow, 100));
   };
   const update = () => {
-    webglContent.update();
+    dd.update(resolution);
+    webglContent.update(dd);
     requestAnimationFrame(update);
   };
 

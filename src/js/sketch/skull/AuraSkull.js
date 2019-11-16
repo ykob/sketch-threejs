@@ -30,12 +30,20 @@ export default class AuraSkull extends THREE.Group {
 
     this.isActive = true;
   }
-  update(time, renderer, camera, sceneAura, cameraAura) {
+  update(time, renderer, camera, sceneAura, cameraAura, dd) {
     if (this.isActive === false) return;
 
     // update the attributes of this group.
     this.time += time;
     this.radian += time;
+
+    if (dd) {
+      this.skull.rotation.set(
+        MathEx.radians(dd.v.y - 15),
+        MathEx.radians(dd.v.x + 15),
+        MathEx.radians(-20)
+      );
+    }
 
     // update children.
     this.skull.update(time, camera);

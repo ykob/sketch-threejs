@@ -69,7 +69,7 @@ export default class WebGLContent {
   pause() {
     clock.stop();
   }
-  update() {
+  update(dd) {
     // When the clock is stopped, it stops the all rendering too.
     if (clock.running === false) return;
 
@@ -81,7 +81,7 @@ export default class WebGLContent {
     cameraAura.update(camera);
 
     // Update each objects.
-    auraSkull.update(time, renderer, camera, sceneAura, cameraAura);
+    auraSkull.update(time, renderer, camera, sceneAura, cameraAura, dd);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
