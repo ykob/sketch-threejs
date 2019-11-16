@@ -29,12 +29,11 @@ void main() {
   float mask3 = smoothstep(0.5, 1.0, texColor3.r + noise * 0.5);
   float mask = (mask1 * 2.0 + mask2) / 3.0 * mask3;
 
-  float strength = smoothstep(0.0, 0.18, pow(mask, 3.0));
-  vec3 hsv = vec3(
-    0.6 + strength * 0.8,
-    0.65 - strength * 0.65,
-    0.8 + strength * 0.2
-    );
-  float opacity = smoothstep(0.04, 0.045, pow(mask, 3.0));
-  gl_FragColor = vec4(convertHsvToRgb(hsv), opacity);
+  float strength = smoothstep(0.05, 0.17, pow(mask, 3.0));
+  vec3 hsv1 = vec3(0.55, 0.5, 0.8);
+  vec3 hsv2 = vec3(0.88, 0.0, 1.0);
+  vec3 rgb = convertHsvToRgb(mix(hsv1, hsv2, strength));
+
+  float opacity = smoothstep(0.05, 0.055, pow(mask, 3.0));
+  gl_FragColor = vec4(rgb, opacity);
 }
