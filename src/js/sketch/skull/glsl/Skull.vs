@@ -21,7 +21,7 @@ void main(void) {
 
   vPosition = mPosition.xyz;
   vUv = uv;
-  vColor = vec3(smoothstep(0.9, 1.0, abs(sin(angleToCamera))));
+  vColor = vec3(smoothstep(0.8, 1.0, abs(sin(angleToCamera))));
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
 }
