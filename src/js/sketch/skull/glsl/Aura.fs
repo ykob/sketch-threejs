@@ -16,8 +16,8 @@ const float blurIteration = 12.0;
 
 void main() {
   vec4 texColor1 = texture2D(postEffectTex, vUv * 1.05 - 0.025);
-  vec4 texColor2 = texture2D(postEffectTex, vUv * 0.8 + vec2(0.1, 0.05));
-  vec4 texColor3 = texture2D(postEffectTex, vUv * 0.6 + vec2(0.2, 0.1));
+  vec4 texColor2 = texture2D(postEffectTex, vUv * vec2(0.8, 0.75) + vec2(0.1, 0.1));
+  vec4 texColor3 = texture2D(postEffectTex, vUv * vec2(0.6, 0.55) + vec2(0.2, 0.2));
 
   float noise1 = texture2D(noiseTex, vUv - vec2(0.0, time * 0.6)).r;
   float noise2 = texture2D(noiseTex, vUv * 2.0 - vec2(0.0, time * 0.7)).g;
@@ -35,5 +35,10 @@ void main() {
   vec3 rgb = convertHsvToRgb(mix(hsv1, hsv2, strength));
 
   float opacity = smoothstep(0.05, 0.055, pow(mask, 3.0));
+
+  if (opacity < 0.01) {
+    discard;
+  }
+
   gl_FragColor = vec4(rgb, opacity);
 }
