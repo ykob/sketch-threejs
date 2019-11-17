@@ -1,20 +1,15 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Points.vs';
 import fs from './glsl/Points.fs';
 
+const DURATION = 4;
+
 export default class Points extends THREE.Points {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BufferGeometry();
-
-    // Define attributes of the geometry
-    const num = 1000;
-    const baPositions = new THREE.BufferAttribute(new Float32Array(num * 3), 3);
-    for (var i = 0, ul = num; i < ul; i++) {
-      baPositions.setXYZ(i, 0, 0, 0);
-    }
-    geometry.addAttribute('position', baPositions);
+    const geometry = new THREE.IcosahedronBufferGeometry(6, 3);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -23,25 +18,43 @@ export default class Points extends THREE.Points {
           type: 'f',
           value: 0
         },
+        alpha: {
+          type: 'f',
+          value: 0
+        },
         pixelRatio: {
           type: 'f',
           value: window.devicePixelRatio
         },
+        noiseTex: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Points';
-    this.isActive = false;
+    this.time = 0;
   }
-  start() {
-    this.isActive = true;
+  start(noiseTex) {
+    this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time) {
-    if (this.isActive === false) return;
+    this.time += time;
+
     this.material.uniforms.time.value += time;
+    this.material.uniforms.alpha.value = (this.time % DURATION) / DURATION;
+    this.rotation.set(
+      0,
+      this.material.uniforms.time.value,
+      0
+    );
   }
 }

@@ -4,6 +4,7 @@ import MathEx from 'js-util/MathEx';
 import Skull from './Skull';
 import AuraPostEffect from './AuraPostEffect';
 import Aura from './Aura';
+import Points from './Points';
 
 export default class AuraSkull extends THREE.Group {
   constructor() {
@@ -12,6 +13,7 @@ export default class AuraSkull extends THREE.Group {
     this.skull;
     this.auraPostEffect;
     this.aura;
+    this.points;
     this.renderTarget1 = new THREE.WebGLRenderTarget(256, 256);
     this.renderTarget2 = new THREE.WebGLRenderTarget(256, 256);
     this.time = 0;
@@ -21,12 +23,17 @@ export default class AuraSkull extends THREE.Group {
     this.skull = new Skull(geometry1, geometry2);
     this.auraPostEffect = new AuraPostEffect();
     this.aura = new Aura();
+    this.points = new Points();
 
     this.add(this.skull);
     this.add(this.aura);
+    this.add(this.points);
+
+    this.points.position.y = 2;
 
     this.skull.start();
     this.aura.start(this.renderTarget1.texture, noiseTex);
+    this.points.start(noiseTex);
 
     this.isActive = true;
   }
@@ -48,6 +55,7 @@ export default class AuraSkull extends THREE.Group {
     // update children.
     this.skull.update(time, camera);
     this.aura.update(time, camera);
+    this.points.update(time);
 
     // processing before rendering the aura as texture.
     renderer.setRenderTarget(this.renderTarget1);
