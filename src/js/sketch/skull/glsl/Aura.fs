@@ -30,8 +30,8 @@ void main() {
   float mask = (mask1 * 2.0 + mask2) / 3.0 * mask3;
 
   float strength = smoothstep(0.05, 0.17, pow(mask, 3.0));
-  vec3 hsv1 = vec3(0.84, 0.4, 0.9);
-  vec3 hsv2 = vec3(0.4, 0.0, 1.0);
+  vec3 hsv1 = vec3(0.84, 0.4, 0.85);
+  vec3 hsv2 = vec3(0.55, 0.05, 0.95);
   vec3 rgb = convertHsvToRgb(mix(hsv1, hsv2, strength));
 
   float opacity = smoothstep(0.05, 0.055, pow(mask, 3.0));

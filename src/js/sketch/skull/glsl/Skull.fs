@@ -35,7 +35,8 @@ void main() {
   vec3 hsv2 = vec3(0.88, 0.55, 1.0) + hsvNoise;
   vec3 rgb = mix(convertHsvToRgb(hsv1), convertHsvToRgb(hsv2), diff);
 
-  vec3 color = (rgb + vColor) * (1.0 - renderOutline);
+  vec3 hsv3 = vec3(0.55, 0.05, 0.95);
+  vec3 color = (rgb * (1.0 - vColor) + convertHsvToRgb(hsv3) * vColor) * (1.0 - renderOutline);
   vec3 colorOutline = vec3(1.0) * renderOutline;
 
   gl_FragColor = vec4(color + colorOutline, 1.0);
