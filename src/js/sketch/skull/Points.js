@@ -5,11 +5,29 @@ import vs from './glsl/Points.vs';
 import fs from './glsl/Points.fs';
 
 const DURATION = 4;
+const NUM = 400;
 
 export default class Points extends THREE.Points {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.IcosahedronBufferGeometry(6, 3);
+    const geometry = new THREE.BufferGeometry();
+
+    // Define attributes of the geometry
+    const baPositions = new THREE.BufferAttribute(new Float32Array(NUM * 3), 3);
+    const baDelays = new THREE.BufferAttribute(new Float32Array(NUM), 1);
+    for (var i = 0, ul = NUM; i < ul; i++) {
+      const radian = MathEx.radians(Math.random() * 360);
+      const radius = Math.random() * 4 + 1;
+      baPositions.setXYZ(
+        i,
+        Math.cos(radian) * radius,
+        0,
+        Math.sin(radian) * radius
+      );
+      baDelays.setX(i, Math.random() * DURATION);
+    }
+    geometry.addAttribute('position', baPositions);
+    geometry.addAttribute('delay', baDelays);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -18,9 +36,9 @@ export default class Points extends THREE.Points {
           type: 'f',
           value: 0
         },
-        alpha: {
+        duration: {
           type: 'f',
-          value: 0
+          value: DURATION
         },
         pixelRatio: {
           type: 'f',
@@ -41,19 +59,15 @@ export default class Points extends THREE.Points {
     // Create Object3D
     super(geometry, material);
     this.name = 'Points';
-    this.time = 0;
   }
   start(noiseTex) {
     this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time) {
-    this.time += time;
-
     this.material.uniforms.time.value += time;
-    this.material.uniforms.alpha.value = (this.time % DURATION) / DURATION;
     this.rotation.set(
       0,
-      this.material.uniforms.time.value,
+      this.material.uniforms.time.value * 0.2,
       0
     );
   }

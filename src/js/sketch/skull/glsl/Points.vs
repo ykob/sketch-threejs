@@ -1,19 +1,24 @@
 attribute vec3 position;
+attribute float delay;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float time;
-uniform float alpha;
+uniform float duration;
 uniform float pixelRatio;
 uniform sampler2D noiseTex;
 
 varying vec3 vColor;
+varying float vAlpha;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 void main() {
   // Coordinate transformation
+  float alpha = mod(time - delay, duration) / duration;
+  vec3 risePosition = vec3(0.0, alpha * 10.0 - 4.0, 0.0);
+
   float noiseR = texture2D(
     noiseTex,
     position.yz * 0.4 + vec2(time * 0.02, 0.0)
@@ -26,12 +31,13 @@ void main() {
     noiseTex,
     position.xy * 0.4 - time * 0.02
     ).b * 2.0 - 1.0;
-  vec3 noisePosition = vec3(noiseR, noiseG, noiseB) * 4.0;
-  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position + noisePosition, 1.0);
+  vec3 noisePosition = vec3(noiseR, noiseG, noiseB) * alpha * 12.0;
+
+  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position + noisePosition + risePosition, 1.0);
   float distanceFromCamera = length(mvPosition.xyz);
 
   // Define the point size.
-  float pointSize = pixelRatio * 240.0 / distanceFromCamera;
+  float pointSize = pixelRatio * 6.0 * 40.0 / distanceFromCamera;
 
   vColor = convertHsvToRgb(
     vec3(
@@ -40,6 +46,7 @@ void main() {
       0.4
       )
     );
+  vAlpha = alpha;
 
   gl_Position = projectionMatrix * mvPosition;
   gl_PointSize = pointSize;
