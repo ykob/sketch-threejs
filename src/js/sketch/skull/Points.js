@@ -5,7 +5,7 @@ import vs from './glsl/Points.vs';
 import fs from './glsl/Points.fs';
 
 const DURATION = 4;
-const NUM = 400;
+const NUM = 360;
 
 export default class Points extends THREE.Points {
   constructor() {
@@ -40,6 +40,10 @@ export default class Points extends THREE.Points {
           type: 'f',
           value: DURATION
         },
+        resolution: {
+          type: 'v2',
+          value: new THREE.Vector2()
+        },
         pixelRatio: {
           type: 'f',
           value: window.devicePixelRatio
@@ -70,5 +74,8 @@ export default class Points extends THREE.Points {
       this.material.uniforms.time.value * 0.2,
       0
     );
+  }
+  resize(resolution) {
+    this.material.uniforms.resolution.value.copy(resolution);
   }
 }

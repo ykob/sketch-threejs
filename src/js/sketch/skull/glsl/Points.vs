@@ -6,6 +6,7 @@ uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float time;
 uniform float duration;
+uniform vec2 resolution;
 uniform float pixelRatio;
 uniform sampler2D noiseTex;
 
@@ -37,11 +38,11 @@ void main() {
   float distanceFromCamera = length(mvPosition.xyz);
 
   // Define the point size.
-  float pointSize = pixelRatio * 6.0 * 40.0 / distanceFromCamera;
+  float pointSize = 7.0 * pixelRatio * 40.0 / distanceFromCamera * resolution.y / 1024.0;
 
   vColor = convertHsvToRgb(
     vec3(
-      (noiseR + noiseG + noiseB) * 0.2 + time * 0.1,
+      0.55 + delay * 0.33,
       0.8,
       0.4
       )
