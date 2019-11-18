@@ -16,8 +16,8 @@ const float blurIteration = 12.0;
 
 void main() {
   vec4 texColor1 = texture2D(postEffectTex, vUv * 1.05 - 0.025);
-  vec4 texColor2 = texture2D(postEffectTex, vUv * vec2(0.8, 0.75) + vec2(0.1, 0.1));
-  vec4 texColor3 = texture2D(postEffectTex, vUv * vec2(0.6, 0.55) + vec2(0.2, 0.2));
+  vec4 texColor2 = texture2D(postEffectTex, vUv * vec2(0.8, 0.75) + vec2(0.1, 0.075));
+  vec4 texColor3 = texture2D(postEffectTex, vUv * vec2(0.6, 0.55) + vec2(0.2, 0.175));
 
   float noise1 = texture2D(noiseTex, vUv - vec2(0.0, time * 0.6)).r;
   float noise2 = texture2D(noiseTex, vUv * 2.0 - vec2(0.0, time * 0.7)).g;
@@ -30,8 +30,8 @@ void main() {
   float mask = (mask1 * 2.0 + mask2) / 3.0 * mask3;
 
   float strength = smoothstep(0.05, 0.17, pow(mask, 3.0));
-  vec3 hsv1 = vec3(0.55, 0.5, 0.8);
-  vec3 hsv2 = vec3(0.88, 0.0, 1.0);
+  vec3 hsv1 = vec3(0.84, 0.4, 0.9);
+  vec3 hsv2 = vec3(0.4, 0.0, 1.0);
   vec3 rgb = convertHsvToRgb(mix(hsv1, hsv2, strength));
 
   float opacity = smoothstep(0.05, 0.055, pow(mask, 3.0));

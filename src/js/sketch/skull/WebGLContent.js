@@ -88,7 +88,7 @@ export default class WebGLContent {
   }
   resize(resolution) {
     camera.resize(resolution);
-    auraSkull.resize(camera);
+    auraSkull.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
 }

@@ -29,7 +29,7 @@ export default class AuraSkull extends THREE.Group {
     this.add(this.aura);
     this.add(this.points);
 
-    this.skull.start();
+    this.skull.start(noiseTex);
     this.aura.start(this.renderTarget1.texture, noiseTex);
     this.points.start(noiseTex);
 
@@ -87,6 +87,7 @@ export default class AuraSkull extends THREE.Group {
     this.add(this.skull);
     this.skull.material.uniforms.renderOutline.value = 0;
   }
-  resize(camera) {
+  resize(resolution) {
+    this.points.resize(resolution);
   }
 }

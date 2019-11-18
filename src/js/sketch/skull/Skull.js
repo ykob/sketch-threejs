@@ -20,6 +20,10 @@ export default class Skull extends THREE.Group {
           type: 'f',
           value: 0
         },
+        noiseTex: {
+          type: 't',
+          value: null
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
@@ -35,13 +39,14 @@ export default class Skull extends THREE.Group {
     this.name = 'Skull';
     this.isActive = false;
   }
-  start(alpha) {
+  start(noiseTex) {
     this.isActive = true;
+    this.material.uniforms.noiseTex.value = noiseTex;
   }
   update(time, camera) {
     if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
-    this.head.rotation.set(MathEx.radians(-(Math.sin(this.material.uniforms.time.value) * 0.5 + 0.5) * 8), 0, 0);
-    this.jaw.rotation.set(MathEx.radians((Math.sin(this.material.uniforms.time.value) * 0.5 + 0.5) * 8), 0, 0);
+    this.head.rotation.set(MathEx.radians(-(Math.sin(this.material.uniforms.time.value) * 0.7 + 0.7) * 8), 0, 0);
+    this.jaw.rotation.set(MathEx.radians((Math.sin(this.material.uniforms.time.value) * 0.7 + 0.7) * 8), 0, 0);
   }
 }
