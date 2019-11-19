@@ -3,6 +3,7 @@ attribute vec3 position;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+uniform vec2 resolution;
 uniform float pixelRatio;
 
 void main() {
@@ -11,7 +12,7 @@ void main() {
   float distanceFromCamera = length(mvPosition.xyz);
 
   // Define the point size.
-  float pointSize = pixelRatio * 100.0 / distanceFromCamera;
+  float pointSize = 2.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
 
   gl_Position = projectionMatrix * mvPosition;
   gl_PointSize = pointSize;

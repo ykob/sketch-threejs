@@ -23,6 +23,10 @@ export default class Points extends THREE.Points {
           type: 'f',
           value: 0
         },
+        resolution: {
+          type: 'v2',
+          value: new THREE.Vector2()
+        },
         pixelRatio: {
           type: 'f',
           value: window.devicePixelRatio
@@ -43,5 +47,8 @@ export default class Points extends THREE.Points {
   update(time) {
     if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
+  }
+  resize(resolution) {
+    this.material.uniforms.resolution.value.copy(resolution);
   }
 }
