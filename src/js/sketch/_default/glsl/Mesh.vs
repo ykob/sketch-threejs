@@ -12,7 +12,7 @@ void main(void) {
   // coordinate transformation
   vec4 mPosition = modelMatrix * vec4(position, 1.0);
 
-  vPosition = position;
+  vPosition = mPosition.xyz;
   vUv = uv;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
