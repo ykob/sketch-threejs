@@ -20,8 +20,8 @@
     "IE 11"
   ],
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "cross-env": "^6.0.3",
@@ -50,7 +50,7 @@
     "require-dir": "^1.2.0",
     "slash": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
-    "webpack": "^4.41.2",
+    "webpack": "^4.41.4",
     "webpack-stream": "^5.2.1",
     "yargs": "^15.0.2"
   },
