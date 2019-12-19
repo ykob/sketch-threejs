@@ -29,9 +29,9 @@ export default class FloatPoints {
       delay.setXYZ(i, Math.random());
       speed.setXYZ(i, MathEx.randomArbitrary(5, 10) * (MathEx.randomInt(0, 1) * 2.0 - 1.0));
     }
-    geometry.addAttribute('position', position);
-    geometry.addAttribute('delay', delay);
-    geometry.addAttribute('speed', speed);
+    geometry.setAttribute('position', position);
+    geometry.setAttribute('delay', delay);
+    geometry.setAttribute('speed', speed);
 
     // Materialを定義
     const material = new THREE.RawShaderMaterial({

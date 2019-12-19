@@ -30,8 +30,8 @@ export default class NodeLine extends THREE.LineSegments {
       indeces.push(i);
     }
 
-    geometry.addAttribute('position', baPositions);
-    geometry.addAttribute('opacity', baOpacity);
+    geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('opacity', baOpacity);
     geometry.setIndex(new THREE.BufferAttribute(new Uint16Array(indeces), 1));
 
     // Define Material

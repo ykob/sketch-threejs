@@ -41,8 +41,8 @@ export default class Pole {
         Math.random() * 8
       )
     }
-    geometry.addAttribute('iPosition', iPositions);
-    geometry.addAttribute('iDelay', iDelays);
+    geometry.setAttribute('iPosition', iPositions);
+    geometry.setAttribute('iDelay', iDelays);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

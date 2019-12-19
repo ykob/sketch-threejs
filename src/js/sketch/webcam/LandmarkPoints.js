@@ -17,7 +17,7 @@ export default class LandmarkPoints {
     const num = 68;
     const geometry = new THREE.BufferGeometry();
     this.positions = new THREE.BufferAttribute(new Float32Array(num * 3), 3);
-    geometry.addAttribute('position', this.positions);
+    geometry.setAttribute('position', this.positions);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

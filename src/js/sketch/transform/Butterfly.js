@@ -50,8 +50,8 @@ export default class Butterfly {
     const squareGeometry = new THREE.PlaneBufferGeometry(this.size * 1.1, this.size * 0.55, 64, 32);
 
     // Add common attributes
-    geometry.addAttribute('spherePosition', sphereGeometry.attributes.position);
-    geometry.addAttribute('squarePosition', squareGeometry.attributes.position);
+    geometry.setAttribute('spherePosition', sphereGeometry.attributes.position);
+    geometry.setAttribute('squarePosition', squareGeometry.attributes.position);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

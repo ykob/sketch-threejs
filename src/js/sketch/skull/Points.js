@@ -26,8 +26,8 @@ export default class Points extends THREE.Points {
       );
       baDelays.setX(i, Math.random() * DURATION);
     }
-    geometry.addAttribute('position', baPositions);
-    geometry.addAttribute('delay', baDelays);
+    geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('delay', baDelays);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

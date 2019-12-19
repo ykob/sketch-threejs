@@ -53,10 +53,10 @@ export default class DnaHelix extends THREE.Points {
         baDelays.setX(index, MathEx.radians(Math.random() * 360));
       }
     }
-    geometry.addAttribute('position', baPositions);
-    geometry.addAttribute('radian', baRadians);
-    geometry.addAttribute('radius', baRadiuses);
-    geometry.addAttribute('delay', baDelays);
+    geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('radian', baRadians);
+    geometry.setAttribute('radius', baRadiuses);
+    geometry.setAttribute('delay', baDelays);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

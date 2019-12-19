@@ -38,9 +38,9 @@ export default class Debris {
       offsets.setXYZ(i, Math.random() * 100);
       rotates.setXYZ(i, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
     }
-    geometry.addAttribute('translate', translate);
-    geometry.addAttribute('offset', offsets);
-    geometry.addAttribute('rotate', rotates);
+    geometry.setAttribute('translate', translate);
+    geometry.setAttribute('offset', offsets);
+    geometry.setAttribute('rotate', rotates);
 
     // Create Object3D
     return new THREE.Mesh(

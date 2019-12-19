@@ -51,9 +51,9 @@ export default class SkyOctahedron {
     const faceNormals = new Float32Array(faceNormalsBase);
     const centers = new Float32Array(centersBase);
     const delays = new Float32Array(delaysBase);
-    geometry.addAttribute('faceNormal', new THREE.BufferAttribute(faceNormals, 3))
-    geometry.addAttribute('center', new THREE.BufferAttribute(centers, 3))
-    geometry.addAttribute('delay', new THREE.BufferAttribute(delays, 1))
+    geometry.setAttribute('faceNormal', new THREE.BufferAttribute(faceNormals, 3))
+    geometry.setAttribute('center', new THREE.BufferAttribute(centers, 3))
+    geometry.setAttribute('delay', new THREE.BufferAttribute(delays, 1))
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({

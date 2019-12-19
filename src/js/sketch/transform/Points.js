@@ -40,11 +40,11 @@ export default class Points {
     for (var i = 0; i < this.uniforms.size.value; i++) {
       this.attr.index.setX(i, i);
     }
-    geometry.addAttribute('position', this.attr.position);
-    geometry.addAttribute('colorH', this.attr.colorH);
-    geometry.addAttribute('i', this.attr.index);
-    geometry.addAttribute('opacity', this.attr.opacity);
-    geometry.addAttribute('valid', this.attr.valid);
+    geometry.setAttribute('position', this.attr.position);
+    geometry.setAttribute('colorH', this.attr.colorH);
+    geometry.setAttribute('i', this.attr.index);
+    geometry.setAttribute('opacity', this.attr.opacity);
+    geometry.setAttribute('valid', this.attr.valid);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

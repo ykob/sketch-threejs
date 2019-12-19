@@ -78,17 +78,17 @@ export default class Node {
             opacity[j / 3] = 1;
           }
         }
-        geometry.addAttribute(`position${index}`, new THREE.Float32BufferAttribute(position, 3, 1));
-        geometry.addAttribute(`opacity${index}`, new THREE.Float32BufferAttribute(opacity, 1, 1));
+        geometry.setAttribute(`position${index}`, new THREE.Float32BufferAttribute(position, 3, 1));
+        geometry.setAttribute(`opacity${index}`, new THREE.Float32BufferAttribute(opacity, 1, 1));
       } else {
         const opacity = [];
         for (var j = 0; j < maxCount ; j++) {
           opacity[j] = 1;
         }
-        geometry.addAttribute(`position${index}`, g.attributes.position);
-        geometry.addAttribute(`opacity${index}`, new THREE.Float32BufferAttribute(opacity, 1, 1));
-        geometry.addAttribute('normal', g.attributes.normal);
-        geometry.addAttribute(`uv`, g.attributes.uv);
+        geometry.setAttribute(`position${index}`, g.attributes.position);
+        geometry.setAttribute(`opacity${index}`, new THREE.Float32BufferAttribute(opacity, 1, 1));
+        geometry.setAttribute('normal', g.attributes.normal);
+        geometry.setAttribute(`uv`, g.attributes.uv);
         geometry.setIndex(g.index);
       }
     });

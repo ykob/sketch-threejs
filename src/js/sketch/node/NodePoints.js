@@ -46,9 +46,9 @@ export default class NodePoints extends THREE.Points {
       baSizes.setX(i, size);
     }
 
-    geometry.addAttribute('position', baPositions);
-    geometry.addAttribute('acceralation', baAcceralations);
-    geometry.addAttribute('size', baSizes);
+    geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('acceralation', baAcceralations);
+    geometry.setAttribute('size', baSizes);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

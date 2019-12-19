@@ -25,8 +25,8 @@ export default class Hill {
       height.setXYZ(i, (i + 1) * 150 + 200);
       offsetX.setXYZ(i, (i - (this.instances - 1) / 2) * 120);
     }
-    geometry.addAttribute('height', height);
-    geometry.addAttribute('offsetX', offsetX);
+    geometry.setAttribute('height', height);
+    geometry.setAttribute('offsetX', offsetX);
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({

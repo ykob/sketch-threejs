@@ -40,10 +40,10 @@ export default class FlameStone {
       rotates.setXYZ(i, i);
       speeds.setXYZ(i, speed);
     }
-    geometry.addAttribute('instancePosition', instancePositions);
-    geometry.addAttribute('scale', scales);
-    geometry.addAttribute('rotate', rotates);
-    geometry.addAttribute('speed', speeds);
+    geometry.setAttribute('instancePosition', instancePositions);
+    geometry.setAttribute('scale', scales);
+    geometry.setAttribute('rotate', rotates);
+    geometry.setAttribute('speed', speeds);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

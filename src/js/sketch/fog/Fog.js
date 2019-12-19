@@ -38,9 +38,9 @@ export default class Fog {
       delays.setXYZ(i, Math.random());
       rotates.setXYZ(i, Math.random() * 2 + 1);
     }
-    geometry.addAttribute('instancePosition', instancePositions);
-    geometry.addAttribute('delay', delays);
-    geometry.addAttribute('rotate', rotates);
+    geometry.setAttribute('instancePosition', instancePositions);
+    geometry.setAttribute('delay', delays);
+    geometry.setAttribute('rotate', rotates);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

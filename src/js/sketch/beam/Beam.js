@@ -34,9 +34,9 @@ export default class Beam {
       rotate.setXYZ(i, (MathEx.randomInt(0, 1) * 2 - 1) * 90 + (Math.random() * 2 - 1) * 60);
       delay.setXYZ(i, Math.random() * 2.0);
     }
-    geometry.addAttribute('instancePosition', instancePosition);
-    geometry.addAttribute('rotate', rotate);
-    geometry.addAttribute('delay', delay);
+    geometry.setAttribute('instancePosition', instancePosition);
+    geometry.setAttribute('rotate', rotate);
+    geometry.setAttribute('delay', delay);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

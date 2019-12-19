@@ -38,10 +38,10 @@ export default class Confetti extends THREE.Mesh {
       );
       ibaDelays.setXYZ(i, Math.random());
     }
-    geometry.addAttribute('iPosition', ibaPositions);
-    geometry.addAttribute('iColor', ibaColors);
-    geometry.addAttribute('iRotate', ibaRotates);
-    geometry.addAttribute('iDelay', ibaDelays);
+    geometry.setAttribute('iPosition', ibaPositions);
+    geometry.setAttribute('iColor', ibaColors);
+    geometry.setAttribute('iRotate', ibaRotates);
+    geometry.setAttribute('iDelay', ibaDelays);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

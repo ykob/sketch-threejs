@@ -22,8 +22,8 @@ export default class Debris extends THREE.Mesh {
       ibaPositions.setXYZ(i, i * 3 + 15, 0, 0);
       ibaIds.setXYZ(i, i);
     }
-    geometry.addAttribute('iPosition', ibaPositions);
-    geometry.addAttribute('iIds', ibaIds);
+    geometry.setAttribute('iPosition', ibaPositions);
+    geometry.setAttribute('iIds', ibaIds);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

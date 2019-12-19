@@ -102,7 +102,7 @@ export default class PhysicsRenderer {
           for (var j = aAttribute.array.length; j < velocityArray.length / 3 * aAttribute.itemSize; j++) {
             aAttribute.array.push(0);
           }
-          this.accelerationMesh.geometry.addAttribute(
+          this.accelerationMesh.geometry.setAttribute(
             aAttributeKeys[i],
             new THREE.BufferAttribute(new Float32Array(aAttribute.array), aAttribute.itemSize)
           );
@@ -118,7 +118,7 @@ export default class PhysicsRenderer {
           for (var j = vAttribute.array.length; j < velocityArray.length / 3 * vAttribute.itemSize; j++) {
             vAttribute.array.push(0);
           }
-          this.velocityMesh.geometry.addAttribute(
+          this.velocityMesh.geometry.setAttribute(
             vAttributeKeys[i],
             new THREE.BufferAttribute(new Float32Array(vAttribute.array), vAttribute.itemSize)
           );

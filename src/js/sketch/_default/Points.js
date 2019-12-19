@@ -14,7 +14,7 @@ export default class Points extends THREE.Points {
     for (var i = 0, ul = num; i < ul; i++) {
       baPositions.setXYZ(i, 0, 0, 0);
     }
-    geometry.addAttribute('position', baPositions);
+    geometry.setAttribute('position', baPositions);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

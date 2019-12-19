@@ -40,13 +40,13 @@ export default function() {
       masses_base.push(Util.getRandomInt(1, 100));
     }
     var vertices = new Float32Array(vertices_base);
-    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     var uvs = new Float32Array(uvs_base);
-    geometry.addAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
+    geometry.setAttribute('uv2', new THREE.BufferAttribute(uvs, 2));
     var colors = new Float32Array(colors_base);
-    geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     var masses = new Float32Array(masses_base);
-    geometry.addAttribute('mass', new THREE.BufferAttribute(masses, 1));
+    geometry.setAttribute('mass', new THREE.BufferAttribute(masses, 1));
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {

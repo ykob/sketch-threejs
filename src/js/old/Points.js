@@ -23,10 +23,10 @@ var exports = function(){
       depthWrite: false,
       blending: param.blending
     });
-    this.geometry.addAttribute('position', new THREE.BufferAttribute(param.positions, 3));
-    this.geometry.addAttribute('customColor', new THREE.BufferAttribute(param.colors, 3));
-    this.geometry.addAttribute('vertexOpacity', new THREE.BufferAttribute(param.opacities, 1));
-    this.geometry.addAttribute('size', new THREE.BufferAttribute(param.sizes, 1));
+    this.geometry.setAttribute('position', new THREE.BufferAttribute(param.positions, 3));
+    this.geometry.setAttribute('customColor', new THREE.BufferAttribute(param.colors, 3));
+    this.geometry.setAttribute('vertexOpacity', new THREE.BufferAttribute(param.opacities, 1));
+    this.geometry.setAttribute('size', new THREE.BufferAttribute(param.sizes, 1));
     this.obj = new THREE.Points(this.geometry, this.material);
     param.scene.add(this.obj);
   };

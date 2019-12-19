@@ -34,9 +34,9 @@ export default class Beam {
       delay.setXYZ(i, Math.random() * 2.0);
       h.setXYZ(i, Math.random() * 0.3);
     }
-    geometry.addAttribute('instancePosition', instancePosition);
-    geometry.addAttribute('delay', delay);
-    geometry.addAttribute('h', h);
+    geometry.setAttribute('instancePosition', instancePosition);
+    geometry.setAttribute('delay', delay);
+    geometry.setAttribute('h', h);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

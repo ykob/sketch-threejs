@@ -29,7 +29,7 @@ export default class Points {
       }
     }
     const attrPosition = new THREE.BufferAttribute(new Float32Array(position), 3);
-    geometry.addAttribute('position', attrPosition);
+    geometry.setAttribute('position', attrPosition);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

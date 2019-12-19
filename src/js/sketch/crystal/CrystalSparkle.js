@@ -24,9 +24,9 @@ export default class CrystalSparkle extends THREE.Points {
       baDelay.setXYZ(i, Math.random());
       baSpeed.setXYZ(i, MathEx.randomArbitrary(1, 10) * (MathEx.randomInt(0, 1) * 2.0 - 1.0));
     }
-    geometry.addAttribute('position', baPositions);
-    geometry.addAttribute('delay', baDelay);
-    geometry.addAttribute('speed', baSpeed);
+    geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('delay', baDelay);
+    geometry.setAttribute('speed', baSpeed);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

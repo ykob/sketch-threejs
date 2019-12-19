@@ -43,9 +43,9 @@ export default class Wire {
       hsv.setXYZ(i, i / this.instances - 0.25, 0.2, 1.0);
       timeHover.setXYZ(i, 0);
     }
-    geometry.addAttribute('radian', radian);
-    geometry.addAttribute('hsv', hsv);
-    geometry.addAttribute('timeHover', timeHover);
+    geometry.setAttribute('radian', radian);
+    geometry.setAttribute('hsv', hsv);
+    geometry.setAttribute('timeHover', timeHover);
 
     return new THREE.Mesh(
       geometry,
@@ -77,9 +77,9 @@ export default class Wire {
       pickedColor.setXYZ(i, color.r, color.g, color.b);
       timeHover.setXYZ(i, 0);
     }
-    geometry.addAttribute('radian', radian);
-    geometry.addAttribute('pickedColor', pickedColor);
-    geometry.addAttribute('timeHover', timeHover);
+    geometry.setAttribute('radian', radian);
+    geometry.setAttribute('pickedColor', pickedColor);
+    geometry.setAttribute('timeHover', timeHover);
 
     return new THREE.Mesh(
       geometry,

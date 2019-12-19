@@ -185,7 +185,7 @@ export default function() {
       indices[j * 3 + 1] = base_geometry.faces[j].b;
       indices[j * 3 + 2] = base_geometry.faces[j].c;
     }
-    geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.attributes.position.dynamic = true;
     geometry.setIndex(new THREE.BufferAttribute(indices, 1));
     geometry.index.dynamic = true;

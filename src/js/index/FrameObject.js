@@ -25,7 +25,7 @@ export default class FrameObject {
     const indices = new Uint16Array([
       0, 1, 2, 0
     ]);
-    geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     geometry.setIndex(new THREE.BufferAttribute(indices, 1));
     return new THREE.Line(
       geometry,

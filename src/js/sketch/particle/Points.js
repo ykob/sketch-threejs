@@ -51,7 +51,7 @@ export default class Points {
     });
     this.uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     this.uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
-    geometry.addAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
+    geometry.setAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
     return new THREE.Points(
       geometry,
       new THREE.RawShaderMaterial({

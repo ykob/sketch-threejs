@@ -35,10 +35,10 @@ export default class Points {
     for (var i = 0; i < this.uniforms.size.value; i++) {
       this.attr.index.setX(i, i);
     }
-    this.geometry.addAttribute('position', this.attr.position);
-    this.geometry.addAttribute('colorH', this.attr.colorH);
-    this.geometry.addAttribute('i', this.attr.index);
-    this.geometry.addAttribute('valid', this.attr.valid);
+    this.geometry.setAttribute('position', this.attr.position);
+    this.geometry.setAttribute('colorH', this.attr.colorH);
+    this.geometry.setAttribute('i', this.attr.index);
+    this.geometry.setAttribute('valid', this.attr.valid);
 
     return new THREE.Points(
       this.geometry,

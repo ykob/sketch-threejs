@@ -39,10 +39,10 @@ export default class Core {
       noiseDiff.setXYZ(i, Math.random());
       speed.setXYZ(i, (Math.random() + 1.0) * 0.5);
     }
-    geometry.addAttribute('radian', radian);
-    geometry.addAttribute('hsv', hsv);
-    geometry.addAttribute('noiseDiff', noiseDiff);
-    geometry.addAttribute('speed', speed);
+    geometry.setAttribute('radian', radian);
+    geometry.setAttribute('hsv', hsv);
+    geometry.setAttribute('noiseDiff', noiseDiff);
+    geometry.setAttribute('speed', speed);
 
     return new THREE.Mesh(
       geometry,

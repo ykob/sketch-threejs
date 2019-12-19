@@ -45,11 +45,11 @@ export default class GUI {
       rotate3.setXYZ(i, Math.random() * 2 - 1);
       h.setXYZ(i, (Math.random() * 2 - 1) * 0.15);
     }
-    geometry.addAttribute('instancePosition', instancePosition);
-    geometry.addAttribute('rotate1', rotate1);
-    geometry.addAttribute('rotate2', rotate2);
-    geometry.addAttribute('rotate3', rotate3);
-    geometry.addAttribute('h', h);
+    geometry.setAttribute('instancePosition', instancePosition);
+    geometry.setAttribute('rotate1', rotate1);
+    geometry.setAttribute('rotate2', rotate2);
+    geometry.setAttribute('rotate3', rotate3);
+    geometry.setAttribute('h', h);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

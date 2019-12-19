@@ -72,13 +72,13 @@ export default class Typo {
     }
 
     // Define attributes of the instancing geometry
-    geometry.addAttribute('iPosition',  iPositions);
-    geometry.addAttribute('iUv',  iUvs);
-    geometry.addAttribute('iId',  iIds);
-    geometry.addAttribute('iTime',  iTimes);
-    geometry.addAttribute('iIsAnimated',  iIsAnimated);
-    geometry.addAttribute('iScale',  iScales);
-    geometry.addAttribute('iMove',  iMoves);
+    geometry.setAttribute('iPosition',  iPositions);
+    geometry.setAttribute('iUv',  iUvs);
+    geometry.setAttribute('iId',  iIds);
+    geometry.setAttribute('iTime',  iTimes);
+    geometry.setAttribute('iIsAnimated',  iIsAnimated);
+    geometry.setAttribute('iScale',  iScales);
+    geometry.setAttribute('iMove',  iMoves);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

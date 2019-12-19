@@ -18,7 +18,7 @@ export default class InstanceMesh extends THREE.Mesh {
     for (var i = 0, ul = num; i < ul; i++) {
       ibaPositions.setXYZ(i, 0, 0, 0);
     }
-    geometry.addAttribute('iPosition', ibaPositions);
+    geometry.setAttribute('iPosition', ibaPositions);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

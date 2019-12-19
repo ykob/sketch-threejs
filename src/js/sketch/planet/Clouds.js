@@ -39,10 +39,10 @@ export default class Clouds {
       instanceScales.setXYZ(i, 1.0, Math.random() * 0.2 + 1.0, Math.random() * 0.4 + 0.8);
       speeds.setXYZ(i, Math.random() * 0.05 + 0.01);
     }
-    geometry.addAttribute('instancePosition', instancePositions);
-    geometry.addAttribute('instanceRotate', instanceRotates);
-    geometry.addAttribute('instanceScale', instanceScales);
-    geometry.addAttribute('speed', speeds);
+    geometry.setAttribute('instancePosition', instancePositions);
+    geometry.setAttribute('instanceRotate', instanceRotates);
+    geometry.setAttribute('instanceScale', instanceScales);
+    geometry.setAttribute('speed', speeds);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
