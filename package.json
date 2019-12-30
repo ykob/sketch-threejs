@@ -50,7 +50,7 @@
     "require-dir": "^1.2.0",
     "slash": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
-    "webpack": "^4.41.4",
+    "webpack": "^4.41.5",
     "webpack-stream": "^5.2.1",
     "yargs": "^15.0.2"
   },
@@ -65,7 +65,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.111.0",
+    "three": "^0.112.1",
     "vue": "^2.6.11"
   }
 }
