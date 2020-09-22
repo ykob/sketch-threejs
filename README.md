@@ -32,7 +32,7 @@ npm run build
 
 ## License
 
-Copyright (c) 2019 Yoichi Kobayashi  
+Copyright (c) 2020 Yoichi Kobayashi  
 Released under the MIT license  
 http://opensource.org/licenses/mit-license.php
 
