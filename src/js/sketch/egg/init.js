@@ -9,7 +9,7 @@ export default function() {
     y: 0
   };
   const canvas = document.getElementById('canvas-webgl');
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new THREE.WebGL1Renderer({
     antialias: false,
     canvas: canvas,
   });

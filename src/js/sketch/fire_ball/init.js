@@ -12,7 +12,7 @@ export default function() {
   const ForceCamera = require('../../old/ForceCamera');
 
   const canvas = document.getElementById('canvas-webgl');
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new THREE.WebGL1Renderer({
     antialias: true,
     canvas: canvas,
   });

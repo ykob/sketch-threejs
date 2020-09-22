@@ -5,7 +5,7 @@ const Beam = require('./Beam').default;
 export default function() {
   const resolution = new THREE.Vector2();
   const canvas = document.getElementById('canvas-webgl');
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new THREE.WebGL1Renderer({
     antialias: true,
     canvas: canvas,
   });

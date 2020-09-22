@@ -14,7 +14,7 @@ export default function() {
   const scrollManager = new SmoothScrollManager();
 
   const canvas = document.getElementById('canvas-webgl');
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new THREE.WebGL1Renderer({
     antialias: false,
     canvas: canvas,
   });

@@ -8,7 +8,7 @@ const Hill = require('./Hill.js').default;
 
 export default function() {
   const canvas = document.getElementById('canvas-webgl');
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new THREE.WebGL1Renderer({
     antialias: true,
     canvas: canvas,
   });

@@ -17,7 +17,7 @@ export default class Debris extends THREE.Mesh {
     const num = 30;
     const ibaPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
     const ibaIds = new THREE.InstancedBufferAttribute(new Float32Array(num), 1);
-    const p = THREE.Vector3();
+    const p = new THREE.Vector3();
     for (var i = 0, ul = num; i < ul; i++) {
       ibaPositions.setXYZ(i, i * 3 + 15, 0, 0);
       ibaIds.setXYZ(i, i);

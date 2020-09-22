@@ -5,7 +5,7 @@ import NodePoints from './NodePoints';
 import NodeLine from './NodeLine';
 
 const canvas = document.getElementById('canvas-webgl');
-const renderer = new THREE.WebGLRenderer({
+const renderer = new THREE.WebGL1Renderer({
   alpha: true,
   antialias: true,
   canvas: canvas,

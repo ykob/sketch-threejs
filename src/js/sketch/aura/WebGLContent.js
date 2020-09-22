@@ -36,7 +36,7 @@ export default class WebGLContent {
   constructor() {
   }
   async start(canvas) {
-    renderer = new THREE.WebGLRenderer({
+    renderer = new THREE.WebGL1Renderer({
       alpha: true,
       antialias: true,
       canvas: canvas,
