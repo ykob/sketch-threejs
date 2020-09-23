@@ -43,7 +43,7 @@ export default class Debris {
     geometry.setAttribute('rotate', rotates);
 
     // Create Object3D
-    return new THREE.Mesh(
+    return new THREE.InstancedMesh(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
@@ -51,10 +51,14 @@ export default class Debris {
         fragmentShader: require('./glsl/debris.fs').default,
         transparent: true,
         side: THREE.DoubleSide
-      })
+      }),
+      this.instances
     )
   }
   render(time) {
     this.uniforms.time.value += time;
+    if (this.obj) {
+      this.obj.instanceMatrix.needsUpdate = true;
+    }
   }
 }

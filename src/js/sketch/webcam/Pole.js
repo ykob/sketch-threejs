@@ -55,7 +55,7 @@ export default class Pole {
     });
 
     // Create Object3D
-    this.obj = new THREE.Mesh(geometry, material);
+    this.obj = new THREE.InstancedMesh(geometry, material, num);
     this.obj.frustumCulled = false;
   }
   render(time, force) {
