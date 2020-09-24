@@ -27,14 +27,15 @@ export default class Hill {
     }
     geometry.setAttribute('height', height);
     geometry.setAttribute('offsetX', offsetX);
-    return new THREE.Mesh(
+    return new THREE.InstancedMesh(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/hill.vs').default,
         fragmentShader: require('./glsl/hill.fs').default,
         flatShading: true,
-      })
+      }),
+      this.instances
     )
   }
   render(renderer, scene, time) {

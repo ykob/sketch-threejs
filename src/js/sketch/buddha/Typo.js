@@ -93,7 +93,7 @@ export default class Typo {
     this.uniforms.unitUv.value = 1 / gridsPerSide;
 
     // Create Object3D
-    this.obj = new THREE.Mesh(geometry, material);
+    this.obj = new THREE.InstancedMesh(geometry, material, gridsPerSide * gridsPerSide);
     this.obj.position.y = 0.0;
     this.obj.frustumCulled = false;
   }

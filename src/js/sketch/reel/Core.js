@@ -44,14 +44,15 @@ export default class Core {
     geometry.setAttribute('noiseDiff', noiseDiff);
     geometry.setAttribute('speed', speed);
 
-    return new THREE.Mesh(
+    return new THREE.InstancedMesh(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/core.vs').default,
         fragmentShader: require('./glsl/core.fs').default,
         transparent: true,
-      })
+      }),
+      this.instances
     )
   }
 }

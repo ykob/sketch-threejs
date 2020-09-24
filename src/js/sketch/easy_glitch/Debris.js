@@ -4,7 +4,7 @@ import MathEx from 'js-util/MathEx';
 import vs from './glsl/debris.vs';
 import fs from './glsl/debris.fs';
 
-export default class Debris extends THREE.Mesh {
+export default class Debris extends THREE.InstancedMesh {
   constructor() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
@@ -39,7 +39,7 @@ export default class Debris extends THREE.Mesh {
     });
 
     // Create Object3D
-    super(geometry, material);
+    super(geometry, material, num);
     this.rotation.set(0, MathEx.radians(40), MathEx.radians(30));
     this.name = 'Debris';
   }

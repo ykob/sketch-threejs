@@ -64,7 +64,7 @@ export default class GUI {
     this.uniforms.texture3.value = textures[2];
 
     // Create Object3D
-    this.obj = new THREE.Mesh(geometry, material);
+    this.obj = new THREE.InstancedMesh(geometry, material, this.num);
   }
   render(time) {
     this.uniforms.time.value += time;

@@ -3,7 +3,9 @@ import * as THREE from 'three';
 import vs from './glsl/InstanceMesh.vs';
 import fs from './glsl/InstanceMesh.fs';
 
-export default class InstanceMesh extends THREE.Mesh {
+const COUNT = 1000;
+
+export default class InstanceMesh extends THREE.InstancedMesh {
   constructor() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
@@ -13,7 +15,6 @@ export default class InstanceMesh extends THREE.Mesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the instancing geometry
-    const num = 1000;
     const ibaPositions = new THREE.InstancedBufferAttribute(new Float32Array(num * 3), 3);
     for (var i = 0, ul = num; i < ul; i++) {
       ibaPositions.setXYZ(i, 0, 0, 0);
@@ -33,7 +34,7 @@ export default class InstanceMesh extends THREE.Mesh {
     });
 
     // Create Object3D
-    super(geometry, material);
+    super(geometry, material, COUNT);
     this.name = 'InstanceMesh';
     this.frustumCulled = false;
     this.isActive = false;

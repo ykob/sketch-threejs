@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-export default class Confetti extends THREE.Mesh {
+export default class Confetti extends THREE.InstancedMesh {
   constructor() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
@@ -58,7 +58,7 @@ export default class Confetti extends THREE.Mesh {
     });
 
     // Create Object3D
-    super(geometry, material);
+    super(geometry, material, NUM);
     this.name = 'InstanceMesh';
     this.frustumCulled = false;
     this.isOver = false;

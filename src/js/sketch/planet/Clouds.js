@@ -53,7 +53,7 @@ export default class Clouds {
     });
 
     // Create Object3D
-    this.obj = new THREE.Mesh(geometry, material);
+    this.obj = new THREE.InstancedMesh(geometry, material, NUM);
     this.obj.frustumCulled = false;
   }
   render(time) {

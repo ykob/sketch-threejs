@@ -2,8 +2,6 @@ const THREE = require('three');
 
 const MathEx = require('js-util/MathEx');
 
-const Force3 = require('../../common/Force3').default;
-
 export default class Wire {
   constructor(instances) {
     this.size = 120;
@@ -47,7 +45,7 @@ export default class Wire {
     geometry.setAttribute('hsv', hsv);
     geometry.setAttribute('timeHover', timeHover);
 
-    return new THREE.Mesh(
+    return new THREE.InstancedMesh(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
@@ -57,7 +55,8 @@ export default class Wire {
         transparent: true,
         side: THREE.DoubleSide,
         flatShading: true
-      })
+      }),
+      this.instances
     );
   }
   createObjPicked() {
@@ -81,13 +80,14 @@ export default class Wire {
     geometry.setAttribute('pickedColor', pickedColor);
     geometry.setAttribute('timeHover', timeHover);
 
-    return new THREE.Mesh(
+    return new THREE.InstancedMesh(
       geometry,
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/wirePicked.vs').default,
         fragmentShader: require('./glsl/wirePicked.fs').default,
-      })
+      }),
+      this.instances
     );
   }
   render(time) {
