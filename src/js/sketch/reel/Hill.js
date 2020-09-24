@@ -3,7 +3,8 @@ const THREE = require('three');
 
 export default class Hill {
   constructor() {
-    this.cubeCamera = new THREE.CubeCamera(1, 15000, 1024);
+    var cubeRenderTarget = new THREE.WebGLCubeRenderTarget(128);
+    this.cubeCamera = new THREE.CubeCamera(1, 15000, cubeRenderTarget);
     this.instances = 6;
     this.uniforms = {
       time: {
