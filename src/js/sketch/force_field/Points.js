@@ -11,52 +11,63 @@ export default class Points extends THREE.Points {
     // Define attributes of the geometry
     const edgeCount = 20;
     const baPositions = new THREE.BufferAttribute(new Float32Array(Math.pow(edgeCount, 3) * 3), 3);
+    const baUvs = new THREE.BufferAttribute(new Float32Array(Math.pow(edgeCount, 3) * 3), 3);
     for (let x = 0; x < edgeCount; x++) {
       const posX = x - edgeCount / 2;
+      const uvX = x / edgeCount;
       for (let y = 0; y < edgeCount; y++) {
         const posY = y - edgeCount / 2;
+        const uvY = y / edgeCount;
         for (let z = 0; z < edgeCount; z++) {
           const i = x * Math.pow(edgeCount, 2) + y * edgeCount + z
           const posZ = z - edgeCount / 2;
+          const uvZ = z / edgeCount;
           baPositions.setXYZ(i, posX, posY, posZ);
+          baUvs.setXYZ(i, uvX, uvY, uvZ);
         }
       }
     }
     geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('uv', baUvs);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
-          type: 'f',
           value: 0
         },
         resolution: {
-          type: 'v2',
           value: new THREE.Vector2()
         },
         pixelRatio: {
-          type: 'f',
           value: window.devicePixelRatio
         },
+        noiseTex: {
+          value: null
+        }
       },
       vertexShader: vs,
       fragmentShader: fs,
+      transparent: true
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Points';
-    this.isActive = false;
   }
-  start() {
-    this.isActive = true;
+  start(noiseTex) {
+    const { uniforms } = this.material;
+
+    uniforms.noiseTex.value = noiseTex;
   }
   update(time) {
-    if (this.isActive === false) return;
-    this.material.uniforms.time.value += time;
+    const { uniforms } = this.material;
+
+    uniforms.time.value += time;
   }
   resize(resolution) {
-    this.material.uniforms.resolution.value.copy(resolution);
+    const { uniforms } = this.material;
+
+    uniforms.resolution.value.copy(resolution);
   }
 }

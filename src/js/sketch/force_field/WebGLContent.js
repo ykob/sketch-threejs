@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import PromiseTextureLoader from '../../common/PromiseTextureLoader';
+
 import Camera from './Camera';
 import Points from './Points';
 
@@ -24,7 +26,7 @@ const points = new Points();
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
+  async start(canvas) {
     renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -32,6 +34,17 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
+
+    await Promise.all([
+      PromiseTextureLoader('/sketch-threejs/img/sketch/force_field/noise.jpg'),
+    ])
+    .then(response => {
+      const noiseTex = response[0];
+
+      noiseTex.wrapS = THREE.RepeatWrapping;
+      noiseTex.wrapT = THREE.RepeatWrapping;
+      points.start(noiseTex)
+    })
 
     scene.add(points);
 
@@ -55,12 +68,14 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    points.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
   }
   resize(resolution) {
     camera.resize(resolution);
+    points.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
 }
