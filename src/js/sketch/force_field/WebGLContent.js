@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import Camera from './Camera';
+import Points from './Points';
 
 // ==========
 // Define common variables
@@ -15,6 +16,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
+const points = new Points();
 
 // ==========
 // Define WebGLContent Class.
@@ -30,6 +32,8 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
+
+    scene.add(points);
 
     camera.start();
   }
