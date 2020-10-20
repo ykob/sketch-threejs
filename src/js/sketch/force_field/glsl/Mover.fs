@@ -6,5 +6,5 @@ void main() {
 
   if (radius > 1.0) discard;
 
-  gl_FragColor = vec4(vec3(1.0), 0.3);
+  gl_FragColor = vec4(vec3(1.0), 0.1);
 }

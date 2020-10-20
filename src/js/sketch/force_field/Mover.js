@@ -15,7 +15,7 @@ export default class Mover extends THREE.Points {
     const geometry = new THREE.BufferGeometry();
 
     // Define attributes of the geometry
-    const count = 100000;
+    const count = 200000;
     const baPositions = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
       baPositions.setXYZ(i, 0, 0, 0);
@@ -65,12 +65,13 @@ export default class Mover extends THREE.Points {
       velocityArrayBase[i + 0] = (Math.random() * 2 - 1) * 2;
       velocityArrayBase[i + 1] = (Math.random() * 2 - 1) * 2;
       velocityArrayBase[i + 2] = (Math.random() * 2 - 1) * 2;
-      accelerationArrayBase[i + 0] = 0.05;
+      accelerationArrayBase[i + 0] = 0;
       accelerationArrayBase[i + 1] = 0;
       accelerationArrayBase[i + 2] = 0;
     }
 
     const velocityFirstArray = [];
+    const delayArray = [];
     const side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
 
     for (var i = 0; i < Math.pow(side, 2) * 3; i += 3) {
@@ -78,11 +79,15 @@ export default class Mover extends THREE.Points {
         velocityFirstArray[i + 0] = (Math.random() * 2 - 1) * 2;
         velocityFirstArray[i + 1] = (Math.random() * 2 - 1) * 2;
         velocityFirstArray[i + 2] = (Math.random() * 2 - 1) * 2;
+        delayArray[i + 0] = Math.random() * 10;
       } else {
         velocityFirstArray[i + 0] = 0;
         velocityFirstArray[i + 1] = 0;
         velocityFirstArray[i + 2] = 0;
+        delayArray[i + 0] = 0;
       }
+      delayArray[i + 1] = 0;
+      delayArray[i + 2] = 0;
     }
     const velocityFirstData = new THREE.DataTexture(
       new Float32Array(velocityFirstArray),
@@ -91,11 +96,20 @@ export default class Mover extends THREE.Points {
       THREE.RGBFormat,
       THREE.FloatType
     );
-    velocityFirstData.needsUpdate = true;
+    const delayData = new THREE.DataTexture(
+      new Float32Array(delayArray),
+      side,
+      side,
+      THREE.RGBFormat,
+      THREE.FloatType
+    );
     this.physicsRenderer = new PhysicsRenderer(vsa, fsa, vsv, fsv);
     this.physicsRenderer.mergeAUniforms({
       noiseTex: {
         value: noiseTex
+      },
+      delay: {
+        value: delayData
       }
     });
     this.physicsRenderer.mergeVUniforms({
