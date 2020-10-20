@@ -4,7 +4,9 @@ import PhysicsRenderer from './PhysicsRenderer';
 
 import vs from './glsl/Mover.vs';
 import fs from './glsl/Mover.fs';
+import vsa from './glsl/physicsRendererAcceleration.vs';
 import fsa from './glsl/physicsRendererAcceleration.fs';
+import vsv from './glsl/physicsRendererVelocity.vs';
 import fsv from './glsl/physicsRendererVelocity.fs';
 
 export default class Mover extends THREE.Points {
@@ -13,7 +15,7 @@ export default class Mover extends THREE.Points {
     const geometry = new THREE.BufferGeometry();
 
     // Define attributes of the geometry
-    const count = 5000;
+    const count = 100000;
     const baPositions = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
       baPositions.setXYZ(i, 0, 0, 0);
@@ -32,9 +34,6 @@ export default class Mover extends THREE.Points {
         pixelRatio: {
           value: window.devicePixelRatio
         },
-        noiseTex: {
-          value: null
-        },
         acceleration: {
           value: null
         },
@@ -52,6 +51,7 @@ export default class Mover extends THREE.Points {
     // Create Object3D
     super(geometry, material);
     this.name = 'Mover';
+    this.physicsRenderer;
   }
   start(renderer, noiseTex) {
     const { uniforms } = this.material;
@@ -60,21 +60,57 @@ export default class Mover extends THREE.Points {
     const verticesBase = this.geometry.attributes.position.array;
     const velocityArrayBase = [];
     const accelerationArrayBase = [];
+
     for (var i = 0; i < verticesBase.length; i+= 3) {
-      velocityArrayBase[i + 0] = -20 - Math.random() * 100;
-      velocityArrayBase[i + 1] = (Math.random() * 2 - 1) * 5;
-      velocityArrayBase[i + 2] = (Math.random() * 2 - 1) * 5;
-      accelerationArrayBase[i + 0] = 0.1;
+      velocityArrayBase[i + 0] = (Math.random() * 2 - 1) * 2;
+      velocityArrayBase[i + 1] = (Math.random() * 2 - 1) * 2;
+      velocityArrayBase[i + 2] = (Math.random() * 2 - 1) * 2;
+      accelerationArrayBase[i + 0] = 0.05;
       accelerationArrayBase[i + 1] = 0;
       accelerationArrayBase[i + 2] = 0;
     }
-    this.physicsRenderer = new PhysicsRenderer(fsa, fsv);
-    this.physicsRenderer.start(renderer, velocityArrayBase, accelerationArrayBase);
+
+    const velocityFirstArray = [];
+    const side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+
+    for (var i = 0; i < Math.pow(side, 2) * 3; i += 3) {
+      if (velocityArrayBase[i] != undefined) {
+        velocityFirstArray[i + 0] = (Math.random() * 2 - 1) * 2;
+        velocityFirstArray[i + 1] = (Math.random() * 2 - 1) * 2;
+        velocityFirstArray[i + 2] = (Math.random() * 2 - 1) * 2;
+      } else {
+        velocityFirstArray[i + 0] = 0;
+        velocityFirstArray[i + 1] = 0;
+        velocityFirstArray[i + 2] = 0;
+      }
+    }
+    const velocityFirstData = new THREE.DataTexture(
+      new Float32Array(velocityFirstArray),
+      side,
+      side,
+      THREE.RGBFormat,
+      THREE.FloatType
+    );
+    velocityFirstData.needsUpdate = true;
+    this.physicsRenderer = new PhysicsRenderer(vsa, fsa, vsv, fsv);
+    this.physicsRenderer.mergeAUniforms({
+      noiseTex: {
+        value: noiseTex
+      }
+    });
+    this.physicsRenderer.mergeVUniforms({
+      velocityFirst: {
+        value: velocityFirstData
+      }
+    });
+    this.physicsRenderer.start(
+      renderer,
+      velocityArrayBase,
+      accelerationArrayBase
+    );
     uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
     uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     this.geometry.setAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
-
-    uniforms.noiseTex.value = noiseTex;
   }
   update(renderer, time) {
     const { uniforms } = this.material;
@@ -86,8 +122,5 @@ export default class Mover extends THREE.Points {
     const { uniforms } = this.material;
 
     uniforms.resolution.value.copy(resolution);
-    if (this.physicsRenderer) {
-      this.physicsRenderer.resize();
-    }
   }
 }

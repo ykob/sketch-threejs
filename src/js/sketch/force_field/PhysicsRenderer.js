@@ -7,7 +7,7 @@ const createMesh = (uniforms, vs, fs) => {
   return new THREE.Mesh(
     new THREE.PlaneBufferGeometry(2, 2),
     new THREE.RawShaderMaterial({
-      uniforms: uniforms,
+      uniforms,
       vertexShader: vs,
       fragmentShader: fs
     })
@@ -15,7 +15,7 @@ const createMesh = (uniforms, vs, fs) => {
 };
 
 export default class PhysicsRenderer {
-  constructor(aFragmentShader, vFragmentShader) {
+  constructor(aVertexShader, aFragmentShader, vVertexShader, vFragmentShader) {
     const option = {
       type: THREE.FloatType,
       minFilter: THREE.LinearFilter,
@@ -25,7 +25,7 @@ export default class PhysicsRenderer {
     this.side = 0;
     this.aScene = new THREE.Scene();
     this.vScene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
+    this.camera = new THREE.OrthographicCamera();
     this.acceleration = [
       new THREE.WebGLRenderTarget(0, 0, option),
       new THREE.WebGLRenderTarget(0, 0, option),
@@ -35,9 +35,6 @@ export default class PhysicsRenderer {
       new THREE.WebGLRenderTarget(0, 0, option),
     ];
     this.aUniforms = {
-      resolution: {
-        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
-      },
       velocity: {
         value: null,
       },
@@ -49,9 +46,6 @@ export default class PhysicsRenderer {
       }
     };
     this.vUniforms = {
-      resolution: {
-        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
-      },
       side: {
         value: 0
       },
@@ -67,24 +61,31 @@ export default class PhysicsRenderer {
     };
     this.accelerationMesh = createMesh(
       this.aUniforms,
-      vs,
+      aVertexShader,
       aFragmentShader
     );
     this.velocityMesh = createMesh(
       this.vUniforms,
-      vs,
+      vVertexShader,
       vFragmentShader
     );
     this.uvs = [];
     this.targetIndex = 0;
+    console.log(this.vUniforms);
   }
   start(renderer, velocityArrayBase, accelerationArrayBase, aAttributesBase, vAttributesBase) {
-    this.side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
-    this.vUniforms.side.value = this.side;
+    this.side = this.vUniforms.side.value = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+    this.camera.top = this.side * 0.5;
+    this.camera.bottom = this.side * -0.5;
+    this.camera.right = this.side * 0.5;
+    this.camera.left = this.side * -0.5;
+    this.camera.position.z = 10;
+
     const velocityArray = [];
     const accelerationArray = [];
+
     for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
-      if (velocityArrayBase && velocityArrayBase[i] != undefined) {
+      if (velocityArrayBase[i] != undefined) {
         velocityArray[i + 0] = velocityArrayBase[i + 0];
         velocityArray[i + 1] = velocityArrayBase[i + 1];
         velocityArray[i + 2] = velocityArrayBase[i + 2];
@@ -105,6 +106,7 @@ export default class PhysicsRenderer {
       this.uvs[i / 3 * 2 + 0] = (i / 3) % this.side / (this.side - 1);
       this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.side) / (this.side - 1);
     }
+
     if (aAttributesBase) {
       const aAttributeKeys = Object.keys(aAttributesBase);
       if (aAttributeKeys.length) {
@@ -120,6 +122,7 @@ export default class PhysicsRenderer {
         }
       }
     }
+
     if (vAttributesBase) {
       const vAttributeKeys = Object.keys(vAttributesBase);
       if (vAttributeKeys.length) {
@@ -135,6 +138,12 @@ export default class PhysicsRenderer {
         }
       }
     }
+
+    for (var i = 0; i < 2; i++) {
+      this.acceleration[i].setSize(this.side, this.side);
+      this.velocity[i].setSize(this.side, this.side);
+    }
+
     const velocityInitData = new THREE.DataTexture(
       new Float32Array(velocityArray),
       this.side,
@@ -155,6 +164,12 @@ export default class PhysicsRenderer {
         fragmentShader: fs,
       })
     );
+    this.vScene.add(this.camera);
+    this.vScene.add(velocityInitMesh);
+    renderer.setRenderTarget(this.velocity[this.targetIndex]);
+    renderer.render(this.vScene, this.camera);
+    this.vScene.remove(velocityInitMesh);
+    this.vScene.add(this.velocityMesh);
 
     const accelerationInitData = new THREE.DataTexture(
       new Float32Array(accelerationArray),
@@ -165,7 +180,7 @@ export default class PhysicsRenderer {
     );
     accelerationInitData.needsUpdate = true;
     const accelerationInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.PlaneBufferGeometry(this.side, this.side),
       new THREE.RawShaderMaterial({
         uniforms: {
           initData: {
@@ -175,20 +190,7 @@ export default class PhysicsRenderer {
         vertexShader: vs,
         fragmentShader: fs,
       })
-    );
-
-    for (var i = 0; i < 2; i++) {
-      this.acceleration[i].setSize(this.side, this.side);
-      this.velocity[i].setSize(this.side, this.side);
-    }
-
-    this.vScene.add(this.camera);
-    this.vScene.add(velocityInitMesh);
-    renderer.setRenderTarget(this.velocity[this.targetIndex]);
-    renderer.render(this.vScene, this.camera);
-    this.vScene.remove(velocityInitMesh);
-    this.vScene.add(this.velocityMesh);
-    
+    );    
     this.aScene.add(this.camera);
     this.aScene.add(accelerationInitMesh);
     renderer.setRenderTarget(this.acceleration[Math.abs(this.targetIndex - 1)]);
@@ -226,9 +228,5 @@ export default class PhysicsRenderer {
   }
   mergeVUniforms(obj) {
     this.vUniforms = Object.assign(this.vUniforms, obj);
-  }
-  resize() {
-    this.aUniforms.resolution.value.set(document.body.clientWidth, window.clientHeight);
-    this.vUniforms.resolution.value.set(document.body.clientWidth, window.clientHeight);
   }
 }

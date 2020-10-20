@@ -58,6 +58,7 @@ export default class WebGLContent {
     scene.add(line);
     scene.add(mover);
     scene.add(points);
+    scene.add(mover.physicsRenderer.acceleration);
 
     camera.start();
   }

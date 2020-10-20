@@ -15,14 +15,14 @@ export default class Line extends THREE.LineSegments {
     const baMovables = new THREE.BufferAttribute(new Float32Array(Math.pow(edgeCount * 2, 3)), 1);
     for (let x = 0; x < edgeCount; x++) {
       const uvX = x / (edgeCount - 1);
-      const posX = (uvX * 2.0 - 1.0) * 10;
+      const posX = (uvX * 2.0 - 1.0) * 20;
       for (let y = 0; y < edgeCount; y++) {
         const uvY = y / (edgeCount - 1);
-        const posY = (uvY * 2.0 - 1.0) * 10;
+        const posY = (uvY * 2.0 - 1.0) * 20;
         for (let z = 0; z < edgeCount; z++) {
           const i = (x * Math.pow(edgeCount, 2) + y * edgeCount + z) * 2;
           const uvZ = z / (edgeCount - 1);
-          const posZ = (uvZ * 2.0 - 1.0) * 10;
+          const posZ = (uvZ * 2.0 - 1.0) * 20;
           baPositions.setXYZ(i, posX, posY, posZ);
           baPositions.setXYZ(i + 1, posX, posY, posZ);
           baUvs.setXYZ(i, uvX, uvY, uvZ);
@@ -54,7 +54,9 @@ export default class Line extends THREE.LineSegments {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      transparent: true
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
     });
 
     // Create Object3D
