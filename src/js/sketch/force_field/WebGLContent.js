@@ -5,6 +5,7 @@ import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Camera from './Camera';
 import Line from './Line';
+import Mover from './Mover';
 import Points from './Points';
 
 // ==========
@@ -22,6 +23,7 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const line = new Line();
+const mover = new Mover();
 const points = new Points();
 
 // ==========
@@ -48,11 +50,13 @@ export default class WebGLContent {
 
       noiseTex.wrapS = THREE.RepeatWrapping;
       noiseTex.wrapT = THREE.RepeatWrapping;
-      line.start(noiseTex)
-      points.start(noiseTex)
+      line.start(noiseTex);
+      mover.start(renderer, noiseTex);
+      points.start(noiseTex);
     })
 
     scene.add(line);
+    scene.add(mover);
     scene.add(points);
 
     camera.start();
@@ -76,14 +80,17 @@ export default class WebGLContent {
 
     // Update each objects.
     line.update(time);
+    mover.update(renderer, time);
     points.update(time);
 
     // Render the 3D scene.
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   resize(resolution) {
     camera.resize(resolution);
     line.resize(resolution);
+    mover.resize(resolution);
     points.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
