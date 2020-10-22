@@ -9,6 +9,7 @@ uniform float pixelRatio;
 uniform sampler2D acceleration;
 uniform sampler2D velocity;
 
+varying vec3 vColor;
 varying float vOpacity;
 
 void main() {
@@ -18,8 +19,9 @@ void main() {
 
   // Define the point size.
   float distanceFromCamera = length(mvPosition.xyz);
-  float pointSize = 3.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
+  float pointSize = 5.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
 
+  vColor = a * 1.2 + 0.4;
   vOpacity = length(a);
 
   gl_PointSize = pointSize;
