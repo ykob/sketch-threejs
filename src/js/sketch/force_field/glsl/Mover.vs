@@ -9,6 +9,8 @@ uniform float pixelRatio;
 uniform sampler2D acceleration;
 uniform sampler2D velocity;
 
+varying float vOpacity;
+
 void main() {
   vec3 a = texture2D(acceleration, uvVelocity).xyz;
   vec3 v = texture2D(velocity, uvVelocity).xyz;
@@ -16,7 +18,9 @@ void main() {
 
   // Define the point size.
   float distanceFromCamera = length(mvPosition.xyz);
-  float pointSize = 4.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
+  float pointSize = 3.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
+
+  vOpacity = length(a);
 
   gl_PointSize = pointSize;
   gl_Position = projectionMatrix * mvPosition;

@@ -18,7 +18,7 @@ export default class PhysicsRenderer {
   constructor(aVertexShader, aFragmentShader, vVertexShader, vFragmentShader) {
     const option = {
       type: THREE.FloatType,
-      minFilter: THREE.LinearFilter,
+      minFilter: THREE.NearestFilter,
       magFilter: THREE.NearestFilter
     };
 
@@ -71,7 +71,6 @@ export default class PhysicsRenderer {
     );
     this.uvs = [];
     this.targetIndex = 0;
-    console.log(this.vUniforms);
   }
   start(renderer, velocityArrayBase, accelerationArrayBase, aAttributesBase, vAttributesBase) {
     this.side = this.vUniforms.side.value = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
@@ -147,10 +146,12 @@ export default class PhysicsRenderer {
     const velocityInitData = new THREE.DataTexture(
       new Float32Array(velocityArray),
       this.side,
-      this.side,
-      THREE.RGBFormat,
-      THREE.FloatType
+      this.side
     );
+    velocityInitData.format = THREE.RGBFormat;
+    velocityInitData.type = THREE.FloatType;
+    velocityInitData.magFilter = THREE.NearestFilter;
+    velocityInitData.minFilter = THREE.NearestFilter;
     velocityInitData.needsUpdate = true;
     const velocityInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
@@ -178,9 +179,13 @@ export default class PhysicsRenderer {
       THREE.RGBFormat,
       THREE.FloatType
     );
+    accelerationInitData.format = THREE.RGBFormat;
+    accelerationInitData.type = THREE.FloatType;
+    accelerationInitData.magFilter = THREE.NearestFilter;
+    accelerationInitData.minFilter = THREE.NearestFilter;
     accelerationInitData.needsUpdate = true;
     const accelerationInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(this.side, this.side),
+      new THREE.PlaneBufferGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: {
           initData: {
