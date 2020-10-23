@@ -19,9 +19,9 @@ void main() {
 
   // Define the point size.
   float distanceFromCamera = length(mvPosition.xyz);
-  float pointSize = 5.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
+  float pointSize = 4.0 * resolution.y / 1024.0 * pixelRatio * 50.0 / distanceFromCamera;
 
-  vColor = a * 1.2 + 0.4;
+  vColor = a * 0.4 + 0.4;
   vOpacity = length(a);
 
   gl_PointSize = pointSize;

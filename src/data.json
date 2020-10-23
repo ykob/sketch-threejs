@@ -12,11 +12,11 @@
       "path": "/",
       "color": "white"
     },
-    "force_field": {
-      "title": "force field",
-      "id": "force_field",
+    "fluid_field": {
+      "title": "fluid field",
+      "id": "fluid_field",
       "description": "",
-      "path": "/sketch/force_field.html",
+      "path": "/sketch/fluid_field.html",
       "posted": "2020.10.20",
       "update": "",
       "color": "white"

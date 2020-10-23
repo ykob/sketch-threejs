@@ -43,7 +43,7 @@ export default class WebGLContent {
     controls = new OrbitControls(camera, renderer.domElement);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/force_field/noise.jpg'),
+      PromiseTextureLoader('/sketch-threejs/img/sketch/fluid_field/noise.jpg'),
     ])
     .then(response => {
       const noiseTex = response[0];

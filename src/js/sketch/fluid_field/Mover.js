@@ -16,7 +16,7 @@ export default class Mover extends THREE.Points {
     const geometry = new THREE.BufferGeometry();
 
     // Define attributes of the geometry
-    const count = 1000000;
+    const count = 150000;
     const baPositions = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
       baPositions.setXYZ(i, 0, 0, 0);
@@ -66,7 +66,7 @@ export default class Mover extends THREE.Points {
       const spherical = MathEx.spherical(
         Math.random() * 2 * Math.PI,
         Math.random() * 2 * Math.PI,
-        Math.random() * 0.5 + 4
+        Math.random() * 0.5 + 3
       )
       velocityArrayBase[i + 0] = spherical[0];
       velocityArrayBase[i + 1] = spherical[1];
@@ -85,7 +85,7 @@ export default class Mover extends THREE.Points {
         velocityFirstArray[j + 0] = velocityArrayBase[j + 0];
         velocityFirstArray[j + 1] = velocityArrayBase[j + 1];
         velocityFirstArray[j + 2] = velocityArrayBase[j + 2];
-        delayArray[j + 0] = Math.random() * 5;
+        delayArray[j + 0] = Math.random() * 10;
       } else {
         velocityFirstArray[j + 0] = 0;
         velocityFirstArray[j + 1] = 0;
