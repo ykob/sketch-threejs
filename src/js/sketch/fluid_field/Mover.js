@@ -64,7 +64,7 @@ export default class Mover extends THREE.Points {
 
     for (var i = 0; i < verticesBase.length; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 2 + 2;
+      const radius = Math.random() * 1 + 2;
       velocityArrayBase[i + 0] = -29.99;
       velocityArrayBase[i + 1] = Math.cos(radian) * radius;
       velocityArrayBase[i + 2] = Math.sin(radian) * radius;
