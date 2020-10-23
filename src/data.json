@@ -15,9 +15,9 @@
     "fluid_field": {
       "title": "fluid field",
       "id": "fluid_field",
-      "description": "",
+      "description": "the simple 3D fluid field made with a noise texture and gpgpu.",
       "path": "/sketch/fluid_field.html",
-      "posted": "2020.10.20",
+      "posted": "2020.10.23",
       "update": "",
       "color": "white"
     },
