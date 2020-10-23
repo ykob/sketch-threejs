@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import sleep from 'js-util/sleep';
 
 import Camera from './Camera';
 
