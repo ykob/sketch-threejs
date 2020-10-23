@@ -63,21 +63,16 @@ export default class Mover extends THREE.Points {
     const accelerationArrayBase = [];
 
     for (var i = 0; i < verticesBase.length; i+= 3) {
-      const spherical = MathEx.spherical(
-        Math.random() * 2 * Math.PI,
-        Math.random() * 2 * Math.PI,
-        Math.random() * 0.5 + 3
-      )
-      velocityArrayBase[i + 0] = spherical[0];
-      velocityArrayBase[i + 1] = spherical[1];
-      velocityArrayBase[i + 2] = spherical[2];
-      accelerationArrayBase[i + 0] = spherical[0] * 0;
-      accelerationArrayBase[i + 1] = spherical[1] * 0;
-      accelerationArrayBase[i + 2] = spherical[2] * 0;
+      const radian = MathEx.radians(Math.random() * 360);
+      const radius = Math.random() * 2 + 2;
+      velocityArrayBase[i + 0] = -29.99;
+      velocityArrayBase[i + 1] = Math.cos(radian) * radius;
+      velocityArrayBase[i + 2] = Math.sin(radian) * radius;
     }
 
     const velocityFirstArray = [];
     const delayArray = [];
+    const massArray = [];
     const side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
 
     for (var j = 0; j < Math.pow(side, 2) * 3; j += 3) {
@@ -86,14 +81,18 @@ export default class Mover extends THREE.Points {
         velocityFirstArray[j + 1] = velocityArrayBase[j + 1];
         velocityFirstArray[j + 2] = velocityArrayBase[j + 2];
         delayArray[j + 0] = Math.random() * 10;
+        massArray[j + 0] = Math.random();
       } else {
         velocityFirstArray[j + 0] = 0;
         velocityFirstArray[j + 1] = 0;
         velocityFirstArray[j + 2] = 0;
         delayArray[j + 0] = 0;
+        massArray[j + 0] = 0;
       }
       delayArray[j + 1] = 0;
       delayArray[j + 2] = 0;
+      massArray[j + 1] = 0;
+      massArray[j + 2] = 0;
     }
     const velocityFirstData = new THREE.DataTexture(
       new Float32Array(velocityFirstArray),
@@ -109,6 +108,13 @@ export default class Mover extends THREE.Points {
       THREE.RGBFormat,
       THREE.FloatType
     );
+    const massData = new THREE.DataTexture(
+      new Float32Array(massArray),
+      side,
+      side,
+      THREE.RGBFormat,
+      THREE.FloatType
+    );
     this.physicsRenderer = new PhysicsRenderer(vsa, fsa, vsv, fsv);
     this.physicsRenderer.mergeAUniforms({
       noiseTex: {
@@ -116,6 +122,9 @@ export default class Mover extends THREE.Points {
       },
       delay: {
         value: delayData
+      },
+      mass: {
+        value: massData
       }
     });
     this.physicsRenderer.mergeVUniforms({
