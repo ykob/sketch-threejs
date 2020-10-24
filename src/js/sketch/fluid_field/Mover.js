@@ -52,6 +52,7 @@ export default class Mover extends THREE.Points {
     // Create Object3D
     super(geometry, material);
     this.name = 'Mover';
+    this.frustumCulled = false;
     this.physicsRenderer;
     this.multiTime = new THREE.Vector2(
       Math.random() * 2 - 1,
