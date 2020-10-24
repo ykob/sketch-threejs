@@ -53,6 +53,10 @@ export default class Mover extends THREE.Points {
     super(geometry, material);
     this.name = 'Mover';
     this.physicsRenderer;
+    this.multiTime = new THREE.Vector2(
+      Math.random() * 2 - 1,
+      Math.random() * 2 - 1
+    );
   }
   start(renderer, noiseTex) {
     const { uniforms } = this.material;
@@ -125,6 +129,9 @@ export default class Mover extends THREE.Points {
       },
       mass: {
         value: massData
+      },
+      multiTime: {
+        value: this.multiTime
       }
     });
     this.physicsRenderer.mergeVUniforms({

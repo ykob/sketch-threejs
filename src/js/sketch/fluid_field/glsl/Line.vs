@@ -9,15 +9,16 @@ uniform float time;
 uniform vec2 resolution;
 uniform float pixelRatio;
 uniform sampler2D noiseTex;
+uniform vec2 multiTime;
 
 varying vec3 vColor;
 
 void main() {
   // Coordinate transformation
   vec3 v = position;
-  float texColorR = texture2D(noiseTex, (v.yz + vec2(v.x) + vec2(time, time * 0.66) * 14.0) * 0.01).r;
-  float texColorG = texture2D(noiseTex, (v.zx + vec2(v.y) + vec2(time, time * 0.66) * 14.0) * 0.01).g;
-  float texColorB = texture2D(noiseTex, (v.xy + vec2(v.z) + vec2(time, time * 0.66) * 14.0) * 0.01).b;
+  float texColorR = texture2D(noiseTex, (v.yz + v.x + time * multiTime * 14.0) * 0.01).r;
+  float texColorG = texture2D(noiseTex, (v.zx + v.y + time * multiTime * 14.0) * 0.01).g;
+  float texColorB = texture2D(noiseTex, (v.xy + v.z + time * multiTime * 14.0) * 0.01).b;
   vec3 noise = vec3(
     texColorR,
     texColorG * 2.0 - 1.0,

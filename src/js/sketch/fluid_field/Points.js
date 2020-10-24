@@ -44,6 +44,9 @@ export default class Points extends THREE.Points {
         },
         noiseTex: {
           value: null
+        },
+        multiTime: {
+          value: new THREE.Vector2()
         }
       },
       vertexShader: vs,
@@ -57,10 +60,11 @@ export default class Points extends THREE.Points {
     super(geometry, material);
     this.name = 'Points';
   }
-  start(noiseTex) {
+  start(noiseTex, multiTime) {
     const { uniforms } = this.material;
 
     uniforms.noiseTex.value = noiseTex;
+    uniforms.multiTime.value.copy(multiTime);
   }
   update(time) {
     const { uniforms } = this.material;
