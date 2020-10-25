@@ -66,72 +66,46 @@ export default class Mover extends THREE.Points {
     const verticesBase = this.geometry.attributes.position.array;
     const vArrayBase = [];
     const aArrayBase = [];
+    const velocityFirstArray = [];
+    const delayArray = [];
+    const massArray = [];
 
     for (var i = 0; i < verticesBase.length; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
       const radius = Math.random() * 1 + 2;
+
       vArrayBase[i + 0] = -29.99;
       vArrayBase[i + 1] = Math.cos(radian) * radius;
       vArrayBase[i + 2] = Math.sin(radian) * radius;
+
+      velocityFirstArray[i + 0] = vArrayBase[i + 0];
+      velocityFirstArray[i + 1] = vArrayBase[i + 1];
+      velocityFirstArray[i + 2] = vArrayBase[i + 2];
+
+      delayArray[i + 0] = Math.random() * 10;
+      delayArray[i + 1] = 0;
+      delayArray[i + 2] = 0;
+
+      massArray[i + 0] = Math.random();
+      massArray[i + 1] = 0;
+      massArray[i + 2] = 0;
     }
-
-    const velocityFirstArray = [];
-    const delayArray = [];
-    const massArray = [];
-    const side = Math.ceil(Math.sqrt(vArrayBase.length / 3));
-
-    for (var j = 0; j < Math.pow(side, 2) * 3; j += 3) {
-      if (vArrayBase[j] != undefined) {
-        velocityFirstArray[j + 0] = vArrayBase[j + 0];
-        velocityFirstArray[j + 1] = vArrayBase[j + 1];
-        velocityFirstArray[j + 2] = vArrayBase[j + 2];
-        delayArray[j + 0] = Math.random() * 10;
-        massArray[j + 0] = Math.random();
-      } else {
-        velocityFirstArray[j + 0] = 0;
-        velocityFirstArray[j + 1] = 0;
-        velocityFirstArray[j + 2] = 0;
-        delayArray[j + 0] = 0;
-        massArray[j + 0] = 0;
-      }
-      delayArray[j + 1] = 0;
-      delayArray[j + 2] = 0;
-      massArray[j + 1] = 0;
-      massArray[j + 2] = 0;
-    }
-
-    const velocityFirstData = new THREE.DataTexture(
-      new Float32Array(velocityFirstArray),
-      side,
-      side,
-      THREE.RGBFormat,
-      THREE.FloatType
-    );
-    const delayData = new THREE.DataTexture(
-      new Float32Array(delayArray),
-      side,
-      side,
-      THREE.RGBFormat,
-      THREE.FloatType
-    );
-    const massData = new THREE.DataTexture(
-      new Float32Array(massArray),
-      side,
-      side,
-      THREE.RGBFormat,
-      THREE.FloatType
-    );
 
     this.physicsRenderer = new PhysicsRenderer(vsa, fsa, vsv, fsv);
+    this.physicsRenderer.start(
+      renderer,
+      aArrayBase,
+      vArrayBase
+    );
     this.physicsRenderer.mergeAUniforms({
       noiseTex: {
         value: noiseTex
       },
       delay: {
-        value: delayData
+        value: this.physicsRenderer.createDataTexture(delayArray)
       },
       mass: {
-        value: massData
+        value: this.physicsRenderer.createDataTexture(massArray)
       },
       multiTime: {
         value: this.multiTime
@@ -139,14 +113,9 @@ export default class Mover extends THREE.Points {
     });
     this.physicsRenderer.mergeVUniforms({
       velocityFirst: {
-        value: velocityFirstData
+        value: this.physicsRenderer.createDataTexture(velocityFirstArray)
       }
     });
-    this.physicsRenderer.start(
-      renderer,
-      aArrayBase,
-      vArrayBase
-    );
 
     uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
     uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();

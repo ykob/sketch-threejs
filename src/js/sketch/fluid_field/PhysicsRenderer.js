@@ -253,4 +253,27 @@ export default class PhysicsRenderer {
   mergeVUniforms(obj) {
     this.vUniforms = Object.assign(this.vUniforms, obj);
   }
+  createDataTexture(arrayBase) {
+    const array = [];
+
+    for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
+      if (arrayBase[i] != undefined) {
+        array[i + 0] = arrayBase[i + 0];
+        array[i + 1] = arrayBase[i + 1];
+        array[i + 2] = arrayBase[i + 2];
+      } else {
+        array[i + 0] = 0;
+        array[i + 1] = 0;
+        array[i + 2] = 0;
+      }
+    }
+
+    return new THREE.DataTexture(
+      new Float32Array(array),
+      this.side,
+      this.side,
+      THREE.RGBFormat,
+      THREE.FloatType
+    );
+  }
 }
