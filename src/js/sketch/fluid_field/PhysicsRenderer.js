@@ -15,7 +15,7 @@ const createMesh = (uniforms, vs, fs) => {
 };
 
 export default class PhysicsRenderer {
-  constructor(aVertexShader, aFragmentShader, vVertexShader, vFragmentShader) {
+  constructor(avs, afs, vvs, vfs) {
     const option = {
       type: THREE.FloatType,
       minFilter: THREE.NearestFilter,
@@ -59,62 +59,63 @@ export default class PhysicsRenderer {
         value: 0
       }
     };
-    this.accelerationMesh = createMesh(
-      this.aUniforms,
-      aVertexShader,
-      aFragmentShader
-    );
-    this.velocityMesh = createMesh(
-      this.vUniforms,
-      vVertexShader,
-      vFragmentShader
-    );
+    this.aMesh = createMesh(this.aUniforms, avs, afs);
+    this.vMesh = createMesh(this.vUniforms, vvs, vfs);
     this.uvs = [];
     this.targetIndex = 0;
   }
-  start(renderer, velocityArrayBase, accelerationArrayBase, aAttributesBase, vAttributesBase) {
-    this.side = this.vUniforms.side.value = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+  start(renderer, aArrayBase, vArrayBase, aAttrBase, vAttrBase) {
+    this.side = this.vUniforms.side.value = Math.ceil(Math.sqrt(vArrayBase.length / 3));
     this.camera.top = this.side * 0.5;
     this.camera.bottom = this.side * -0.5;
     this.camera.right = this.side * 0.5;
     this.camera.left = this.side * -0.5;
     this.camera.position.z = 10;
 
-    const velocityArray = [];
-    const accelerationArray = [];
+    // make arrays of velocity and acceleration.
+    const aArray = [];
+    const vArray = [];
 
     for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
-      if (velocityArrayBase[i] != undefined) {
-        velocityArray[i + 0] = velocityArrayBase[i + 0];
-        velocityArray[i + 1] = velocityArrayBase[i + 1];
-        velocityArray[i + 2] = velocityArrayBase[i + 2];
+      // set acceleration values from arguments.
+      if (aArrayBase && aArrayBase[i] != undefined) {
+        aArray[i + 0] = aArrayBase[i + 0];
+        aArray[i + 1] = aArrayBase[i + 1];
+        aArray[i + 2] = aArrayBase[i + 2];
       } else {
-        velocityArray[i + 0] = 0;
-        velocityArray[i + 1] = 0;
-        velocityArray[i + 2] = 0;
+        aArray[i + 0] = 0;
+        aArray[i + 1] = 0;
+        aArray[i + 2] = 0;
       }
-      if (accelerationArrayBase && accelerationArrayBase[i] != undefined) {
-        accelerationArray[i + 0] = accelerationArrayBase[i + 0];
-        accelerationArray[i + 1] = accelerationArrayBase[i + 1];
-        accelerationArray[i + 2] = accelerationArrayBase[i + 2];
+
+      // set velocity values from arguments.
+      if (vArrayBase && vArrayBase[i] != undefined) {
+        vArray[i + 0] = vArrayBase[i + 0];
+        vArray[i + 1] = vArrayBase[i + 1];
+        vArray[i + 2] = vArrayBase[i + 2];
       } else {
-        accelerationArray[i + 0] = 0;
-        accelerationArray[i + 1] = 0;
-        accelerationArray[i + 2] = 0;
+        vArray[i + 0] = 0;
+        vArray[i + 1] = 0;
+        vArray[i + 2] = 0;
       }
+
+      // define UV to allow other objects to see the velocity value.
       this.uvs[i / 3 * 2 + 0] = (i / 3) % this.side / (this.side - 1);
       this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.side) / (this.side - 1);
     }
 
-    if (aAttributesBase) {
-      const aAttributeKeys = Object.keys(aAttributesBase);
+    // set the buffer attribute of acceleration.
+    if (aAttrBase) {
+      const aAttributeKeys = Object.keys(aAttrBase);
+
       if (aAttributeKeys.length) {
         for (var i = 0; i < aAttributeKeys.length; i++) {
-          const aAttribute = aAttributesBase[aAttributeKeys[i]];
-          for (var j = aAttribute.array.length; j < velocityArray.length / 3 * aAttribute.itemSize; j++) {
+          const aAttribute = aAttrBase[aAttributeKeys[i]];
+
+          for (var j = aAttribute.array.length; j < vArray.length / 3 * aAttribute.itemSize; j++) {
             aAttribute.array.push(0);
           }
-          this.accelerationMesh.geometry.setAttribute(
+          this.aMesh.geometry.setAttribute(
             aAttributeKeys[i],
             new THREE.BufferAttribute(new Float32Array(aAttribute.array), aAttribute.itemSize)
           );
@@ -122,15 +123,18 @@ export default class PhysicsRenderer {
       }
     }
 
-    if (vAttributesBase) {
-      const vAttributeKeys = Object.keys(vAttributesBase);
+    // set the buffer attribute of velocity.
+    if (vAttrBase) {
+      const vAttributeKeys = Object.keys(vAttrBase);
+
       if (vAttributeKeys.length) {
         for (var i = 0; i < vAttributeKeys.length; i++) {
-          const vAttribute = vAttributesBase[vAttributeKeys[i]];
-          for (var j = vAttribute.array.length; j < velocityArray.length / 3 * vAttribute.itemSize; j++) {
+          const vAttribute = vAttrBase[vAttributeKeys[i]];
+
+          for (var j = vAttribute.array.length; j < vArray.length / 3 * vAttribute.itemSize; j++) {
             vAttribute.array.push(0);
           }
-          this.velocityMesh.geometry.setAttribute(
+          this.vMesh.geometry.setAttribute(
             vAttributeKeys[i],
             new THREE.BufferAttribute(new Float32Array(vAttribute.array), vAttribute.itemSize)
           );
@@ -143,79 +147,94 @@ export default class PhysicsRenderer {
       this.velocity[i].setSize(this.side, this.side);
     }
 
-    const velocityInitData = new THREE.DataTexture(
-      new Float32Array(velocityArray),
-      this.side,
-      this.side
-    );
-    velocityInitData.format = THREE.RGBFormat;
-    velocityInitData.type = THREE.FloatType;
-    velocityInitData.magFilter = THREE.NearestFilter;
-    velocityInitData.minFilter = THREE.NearestFilter;
-    velocityInitData.needsUpdate = true;
-    const velocityInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
-      new THREE.RawShaderMaterial({
-        uniforms: {
-          initData: {
-            value: velocityInitData
-          }
-        },
-        vertexShader: vs,
-        fragmentShader: fs,
-      })
-    );
-    this.vScene.add(this.camera);
-    this.vScene.add(velocityInitMesh);
-    renderer.setRenderTarget(this.velocity[this.targetIndex]);
-    renderer.render(this.vScene, this.camera);
-    this.vScene.remove(velocityInitMesh);
-    this.vScene.add(this.velocityMesh);
-
-    const accelerationInitData = new THREE.DataTexture(
-      new Float32Array(accelerationArray),
+    // set acceleration of the first frame.
+    const aInitData = new THREE.DataTexture(
+      new Float32Array(aArray),
       this.side,
       this.side,
       THREE.RGBFormat,
       THREE.FloatType
     );
-    accelerationInitData.format = THREE.RGBFormat;
-    accelerationInitData.type = THREE.FloatType;
-    accelerationInitData.magFilter = THREE.NearestFilter;
-    accelerationInitData.minFilter = THREE.NearestFilter;
-    accelerationInitData.needsUpdate = true;
+
+    aInitData.format = THREE.RGBFormat;
+    aInitData.type = THREE.FloatType;
+    aInitData.magFilter = THREE.NearestFilter;
+    aInitData.minFilter = THREE.NearestFilter;
+    aInitData.needsUpdate = true;
+
     const accelerationInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: {
           initData: {
-            value: accelerationInitData
+            value: aInitData
           }
         },
         vertexShader: vs,
         fragmentShader: fs,
       })
-    );    
+    );
+
     this.aScene.add(this.camera);
     this.aScene.add(accelerationInitMesh);
     renderer.setRenderTarget(this.acceleration[Math.abs(this.targetIndex - 1)]);
     renderer.render(this.aScene, this.camera);
     this.aScene.remove(accelerationInitMesh);
-    this.aScene.add(this.accelerationMesh);
+    this.aScene.add(this.aMesh);
+
+    // set velocity of the first frame.
+    const vInitData = new THREE.DataTexture(
+      new Float32Array(vArray),
+      this.side,
+      this.side
+    );
+
+    vInitData.format = THREE.RGBFormat;
+    vInitData.type = THREE.FloatType;
+    vInitData.magFilter = THREE.NearestFilter;
+    vInitData.minFilter = THREE.NearestFilter;
+    vInitData.needsUpdate = true;
+
+    const velocityInitMesh = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.RawShaderMaterial({
+        uniforms: {
+          initData: {
+            value: vInitData
+          }
+        },
+        vertexShader: vs,
+        fragmentShader: fs,
+      })
+    );
+
+    this.vScene.add(this.camera);
+    this.vScene.add(velocityInitMesh);
+    renderer.setRenderTarget(this.velocity[this.targetIndex]);
+    renderer.render(this.vScene, this.camera);
+    this.vScene.remove(velocityInitMesh);
+    this.vScene.add(this.vMesh);
   }
   update(renderer, time) {
     const prevIndex = Math.abs(this.targetIndex - 1);
     const nextIndex = this.targetIndex;
 
+    // update velocity.
     this.aUniforms.acceleration.value = this.acceleration[prevIndex].texture;
     this.aUniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.setRenderTarget(this.acceleration[nextIndex]);
     renderer.render(this.aScene, this.camera);
+
+    // update acceleration.
     this.vUniforms.acceleration.value = this.acceleration[nextIndex].texture;
     this.vUniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.setRenderTarget(this.velocity[prevIndex]);
     renderer.render(this.vScene, this.camera);
+
+    // update the index number of the renderTarget array.
     this.targetIndex = prevIndex;
+
+    // update the time.
     this.aUniforms.time.value += time;
     this.vUniforms.time.value += time;
   }
@@ -233,5 +252,28 @@ export default class PhysicsRenderer {
   }
   mergeVUniforms(obj) {
     this.vUniforms = Object.assign(this.vUniforms, obj);
+  }
+  createDataTexture(arrayBase) {
+    const array = [];
+
+    for (var i = 0; i < Math.pow(this.side, 2) * 3; i += 3) {
+      if (arrayBase[i] != undefined) {
+        array[i + 0] = arrayBase[i + 0];
+        array[i + 1] = arrayBase[i + 1];
+        array[i + 2] = arrayBase[i + 2];
+      } else {
+        array[i + 0] = 0;
+        array[i + 1] = 0;
+        array[i + 2] = 0;
+      }
+    }
+
+    return new THREE.DataTexture(
+      new Float32Array(array),
+      this.side,
+      this.side,
+      THREE.RGBFormat,
+      THREE.FloatType
+    );
   }
 }

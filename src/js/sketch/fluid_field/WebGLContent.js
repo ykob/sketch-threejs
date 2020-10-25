@@ -54,15 +54,14 @@ export default class WebGLContent {
       noiseTex.type = THREE.FloatType;
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
-      line.start(noiseTex);
       mover.start(renderer, noiseTex);
-      points.start(noiseTex);
+      line.start(noiseTex, mover.multiTime);
+      points.start(noiseTex, mover.multiTime);
     })
 
     scene.add(line);
     scene.add(mover);
     scene.add(points);
-    scene.add(mover.physicsRenderer.acceleration);
 
     camera.start();
   }
