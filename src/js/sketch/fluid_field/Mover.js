@@ -64,27 +64,27 @@ export default class Mover extends THREE.Points {
 
     // Define PhysicsRenderer
     const verticesBase = this.geometry.attributes.position.array;
-    const velocityArrayBase = [];
-    const accelerationArrayBase = [];
+    const vArrayBase = [];
+    const aArrayBase = [];
 
     for (var i = 0; i < verticesBase.length; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
       const radius = Math.random() * 1 + 2;
-      velocityArrayBase[i + 0] = -29.99;
-      velocityArrayBase[i + 1] = Math.cos(radian) * radius;
-      velocityArrayBase[i + 2] = Math.sin(radian) * radius;
+      vArrayBase[i + 0] = -29.99;
+      vArrayBase[i + 1] = Math.cos(radian) * radius;
+      vArrayBase[i + 2] = Math.sin(radian) * radius;
     }
 
     const velocityFirstArray = [];
     const delayArray = [];
     const massArray = [];
-    const side = Math.ceil(Math.sqrt(velocityArrayBase.length / 3));
+    const side = Math.ceil(Math.sqrt(vArrayBase.length / 3));
 
     for (var j = 0; j < Math.pow(side, 2) * 3; j += 3) {
-      if (velocityArrayBase[j] != undefined) {
-        velocityFirstArray[j + 0] = velocityArrayBase[j + 0];
-        velocityFirstArray[j + 1] = velocityArrayBase[j + 1];
-        velocityFirstArray[j + 2] = velocityArrayBase[j + 2];
+      if (vArrayBase[j] != undefined) {
+        velocityFirstArray[j + 0] = vArrayBase[j + 0];
+        velocityFirstArray[j + 1] = vArrayBase[j + 1];
+        velocityFirstArray[j + 2] = vArrayBase[j + 2];
         delayArray[j + 0] = Math.random() * 10;
         massArray[j + 0] = Math.random();
       } else {
@@ -99,6 +99,7 @@ export default class Mover extends THREE.Points {
       massArray[j + 1] = 0;
       massArray[j + 2] = 0;
     }
+
     const velocityFirstData = new THREE.DataTexture(
       new Float32Array(velocityFirstArray),
       side,
@@ -120,6 +121,7 @@ export default class Mover extends THREE.Points {
       THREE.RGBFormat,
       THREE.FloatType
     );
+
     this.physicsRenderer = new PhysicsRenderer(vsa, fsa, vsv, fsv);
     this.physicsRenderer.mergeAUniforms({
       noiseTex: {
@@ -142,9 +144,10 @@ export default class Mover extends THREE.Points {
     });
     this.physicsRenderer.start(
       renderer,
-      velocityArrayBase,
-      accelerationArrayBase
+      aArrayBase,
+      vArrayBase
     );
+
     uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
     uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     this.geometry.setAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
