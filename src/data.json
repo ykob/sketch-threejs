@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "fluid_field_2": {
+      "title": "fluid field 2",
+      "id": "fluid_field_2",
+      "description": "",
+      "path": "/sketch/fluid_field_2.html",
+      "posted": "2020.11.xx",
+      "update": "",
+      "color": "white"
+    },
     "fluid_field": {
       "title": "fluid field",
       "id": "fluid_field",
