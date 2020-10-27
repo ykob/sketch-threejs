@@ -238,8 +238,17 @@ export default class PhysicsRenderer {
     this.aUniforms.time.value += time;
     this.vUniforms.time.value += time;
   }
-  getBufferAttributeUv() {
-    return new THREE.BufferAttribute(new Float32Array(this.uvs), 2);
+  getBufferAttributeUv(count = 1) {
+    const uvs = [];
+    for (let i = 0; i < this.uvs.length / 2; i++) {
+      for (let j = 0; j < count; j++) {
+        uvs.push(this.uvs[i * 2]);
+        uvs.push(this.uvs[i * 2 + 1]);
+      }
+    }
+    return count > 1
+      ? new THREE.InstancedBufferAttribute(new Float32Array(uvs), 2)
+      : new THREE.BufferAttribute(new Float32Array(uvs), 2);
   }
   getCurrentVelocity() {
     return this.velocity[Math.abs(this.targetIndex - 1)].texture;

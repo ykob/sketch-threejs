@@ -94,7 +94,6 @@ export default class WebGLContent {
   resize(resolution) {
     camera.resize(resolution);
     line.resize(resolution);
-    mover.resize(resolution);
     points.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   }

@@ -10,30 +10,29 @@ import fsa from './glsl/physicsRendererAcceleration.fs';
 import vsv from './glsl/physicsRendererVelocity.vs';
 import fsv from './glsl/physicsRendererVelocity.fs';
 
-export default class Mover extends THREE.Points {
+export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BufferGeometry();
+    const geometry = new THREE.InstancedBufferGeometry();
+    const baseGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
+    console.log(baseGeometry);
+
+    // Add common attributes
+    geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 150000;
-    const baPositions = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
+    const count = 1000;
+    const baColors = new THREE.InstancedBufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
-      baPositions.setXYZ(i, 0, 0, 0);
+      baColors.setXYZ(i, 0, 0, 0);
     }
-    geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('color', baColors);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
           value: 0
-        },
-        resolution: {
-          value: new THREE.Vector2()
-        },
-        pixelRatio: {
-          value: window.devicePixelRatio
         },
         acceleration: {
           value: null
@@ -43,14 +42,11 @@ export default class Mover extends THREE.Points {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
+      fragmentShader: fs
     });
 
     // Create Object3D
-    super(geometry, material);
+    super(geometry, material, count);
     this.name = 'Mover';
     this.frustumCulled = false;
     this.physicsRenderer;
@@ -63,7 +59,7 @@ export default class Mover extends THREE.Points {
     const { uniforms } = this.material;
 
     // Define PhysicsRenderer
-    const verticesBase = this.geometry.attributes.position.array;
+    const verticesBase = this.geometry.attributes.color.array;
     const vArrayBase = [];
     const aArrayBase = [];
     const velocityFirstArray = [];
@@ -119,17 +115,15 @@ export default class Mover extends THREE.Points {
 
     uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
     uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
-    this.geometry.setAttribute('uvVelocity', this.physicsRenderer.getBufferAttributeUv());
+    this.geometry.setAttribute(
+      'uvVelocity',
+      this.physicsRenderer.getBufferAttributeUv(24)
+    );
   }
   update(renderer, time) {
     const { uniforms } = this.material;
 
     this.physicsRenderer.update(renderer, time);
     uniforms.time.value += time;
-  }
-  resize(resolution) {
-    const { uniforms } = this.material;
-
-    uniforms.resolution.value.copy(resolution);
   }
 }
