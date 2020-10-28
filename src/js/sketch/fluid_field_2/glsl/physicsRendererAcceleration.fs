@@ -3,6 +3,7 @@ precision highp float;
 uniform float time;
 uniform sampler2D velocity;
 uniform sampler2D acceleration;
+uniform sampler2D accelerationFirst;
 uniform sampler2D noiseTex;
 uniform sampler2D delay;
 uniform sampler2D mass;
@@ -15,22 +16,23 @@ varying vec2 vUv;
 void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
+  vec3 af = texture2D(accelerationFirst, vUv).xyz;
   float dl = texture2D(delay, vUv).x;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.025 + mass * 0.01);
+  vec3 d = drag(a, 0.012 + mass * 0.012);
 
-  float texColorR = texture2D(noiseTex, (v.yz + v.x + time * multiTime * 10.0) * 0.008).r;
-  float texColorG = texture2D(noiseTex, (v.zx + v.y + time * multiTime * 10.0) * 0.008).g;
-  float texColorB = texture2D(noiseTex, (v.xy + v.z + time * multiTime * 10.0) * 0.008).b;
+  float texColorR = texture2D(noiseTex, (v.yz + vec2(v.x, 0.0) + time * multiTime * 10.0) * 0.005).r;
+  float texColorG = texture2D(noiseTex, (v.zx + vec2(v.y, 0.0) + time * multiTime * 10.0) * 0.005).g;
+  float texColorB = texture2D(noiseTex, (v.xy + vec2(v.z, 0.0) + time * multiTime * 10.0) * 0.005).b;
   vec3 noise = vec3(
     texColorR * 2.0 - 1.0,
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.03 * step(dl, time);
+  vec3 f = noise * 0.008 * step(dl, time);
 
-  float init = step(60.0, length(v));
-  vec3 f2 = (f + a + d) * ((1.0 - init) + vec3(0.0) * init);
+  float init = step(100.0, length(v));
+  vec3 f2 = (f + a + d + af * 0.006) * (1.0 - init) + af * init;
 
   gl_FragColor = vec4(f2, 1.0);
 }

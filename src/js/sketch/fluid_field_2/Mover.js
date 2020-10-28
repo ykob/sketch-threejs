@@ -54,27 +54,36 @@ export default class Mover extends THREE.InstancedMesh {
     const { uniforms } = this.material;
 
     // Define PhysicsRenderer
-    const vArrayBase = [];
     const aArrayBase = [];
-    const velocityFirstArray = [];
+    const vArrayBase = [];
+    const aFirstArray = [];
+    const vFirstArray = [];
     const delayArray = [];
     const massArray = [];
 
     for (var i = 0; i < this.count * 3; i+= 3) {
       const radian1 = MathEx.radians(Math.random() * 360);
       const radian2 = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 10 + 1;
+      const radius = 2;
       const spherical = MathEx.spherical(radian1, radian2, radius);
+
+      aArrayBase[i + 0] = spherical[0] * 0.5;
+      aArrayBase[i + 1] = spherical[1] * 0.5;
+      aArrayBase[i + 2] = spherical[2] * 0.5;
 
       vArrayBase[i + 0] = spherical[0];
       vArrayBase[i + 1] = spherical[1];
       vArrayBase[i + 2] = spherical[2];
 
-      velocityFirstArray[i + 0] = vArrayBase[i + 0];
-      velocityFirstArray[i + 1] = vArrayBase[i + 1];
-      velocityFirstArray[i + 2] = vArrayBase[i + 2];
+      aFirstArray[i + 0] = aArrayBase[i + 0] * 0.25;
+      aFirstArray[i + 1] = aArrayBase[i + 1] * 0.25;
+      aFirstArray[i + 2] = aArrayBase[i + 2] * 0.25;
 
-      delayArray[i + 0] = Math.random() * 5;
+      vFirstArray[i + 0] = vArrayBase[i + 0];
+      vFirstArray[i + 1] = vArrayBase[i + 1];
+      vFirstArray[i + 2] = vArrayBase[i + 2];
+
+      delayArray[i + 0] = 0;
       delayArray[i + 1] = 0;
       delayArray[i + 2] = 0;
 
@@ -93,6 +102,9 @@ export default class Mover extends THREE.InstancedMesh {
       noiseTex: {
         value: noiseTex
       },
+      accelerationFirst: {
+        value: this.physicsRenderer.createDataTexture(aFirstArray)
+      },
       delay: {
         value: this.physicsRenderer.createDataTexture(delayArray)
       },
@@ -105,7 +117,7 @@ export default class Mover extends THREE.InstancedMesh {
     });
     this.physicsRenderer.mergeVUniforms({
       velocityFirst: {
-        value: this.physicsRenderer.createDataTexture(velocityFirstArray)
+        value: this.physicsRenderer.createDataTexture(vFirstArray)
       }
     });
 
