@@ -29,7 +29,7 @@ void main(void) {
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.008 * step(dl, time);
+  vec3 f = noise * 0.012 * step(dl, time);
 
   float init = step(100.0, length(v));
   vec3 f2 = (f + a + d + af * 0.006) * (1.0 - init) + af * init;
