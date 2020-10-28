@@ -14,13 +14,13 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.ConeBufferGeometry(0.5, 1.5, 5);
+    const baseGeometry = new THREE.ConeBufferGeometry(0.2, 1, 5);
 
     // Add common attributes
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 30000;
+    const count = 10000;
     const baColors = new THREE.InstancedBufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
       baColors.setXYZ(i, 0, 0, 0);
@@ -68,7 +68,7 @@ export default class Mover extends THREE.InstancedMesh {
 
     for (var i = 0; i < verticesBase.length; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 1 + 2;
+      const radius = Math.random() * 10 + 1;
 
       vArrayBase[i + 0] = -29.99;
       vArrayBase[i + 1] = Math.cos(radian) * radius;
@@ -117,9 +117,9 @@ export default class Mover extends THREE.InstancedMesh {
     uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     this.geometry.setAttribute(
       'uvVelocity',
-      this.physicsRenderer.getBufferAttributeUv(
-        this.geometry.attributes.position.count
-      )
+      this.physicsRenderer.getBufferAttributeUv({
+        instanced: true
+      })
     );
   }
   update(renderer, time) {
