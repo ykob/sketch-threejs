@@ -14,14 +14,13 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    console.log(baseGeometry);
+    const baseGeometry = new THREE.ConeBufferGeometry(0.5, 1.5, 5);
 
     // Add common attributes
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 1000;
+    const count = 10000;
     const baColors = new THREE.InstancedBufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
       baColors.setXYZ(i, 0, 0, 0);
@@ -42,7 +41,8 @@ export default class Mover extends THREE.InstancedMesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs
+      fragmentShader: fs,
+      transparent: true
     });
 
     // Create Object3D
@@ -117,7 +117,9 @@ export default class Mover extends THREE.InstancedMesh {
     uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     this.geometry.setAttribute(
       'uvVelocity',
-      this.physicsRenderer.getBufferAttributeUv(24)
+      this.physicsRenderer.getBufferAttributeUv(
+        this.geometry.attributes.position.count
+      )
     );
   }
   update(renderer, time) {

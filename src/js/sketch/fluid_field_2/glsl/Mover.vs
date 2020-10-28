@@ -23,8 +23,8 @@ void main() {
   // Define the point size.
   float distanceFromCamera = length(mvPosition.xyz);
 
-  vColor = a * 0.4 + 0.4 + color;
-  vOpacity = length(a);
+  vColor = a * 2.0 + 0.4;
+  vOpacity = 1.0 - smoothstep(0.9, 1.0, abs(v.x) / 30.0);
 
   gl_Position = projectionMatrix * mvPosition;
 }
