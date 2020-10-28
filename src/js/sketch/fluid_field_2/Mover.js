@@ -21,11 +21,6 @@ export default class Mover extends THREE.InstancedMesh {
 
     // Define attributes of the geometry
     const count = 10000;
-    const baColors = new THREE.InstancedBufferAttribute(new Float32Array(count * 3), 3);
-    for (let i = 0; i < count; i++) {
-      baColors.setXYZ(i, 0, 0, 0);
-    }
-    geometry.setAttribute('color', baColors);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -59,14 +54,13 @@ export default class Mover extends THREE.InstancedMesh {
     const { uniforms } = this.material;
 
     // Define PhysicsRenderer
-    const verticesBase = this.geometry.attributes.color.array;
     const vArrayBase = [];
     const aArrayBase = [];
     const velocityFirstArray = [];
     const delayArray = [];
     const massArray = [];
 
-    for (var i = 0; i < verticesBase.length; i+= 3) {
+    for (var i = 0; i < this.count * 3; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
       const radius = Math.random() * 10 + 1;
 
