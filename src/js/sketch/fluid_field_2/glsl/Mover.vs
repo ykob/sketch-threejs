@@ -59,9 +59,10 @@ vec3 rotate(vec3 v, Quaternion q) {
 void main() {
   vec3 a = texture2D(acceleration, uvVelocity).xyz;
   vec3 v = texture2D(velocity, uvVelocity).xyz;
+  float alpha = texture2D(velocity, uvVelocity).w;
 
   // for scale.
-  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 5.0 + 0.1, 1.0));
+  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 4.0 + 0.1, 1.0));
   vec3 scaledPosition = (scaleMat * vec4(position, 1.0)).xyz;
 
   // for rotation.
@@ -78,7 +79,7 @@ void main() {
   float distanceFromCamera = length(mvPosition.xyz);
 
   vColor = convertHsvToRgb(vec3(degrees(angle) / 180.0, 0.45, 0.8));
-  vOpacity = smoothstep(0.9, 1.0, length(v) / 5.0) * (1.0 - smoothstep(0.9, 1.0, length(v) / 60.0));
+  vOpacity = alpha * 0.8;
 
   gl_Position = projectionMatrix * mvPosition;
 }

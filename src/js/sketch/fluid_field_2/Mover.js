@@ -20,7 +20,7 @@ export default class Mover extends THREE.InstancedMesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 10000;
+    const count = 20000;
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -63,7 +63,7 @@ export default class Mover extends THREE.InstancedMesh {
     for (var i = 0; i < this.count * 3; i+= 3) {
       const radian1 = MathEx.radians(Math.random() * 360);
       const radian2 = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 4 + 1;
+      const radius = Math.random() * 10 + 1;
       const spherical = MathEx.spherical(radian1, radian2, radius);
 
       vArrayBase[i + 0] = spherical[0];
@@ -74,7 +74,7 @@ export default class Mover extends THREE.InstancedMesh {
       velocityFirstArray[i + 1] = vArrayBase[i + 1];
       velocityFirstArray[i + 2] = vArrayBase[i + 2];
 
-      delayArray[i + 0] = Math.random() * 10;
+      delayArray[i + 0] = Math.random() * 5;
       delayArray[i + 1] = 0;
       delayArray[i + 2] = 0;
 

@@ -4,9 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Camera from './Camera';
-import Line from './Line';
 import Mover from './Mover';
-import Points from './Points';
 
 // ==========
 // Define common variables
@@ -22,9 +20,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
-const line = new Line();
 const mover = new Mover();
-const points = new Points();
 
 // ==========
 // Define WebGLContent Class.
@@ -55,13 +51,9 @@ export default class WebGLContent {
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
       mover.start(renderer, noiseTex);
-      line.start(noiseTex, mover.multiTime);
-      points.start(noiseTex, mover.multiTime);
     })
 
-    scene.add(line);
     scene.add(mover);
-    scene.add(points);
 
     camera.start();
   }
@@ -83,9 +75,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
-    line.update(time);
     mover.update(renderer, time);
-    points.update(time);
 
     // Render the 3D scene.
     renderer.setRenderTarget(null);
@@ -93,8 +83,6 @@ export default class WebGLContent {
   }
   resize(resolution) {
     camera.resize(resolution);
-    line.resize(resolution);
-    points.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
 }

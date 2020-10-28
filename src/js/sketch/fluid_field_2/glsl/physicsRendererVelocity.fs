@@ -14,5 +14,5 @@ void main(void) {
   float init = step(60.0, length(v));
   v = (a + v) * (1.0 - init) + vf * init;
 
-  gl_FragColor = vec4(v, 1.0);
+  gl_FragColor = vec4(v, (1.0 - init));
 }
