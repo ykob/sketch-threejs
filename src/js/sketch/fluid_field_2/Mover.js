@@ -20,7 +20,7 @@ export default class Mover extends THREE.InstancedMesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 10000;
+    const count = 30000;
     const baColors = new THREE.InstancedBufferAttribute(new Float32Array(count * 3), 3);
     for (let i = 0; i < count; i++) {
       baColors.setXYZ(i, 0, 0, 0);
