@@ -23,13 +23,13 @@ void main(void) {
   float texColorG = texture2D(noiseTex, (v.zx + v.y + time * multiTime * 14.0) * 0.01).g;
   float texColorB = texture2D(noiseTex, (v.xy + v.z + time * multiTime * 14.0) * 0.01).b;
   vec3 noise = vec3(
-    texColorR,
+    texColorR * 2.0 - 1.0,
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.008 * step(dl, time);
+  vec3 f = noise * 0.014 * step(dl, time);
 
-  float init = clamp(step(30.0, abs(v.x)) + step(30.0, abs(v.y)) + step(30.0, abs(v.z)), 0.0, 1.0);
+  float init = step(60.0, length(v));
   vec3 ff = (f + a + d) * (1.0 - init) + vec3(0.0) * init;
 
   gl_FragColor = vec4(ff, 1.0);

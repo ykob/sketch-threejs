@@ -14,7 +14,7 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.ConeBufferGeometry(0.2, 1, 5);
+    const baseGeometry = new THREE.ConeBufferGeometry(0.1, 1, 5);
 
     // Add common attributes
     geometry.copy(baseGeometry);
@@ -61,12 +61,14 @@ export default class Mover extends THREE.InstancedMesh {
     const massArray = [];
 
     for (var i = 0; i < this.count * 3; i+= 3) {
-      const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 10 + 1;
+      const radian1 = MathEx.radians(Math.random() * 360);
+      const radian2 = MathEx.radians(Math.random() * 360);
+      const radius = Math.random() * 4 + 1;
+      const spherical = MathEx.spherical(radian1, radian2, radius);
 
-      vArrayBase[i + 0] = -29.99;
-      vArrayBase[i + 1] = Math.cos(radian) * radius;
-      vArrayBase[i + 2] = Math.sin(radian) * radius;
+      vArrayBase[i + 0] = spherical[0];
+      vArrayBase[i + 1] = spherical[1];
+      vArrayBase[i + 2] = spherical[2];
 
       velocityFirstArray[i + 0] = vArrayBase[i + 0];
       velocityFirstArray[i + 1] = vArrayBase[i + 1];

@@ -13,6 +13,8 @@ varying vec3 vColor;
 varying float vOpacity;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
+#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 struct Quaternion {
   float x;
@@ -58,20 +60,25 @@ void main() {
   vec3 a = texture2D(acceleration, uvVelocity).xyz;
   vec3 v = texture2D(velocity, uvVelocity).xyz;
 
+  // for scale.
+  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 5.0 + 0.1, 1.0));
+  vec3 scaledPosition = (scaleMat * vec4(position, 1.0)).xyz;
+
+  // for rotation.
   vec3 top = vec3(0.0, 1.0, 0.0);
   vec3 dir = normalize(a);
   vec3 axis = cross(top, dir);
   float angle = acos(dot(top, dir));
   Quaternion q = axisAngle(axis, angle);
-  vec3 rotatePosition = rotate(position, q);
+  vec3 rotatedPosition = rotate(scaledPosition, q);
   
-  vec4 mvPosition = modelViewMatrix * calcTranslateMat4(v) * vec4(rotatePosition, 1.0);
+  vec4 mvPosition = modelViewMatrix * calcTranslateMat4(v) * vec4(rotatedPosition, 1.0);
 
   // Define the point size.
   float distanceFromCamera = length(mvPosition.xyz);
 
-  vColor = a * 2.0 + 0.4;
-  vOpacity = 1.0 - smoothstep(0.9, 1.0, abs(v.x) / 30.0);
+  vColor = convertHsvToRgb(vec3(degrees(angle) / 180.0, 0.45, 0.8));
+  vOpacity = smoothstep(0.9, 1.0, length(v) / 5.0) * (1.0 - smoothstep(0.9, 1.0, length(v) / 60.0));
 
   gl_Position = projectionMatrix * mvPosition;
 }
