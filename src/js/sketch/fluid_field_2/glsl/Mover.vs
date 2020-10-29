@@ -79,7 +79,7 @@ void main() {
   float distanceFromCamera = length(mvPosition.xyz);
 
   vColor = convertHsvToRgb(vec3(degrees(angle) / 180.0, 0.45, 0.8));
-  vOpacity = alpha * 0.8;
+  vOpacity = alpha * 0.4;
 
   gl_Position = projectionMatrix * mvPosition;
 }
