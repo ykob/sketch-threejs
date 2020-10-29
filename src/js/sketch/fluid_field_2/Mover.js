@@ -67,9 +67,9 @@ export default class Mover extends THREE.InstancedMesh {
       const radius = 5;
       const spherical = MathEx.spherical(radian1, radian2, radius);
 
-      aArrayBase[i + 0] = spherical[0] * 0.1;
-      aArrayBase[i + 1] = spherical[1] * 0.1;
-      aArrayBase[i + 2] = spherical[2] * 0.1;
+      aArrayBase[i + 0] = spherical[0] * 0.02;
+      aArrayBase[i + 1] = spherical[1] * 0.02;
+      aArrayBase[i + 2] = spherical[2] * 0.02;
 
       vArrayBase[i + 0] = spherical[0];
       vArrayBase[i + 1] = spherical[1];
