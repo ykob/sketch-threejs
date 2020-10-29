@@ -78,8 +78,14 @@ void main() {
   // Define the point size.
   float distanceFromCamera = length(mvPosition.xyz);
 
-  vColor = convertHsvToRgb(vec3(degrees(angle) / 180.0, 0.45, 0.8));
-  vOpacity = alpha * 0.4;
+  vColor = convertHsvToRgb(
+    vec3(
+      degrees(angle) / 180.0,
+      0.45,
+      0.8
+    )
+  );
+  vOpacity = alpha;
 
   gl_Position = projectionMatrix * mvPosition;
 }

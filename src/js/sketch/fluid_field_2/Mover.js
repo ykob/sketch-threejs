@@ -14,7 +14,7 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.ConeBufferGeometry(0.1, 1, 5);
+    const baseGeometry = new THREE.ConeBufferGeometry(0.1, 2, 5);
 
     // Add common attributes
     geometry.copy(baseGeometry);
@@ -37,9 +37,7 @@ export default class Mover extends THREE.InstancedMesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
+      transparent: true
     });
 
     // Create Object3D
@@ -66,20 +64,20 @@ export default class Mover extends THREE.InstancedMesh {
     for (var i = 0; i < this.count * 3; i+= 3) {
       const radian1 = MathEx.radians(Math.random() * 360);
       const radian2 = MathEx.radians(Math.random() * 360);
-      const radius = 2;
+      const radius = 5;
       const spherical = MathEx.spherical(radian1, radian2, radius);
 
-      aArrayBase[i + 0] = spherical[0] * 0.05;
-      aArrayBase[i + 1] = spherical[1] * 0.05;
-      aArrayBase[i + 2] = spherical[2] * 0.05;
+      aArrayBase[i + 0] = spherical[0] * 0.1;
+      aArrayBase[i + 1] = spherical[1] * 0.1;
+      aArrayBase[i + 2] = spherical[2] * 0.1;
 
       vArrayBase[i + 0] = spherical[0];
       vArrayBase[i + 1] = spherical[1];
       vArrayBase[i + 2] = spherical[2];
 
-      aFirstArray[i + 0] = aArrayBase[i + 0];
-      aFirstArray[i + 1] = aArrayBase[i + 1];
-      aFirstArray[i + 2] = aArrayBase[i + 2];
+      aFirstArray[i + 0] = aArrayBase[i + 0] * 0.3;
+      aFirstArray[i + 1] = aArrayBase[i + 1] * 0.3;
+      aFirstArray[i + 2] = aArrayBase[i + 2] * 0.3;
 
       vFirstArray[i + 0] = vArrayBase[i + 0];
       vFirstArray[i + 1] = vArrayBase[i + 1];
