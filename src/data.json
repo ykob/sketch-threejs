@@ -15,16 +15,16 @@
     "fluid_field_2": {
       "title": "fluid field 2",
       "id": "fluid_field_2",
-      "description": "",
+      "description": "made the cones with Geometry Instancing, and move these with GPGPU and simple physics calculation.",
       "path": "/sketch/fluid_field_2.html",
-      "posted": "2020.11.xx",
+      "posted": "2020.10.29",
       "update": "",
       "color": "white"
     },
     "fluid_field": {
       "title": "fluid field",
       "id": "fluid_field",
-      "description": "the simple 3D fluid field made with a noise texture and gpgpu.",
+      "description": "the simple 3D fluid field made with a noise texture and GPGPU.",
       "path": "/sketch/fluid_field.html",
       "posted": "2020.10.23",
       "update": "",
