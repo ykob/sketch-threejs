@@ -14,13 +14,13 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.ConeBufferGeometry(0.1, 2, 5);
+    const baseGeometry = new THREE.PlaneBufferGeometry(1, 1, 10, 1);
 
     // Add common attributes
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 30000;
+    const count = 10000;
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -37,7 +37,7 @@ export default class Mover extends THREE.InstancedMesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      transparent: true
+      side: THREE.DoubleSide      
     });
 
     // Create Object3D

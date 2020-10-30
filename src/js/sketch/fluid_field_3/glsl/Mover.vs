@@ -62,7 +62,7 @@ void main() {
   float alpha = texture2D(velocity, uvVelocity).w;
 
   // for scale.
-  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 3.0 + 0.1, 1.0));
+  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 20.0 + 0.1, 1.0));
   vec3 scaledPosition = (scaleMat * vec4(position, 1.0)).xyz;
 
   // for rotation.
