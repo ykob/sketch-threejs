@@ -28,18 +28,18 @@ export default class PhysicsRenderer {
     this.camera = new THREE.OrthographicCamera();
     this.acceleration = [
       new THREE.WebGLRenderTarget(0, 0, option),
-      new THREE.WebGLRenderTarget(0, 0, option),
+      new THREE.WebGLRenderTarget(0, 0, option)
     ];
     this.velocity = [
       new THREE.WebGLRenderTarget(0, 0, option),
-      new THREE.WebGLRenderTarget(0, 0, option),
+      new THREE.WebGLRenderTarget(0, 0, option)
     ];
     this.aUniforms = {
       velocity: {
-        value: null,
+        value: null
       },
       acceleration: {
-        value: null,
+        value: null
       },
       time: {
         value: 0
@@ -50,10 +50,10 @@ export default class PhysicsRenderer {
         value: 0
       },
       velocity: {
-        value: null,
+        value: null
       },
       acceleration: {
-        value: null,
+        value: null
       },
       time: {
         value: 0
@@ -65,7 +65,9 @@ export default class PhysicsRenderer {
     this.targetIndex = 0;
   }
   start(renderer, aArrayBase, vArrayBase, aAttrBase, vAttrBase) {
-    this.side = this.vUniforms.side.value = Math.ceil(Math.sqrt(vArrayBase.length / 3));
+    this.side = this.vUniforms.side.value = Math.ceil(
+      Math.sqrt(vArrayBase.length / 3)
+    );
     this.camera.top = this.side * 0.5;
     this.camera.bottom = this.side * -0.5;
     this.camera.right = this.side * 0.5;
@@ -100,8 +102,9 @@ export default class PhysicsRenderer {
       }
 
       // define UV to allow other objects to see the velocity value.
-      this.uvs[i / 3 * 2 + 0] = (i / 3) % this.side / (this.side - 1);
-      this.uvs[i / 3 * 2 + 1] = Math.floor((i / 3) / this.side) / (this.side - 1);
+      this.uvs[(i / 3) * 2 + 0] = ((i / 3) % this.side) / (this.side - 1);
+      this.uvs[(i / 3) * 2 + 1] =
+        Math.floor(i / 3 / this.side) / (this.side - 1);
     }
 
     // set the buffer attribute of acceleration.
@@ -109,15 +112,22 @@ export default class PhysicsRenderer {
       const aAttributeKeys = Object.keys(aAttrBase);
 
       if (aAttributeKeys.length) {
-        for (var i = 0; i < aAttributeKeys.length; i++) {
-          const aAttribute = aAttrBase[aAttributeKeys[i]];
+        for (var i2 = 0; i2 < aAttributeKeys.length; i2++) {
+          const aAttribute = aAttrBase[aAttributeKeys[i2]];
 
-          for (var j = aAttribute.array.length; j < vArray.length / 3 * aAttribute.itemSize; j++) {
+          for (
+            var j = aAttribute.array.length;
+            j < (vArray.length / 3) * aAttribute.itemSize;
+            j++
+          ) {
             aAttribute.array.push(0);
           }
           this.aMesh.geometry.setAttribute(
-            aAttributeKeys[i],
-            new THREE.BufferAttribute(new Float32Array(aAttribute.array), aAttribute.itemSize)
+            aAttributeKeys[i2],
+            new THREE.BufferAttribute(
+              new Float32Array(aAttribute.array),
+              aAttribute.itemSize
+            )
           );
         }
       }
@@ -128,23 +138,30 @@ export default class PhysicsRenderer {
       const vAttributeKeys = Object.keys(vAttrBase);
 
       if (vAttributeKeys.length) {
-        for (var i = 0; i < vAttributeKeys.length; i++) {
-          const vAttribute = vAttrBase[vAttributeKeys[i]];
+        for (var i3 = 0; i3 < vAttributeKeys.length; i3++) {
+          const vAttribute = vAttrBase[vAttributeKeys[i3]];
 
-          for (var j = vAttribute.array.length; j < vArray.length / 3 * vAttribute.itemSize; j++) {
+          for (
+            var j2 = vAttribute.array.length;
+            j2 < (vArray.length / 3) * vAttribute.itemSize;
+            j2++
+          ) {
             vAttribute.array.push(0);
           }
           this.vMesh.geometry.setAttribute(
-            vAttributeKeys[i],
-            new THREE.BufferAttribute(new Float32Array(vAttribute.array), vAttribute.itemSize)
+            vAttributeKeys[i3],
+            new THREE.BufferAttribute(
+              new Float32Array(vAttribute.array),
+              vAttribute.itemSize
+            )
           );
         }
       }
     }
 
-    for (var i = 0; i < 2; i++) {
-      this.acceleration[i].setSize(this.side, this.side);
-      this.velocity[i].setSize(this.side, this.side);
+    for (var i4 = 0; i4 < 2; i4++) {
+      this.acceleration[i4].setSize(this.side, this.side);
+      this.velocity[i4].setSize(this.side, this.side);
     }
 
     // set acceleration of the first frame.
@@ -171,7 +188,7 @@ export default class PhysicsRenderer {
           }
         },
         vertexShader: vs,
-        fragmentShader: fs,
+        fragmentShader: fs
       })
     );
 
@@ -204,7 +221,7 @@ export default class PhysicsRenderer {
           }
         },
         vertexShader: vs,
-        fragmentShader: fs,
+        fragmentShader: fs
       })
     );
 
@@ -230,6 +247,8 @@ export default class PhysicsRenderer {
     this.vUniforms.velocity.value = this.velocity[nextIndex].texture;
     renderer.setRenderTarget(this.velocity[prevIndex]);
     renderer.render(this.vScene, this.camera);
+
+    renderer.setRenderTarget(null);
 
     // update the index number of the renderTarget array.
     this.targetIndex = prevIndex;
