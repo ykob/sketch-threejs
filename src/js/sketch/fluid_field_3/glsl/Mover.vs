@@ -4,8 +4,6 @@ attribute vec2 uvVelocity;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 uniform float time;
-uniform vec2 resolution;
-uniform float pixelRatio;
 uniform sampler2D acceleration;
 uniform sampler2D velocity;
 
