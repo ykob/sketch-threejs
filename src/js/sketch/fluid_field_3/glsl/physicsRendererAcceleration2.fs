@@ -18,8 +18,8 @@ void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.012 + mass * 0.004);
-  vec3 h = hook(v, pv, 0.1, 0.3);
+  vec3 d = drag(a, 0.2);
+  vec3 h = hook(v, pv, 0.6, 0.07);
 
   gl_FragColor = vec4(a + d + h, 1.0);
 }

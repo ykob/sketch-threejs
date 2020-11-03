@@ -7,12 +7,12 @@ import vs from './glsl/Mover.vs';
 import fs from './glsl/Mover.fs';
 import vsa from './glsl/physicsRendererAcceleration.vs';
 import fsa from './glsl/physicsRendererAcceleration.fs';
-import vsa2 from './glsl/physicsRendererAcceleration.vs';
-import fsa2 from './glsl/physicsRendererAcceleration.fs';
+import vsa2 from './glsl/physicsRendererAcceleration2.vs';
+import fsa2 from './glsl/physicsRendererAcceleration2.fs';
 import vsv from './glsl/physicsRendererVelocity.vs';
 import fsv from './glsl/physicsRendererVelocity.fs';
-import vsv2 from './glsl/physicsRendererVelocity.vs';
-import fsv2 from './glsl/physicsRendererVelocity.fs';
+import vsv2 from './glsl/physicsRendererVelocity2.vs';
+import fsv2 from './glsl/physicsRendererVelocity2.fs';
 
 const HEIGHT_SEGMENTS = 5;
 
@@ -20,13 +20,13 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1, 1, 1, HEIGHT_SEGMENTS);
+    const baseGeometry = new THREE.PlaneBufferGeometry(0.5, 0.5, 0.5, HEIGHT_SEGMENTS);
 
     // Add common attributes
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 100;
+    const count = 3000;
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -131,16 +131,8 @@ export default class Mover extends THREE.InstancedMesh {
           mass: {
             value: this.physicsRenderers[i].createDataTexture(massArray)
           },
-          multiTime: {
-            value: this.multiTime
-          },
           prevVelocity: {
             value: this.physicsRenderers[i - 1].getCurrentVelocity()
-          }
-        });
-        this.physicsRenderers[i].mergeVUniforms({
-          velocityFirst: {
-            value: this.physicsRenderers[i].createDataTexture(vFirstArray)
           }
         });
         uniforms[`velocity${i}`] = {
@@ -164,7 +156,7 @@ export default class Mover extends THREE.InstancedMesh {
     for (let i = 0; i < this.physicsRenderers.length; i++) {
       const fr = this.physicsRenderers[i];
       if (i !== 0) {
-        fr.aUniforms.prevVelocity.value = fr.getCurrentVelocity()
+        fr.aUniforms.prevVelocity.value = this.physicsRenderers[i - 1].getCurrentVelocity()
       }
       fr.update(renderer, time);
       if (i === 0) {
@@ -174,7 +166,6 @@ export default class Mover extends THREE.InstancedMesh {
         uniforms[`velocity${i}`].value = fr.getCurrentVelocity();
       }
     }
-    
     uniforms.time.value += time;
   }
 }
