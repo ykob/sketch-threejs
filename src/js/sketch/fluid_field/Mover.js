@@ -125,6 +125,8 @@ export default class Mover extends THREE.Points {
     const { uniforms } = this.material;
 
     this.physicsRenderer.update(renderer, time);
+    uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
+    uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     uniforms.time.value += time;
   }
   resize(resolution) {
