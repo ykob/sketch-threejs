@@ -1,4 +1,5 @@
 attribute vec3 position;
+attribute vec2 uv;
 attribute vec2 uvVelocity;
 
 uniform mat4 modelViewMatrix;
@@ -6,12 +7,15 @@ uniform mat4 projectionMatrix;
 uniform float time;
 uniform sampler2D acceleration;
 uniform sampler2D velocity;
+uniform sampler2D velocity1;
+uniform sampler2D velocity2;
+uniform sampler2D velocity3;
+uniform sampler2D velocity4;
 
 varying vec3 vColor;
 varying float vOpacity;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 struct Quaternion {
@@ -56,12 +60,18 @@ vec3 rotate(vec3 v, Quaternion q) {
 
 void main() {
   vec3 a = texture2D(acceleration, uvVelocity).xyz;
-  vec3 v = texture2D(velocity, uvVelocity).xyz;
+  vec3 v0 = texture2D(velocity, uvVelocity).xyz;
+  vec3 v1 = texture2D(velocity1, uvVelocity).xyz;
+  vec3 v2 = texture2D(velocity2, uvVelocity).xyz;
+  vec3 v3 = texture2D(velocity3, uvVelocity).xyz;
+  vec3 v4 = texture2D(velocity4, uvVelocity).xyz;
+  vec3 v =
+    v0 * step(0.0, uv.y) * (1.0 - step(0.25, uv.y)) +
+    v1 * step(0.25, uv.y) * (1.0 - step(0.5, uv.y)) +
+    v2 * step(0.5, uv.y) * (1.0 - step(0.75, uv.y)) +
+    v3 * step(0.75, uv.y) * (1.0 - step(1.0, uv.y)) +
+    v4 * step(1.0, uv.y);
   float alpha = texture2D(velocity, uvVelocity).w;
-
-  // for scale.
-  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 20.0 + 0.1, 1.0));
-  vec3 scaledPosition = (scaleMat * vec4(position, 1.0)).xyz;
 
   // for rotation.
   vec3 top = vec3(0.0, 1.0, 0.0);
@@ -69,7 +79,7 @@ void main() {
   vec3 axis = cross(top, dir);
   float angle = acos(dot(top, dir));
   Quaternion q = axisAngle(axis, angle);
-  vec3 rotatedPosition = rotate(scaledPosition, q);
+  vec3 rotatedPosition = rotate(position, q);
   
   vec4 mvPosition = modelViewMatrix * calcTranslateMat4(v) * vec4(rotatedPosition, 1.0);
 

@@ -31,14 +31,14 @@ export default class Mover extends THREE.InstancedMesh {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
-        time: {
-          value: 0
-        },
         acceleration: {
           value: null
         },
         velocity: {
           value: null
+        },
+        time: {
+          value: 0
         }
       },
       vertexShader: vs,
@@ -143,29 +143,38 @@ export default class Mover extends THREE.InstancedMesh {
             value: this.physicsRenderers[i].createDataTexture(vFirstArray)
           }
         });
+        uniforms[`velocity${i}`] = {
+          value: this.physicsRenderers[i].getCurrentVelocity()
+        };
       }
     }
-
     uniforms.acceleration.value = this.physicsRenderers[0].getCurrentAcceleration();
     uniforms.velocity.value = this.physicsRenderers[0].getCurrentVelocity();
+
     this.geometry.setAttribute(
       'uvVelocity',
       this.physicsRenderers[0].getBufferAttributeUv({
         instanced: true
       })
     );
-    console.log(this.geometry);
   }
   update(renderer, time) {
     const { uniforms } = this.material;
 
     for (let i = 0; i < this.physicsRenderers.length; i++) {
+      const fr = this.physicsRenderers[i];
       if (i !== 0) {
-        this.physicsRenderers[i].aUniforms.prevVelocity.value =
-          this.physicsRenderers[i - 1].getCurrentVelocity()
+        fr.aUniforms.prevVelocity.value = fr.getCurrentVelocity()
       }
-      this.physicsRenderers[i].update(renderer, time);
+      fr.update(renderer, time);
+      if (i === 0) {
+        uniforms.acceleration.value = fr.getCurrentAcceleration();
+        uniforms.velocity.value = fr.getCurrentVelocity();
+      } else {
+        uniforms[`velocity${i}`].value = fr.getCurrentVelocity();
+      }
     }
+    
     uniforms.time.value += time;
   }
 }
