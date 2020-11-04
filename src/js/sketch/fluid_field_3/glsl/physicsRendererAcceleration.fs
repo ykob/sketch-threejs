@@ -19,15 +19,15 @@ void main(void) {
   float mass = texture2D(mass, vUv).x;
   vec3 d = drag(a, 0.012 + mass * 0.004);
 
-  float texColorR = texture2D(noiseTex, (v.yz + vec2(v.x, 0.0) + time * multiTime * 12.0) * 0.005).r;
-  float texColorG = texture2D(noiseTex, (v.zx + vec2(v.y, 0.0) + time * multiTime * 12.0) * 0.005).g;
-  float texColorB = texture2D(noiseTex, (v.xy + vec2(v.z, 0.0) + time * multiTime * 12.0) * 0.005).b;
+  float texColorR = texture2D(noiseTex, (v.yz + vec2(v.x, 0.0) + time * multiTime * 6.0) * 0.0045).r;
+  float texColorG = texture2D(noiseTex, (v.zx + vec2(v.y, 0.0) + time * multiTime * 6.0) * 0.0045).g;
+  float texColorB = texture2D(noiseTex, (v.xy + vec2(v.z, 0.0) + time * multiTime * 6.0) * 0.0045).b;
   vec3 noise = vec3(
     texColorR * 2.0 - 1.0,
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.014;
+  vec3 f = noise * 0.016;
 
   float init = step(100.0, length(v));
   vec3 f2 = (f + a + d + af * 0.003) * (1.0 - init) + af * init;

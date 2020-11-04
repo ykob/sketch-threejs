@@ -20,8 +20,8 @@ void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.8);
-  vec3 h = hook(v, pv, 0.4, 0.12);
+  vec3 d = drag(a, 0.6);
+  vec3 h = hook(v, pv, 0.8, 0.12);
 
   float init = step(100.0, length(hv));
   vec3 f = (a + d + h) * (1.0 - init) + vec3(0.0) * init;
