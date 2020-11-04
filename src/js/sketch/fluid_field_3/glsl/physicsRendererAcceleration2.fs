@@ -2,6 +2,7 @@ precision highp float;
 
 uniform float time;
 uniform sampler2D prevVelocity;
+uniform sampler2D headVelocity;
 uniform sampler2D velocity;
 uniform sampler2D acceleration;
 uniform sampler2D noiseTex;
@@ -15,11 +16,15 @@ varying vec2 vUv;
 
 void main(void) {
   vec3 pv = texture2D(prevVelocity, vUv).xyz;
+  vec3 hv = texture2D(headVelocity, vUv).xyz;
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.2);
-  vec3 h = hook(v, pv, 0.6, 0.07);
+  vec3 d = drag(a, 0.8);
+  vec3 h = hook(v, pv, 0.4, 0.12);
 
-  gl_FragColor = vec4(a + d + h, 1.0);
+  float init = step(100.0, length(hv));
+  vec3 f = (a + d + h) * (1.0 - init) + vec3(0.0) * init;
+
+  gl_FragColor = vec4(f, 1.0);
 }

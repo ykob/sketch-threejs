@@ -26,7 +26,7 @@ export default class Mover extends THREE.InstancedMesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 3000;
+    const count = 2000;
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -133,6 +133,17 @@ export default class Mover extends THREE.InstancedMesh {
           },
           prevVelocity: {
             value: this.physicsRenderers[i - 1].getCurrentVelocity()
+          },
+          headVelocity: {
+            value: this.physicsRenderers[0].getCurrentVelocity()
+          }
+        });
+        this.physicsRenderers[i].mergeVUniforms({
+          velocityFirst: {
+            value: this.physicsRenderers[i].createDataTexture(vFirstArray)
+          },
+          headVelocity: {
+            value: this.physicsRenderers[0].getCurrentVelocity()
           }
         });
         uniforms[`velocity${i}`] = {
@@ -157,6 +168,8 @@ export default class Mover extends THREE.InstancedMesh {
       const fr = this.physicsRenderers[i];
       if (i !== 0) {
         fr.aUniforms.prevVelocity.value = this.physicsRenderers[i - 1].getCurrentVelocity()
+        fr.aUniforms.headVelocity.value = this.physicsRenderers[0].getCurrentVelocity()
+        fr.vUniforms.headVelocity.value = this.physicsRenderers[0].getCurrentVelocity()
       }
       fr.update(renderer, time);
       if (i === 0) {
