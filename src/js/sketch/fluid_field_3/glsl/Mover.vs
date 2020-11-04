@@ -11,6 +11,11 @@ uniform sampler2D velocity1;
 uniform sampler2D velocity2;
 uniform sampler2D velocity3;
 uniform sampler2D velocity4;
+uniform sampler2D velocity5;
+uniform sampler2D velocity6;
+uniform sampler2D velocity7;
+uniform sampler2D velocity8;
+uniform sampler2D velocity9;
 
 varying vec3 vColor;
 varying float vOpacity;
@@ -65,17 +70,38 @@ void main() {
   vec3 v2 = texture2D(velocity2, uvVelocity).xyz;
   vec3 v3 = texture2D(velocity3, uvVelocity).xyz;
   vec3 v4 = texture2D(velocity4, uvVelocity).xyz;
+  vec3 v5 = texture2D(velocity5, uvVelocity).xyz;
+  vec3 v6 = texture2D(velocity6, uvVelocity).xyz;
+  vec3 v7 = texture2D(velocity7, uvVelocity).xyz;
+  vec3 v8 = texture2D(velocity8, uvVelocity).xyz;
+  vec3 v9 = texture2D(velocity9, uvVelocity).xyz;
   vec3 v =
-    v0 * step(0.0, uv.y) * (1.0 - step(0.25, uv.y)) +
-    v1 * step(0.25, uv.y) * (1.0 - step(0.5, uv.y)) +
-    v2 * step(0.5, uv.y) * (1.0 - step(0.75, uv.y)) +
-    v3 * step(0.75, uv.y) * (1.0 - step(1.0, uv.y)) +
-    v4 * step(1.0, uv.y);
+    v0 * step(0.0, uv.y) * (1.0 - step(1.0 / 10.0, uv.y)) +
+    v1 * step(1.0 / 10.0, uv.y) * (1.0 - step(2.0 / 10.0, uv.y)) +
+    v2 * step(2.0 / 10.0, uv.y) * (1.0 - step(3.0 / 10.0, uv.y)) +
+    v3 * step(3.0 / 10.0, uv.y) * (1.0 - step(4.0 / 10.0, uv.y)) +
+    v4 * step(4.0 / 10.0, uv.y) * (1.0 - step(5.0 / 10.0, uv.y)) +
+    v5 * step(5.0 / 10.0, uv.y) * (1.0 - step(6.0 / 10.0, uv.y)) +
+    v6 * step(6.0 / 10.0, uv.y) * (1.0 - step(7.0 / 10.0, uv.y)) +
+    v7 * step(7.0 / 10.0, uv.y) * (1.0 - step(8.0 / 10.0, uv.y)) +
+    v8 * step(8.0 / 10.0, uv.y) * (1.0 - step(9.0 / 10.0, uv.y)) +
+    v9 * step(9.0 / 10.0, uv.y);
+  vec3 pv =
+    a * step(0.0, uv.y) * (1.0 - step(1.0 / 10.0, uv.y)) +
+    (v - v1) * step(1.0 / 10.0, uv.y) * (1.0 - step(2.0 / 10.0, uv.y)) +
+    (v1 - v2) * step(2.0 / 10.0, uv.y) * (1.0 - step(3.0 / 10.0, uv.y)) +
+    (v2 - v3) * step(3.0 / 10.0, uv.y) * (1.0 - step(4.0 / 10.0, uv.y)) +
+    (v3 - v4) * step(4.0 / 10.0, uv.y) * (1.0 - step(5.0 / 10.0, uv.y)) +
+    (v4 - v5) * step(5.0 / 10.0, uv.y) * (1.0 - step(6.0 / 10.0, uv.y)) +
+    (v5 - v6) * step(6.0 / 10.0, uv.y) * (1.0 - step(7.0 / 10.0, uv.y)) +
+    (v6 - v7) * step(7.0 / 10.0, uv.y) * (1.0 - step(8.0 / 10.0, uv.y)) +
+    (v7 - v8) * step(8.0 / 10.0, uv.y) * (1.0 - step(9.0 / 10.0, uv.y)) +
+    (v8 - v9) * step(9.0 / 10.0, uv.y);
   float alpha = texture2D(velocity, uvVelocity).w;
 
   // for rotation.
   vec3 top = vec3(0.0, 1.0, 0.0);
-  vec3 dir = normalize(a);
+  vec3 dir = normalize(pv);
   vec3 axis = cross(top, dir);
   float angle = acos(dot(top, dir));
   Quaternion q = axisAngle(axis, angle);
