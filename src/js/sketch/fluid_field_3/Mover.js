@@ -26,7 +26,7 @@ export default class Mover extends THREE.InstancedMesh {
     geometry.copy(baseGeometry);
 
     // Define attributes of the geometry
-    const count = 1500;
+    const count = 5000;
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -42,8 +42,7 @@ export default class Mover extends THREE.InstancedMesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs,
-      side: THREE.DoubleSide      
+      fragmentShader: fs
     });
 
     // Create Object3D
