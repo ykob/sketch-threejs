@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "fluid_field_3": {
+      "title": "fluid field 3",
+      "id": "fluid_field_3",
+      "description": "made the codes with Geometry Instancing, and move these with GPGPU and Hooke's law.",
+      "path": "/sketch/fluid_field_3.html",
+      "posted": "2020.11.5",
+      "update": "",
+      "color": "white"
+    },
     "fluid_field_2": {
       "title": "fluid field 2",
       "id": "fluid_field_2",

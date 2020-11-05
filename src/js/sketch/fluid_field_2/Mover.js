@@ -134,6 +134,8 @@ export default class Mover extends THREE.InstancedMesh {
     const { uniforms } = this.material;
 
     this.physicsRenderer.update(renderer, time);
+    uniforms.acceleration.value = this.physicsRenderer.getCurrentAcceleration();
+    uniforms.velocity.value = this.physicsRenderer.getCurrentVelocity();
     uniforms.time.value += time;
   }
 }
