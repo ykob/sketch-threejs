@@ -29,7 +29,7 @@ void main(void) {
   );
   vec3 f = noise * 0.016;
 
-  float init = step(100.0, length(v));
+  float init = step(200.0, length(v));
   vec3 f2 = (f + a + d + af * 0.003) * (1.0 - init) + af * init;
 
   gl_FragColor = vec4(f2, 1.0);
