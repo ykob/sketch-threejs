@@ -10,6 +10,10 @@ Also, I'm accepting donations through Paypal.
 If you can support my project, please consider that.  
 https://www.paypal.me/ykob
 
+## Requirements
+
+Node > v10.x
+
 ## Usage
 
 1. Install the necessary node modules.
