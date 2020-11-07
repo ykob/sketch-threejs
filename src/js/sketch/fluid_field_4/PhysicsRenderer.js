@@ -214,6 +214,7 @@ export default class PhysicsRenderer {
     renderer.render(this.vScene, this.camera);
     this.vScene.remove(velocityInitMesh);
     this.vScene.add(this.vMesh);
+    renderer.setRenderTarget(null);
   }
   update(renderer, time) {
     const prevIndex = Math.abs(this.targetIndex - 1);
