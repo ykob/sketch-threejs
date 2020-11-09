@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
+import MoverCore from './MoverCore';
+import MoverTrail from './MoverTrail';
 import PhysicsRenderer from './PhysicsRenderer';
 
 import vsa from './glsl/physicsRendererAcceleration.vs';
@@ -11,9 +13,8 @@ import vsv from './glsl/physicsRendererVelocity.vs';
 import fsv from './glsl/physicsRendererVelocity.fs';
 import vsv2 from './glsl/physicsRendererVelocity2.vs';
 import fsv2 from './glsl/physicsRendererVelocity2.fs';
-import MoverCore from './MoverCore';
 
-const COUNT = 30000;
+const COUNT = 1000;
 const HEIGHT_SEGMENTS = 10;
 
 export default class Mover extends THREE.Group {
@@ -22,6 +23,7 @@ export default class Mover extends THREE.Group {
 
     this.name = 'Mover';
     this.core = new MoverCore(COUNT);
+    this.trail = new MoverTrail(COUNT, HEIGHT_SEGMENTS);
     this.physicsRenderers = [];
     this.multiTime = new THREE.Vector2(
       Math.random() * 2 - 1,
@@ -120,7 +122,9 @@ export default class Mover extends THREE.Group {
     }
 
     this.core.start(this.physicsRenderers[0]);
+    this.trail.start(this.physicsRenderers);
     this.add(this.core);
+    this.add(this.trail);
   }
   update(renderer, time) {
     for (let i = 0; i < this.physicsRenderers.length; i++) {
@@ -133,5 +137,6 @@ export default class Mover extends THREE.Group {
       fr.update(renderer, time);
     }
     this.core.update(this.physicsRenderers[0], time);
+    this.trail.update(this.physicsRenderers, time);
   }
 }
