@@ -115,12 +115,12 @@ void main() {
 
   vColor = convertHsvToRgb(
     vec3(
-      degrees(angle) / 180.0,
-      0.45,
-      0.8
+      degrees(angle) / 90.0,
+      0.65,
+      0.3
     )
   );
-  vOpacity = alpha;
+  vOpacity = (1.0 - y) * alpha;
 
   gl_Position = projectionMatrix * mvPosition;
 }

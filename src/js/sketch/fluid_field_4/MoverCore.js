@@ -7,7 +7,7 @@ export default class MoverCore extends THREE.InstancedMesh {
   constructor(count) {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.ConeBufferGeometry(1, 3, 5);
+    const baseGeometry = new THREE.ConeBufferGeometry(5, 5, 4);
 
     // Add common attributes
     geometry.copy(baseGeometry);
@@ -27,7 +27,9 @@ export default class MoverCore extends THREE.InstancedMesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      transparent: true
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
     });
 
     // Create Object3D

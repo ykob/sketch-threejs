@@ -14,7 +14,7 @@ import fsv from './glsl/physicsRendererVelocity.fs';
 import vsv2 from './glsl/physicsRendererVelocity2.vs';
 import fsv2 from './glsl/physicsRendererVelocity2.fs';
 
-const COUNT = 1000;
+const COUNT = 5000;
 const HEIGHT_SEGMENTS = 10;
 
 export default class Mover extends THREE.Group {
@@ -40,13 +40,13 @@ export default class Mover extends THREE.Group {
 
     for (var i = 0; i < COUNT * 3; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 1 + 20;
+      const radius = Math.random() * 0.1 + 50;
 
       aArrayBase[i + 0] = 0;
       aArrayBase[i + 1] = 0;
       aArrayBase[i + 2] = 0;
 
-      vArrayBase[i + 0] = -199.99;
+      vArrayBase[i + 0] = -499.99;
       vArrayBase[i + 1] = Math.cos(radian) * radius;
       vArrayBase[i + 2] = Math.sin(radian) * radius;
 

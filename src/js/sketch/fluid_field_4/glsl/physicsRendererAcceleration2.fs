@@ -20,10 +20,10 @@ void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.6);
-  vec3 h = hook(v, pv, 0.8, 0.12);
+  vec3 d = drag(a, 0.9);
+  vec3 h = hook(v, pv, 1.0, 0.4);
 
-  float init = clamp(step(200.0, hv.x) + step(200.0, abs(hv.y)) + step(200.0, abs(hv.z)), 0.0, 1.0);
+  float init = clamp(step(500.0, hv.x) + step(500.0, abs(hv.y)) + step(500.0, abs(hv.z)), 0.0, 1.0);
   vec3 f = (a + d + h) * (1.0 - init) + vec3(0.0) * init;
 
   gl_FragColor = vec4(f, 1.0);

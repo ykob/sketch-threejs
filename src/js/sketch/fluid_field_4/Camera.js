@@ -8,8 +8,8 @@ export default class Camera extends THREE.PerspectiveCamera {
     this.time = 0;
   }
   start() {
-    this.far = 1000;
-    this.setFocalLength(50);
+    this.far = 5000;
+    this.setFocalLength(18);
     this.position.set(80, 0, 0);
     this.lookAt(new THREE.Vector3());
   }

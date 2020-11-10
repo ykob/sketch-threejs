@@ -17,20 +17,20 @@ void main(void) {
   vec3 a = texture2D(acceleration, vUv).xyz;
   vec3 af = texture2D(accelerationFirst, vUv).xyz;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.012 + mass * 0.004);
+  vec3 d = drag(a, 0.032 + mass * 0.006);
 
-  float texColorR = texture2D(noiseTex, (v.yz + vec2(v.x, 0.0) + time * multiTime * 12.0) * 0.006).r;
-  float texColorG = texture2D(noiseTex, (v.zx + vec2(v.y, 0.0) + time * multiTime * 12.0) * 0.006).g;
-  float texColorB = texture2D(noiseTex, (v.xy + vec2(v.z, 0.0) + time * multiTime * 12.0) * 0.006).b;
+  float texColorR = texture2D(noiseTex, (v.yz + vec2(v.x, 0.0) + time * multiTime * 12.0) * 0.003).r;
+  float texColorG = texture2D(noiseTex, (v.zx + vec2(v.y, 0.0) + time * multiTime * 12.0) * 0.003).g;
+  float texColorB = texture2D(noiseTex, (v.xy + vec2(v.z, 0.0) + time * multiTime * 12.0) * 0.003).b;
   vec3 noise = vec3(
     texColorR,
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.016;
+  vec3 f = noise * 0.2;
 
-  float init = clamp(step(200.0, v.x) + step(200.0, abs(v.y)) + step(200.0, abs(v.z)), 0.0, 1.0);
-  vec3 f2 = (f + a + d + af * 0.003) * (1.0 - init) + af * init;
+  float init = clamp(step(500.0, v.x) + step(500.0, abs(v.y)) + step(500.0, abs(v.z)), 0.0, 1.0);
+  vec3 f2 = (f + a + d) * (1.0 - init) + af * init;
 
   gl_FragColor = vec4(f2, 1.0);
 }
