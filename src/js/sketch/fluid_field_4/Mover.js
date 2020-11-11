@@ -60,7 +60,7 @@ export default class Mover extends THREE.Group {
       vFirstArray[i + 1] = vArrayBase[i + 1];
       vFirstArray[i + 2] = vArrayBase[i + 2];
 
-      delayArray[i + 0] = Math.random() * 20;
+      delayArray[i + 0] = Math.random() * 5;
       delayArray[i + 1] = 0;
       delayArray[i + 2] = 0;
 
