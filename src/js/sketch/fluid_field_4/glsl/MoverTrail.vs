@@ -77,7 +77,7 @@ void main() {
   vec3 v8 = texture2D(velocity8, uvVelocity).xyz;
   vec3 v9 = texture2D(velocity9, uvVelocity).xyz;
   vec3 v =
-    v0 * step(0.0, y) * (1.0 - step(1.0 / 10.0, y)) +
+    v0 * (1.0 - step(1.0 / 10.0, y)) +
     v1 * step(1.0 / 10.0, y) * (1.0 - step(2.0 / 10.0, y)) +
     v2 * step(2.0 / 10.0, y) * (1.0 - step(3.0 / 10.0, y)) +
     v3 * step(3.0 / 10.0, y) * (1.0 - step(4.0 / 10.0, y)) +
@@ -88,7 +88,7 @@ void main() {
     v8 * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
     v9 * step(9.0 / 10.0, y);
   vec3 pv =
-    (v + a) * step(0.0, y) * (1.0 - step(1.0 / 10.0, y)) +
+    (v + a) * (1.0 - step(1.0 / 10.0, y)) +
     v0 * step(1.0 / 10.0, y) * (1.0 - step(2.0 / 10.0, y)) +
     v1 * step(2.0 / 10.0, y) * (1.0 - step(3.0 / 10.0, y)) +
     v2 * step(3.0 / 10.0, y) * (1.0 - step(4.0 / 10.0, y)) +
