@@ -1,20 +1,22 @@
 attribute vec3 position;
+attribute vec2 uv;
 attribute vec2 uvVelocity;
 
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
+uniform vec3 cameraPosition;
 uniform float time;
 uniform vec2 resolution;
 uniform float pixelRatio;
 uniform sampler2D acceleration;
 uniform sampler2D velocity;
 
+varying vec2 vUv;
 varying vec3 vColor;
 varying float vOpacity;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 #pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 struct Quaternion {
   float x;
@@ -61,29 +63,24 @@ void main() {
   vec3 v = texture2D(velocity, uvVelocity).xyz;
   float alpha = texture2D(velocity, uvVelocity).w;
 
-  // for scale.
-  mat4 scaleMat = calcScaleMat4(vec3(1.0, length(a) * 0.8 + 0.1, 1.0));
-  vec3 scaledPosition = (scaleMat * vec4(position, 1.0)).xyz;
-
   // for rotation.
-  vec3 top = vec3(0.0, 1.0, 0.0);
-  vec3 dir = normalize(a);
+  vec3 top = vec3(0.0, 0.0, 1.0);
+  vec3 dir = normalize(cameraPosition - v);
   vec3 axis = cross(top, dir);
   float angle = acos(dot(top, dir));
   Quaternion q = axisAngle(axis, angle);
-  vec3 rotatedPosition = rotate(scaledPosition, q);
-  
+  vec3 rotatedPosition = rotate(position, q);
   vec4 mvPosition = modelViewMatrix * calcTranslateMat4(v) * vec4(rotatedPosition, 1.0);
 
-  // Define the point size.
-  float distanceFromCamera = length(mvPosition.xyz);
+  vec3 top2 = vec3(0.0, 1.0, 0.0);
+  vec3 dir2 = normalize(a);
+  float angle2 = acos(dot(top2, dir2));
 
-  vColor = convertHsvToRgb(
-    vec3(
-      degrees(angle) / 90.0,
-      0.65,
-      0.3
-    )
+  vUv = uv;
+  vColor = vec3(
+    degrees(angle2) / 90.0,
+    0.55,
+    0.3
   );
   vOpacity = alpha;
 
