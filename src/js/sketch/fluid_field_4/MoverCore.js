@@ -36,6 +36,7 @@ export default class MoverCore extends THREE.InstancedMesh {
     super(geometry, material, count);
     this.name = 'MoverCore';
     this.frustumCulled = false;
+    this.renderOrder = 2;
   }
   start(physicsRenderer) {
     const { uniforms } = this.material;
