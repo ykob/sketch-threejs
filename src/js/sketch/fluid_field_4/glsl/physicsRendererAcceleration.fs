@@ -29,10 +29,10 @@ void main(void) {
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.2 * step(dl, time);
+  vec3 f = noise * 0.2;
 
   float init = clamp(step(500.0, v.x), 0.0, 1.0);
-  vec3 f2 = (f + a + d) * (1.0 - init) + af * init;
+  vec3 f2 = (a + (f + d) * step(dl, time)) * (1.0 - init) + af * init;
 
   gl_FragColor = vec4(f2, 1.0);
 }

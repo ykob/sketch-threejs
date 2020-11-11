@@ -98,7 +98,7 @@ void main() {
     v6 * step(7.0 / 10.0, y) * (1.0 - step(8.0 / 10.0, y)) +
     v7 * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
     v8 * step(9.0 / 10.0, y);
-  float alpha = texture2D(velocity, uvVelocity).w;
+  float alpha = 1.0 - smoothstep(450.0, 500.0, abs(v.x));
 
   // for rotation.
   vec3 top = vec3(0.0, 1.0, 0.0);

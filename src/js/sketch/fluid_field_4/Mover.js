@@ -14,7 +14,7 @@ import fsv from './glsl/physicsRendererVelocity.fs';
 import vsv2 from './glsl/physicsRendererVelocity2.vs';
 import fsv2 from './glsl/physicsRendererVelocity2.fs';
 
-const COUNT = 2000;
+const COUNT = 3000;
 const HEIGHT_SEGMENTS = 10;
 
 export default class Mover extends THREE.Group {
@@ -41,25 +41,26 @@ export default class Mover extends THREE.Group {
 
     for (var i = 0; i < COUNT * 3; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * Math.random() * 50 + 50;
+      const radiusA = 5;
+      const radiusV = 30;
 
-      aArrayBase[i + 0] = 0;
-      aArrayBase[i + 1] = 0;
-      aArrayBase[i + 2] = 0;
+      aArrayBase[i + 0] = 2;
+      aArrayBase[i + 1] = Math.cos(radian) * radiusA;
+      aArrayBase[i + 2] = Math.sin(radian) * radiusA;
 
       vArrayBase[i + 0] = -499.99;
-      vArrayBase[i + 1] = Math.cos(radian) * radius;
-      vArrayBase[i + 2] = Math.sin(radian) * radius;
+      vArrayBase[i + 1] = Math.cos(radian) * radiusV;
+      vArrayBase[i + 2] = Math.sin(radian) * radiusV;
 
-      aFirstArray[i + 0] = aArrayBase[i + 0] * 0.3;
-      aFirstArray[i + 1] = aArrayBase[i + 1] * 0.3;
-      aFirstArray[i + 2] = aArrayBase[i + 2] * 0.3;
+      aFirstArray[i + 0] = aArrayBase[i + 0];
+      aFirstArray[i + 1] = aArrayBase[i + 1];
+      aFirstArray[i + 2] = aArrayBase[i + 2];
 
       vFirstArray[i + 0] = vArrayBase[i + 0];
       vFirstArray[i + 1] = vArrayBase[i + 1];
       vFirstArray[i + 2] = vArrayBase[i + 2];
 
-      delayArray[i + 0] = Math.random() * 10;
+      delayArray[i + 0] = Math.random() * 20;
       delayArray[i + 1] = 0;
       delayArray[i + 2] = 0;
 
@@ -94,6 +95,9 @@ export default class Mover extends THREE.Group {
           }
         });
         this.physicsRenderers[i].mergeVUniforms({
+          delay: {
+            value: this.physicsRenderers[i].createDataTexture(delayArray)
+          },
           velocityFirst: {
             value: this.physicsRenderers[i].createDataTexture(vFirstArray)
           }
