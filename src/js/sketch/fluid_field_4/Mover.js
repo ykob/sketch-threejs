@@ -42,7 +42,7 @@ export default class Mover extends THREE.Group {
     for (var i = 0; i < COUNT * 3; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
       const radiusA = 5;
-      const radiusV = 30 * Math.random() * 2;
+      const radiusV = 30;
 
       aArrayBase[i + 0] = 3;
       aArrayBase[i + 1] = Math.cos(radian) * radiusA;

@@ -16,7 +16,7 @@ void main() {
       (1.0 - smoothstep(0.2, 0.6, length(p))) * 0.4
     )
   );
-  float opacity = (1.0 - smoothstep(0.8, 1.0, length(p))) * vOpacity;
+  float opacity = (1.0 - smoothstep(0.6, 1.0, length(p))) * vOpacity;
 
   if (opacity <= 0.01) discard;
 
