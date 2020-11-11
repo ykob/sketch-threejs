@@ -15,9 +15,9 @@
     "fluid_field_4": {
       "title": "fluid field 4",
       "id": "fluid_field_4",
-      "description": "",
+      "description": "Particles that have a trail. It consists of two Instanced Meshes.",
       "path": "/sketch/fluid_field_4.html",
-      "posted": "2020.11.xx",
+      "posted": "2020.11.12",
       "update": "",
       "color": "white"
     },
