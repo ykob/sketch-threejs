@@ -23,7 +23,7 @@ void main(void) {
   vec3 d = drag(a, 0.9);
   vec3 h = hook(v, pv, 1.0, 0.4);
 
-  float init = clamp(step(500.0, hv.x) + step(500.0, abs(hv.y)) + step(500.0, abs(hv.z)), 0.0, 1.0);
+  float init = clamp(step(500.0, hv.x), 0.0, 1.0);
   vec3 f = (a + d + h) * (1.0 - init) + vec3(0.0) * init;
 
   gl_FragColor = vec4(f, 1.0);

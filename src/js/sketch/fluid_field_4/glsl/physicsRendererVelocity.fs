@@ -11,8 +11,10 @@ void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 vf = texture2D(velocityFirst, vUv).xyz;
 
-  float init = clamp(step(500.0, v.x) + step(500.0, abs(v.y)) + step(500.0, abs(v.z)), 0.0, 1.0);
+  float init = clamp(step(500.0, v.x), 0.0, 1.0);
   v = (a + v) * (1.0 - init) + vf * init;
 
-  gl_FragColor = vec4(v, (1.0 - init));
+  float alpha = 1.0 - smoothstep(450.0, 500.0, abs(v.x));
+
+  gl_FragColor = vec4(v, alpha);
 }

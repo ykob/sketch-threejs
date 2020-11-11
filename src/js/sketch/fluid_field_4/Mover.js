@@ -36,11 +36,12 @@ export default class Mover extends THREE.Group {
     const vArrayBase = [];
     const aFirstArray = [];
     const vFirstArray = [];
+    const delayArray = [];
     const massArray = [];
 
     for (var i = 0; i < COUNT * 3; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 5 + 75;
+      const radius = Math.random() * Math.random() * 50 + 50;
 
       aArrayBase[i + 0] = 0;
       aArrayBase[i + 1] = 0;
@@ -57,6 +58,10 @@ export default class Mover extends THREE.Group {
       vFirstArray[i + 0] = vArrayBase[i + 0];
       vFirstArray[i + 1] = vArrayBase[i + 1];
       vFirstArray[i + 2] = vArrayBase[i + 2];
+
+      delayArray[i + 0] = Math.random() * 10;
+      delayArray[i + 1] = 0;
+      delayArray[i + 2] = 0;
 
       massArray[i + 0] = Math.random();
       massArray[i + 1] = 0;
@@ -77,6 +82,9 @@ export default class Mover extends THREE.Group {
           },
           accelerationFirst: {
             value: this.physicsRenderers[i].createDataTexture(aFirstArray)
+          },
+          delay: {
+            value: this.physicsRenderers[i].createDataTexture(delayArray)
           },
           mass: {
             value: this.physicsRenderers[i].createDataTexture(massArray)
