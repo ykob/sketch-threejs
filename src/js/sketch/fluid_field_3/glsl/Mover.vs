@@ -88,21 +88,21 @@ void main() {
     v8 * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
     v9 * step(9.0 / 10.0, y);
   vec3 pv =
-    a * step(0.0, y) * (1.0 - step(1.0 / 10.0, y)) +
-    (v - v1) * step(1.0 / 10.0, y) * (1.0 - step(2.0 / 10.0, y)) +
-    (v1 - v2) * step(2.0 / 10.0, y) * (1.0 - step(3.0 / 10.0, y)) +
-    (v2 - v3) * step(3.0 / 10.0, y) * (1.0 - step(4.0 / 10.0, y)) +
-    (v3 - v4) * step(4.0 / 10.0, y) * (1.0 - step(5.0 / 10.0, y)) +
-    (v4 - v5) * step(5.0 / 10.0, y) * (1.0 - step(6.0 / 10.0, y)) +
-    (v5 - v6) * step(6.0 / 10.0, y) * (1.0 - step(7.0 / 10.0, y)) +
-    (v6 - v7) * step(7.0 / 10.0, y) * (1.0 - step(8.0 / 10.0, y)) +
-    (v7 - v8) * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
-    (v8 - v9) * step(9.0 / 10.0, y);
+    (v + a) * (1.0 - step(1.0 / 10.0, y)) +
+    v0 * step(1.0 / 10.0, y) * (1.0 - step(2.0 / 10.0, y)) +
+    v1 * step(2.0 / 10.0, y) * (1.0 - step(3.0 / 10.0, y)) +
+    v2 * step(3.0 / 10.0, y) * (1.0 - step(4.0 / 10.0, y)) +
+    v3 * step(4.0 / 10.0, y) * (1.0 - step(5.0 / 10.0, y)) +
+    v4 * step(5.0 / 10.0, y) * (1.0 - step(6.0 / 10.0, y)) +
+    v5 * step(6.0 / 10.0, y) * (1.0 - step(7.0 / 10.0, y)) +
+    v6 * step(7.0 / 10.0, y) * (1.0 - step(8.0 / 10.0, y)) +
+    v7 * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
+    v8 * step(9.0 / 10.0, y);
   float alpha = texture2D(velocity, uvVelocity).w;
 
   // for rotation.
   vec3 top = vec3(0.0, 1.0, 0.0);
-  vec3 dir = normalize(pv);
+  vec3 dir = normalize(pv - v);
   vec3 axis = cross(top, dir);
   float angle = acos(dot(top, dir));
   Quaternion q = axisAngle(axis, angle);
