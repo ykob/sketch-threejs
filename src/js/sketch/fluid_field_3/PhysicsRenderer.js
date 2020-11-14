@@ -17,7 +17,7 @@ const createMesh = (uniforms, vs, fs) => {
 export default class PhysicsRenderer {
   constructor(avs, afs, vvs, vfs) {
     const option = {
-      type: THREE.FloatType,
+      type: (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) ? THREE.HalfFloatType : THREE.FloatType,
       minFilter: THREE.NearestFilter,
       magFilter: THREE.NearestFilter
     };
