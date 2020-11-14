@@ -14,8 +14,8 @@ import fsv from './glsl/physicsRendererVelocity.fs';
 import vsv2 from './glsl/physicsRendererVelocity2.vs';
 import fsv2 from './glsl/physicsRendererVelocity2.fs';
 
-const COUNT = 3000;
-const HEIGHT_SEGMENTS = 10;
+const COUNT = 5000;
+const HEIGHT_SEGMENTS = 5;
 
 export default class Mover extends THREE.Group {
   constructor() {

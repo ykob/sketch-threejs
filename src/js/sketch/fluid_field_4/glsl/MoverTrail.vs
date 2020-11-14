@@ -71,33 +71,18 @@ void main() {
   vec3 v2 = texture2D(velocity2, uvVelocity).xyz;
   vec3 v3 = texture2D(velocity3, uvVelocity).xyz;
   vec3 v4 = texture2D(velocity4, uvVelocity).xyz;
-  vec3 v5 = texture2D(velocity5, uvVelocity).xyz;
-  vec3 v6 = texture2D(velocity6, uvVelocity).xyz;
-  vec3 v7 = texture2D(velocity7, uvVelocity).xyz;
-  vec3 v8 = texture2D(velocity8, uvVelocity).xyz;
-  vec3 v9 = texture2D(velocity9, uvVelocity).xyz;
   vec3 v =
-    v0 * (1.0 - step(1.0 / 10.0, y)) +
-    v1 * step(1.0 / 10.0, y) * (1.0 - step(2.0 / 10.0, y)) +
-    v2 * step(2.0 / 10.0, y) * (1.0 - step(3.0 / 10.0, y)) +
-    v3 * step(3.0 / 10.0, y) * (1.0 - step(4.0 / 10.0, y)) +
-    v4 * step(4.0 / 10.0, y) * (1.0 - step(5.0 / 10.0, y)) +
-    v5 * step(5.0 / 10.0, y) * (1.0 - step(6.0 / 10.0, y)) +
-    v6 * step(6.0 / 10.0, y) * (1.0 - step(7.0 / 10.0, y)) +
-    v7 * step(7.0 / 10.0, y) * (1.0 - step(8.0 / 10.0, y)) +
-    v8 * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
-    v9 * step(9.0 / 10.0, y);
+    v0 * (1.0 - step(1.0 / 5.0, y)) +
+    v1 * step(1.0 / 5.0, y) * (1.0 - step(2.0 / 5.0, y)) +
+    v2 * step(2.0 / 5.0, y) * (1.0 - step(3.0 / 5.0, y)) +
+    v3 * step(3.0 / 5.0, y) * (1.0 - step(4.0 / 5.0, y)) +
+    v4 * step(4.0 / 5.0, y);
   vec3 pv =
-    (v + a) * (1.0 - step(1.0 / 10.0, y)) +
-    v0 * step(1.0 / 10.0, y) * (1.0 - step(2.0 / 10.0, y)) +
-    v1 * step(2.0 / 10.0, y) * (1.0 - step(3.0 / 10.0, y)) +
-    v2 * step(3.0 / 10.0, y) * (1.0 - step(4.0 / 10.0, y)) +
-    v3 * step(4.0 / 10.0, y) * (1.0 - step(5.0 / 10.0, y)) +
-    v4 * step(5.0 / 10.0, y) * (1.0 - step(6.0 / 10.0, y)) +
-    v5 * step(6.0 / 10.0, y) * (1.0 - step(7.0 / 10.0, y)) +
-    v6 * step(7.0 / 10.0, y) * (1.0 - step(8.0 / 10.0, y)) +
-    v7 * step(8.0 / 10.0, y) * (1.0 - step(9.0 / 10.0, y)) +
-    v8 * step(9.0 / 10.0, y);
+    (v + a) * (1.0 - step(1.0 / 5.0, y)) +
+    v0 * step(1.0 / 5.0, y) * (1.0 - step(2.0 / 5.0, y)) +
+    v1 * step(2.0 / 5.0, y) * (1.0 - step(3.0 / 5.0, y)) +
+    v2 * step(3.0 / 5.0, y) * (1.0 - step(4.0 / 5.0, y)) +
+    v3 * step(4.0 / 5.0, y);
   float alpha = 1.0 - smoothstep(450.0, 490.0, abs(v.x));
 
   // for rotation.
