@@ -4,17 +4,15 @@
   bottom: 22px;
   left: 20px;
   @include l-mobile {
-    right: 90px;
+    right: 20px;
   }
   &__title {
     line-height: 1;
+    margin-bottom: 0.075em;
     margin-left: -0.05em;
     @include flexFontSize(11);
     font-weight: 100;
     letter-spacing: 0.05em;
-    @include l-more-than-mobile {
-      margin-bottom: 0.075em;
-    }
   }
   &__date {
     line-height: 1;
