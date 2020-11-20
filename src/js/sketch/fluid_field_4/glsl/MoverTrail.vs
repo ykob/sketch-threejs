@@ -64,7 +64,7 @@ vec3 rotate(vec3 v, Quaternion q) {
 }
 
 void main() {
-  float y = (position.y + 1.0) / 2.0;
+  float y = uv.y;
   vec3 a = texture2D(acceleration, uvVelocity).xyz;
   vec3 v0 = texture2D(velocity, uvVelocity).xyz;
   vec3 v1 = texture2D(velocity1, uvVelocity).xyz;

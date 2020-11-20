@@ -7,7 +7,7 @@ export default class MoverCore extends THREE.InstancedMesh {
   constructor(count) {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(7, 7);
+    const baseGeometry = new THREE.PlaneBufferGeometry(8, 8);
 
     // Add common attributes
     geometry.copy(baseGeometry);
