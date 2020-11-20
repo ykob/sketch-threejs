@@ -14,7 +14,7 @@ import fsv from './glsl/physicsRendererVelocity.fs';
 import vsv2 from './glsl/physicsRendererVelocity2.vs';
 import fsv2 from './glsl/physicsRendererVelocity2.fs';
 
-const COUNT = 5000;
+const COUNT = 1000;
 const HEIGHT_SEGMENTS = 5;
 
 export default class Mover extends THREE.Group {
@@ -40,29 +40,14 @@ export default class Mover extends THREE.Group {
     const massArray = [];
 
     for (var i = 0; i < COUNT * 3; i+= 3) {
-      const radian = MathEx.radians(Math.random() * 360);
-      const radiusA = 5;
-      const radiusV = 30;
+      const radian1 = MathEx.radians(Math.random() * 360);
+      const radian2 = MathEx.radians(Math.random() * 360);
+      const radius = 40;
+      const spherical = MathEx.spherical(radian1, radian2, radius);
 
-      aArrayBase[i + 0] = 3;
-      aArrayBase[i + 1] = Math.cos(radian) * radiusA;
-      aArrayBase[i + 2] = Math.sin(radian) * radiusA;
-
-      vArrayBase[i + 0] = -499.99;
-      vArrayBase[i + 1] = Math.cos(radian) * radiusV;
-      vArrayBase[i + 2] = Math.sin(radian) * radiusV;
-
-      aFirstArray[i + 0] = aArrayBase[i + 0];
-      aFirstArray[i + 1] = aArrayBase[i + 1];
-      aFirstArray[i + 2] = aArrayBase[i + 2];
-
-      vFirstArray[i + 0] = vArrayBase[i + 0];
-      vFirstArray[i + 1] = vArrayBase[i + 1];
-      vFirstArray[i + 2] = vArrayBase[i + 2];
-
-      delayArray[i + 0] = Math.random() * 5;
-      delayArray[i + 1] = 0;
-      delayArray[i + 2] = 0;
+      vArrayBase[i + 0] = spherical[0];
+      vArrayBase[i + 1] = spherical[1];
+      vArrayBase[i + 2] = spherical[2];
 
       massArray[i + 0] = Math.random();
       massArray[i + 1] = 0;

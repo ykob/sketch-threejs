@@ -7,7 +7,7 @@ export default class MoverTrail extends THREE.InstancedMesh {
   constructor(count, heightSegments) {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.CylinderBufferGeometry(3, 0.4, 2, 6, heightSegments, true);
+    const baseGeometry = new THREE.CylinderBufferGeometry(1, 0.1, 2, 6, heightSegments, true);
 
     // Add common attributes
     geometry.copy(baseGeometry);
