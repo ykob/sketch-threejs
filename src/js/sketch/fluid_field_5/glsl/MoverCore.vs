@@ -61,7 +61,6 @@ vec3 rotate(vec3 v, Quaternion q) {
 void main() {
   vec3 a = texture2D(acceleration, uvVelocity).xyz;
   vec3 v = texture2D(velocity, uvVelocity).xyz;
-  float alpha = texture2D(velocity, uvVelocity).w;
 
   // for rotation.
   vec3 top = vec3(0.0, 0.0, 1.0);
@@ -82,7 +81,7 @@ void main() {
     0.55,
     0.3
   );
-  vOpacity = alpha;
+  vOpacity = 0.4;
 
   gl_Position = projectionMatrix * mvPosition;
 }

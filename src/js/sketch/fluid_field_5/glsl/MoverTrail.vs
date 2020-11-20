@@ -83,7 +83,6 @@ void main() {
     v1 * step(2.0 / 5.0, y) * (1.0 - step(3.0 / 5.0, y)) +
     v2 * step(3.0 / 5.0, y) * (1.0 - step(4.0 / 5.0, y)) +
     v3 * step(4.0 / 5.0, y);
-  float alpha = 1.0 - smoothstep(450.0, 490.0, abs(v.x));
 
   // for rotation.
   vec3 top = vec3(0.0, 1.0, 0.0);
@@ -105,7 +104,7 @@ void main() {
       0.3
     )
   );
-  vOpacity = (1.0 - y) * alpha;
+  vOpacity = (1.0 - y) * 0.4;
 
   gl_Position = projectionMatrix * mvPosition;
 }
