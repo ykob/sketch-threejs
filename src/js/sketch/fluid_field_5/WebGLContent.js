@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Camera from './Camera';
+import Core from './Core';
 import Mover from './Mover';
 
 // ==========
@@ -20,6 +21,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
+const core = new Core();
 const mover = new Mover();
 
 // ==========
@@ -53,6 +55,7 @@ export default class WebGLContent {
       mover.start(renderer, noiseTex);
     })
 
+    scene.add(core);
     scene.add(mover);
 
     camera.start();

@@ -78,10 +78,10 @@ void main() {
   vUv = uv;
   vColor = vec3(
     degrees(angle2) / 90.0,
-    0.55,
-    0.3
+    0.7,
+    0.4
   );
-  vOpacity = 0.4;
+  vOpacity = 1.0;
 
   gl_Position = projectionMatrix * mvPosition;
 }

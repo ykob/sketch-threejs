@@ -40,14 +40,12 @@ export default class Mover extends THREE.Group {
     const massArray = [];
 
     for (var i = 0; i < COUNT * 3; i+= 3) {
-      const radian1 = MathEx.radians(Math.random() * 360);
-      const radian2 = MathEx.radians(Math.random() * 360);
-      const radius = 50;
-      const spherical = MathEx.spherical(radian1, radian2, radius);
+      const radian = MathEx.radians(Math.random() * 360);
+      const radius = Math.random() * 4 + 1;
 
-      vArrayBase[i + 0] = spherical[0];
-      vArrayBase[i + 1] = spherical[1];
-      vArrayBase[i + 2] = spherical[2];
+      vArrayBase[i + 0] = Math.cos(radian) * radius;
+      vArrayBase[i + 1] = Math.sin(radian) * radius;
+      vArrayBase[i + 2] = Math.random() * 2 - 1;
 
       massArray[i + 0] = Math.random();
       massArray[i + 1] = 0;
