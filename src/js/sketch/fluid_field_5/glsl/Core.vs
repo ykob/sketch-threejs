@@ -8,7 +8,7 @@ uniform vec3 cameraPosition;
 uniform float time;
 
 varying vec2 vUv;
-varying vec3 vColor;
+varying float vEdge;
 
 void main(void) {
   // coordinate transformation
@@ -17,7 +17,7 @@ void main(void) {
   float angleToCamera = acos(dot(normalize(cameraPosition), normalize(mPosition.xyz)));
 
   vUv = uv;
-  vColor = vec3(smoothstep(0.5, 1.0, abs(sin(angleToCamera)))) * 0.9;
+  vEdge = smoothstep(0.4, 1.0, abs(sin(angleToCamera)));
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
 }

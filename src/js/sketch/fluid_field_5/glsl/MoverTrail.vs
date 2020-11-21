@@ -100,7 +100,7 @@ void main() {
   vColor = convertHsvToRgb(
     vec3(
       degrees(angle) / 90.0,
-      0.85,
+      0.65,
       0.24
     )
   );

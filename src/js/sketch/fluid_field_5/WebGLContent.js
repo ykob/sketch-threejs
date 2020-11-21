@@ -52,6 +52,7 @@ export default class WebGLContent {
       noiseTex.type = THREE.FloatType;
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
+      core.start(noiseTex);
       mover.start(renderer, noiseTex);
     })
 
@@ -78,6 +79,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    core.update(time);
     mover.update(renderer, time);
 
     // Render the 3D scene.
