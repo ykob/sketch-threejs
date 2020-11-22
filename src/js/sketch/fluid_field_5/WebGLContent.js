@@ -6,6 +6,7 @@ import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import Core from './Core';
 import Mover from './Mover';
+import Background from './Background';
 
 // ==========
 // Define common variables
@@ -23,6 +24,7 @@ const clock = new THREE.Clock({
 //
 const core = new Core();
 const mover = new Mover();
+const bg = new Background();
 
 // ==========
 // Define WebGLContent Class.
@@ -54,10 +56,12 @@ export default class WebGLContent {
       noiseTex.magFilter = THREE.NearestFilter;
       core.start(noiseTex);
       mover.start(renderer, noiseTex);
+      bg.start(noiseTex);
     })
 
     scene.add(core);
     scene.add(mover);
+    scene.add(bg);
 
     camera.start();
   }
@@ -81,6 +85,7 @@ export default class WebGLContent {
     // Update each objects.
     core.update(time);
     mover.update(renderer, time);
+    bg.update(time);
 
     // Render the 3D scene.
     renderer.setRenderTarget(null);
@@ -88,6 +93,7 @@ export default class WebGLContent {
   }
   resize(resolution) {
     camera.resize(resolution);
+    bg.resize(camera, resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
 }
