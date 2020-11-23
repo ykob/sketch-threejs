@@ -18,18 +18,18 @@ void main(void) {
   vec3 a = texture2D(acceleration, vUv).xyz;
   float dl = texture2D(delay, vUv).x;
   float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.0045);
-  vec3 h = hook(v, vec3(0.0), 40.0, 0.0034);
+  vec3 d = drag(a, 0.01);
+  vec3 h = hook(v, vec3(0.0), 50.0, 0.0055);
 
-  float texColorR = texture2D(noiseTex, (v.yz + vec2(sin(v.x * 0.1), 0.0) + multiTime * 8.0) * 0.0029).r;
-  float texColorG = texture2D(noiseTex, (v.zx + vec2(sin(v.y * 0.1), 0.0) + multiTime * 8.0) * 0.0029).g;
-  float texColorB = texture2D(noiseTex, (v.xy + vec2(sin(v.z * 0.1), 0.0) + multiTime * 8.0) * 0.0029).b;
+  float texColorR = texture2D(noiseTex, (v.zy + vec2(sin(v.x * 0.1), 0.0)) * 0.0026 + time * 0.06 + multiTime).r;
+  float texColorG = texture2D(noiseTex, (v.xz + vec2(sin(v.y * 0.1), 0.0)) * 0.0026 - time * 0.06 + multiTime).g;
+  float texColorB = texture2D(noiseTex, (v.yx + vec2(sin(v.z * 0.1), 0.0)) * 0.0026 + time * 0.06 + multiTime).b;
   vec3 noise = vec3(
     texColorR * 2.0 - 1.0,
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.065;
+  vec3 f = noise * 0.09;
 
   vec3 f2 = a + d + f + h;
 
