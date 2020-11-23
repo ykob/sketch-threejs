@@ -23,13 +23,13 @@ export default class Background extends THREE.Mesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs,
-      depthWrite: false
+      fragmentShader: fs
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Background';
+    this.position.z = -1000;
   }
   start(texture) {
     const { uniforms } = this.material;

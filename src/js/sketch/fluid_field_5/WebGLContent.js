@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
@@ -12,7 +11,6 @@ import Background from './Background';
 // Define common variables
 //
 let renderer;
-let controls;
 const scene = new THREE.Scene();
 const camera = new Camera();
 const clock = new THREE.Clock({
@@ -40,7 +38,6 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
-    controls = new OrbitControls(camera, renderer.domElement);
 
     await Promise.all([
       PromiseTextureLoader('/sketch-threejs/img/sketch/fluid_field/noise.jpg'),
