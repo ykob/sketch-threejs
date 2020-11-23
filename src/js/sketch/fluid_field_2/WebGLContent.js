@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
-
 import Camera from './Camera';
 import Mover from './Mover';
 
@@ -21,6 +19,7 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const mover = new Mover();
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define WebGLContent Class.
@@ -39,7 +38,7 @@ export default class WebGLContent {
     controls = new OrbitControls(camera, renderer.domElement);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/fluid_field/noise.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/fluid_field/noise.jpg'),
     ])
     .then(response => {
       const noiseTex = response[0];

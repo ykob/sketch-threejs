@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
-
 import Camera from './Camera';
 import Core from './Core';
 import Mover from './Mover';
@@ -23,6 +21,7 @@ const clock = new THREE.Clock({
 const core = new Core();
 const mover = new Mover();
 const bg = new Background();
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define WebGLContent Class.
@@ -40,7 +39,7 @@ export default class WebGLContent {
     renderer.setClearColor(0x0e0e0e, 1.0);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/fluid_field/noise.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/fluid_field/noise.jpg'),
     ])
     .then(response => {
       const noiseTex = response[0];
