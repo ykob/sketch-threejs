@@ -20,10 +20,11 @@ if (pageId == 'index') {
   });
 
   switch (pageId) {
-    case 'fluid_field_4': require('./sketch/fluid_field_4/init.js').default(); break;
-    case 'fluid_field_3': require('./sketch/fluid_field_3/init.js').default(); break;
-    case 'fluid_field_2': require('./sketch/fluid_field_2/init.js').default(); break;
-    case 'fluid_field':   require('./sketch/fluid_field/init.js').default(); break;
+    case 'flow_field_5': require('./sketch/flow_field_5/init.js').default(); break;
+    case 'flow_field_4': require('./sketch/flow_field_4/init.js').default(); break;
+    case 'flow_field_3': require('./sketch/flow_field_3/init.js').default(); break;
+    case 'flow_field_2': require('./sketch/flow_field_2/init.js').default(); break;
+    case 'flow_field':   require('./sketch/flow_field/init.js').default(); break;
     case 'skull':         require('./sketch/skull/init.js').default(); break;
     case 'aura':          require('./sketch/aura/init.js').default(); break;
     case 'shadow':        require('./sketch/shadow/init.js').default(); break;
