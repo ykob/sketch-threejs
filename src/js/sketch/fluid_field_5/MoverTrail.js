@@ -7,7 +7,7 @@ export default class MoverTrail extends THREE.InstancedMesh {
   constructor(count, heightSegments) {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.CylinderBufferGeometry(0, 0.4, 2, 6, heightSegments, true);
+    const baseGeometry = new THREE.CylinderBufferGeometry(0, 0.8, 2, 3, heightSegments, true);
 
     // Add common attributes
     geometry.copy(baseGeometry);
@@ -36,11 +36,6 @@ export default class MoverTrail extends THREE.InstancedMesh {
     // Create Object3D
     super(geometry, material, count);
     this.name = 'MoverTrail';
-    this.frustumCulled = false;
-    this.multiTime = new THREE.Vector2(
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1
-    );
   }
   start(physicsRenderers) {
     const { uniforms } = this.material;

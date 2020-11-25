@@ -14,7 +14,7 @@ import fsv from './glsl/physicsRendererVelocity.fs';
 import vsv2 from './glsl/physicsRendererVelocity2.vs';
 import fsv2 from './glsl/physicsRendererVelocity2.fs';
 
-const COUNT = 10000;
+const COUNT = 5000;
 const HEIGHT_SEGMENTS = 5;
 
 export default class Mover extends THREE.Group {
@@ -34,10 +34,7 @@ export default class Mover extends THREE.Group {
     // Define PhysicsRenderer
     const aArrayBase = [];
     const vArrayBase = [];
-    const aFirstArray = [];
-    const vFirstArray = [];
-    const delayArray = [];
-    const massArray = [];
+    const hOptArrayBase = [];
 
     for (var i = 0; i < COUNT * 3; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
@@ -47,9 +44,9 @@ export default class Mover extends THREE.Group {
       vArrayBase[i + 1] = Math.sin(radian) * radius;
       vArrayBase[i + 2] = Math.random() * 2 - 1;
 
-      massArray[i + 0] = Math.random();
-      massArray[i + 1] = 0;
-      massArray[i + 2] = 0;
+      hOptArrayBase[i + 0] = Math.random() * 0.02 + 0.08;
+      hOptArrayBase[i + 1] = Math.random() * 0.01 + 0.02;
+      hOptArrayBase[i + 2] = 0;
     }
 
     for (let i = 0; i < HEIGHT_SEGMENTS; i++) {
@@ -64,25 +61,14 @@ export default class Mover extends THREE.Group {
           noiseTex: {
             value: noiseTex
           },
-          accelerationFirst: {
-            value: this.physicsRenderers[i].createDataTexture(aFirstArray)
-          },
-          delay: {
-            value: this.physicsRenderers[i].createDataTexture(delayArray)
-          },
-          mass: {
-            value: this.physicsRenderers[i].createDataTexture(massArray)
-          },
           multiTime: {
             value: this.multiTime
-          }
-        });
-        this.physicsRenderers[i].mergeVUniforms({
-          delay: {
-            value: this.physicsRenderers[i].createDataTexture(delayArray)
           },
-          velocityFirst: {
-            value: this.physicsRenderers[i].createDataTexture(vFirstArray)
+          anchor: {
+            value: new THREE.Vector3()
+          },
+          hookOptions: {
+            value: this.physicsRenderers[0].createDataTexture(hOptArrayBase)
           }
         });
       } else {
@@ -93,22 +79,8 @@ export default class Mover extends THREE.Group {
           vArrayBase
         );
         this.physicsRenderers[i].mergeAUniforms({
-          mass: {
-            value: this.physicsRenderers[i].createDataTexture(massArray)
-          },
           prevVelocity: {
             value: this.physicsRenderers[i - 1].getCurrentVelocity()
-          },
-          headVelocity: {
-            value: this.physicsRenderers[0].getCurrentVelocity()
-          }
-        });
-        this.physicsRenderers[i].mergeVUniforms({
-          velocityFirst: {
-            value: this.physicsRenderers[i].createDataTexture(vFirstArray)
-          },
-          headVelocity: {
-            value: this.physicsRenderers[0].getCurrentVelocity()
           }
         });
       }
@@ -119,13 +91,13 @@ export default class Mover extends THREE.Group {
     this.add(this.core);
     this.add(this.trail);
   }
-  update(renderer, time) {
+  update(renderer, time, core) {
     for (let i = 0; i < this.physicsRenderers.length; i++) {
       const fr = this.physicsRenderers[i];
-      if (i !== 0) {
+      if (i === 0) {
+        fr.aUniforms.anchor.value.copy(core.position);
+      } else {
         fr.aUniforms.prevVelocity.value = this.physicsRenderers[i - 1].getCurrentVelocity()
-        fr.aUniforms.headVelocity.value = this.physicsRenderers[0].getCurrentVelocity()
-        fr.vUniforms.headVelocity.value = this.physicsRenderers[0].getCurrentVelocity()
       }
       fr.update(renderer, time);
     }

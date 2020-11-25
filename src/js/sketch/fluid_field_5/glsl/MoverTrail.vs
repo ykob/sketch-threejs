@@ -11,11 +11,6 @@ uniform sampler2D velocity1;
 uniform sampler2D velocity2;
 uniform sampler2D velocity3;
 uniform sampler2D velocity4;
-uniform sampler2D velocity5;
-uniform sampler2D velocity6;
-uniform sampler2D velocity7;
-uniform sampler2D velocity8;
-uniform sampler2D velocity9;
 
 varying vec3 vColor;
 varying float vOpacity;

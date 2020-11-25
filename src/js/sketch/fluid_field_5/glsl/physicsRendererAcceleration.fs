@@ -4,9 +4,9 @@ uniform float time;
 uniform sampler2D velocity;
 uniform sampler2D acceleration;
 uniform sampler2D noiseTex;
-uniform sampler2D delay;
-uniform sampler2D mass;
 uniform vec2 multiTime;
+uniform vec3 anchor;
+uniform sampler2D hookOptions;
 
 varying vec2 vUv;
 
@@ -16,20 +16,19 @@ varying vec2 vUv;
 void main(void) {
   vec3 v = texture2D(velocity, vUv).xyz;
   vec3 a = texture2D(acceleration, vUv).xyz;
-  float dl = texture2D(delay, vUv).x;
-  float mass = texture2D(mass, vUv).x;
-  vec3 d = drag(a, 0.01);
-  vec3 h = hook(v, vec3(0.0), 50.0, 0.0055);
+  vec3 hopt = texture2D(hookOptions, vUv).xyz;
+  vec3 d = drag(a, hopt.r);
+  vec3 h = hook(v, anchor, 40.0, hopt.g);
 
-  float texColorR = texture2D(noiseTex, (v.zy + vec2(sin(v.x * 0.1), 0.0)) * 0.0026 + time * 0.06 + multiTime).r;
-  float texColorG = texture2D(noiseTex, (v.xz + vec2(sin(v.y * 0.1), 0.0)) * 0.0026 - time * 0.06 + multiTime).g;
-  float texColorB = texture2D(noiseTex, (v.yx + vec2(sin(v.z * 0.1), 0.0)) * 0.0026 + time * 0.06 + multiTime).b;
+  float texColorR = texture2D(noiseTex, v.zy * 0.0024 + step(vUv.x, 0.5) * 0.333 + step(vUv.y, 0.5) * 0.333 + time * 0.04 + multiTime).r;
+  float texColorG = texture2D(noiseTex, v.xz * 0.0024 + step(vUv.x, 0.5) * 0.333 + step(vUv.y, 0.5) * 0.333 - time * 0.04 + multiTime).g;
+  float texColorB = texture2D(noiseTex, v.yx * 0.0024 + step(vUv.x, 0.5) * 0.333 + step(vUv.y, 0.5) * 0.333 + time * 0.04 - multiTime).b;
   vec3 noise = vec3(
     texColorR * 2.0 - 1.0,
     texColorG * 2.0 - 1.0,
     texColorB * 2.0 - 1.0
   );
-  vec3 f = noise * 0.09;
+  vec3 f = noise * 0.8;
 
   vec3 f2 = a + d + f + h;
 
