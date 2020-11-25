@@ -8,6 +8,7 @@
   }
   &__title {
     line-height: 1;
+    margin-top: 0;
     margin-bottom: 0.075em;
     margin-left: -0.05em;
     @include flexFontSize(11);
