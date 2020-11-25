@@ -12,47 +12,47 @@
       "path": "/",
       "color": "white"
     },
-    "fluid_field_5": {
-      "title": "fluid field 5",
-      "id": "fluid_field_5",
+    "flow_field_5": {
+      "title": "flow field 5",
+      "id": "flow_field_5",
       "description": "A bundle of light moved by the gravitational pull of the core and the force of the flow field.",
-      "path": "/sketch/fluid_field_5.html",
+      "path": "/sketch/flow_field_5.html",
       "posted": "2020.11.25",
       "update": "",
       "color": "white"
     },
-    "fluid_field_4": {
-      "title": "fluid field 4",
-      "id": "fluid_field_4",
+    "flow_field_4": {
+      "title": "flow field 4",
+      "id": "flow_field_4",
       "description": "Particles that have a trail. It consists of two Instanced Meshes.",
-      "path": "/sketch/fluid_field_4.html",
+      "path": "/sketch/flow_field_4.html",
       "posted": "2020.11.12",
       "update": "",
       "color": "white"
     },
-    "fluid_field_3": {
-      "title": "fluid field 3",
-      "id": "fluid_field_3",
+    "flow_field_3": {
+      "title": "flow field 3",
+      "id": "flow_field_3",
       "description": "made the codes with Geometry Instancing, and move these with GPGPU and Hooke's law.",
-      "path": "/sketch/fluid_field_3.html",
+      "path": "/sketch/flow_field_3.html",
       "posted": "2020.11.5",
       "update": "",
       "color": "white"
     },
-    "fluid_field_2": {
-      "title": "fluid field 2",
-      "id": "fluid_field_2",
+    "flow_field_2": {
+      "title": "flow field 2",
+      "id": "flow_field_2",
       "description": "made the cones with Geometry Instancing, and move these with GPGPU and simple physics calculation.",
-      "path": "/sketch/fluid_field_2.html",
+      "path": "/sketch/flow_field_2.html",
       "posted": "2020.10.29",
       "update": "",
       "color": "white"
     },
-    "fluid_field": {
-      "title": "fluid field",
-      "id": "fluid_field",
-      "description": "the simple 3D fluid field made with a noise texture and GPGPU.",
-      "path": "/sketch/fluid_field.html",
+    "flow_field": {
+      "title": "flow field",
+      "id": "flow_field",
+      "description": "the simple 3D flow field made with a noise texture and GPGPU.",
+      "path": "/sketch/flow_field.html",
       "posted": "2020.10.23",
       "update": "",
       "color": "white"

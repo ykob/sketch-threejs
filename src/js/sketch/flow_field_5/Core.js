@@ -37,7 +37,7 @@ export default class Core extends THREE.Mesh {
     const { uniforms } = this.material;
 
     uniforms.time.value += time;
-    this.applyHook(0, 0.08);
+    this.applyHook(0, 0.2);
     this.applyDrag(0.6);
     this.position.add(this.acceleration);
     this.lookAt(camera.position);
