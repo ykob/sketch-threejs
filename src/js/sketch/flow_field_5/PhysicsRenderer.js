@@ -168,7 +168,7 @@ export default class PhysicsRenderer {
           }
         },
         vertexShader: vs,
-        fragmentShader: fs,
+        fragmentShader: fs
       })
     );
 
@@ -200,7 +200,7 @@ export default class PhysicsRenderer {
           }
         },
         vertexShader: vs,
-        fragmentShader: fs,
+        fragmentShader: fs
       })
     );
 
