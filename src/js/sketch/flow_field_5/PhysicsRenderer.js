@@ -228,6 +228,9 @@ export default class PhysicsRenderer {
     renderer.setRenderTarget(this.velocity[prevIndex]);
     renderer.render(this.vScene, this.camera);
 
+    // setRenderTarget to null
+    renderer.setRenderTarget(null);
+
     // update the index number of the renderTarget array.
     this.targetIndex = prevIndex;
 
