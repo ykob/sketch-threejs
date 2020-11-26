@@ -156,11 +156,8 @@ export default class PhysicsRenderer {
       THREE.FloatType
     );
 
-    aInitData.format = THREE.RGBFormat;
-    aInitData.type = THREE.FloatType;
     aInitData.magFilter = THREE.NearestFilter;
     aInitData.minFilter = THREE.NearestFilter;
-    aInitData.needsUpdate = true;
 
     const accelerationInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
@@ -186,14 +183,13 @@ export default class PhysicsRenderer {
     const vInitData = new THREE.DataTexture(
       new Float32Array(vArray),
       this.side,
-      this.side
+      this.side,
+      THREE.RGBFormat,
+      THREE.FloatType
     );
 
-    vInitData.format = THREE.RGBFormat;
-    vInitData.type = THREE.FloatType;
     vInitData.magFilter = THREE.NearestFilter;
     vInitData.minFilter = THREE.NearestFilter;
-    vInitData.needsUpdate = true;
 
     const velocityInitMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(2, 2),
