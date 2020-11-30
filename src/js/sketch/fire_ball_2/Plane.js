@@ -6,7 +6,7 @@ import fs from './glsl/Plane.fs';
 export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.OctahedronBufferGeometry(30, 6);
+    const geometry = new THREE.PlaneBufferGeometry(30, 30, 30, 30);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -37,25 +37,5 @@ export default class Plane extends THREE.Mesh {
     const { uniforms } = this.material;
 
     uniforms.time.value += time;
-    this.applyHook(0, 0.2);
-    this.applyDrag(0.6);
-    this.position.add(this.acceleration);
-    this.lookAt(camera.position);
-  }
-  applyDrag(value) {
-    const force = this.acceleration.clone();
-
-    force.multiplyScalar(-1);
-    force.normalize();
-    force.multiplyScalar(this.acceleration.length() * value);
-    this.acceleration.add(force);
-  }
-  applyHook(restLength, k) {
-    const force = this.position.clone().sub(this.anchor);
-    const distance = force.length() - restLength;
-
-    force.normalize();
-    force.multiplyScalar(-1 * k * distance);
-    this.acceleration.add(force);
   }
 }

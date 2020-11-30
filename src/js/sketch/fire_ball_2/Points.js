@@ -63,12 +63,8 @@ export default class Points extends THREE.Points {
     const { uniforms } = this.material;
 
     // Define PhysicsRenderer
-    const verticesBase = this.geometry.attributes.position.array;
-    const vArrayBase = [];
     const aArrayBase = [];
-    const velocityFirstArray = [];
-    const delayArray = [];
-    const massArray = [];
+    const vArrayBase = [];
 
     for (var i = 0; i < verticesBase.length; i+= 3) {
       const radian = MathEx.radians(Math.random() * 360);
@@ -77,18 +73,6 @@ export default class Points extends THREE.Points {
       vArrayBase[i + 0] = -29.99;
       vArrayBase[i + 1] = Math.cos(radian) * radius;
       vArrayBase[i + 2] = Math.sin(radian) * radius;
-
-      velocityFirstArray[i + 0] = vArrayBase[i + 0];
-      velocityFirstArray[i + 1] = vArrayBase[i + 1];
-      velocityFirstArray[i + 2] = vArrayBase[i + 2];
-
-      delayArray[i + 0] = Math.random() * 10;
-      delayArray[i + 1] = 0;
-      delayArray[i + 2] = 0;
-
-      massArray[i + 0] = Math.random();
-      massArray[i + 1] = 0;
-      massArray[i + 2] = 0;
     }
 
     this.physicsRenderer = new PhysicsRenderer(vsa, fsa, vsv, fsv);
@@ -100,20 +84,6 @@ export default class Points extends THREE.Points {
     this.physicsRenderer.mergeAUniforms({
       noiseTex: {
         value: noiseTex
-      },
-      delay: {
-        value: this.physicsRenderer.createDataTexture(delayArray)
-      },
-      mass: {
-        value: this.physicsRenderer.createDataTexture(massArray)
-      },
-      multiTime: {
-        value: this.multiTime
-      }
-    });
-    this.physicsRenderer.mergeVUniforms({
-      velocityFirst: {
-        value: this.physicsRenderer.createDataTexture(velocityFirstArray)
       }
     });
 
