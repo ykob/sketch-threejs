@@ -24,16 +24,14 @@ export default class Plane extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Core';
-    this.acceleration = new THREE.Vector3();
-    this.anchor = new THREE.Vector3();
+    this.name = 'Plane';
   }
   start(noiseTex) {
     const { uniforms } = this.material;
 
     uniforms.noiseTex.value = noiseTex;
   }
-  update(time, camera) {
+  update(time) {
     const { uniforms } = this.material;
 
     uniforms.time.value += time;

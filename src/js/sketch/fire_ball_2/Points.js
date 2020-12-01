@@ -51,13 +51,9 @@ export default class Points extends THREE.Points {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Mover';
+    this.name = 'Points';
     this.frustumCulled = false;
     this.physicsRenderer;
-    this.multiTime = new THREE.Vector2(
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1
-    );
   }
   start(renderer, noiseTex) {
     const { uniforms } = this.material;
