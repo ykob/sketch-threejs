@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import Camera from './Camera';
+import Plane from './Plane';
 
 // ==========
 // Define common variables
@@ -15,6 +16,8 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
+const plane = new Plane();
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define WebGLContent Class.
@@ -22,7 +25,7 @@ const clock = new THREE.Clock({
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
+  async start(canvas) {
     renderer = new THREE.WebGL1Renderer({
       alpha: true,
       antialias: true,
@@ -30,6 +33,23 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
+
+    await Promise.all([
+      texLoader.loadAsync('/sketch-threejs/img/sketch/flow_field/noise.jpg'),
+    ])
+    .then(response => {
+      const noiseTex = response[0];
+
+      noiseTex.wrapS = THREE.RepeatWrapping;
+      noiseTex.wrapT = THREE.RepeatWrapping;
+      noiseTex.format = THREE.RGBFormat;
+      noiseTex.type = THREE.FloatType;
+      noiseTex.minFilter = THREE.NearestFilter;
+      noiseTex.magFilter = THREE.NearestFilter;
+      plane.start(noiseTex);
+    })
+
+    scene.add(plane);
 
     camera.start();
   }
