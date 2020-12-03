@@ -9,6 +9,12 @@ export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(30, 30, SEGMENT, SEGMENT);
+    const { count } = geometry.attributes.position;
+    const baAccelerations = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
+    for (let i = 0; i < count; i++) {
+      baAccelerations.setXYZ(i, 0, 0, 0);
+    }
+    geometry.setAttribute('acceleration', baAccelerations);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
