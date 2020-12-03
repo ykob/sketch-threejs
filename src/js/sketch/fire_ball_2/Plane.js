@@ -30,11 +30,17 @@ export default class Plane extends THREE.Mesh {
     this.name = 'Plane';
   }
   start(noiseTex) {
+    const uv = this.geometry.attributes.uv.array;
     const { uniforms } = this.material;
 
     uniforms.noiseTex.value = noiseTex;
 
     console.log(this.geometry);
+    for (let i = 0; i < uv.length; i += 2) {
+      const x = Math.floor(uv[i + 0] * SEGMENT);
+      const y = SEGMENT - Math.floor(uv[i + 1] * SEGMENT);
+      console.log(x, y);
+    }
   }
   update(time) {
     const { uniforms } = this.material;
