@@ -4,17 +4,29 @@ import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
 
 const SEGMENT = 3;
+const hookes = [];
 
 export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(30, 30, SEGMENT, SEGMENT);
     const { count } = geometry.attributes.position;
-    const baAccelerations = new THREE.BufferAttribute(new Float32Array(count * 3), 3);
+    const uv = geometry.attributes.uv.array;
+    const baHookesIndices = new THREE.BufferAttribute(new Float32Array(count), 1);
+
     for (let i = 0; i < count; i++) {
-      baAccelerations.setXYZ(i, 0, 0, 0);
+      hookes.push({
+        velocity: new THREE.Vector3(),
+        accleration: new THREE.Vector3()
+      });
     }
-    geometry.setAttribute('acceleration', baAccelerations);
+    for (let i = 0; i < uv.length; i += 2) {
+      const x = Math.floor(uv[i + 0] * SEGMENT);
+      const y = SEGMENT - Math.floor(uv[i + 1] * SEGMENT);
+
+      baHookesIndices.setXYZ(i / 2, x + y * (SEGMENT + 1));
+    }
+    geometry.setAttribute('hookesIndex', baHookesIndices);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
