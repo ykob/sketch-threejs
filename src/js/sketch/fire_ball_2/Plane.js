@@ -3,8 +3,25 @@ import * as THREE from 'three';
 import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
 
-const SEGMENT = 3;
+const SEGMENT = 9;
 const hookes = [];
+
+const applyDrag = (acceleration, value) => {
+  const force = acceleration.clone();
+
+  force.multiplyScalar(-1);
+  force.normalize();
+  force.multiplyScalar(acceleration.length() * value);
+  acceleration.add(force);
+};
+const applyHook = (position, acceleration, anchor, restLength, k) => {
+  const force = position.clone().sub(anchor);
+  const distance = force.length() - restLength;
+
+  force.normalize();
+  force.multiplyScalar(-1 * k * distance);
+  acceleration.add(force);
+};
 
 export default class Plane extends THREE.Mesh {
   constructor() {
@@ -20,7 +37,7 @@ export default class Plane extends THREE.Mesh {
 
       hookes.push({
         velocity: new THREE.Vector3(),
-        accleration: new THREE.Vector3()
+        acceleration: new THREE.Vector3()
       });
       baHookesIndices.setXYZ(i, x + y * (SEGMENT + 1));
     }
@@ -44,23 +61,47 @@ export default class Plane extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Plane';
+    this.acceleration = new THREE.Vector3();
+    this.anchor = new THREE.Vector3();
   }
   start(noiseTex) {
-    const uv = this.geometry.attributes.uv.array;
     const { uniforms } = this.material;
+    const { position, hookesIndex } = this.geometry.attributes;
 
     uniforms.noiseTex.value = noiseTex;
 
-    console.log(this.geometry);
-    for (let i = 0; i < uv.length; i += 2) {
-      const x = Math.floor(uv[i + 0] * SEGMENT);
-      const y = SEGMENT - Math.floor(uv[i + 1] * SEGMENT);
-      console.log(x, y);
+    for (let i = 0; i < hookesIndex.array.length; i++) {
+      const index = hookesIndex.getX(i);
+      const { velocity } = hookes[index];
+
+      velocity.set(
+        position.getX(i),
+        position.getY(i),
+        position.getZ(i)
+      );
     }
   }
   update(time) {
     const { uniforms } = this.material;
+    const { position, hookesIndex } = this.geometry.attributes;
 
     uniforms.time.value += time;
+
+    for (let i = 0; i < hookes.length; i++) {
+      const { velocity, acceleration } = hookes[i];
+      const index = hookesIndex.getX(i);
+      const k = Math.max(index - SEGMENT - 1, -1);
+
+      if (k > -1) {
+        const anchor = hookes[k].velocity;
+
+        acceleration.add(new THREE.Vector3(0, -1, 0));
+        applyHook(velocity, acceleration, anchor, 1, 0.4);
+        applyDrag(acceleration, 0.6);
+        velocity.add(acceleration);
+      }
+      position.setXYZ(index, velocity.x, velocity.y, velocity.z);
+      position.needsUpdate = true;
+    }
   }
 }

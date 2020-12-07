@@ -71,6 +71,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    plane.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
