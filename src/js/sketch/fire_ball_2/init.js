@@ -16,6 +16,21 @@ export default async function() {
     webglContent.resize(resolution);
   };
   const on = () => {
+    const touchstart = (e) => {
+      webglContent.touchStart(e, resolution);
+    }
+    const touchmove = (e) => {
+      webglContent.touchMove(e, resolution);
+    }
+    const touchend = () => {
+      webglContent.touchEnd();
+    }
+    canvas.addEventListener('mousedown', touchstart, { passive: false });
+    window.addEventListener('mousemove', touchmove, { passive: false });
+    window.addEventListener('mouseup', touchend);
+    canvas.addEventListener('touchstart', touchstart, { passive: false });
+    window.addEventListener('touchmove', touchmove, { passive: false });
+    window.addEventListener('touchend', touchend);
     window.addEventListener('blur', () => {
       webglContent.pause();
     });

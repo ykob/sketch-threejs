@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
@@ -26,7 +27,7 @@ const applyHook = (position, acceleration, anchor, restLength, k) => {
 export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(30, 30, SEGMENT, SEGMENT);
+    const geometry = new THREE.PlaneBufferGeometry(15, 15, SEGMENT, SEGMENT);
     const { count } = geometry.attributes.position;
     const { uv } = geometry.attributes;
     const baHookesIndices = new THREE.BufferAttribute(new Float32Array(count), 1);
@@ -61,7 +62,6 @@ export default class Plane extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Plane';
-    this.acceleration = new THREE.Vector3();
     this.anchor = new THREE.Vector3();
   }
   start(noiseTex) {
@@ -95,11 +95,26 @@ export default class Plane extends THREE.Mesh {
       if (k > -1) {
         const anchor = hookes[k].velocity;
 
-        acceleration.add(new THREE.Vector3(0, -1, 0));
-        applyHook(velocity, acceleration, anchor, 1, 0.4);
-        applyDrag(acceleration, 0.6);
-        velocity.add(acceleration);
+        acceleration.add(new THREE.Vector3(0, 1.7, 0));
+        applyHook(velocity, acceleration, anchor, 1, 0.74);
+      } else {
+        applyHook(
+          velocity,
+          acceleration,
+          this.anchor
+            .clone()
+            .add(
+              new THREE.Vector3(
+                (i / SEGMENT * 2 - 1) * 10,
+                0,
+                Math.cos(MathEx.radians(((i / SEGMENT) * 2 - 1) * 90)) * 10,
+              )),
+          1,
+          0.74
+        );
       }
+      applyDrag(acceleration, 0.7);
+      velocity.add(acceleration);
       position.setXYZ(index, velocity.x, velocity.y, velocity.z);
       position.needsUpdate = true;
     }

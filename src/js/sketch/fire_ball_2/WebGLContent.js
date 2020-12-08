@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 import Camera from './Camera';
 import Plane from './Plane';
@@ -18,6 +19,8 @@ const clock = new THREE.Clock({
 //
 const plane = new Plane();
 const texLoader = new THREE.TextureLoader();
+const vTouch = new THREE.Vector2();
+let isTouched = false;
 
 // ==========
 // Define WebGLContent Class.
@@ -79,5 +82,47 @@ export default class WebGLContent {
   resize(resolution) {
     camera.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
+  }
+  setCoreAnchor(resolution) {
+    const corePositionZ =
+      (vTouch.x / resolution.x * 2.0 - 1.0) * 50 +
+      (vTouch.y / resolution.y * 2.0 - 1.0) * 50;
+    const height = Math.abs(
+      (camera.position.z - corePositionZ) *
+        Math.tan(MathEx.radians(camera.fov) / 2) *
+        2
+    );
+    const width = height * camera.aspect;
+
+    plane.anchor.set(
+      (vTouch.x / resolution.x - 0.5) * width,
+      -(vTouch.y / resolution.y - 0.5) * height,
+      corePositionZ
+    );
+  }
+  touchStart(e, resolution) {
+    if (!e.touches) e.preventDefault();
+
+    vTouch.set(
+      (e.touches) ? e.touches[0].clientX : e.clientX,
+      (e.touches) ? e.touches[0].clientY : e.clientY
+    );
+    isTouched = true;
+    this.setCoreAnchor(resolution);
+  }
+  touchMove(e, resolution) {
+    if (!e.touches) e.preventDefault();
+
+    if (isTouched === true) {
+      vTouch.set(
+        (e.touches) ? e.touches[0].clientX : e.clientX,
+        (e.touches) ? e.touches[0].clientY : e.clientY
+      );
+      this.setCoreAnchor(resolution);
+    }
+  }
+  touchEnd() {
+    plane.anchor.set(0, 0, 0);
+    isTouched = false;
   }
 }
