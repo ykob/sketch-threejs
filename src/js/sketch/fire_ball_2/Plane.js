@@ -96,22 +96,30 @@ export default class Plane extends THREE.Mesh {
         const anchor = hookes[k].velocity;
 
         acceleration.add(new THREE.Vector3(0, 1.7, 0));
-        applyHook(velocity, acceleration, anchor, 1, 0.74);
+        applyHook(velocity, acceleration, anchor, 1, 1.5);
       } else {
-        applyHook(
-          velocity,
-          acceleration,
-          this.anchor
-            .clone()
-            .add(
-              new THREE.Vector3(
-                (i / SEGMENT * 2 - 1) * 10,
-                0,
-                Math.cos(MathEx.radians(((i / SEGMENT) * 2 - 1) * 90)) * 10,
-              )),
-          1,
-          0.74
-        );
+        if (i === 0 || i === SEGMENT) {
+          applyHook(
+            velocity,
+            acceleration,
+            this.anchor
+              .clone()
+              .add(
+                new THREE.Vector3(
+                  (i / SEGMENT * 2 - 1) * 10,
+                  0,
+                  0,
+                )),
+            1,
+            0.74
+          );
+        } else {
+          const anchor1 = hookes[i - 1].velocity;
+          const anchor2 = hookes[i + 1].velocity;
+
+          applyHook(velocity, acceleration, anchor1, 1, 1.5);
+          applyHook(velocity, acceleration, anchor2, 1, 1.5);
+        }
       }
       applyDrag(acceleration, 0.7);
       velocity.add(acceleration);
