@@ -84,11 +84,8 @@ export default class WebGLContent {
     renderer.setSize(resolution.x, resolution.y);
   }
   setCoreAnchor(resolution) {
-    const corePositionZ =
-      (vTouch.x / resolution.x * 2.0 - 1.0) * 50 +
-      (vTouch.y / resolution.y * 2.0 - 1.0) * 50;
     const height = Math.abs(
-      (camera.position.z - corePositionZ) *
+      camera.position.z *
         Math.tan(MathEx.radians(camera.fov) / 2) *
         2
     );
@@ -97,7 +94,7 @@ export default class WebGLContent {
     plane.anchor.set(
       (vTouch.x / resolution.x - 0.5) * width,
       -(vTouch.y / resolution.y - 0.5) * height,
-      corePositionZ
+      0
     );
   }
   touchStart(e, resolution) {
