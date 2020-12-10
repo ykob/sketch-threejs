@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
