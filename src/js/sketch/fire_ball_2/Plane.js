@@ -95,8 +95,8 @@ export default class Plane extends THREE.Mesh {
       if (k > -1) {
         const anchor = hookes[k].velocity;
 
-        acceleration.add(new THREE.Vector3(0, 1.7, 0));
-        applyHook(velocity, acceleration, anchor, 1, 1.5);
+        acceleration.add(new THREE.Vector3(0, -1.5, 0));
+        applyHook(velocity, acceleration, anchor, 1, 1.4);
       } else {
         if (i === 0 || i === SEGMENT_X) {
           applyHook(
@@ -117,14 +117,36 @@ export default class Plane extends THREE.Mesh {
           const anchor1 = hookes[i - 1].velocity;
           const anchor2 = hookes[i + 1].velocity;
 
-          applyHook(velocity, acceleration, anchor1, 1, 1.5);
-          applyHook(velocity, acceleration, anchor2, 1, 1.5);
+          applyHook(velocity, acceleration, anchor1, 1, 1.4);
+          applyHook(velocity, acceleration, anchor2, 1, 1.4);
         }
       }
       applyDrag(acceleration, 0.7);
       velocity.add(acceleration);
       position.setXYZ(index, velocity.x, velocity.y, velocity.z);
       position.needsUpdate = true;
+    }
+    for (let i = 0; i < hookes.length; i++) {
+      const { normal } = this.geometry.attributes;
+      const index = hookesIndex.getX(i);
+      const i2 = (i <= SEGMENT_X) ? i + SEGMENT_X + 1 : i - SEGMENT_X - 1;
+      const i3 = (i % (SEGMENT_X + 1) === 0) ? i + 1 : i - 1;
+      const v1 = hookes[i].velocity;
+      const v2 = hookes[i2].velocity;
+      const v3 = hookes[i3].velocity;
+      const n1 = v1.clone().sub(v2).normalize();
+      const n2 = v1.clone().sub(v3).normalize();
+      let cross;
+
+      if (i <= SEGMENT_X && i % (SEGMENT_X + 1) === 0) {
+        cross = n1.cross(n2)
+      } else if (i <= SEGMENT_X || i % (SEGMENT_X + 1) === 0) {
+        cross = n2.cross(n1)
+      } else {
+        cross = n1.cross(n2)
+      }
+      normal.setXYZ(index, cross.x, cross.y, cross.z);
+      normal.needsUpdate = true;
     }
   }
 }
