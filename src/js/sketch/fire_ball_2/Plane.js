@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
 
-const SEGMENT = 9;
+const SEGMENT_X = 9;
+const SEGMENT_Y = 18;
 const hookes = [];
 
 const applyDrag = (acceleration, value) => {
@@ -26,20 +27,20 @@ const applyHook = (position, acceleration, anchor, restLength, k) => {
 export default class Plane extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(15, 15, SEGMENT, SEGMENT);
+    const geometry = new THREE.PlaneBufferGeometry(15, 15, SEGMENT_X, SEGMENT_Y);
     const { count } = geometry.attributes.position;
     const { uv } = geometry.attributes;
     const baHookesIndices = new THREE.BufferAttribute(new Float32Array(count), 1);
 
     for (let i = 0; i < count; i++) {
-      const x = Math.floor(uv.getX(i) * SEGMENT);
-      const y = SEGMENT - Math.floor(uv.getY(i) * SEGMENT);
+      const x = Math.round(uv.getX(i) * SEGMENT_X);
+      const y = Math.round(SEGMENT_Y - uv.getY(i) * SEGMENT_Y);
 
       hookes.push({
         velocity: new THREE.Vector3(),
         acceleration: new THREE.Vector3()
       });
-      baHookesIndices.setXYZ(i, x + y * (SEGMENT + 1));
+      baHookesIndices.setXYZ(i, x + y * (SEGMENT_X + 1));
     }
     geometry.setAttribute('hookesIndex', baHookesIndices);
 
@@ -55,7 +56,7 @@ export default class Plane extends THREE.Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      wireframe: true
+      side: THREE.DoubleSide
     });
 
     // Create Object3D
@@ -89,7 +90,7 @@ export default class Plane extends THREE.Mesh {
     for (let i = 0; i < hookes.length; i++) {
       const { velocity, acceleration } = hookes[i];
       const index = hookesIndex.getX(i);
-      const k = Math.max(index - SEGMENT - 1, -1);
+      const k = Math.max(index - SEGMENT_X - 1, -1);
 
       if (k > -1) {
         const anchor = hookes[k].velocity;
@@ -97,7 +98,7 @@ export default class Plane extends THREE.Mesh {
         acceleration.add(new THREE.Vector3(0, 1.7, 0));
         applyHook(velocity, acceleration, anchor, 1, 1.5);
       } else {
-        if (i === 0 || i === SEGMENT) {
+        if (i === 0 || i === SEGMENT_X) {
           applyHook(
             velocity,
             acceleration,
@@ -105,7 +106,7 @@ export default class Plane extends THREE.Mesh {
               .clone()
               .add(
                 new THREE.Vector3(
-                  (i / SEGMENT * 2 - 1) * 10,
+                  (i / SEGMENT_X * 2 - 1) * 10,
                   0,
                   0,
                 )),
