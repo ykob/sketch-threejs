@@ -81,7 +81,7 @@ export default class Plane extends THREE.Mesh {
       );
     }
   }
-  update(time) {
+  update(time, core) {
     const { uniforms } = this.material;
     const { position, hookesIndex } = this.geometry.attributes;
 
@@ -95,31 +95,17 @@ export default class Plane extends THREE.Mesh {
       if (k > -1) {
         const anchor = hookes[k].velocity;
 
-        acceleration.add(new THREE.Vector3(0, -1.5, 0));
+        acceleration.add(new THREE.Vector3(0, 1.5, 0));
         applyHook(velocity, acceleration, anchor, 1, 1.4);
       } else {
-        if (i === 0 || i === SEGMENT_X) {
-          applyHook(
-            velocity,
-            acceleration,
-            this.anchor
-              .clone()
-              .add(
-                new THREE.Vector3(
-                  (i / SEGMENT_X * 2 - 1) * 10,
-                  0,
-                  0,
-                )),
-            1,
-            0.74
-          );
-        } else {
-          const anchor1 = hookes[i - 1].velocity;
-          const anchor2 = hookes[i + 1].velocity;
-
-          applyHook(velocity, acceleration, anchor1, 1, 1.4);
-          applyHook(velocity, acceleration, anchor2, 1, 1.4);
-        }
+        velocity
+          .copy(core.position)
+          .add(
+            new THREE.Vector3(
+              (i / SEGMENT_X * 2 - 1) * 10,
+              0,
+              0,
+            ));
       }
       applyDrag(acceleration, 0.7);
       velocity.add(acceleration);

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
 import Camera from './Camera';
+import Core from './Core';
 import Plane from './Plane';
 
 // ==========
@@ -17,6 +18,7 @@ const clock = new THREE.Clock({
 // ==========
 // Define unique variables
 //
+const core = new Core();
 const plane = new Plane();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
@@ -49,9 +51,11 @@ export default class WebGLContent {
       noiseTex.type = THREE.FloatType;
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
+      core.start(noiseTex);
       plane.start(noiseTex);
     })
 
+    scene.add(core);
     scene.add(plane);
 
     camera.start();
@@ -74,7 +78,8 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
-    plane.update(time);
+    core.update(time, camera);
+    plane.update(time, core);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
@@ -94,7 +99,7 @@ export default class WebGLContent {
     );
     const width = height * camera.aspect;
 
-    plane.anchor.set(
+    core.anchor.set(
       (vTouch.x / resolution.x - 0.5) * width,
       -(vTouch.y / resolution.y - 0.5) * height,
       corePositionZ
@@ -122,7 +127,7 @@ export default class WebGLContent {
     }
   }
   touchEnd() {
-    plane.anchor.set(0, 0, 0);
+    core.anchor.set(0, 0, 0);
     isTouched = false;
   }
 }
