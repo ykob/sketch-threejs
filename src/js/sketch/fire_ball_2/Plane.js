@@ -63,6 +63,7 @@ export default class Plane extends THREE.Mesh {
     super(geometry, material);
     this.name = 'Plane';
     this.anchor = new THREE.Vector3();
+    this.top = new THREE.Vector3(0, 1, 0);
   }
   start(noiseTex) {
     const { uniforms } = this.material;
@@ -84,6 +85,10 @@ export default class Plane extends THREE.Mesh {
   update(time, core) {
     const { uniforms } = this.material;
     const { position, hookesIndex } = this.geometry.attributes;
+    const dir = core.acceleration.clone().normalize();
+    const axis = new THREE.Vector3().crossVectors(this.top, dir);
+    const angle = Math.acos(dir.clone().dot(this.top)) * core.acceleration.distanceTo(new THREE.Vector3());
+    const rotateMat = new THREE.Matrix4().makeRotationAxis(axis, angle);
 
     uniforms.time.value += time;
 
@@ -95,8 +100,10 @@ export default class Plane extends THREE.Mesh {
       if (k > -1) {
         const anchor = hookes[k].velocity;
 
-        acceleration.add(new THREE.Vector3(0, 1.5, 0));
-        applyHook(velocity, acceleration, anchor, 1, 1.4);
+        acceleration.add(new THREE.Vector3(0, 2.4, 0));
+        applyHook(velocity, acceleration, anchor, 1, 1.7);
+        applyDrag(acceleration, 0.7);
+        velocity.add(acceleration);
       } else {
         velocity
           .copy(core.position)
@@ -105,10 +112,9 @@ export default class Plane extends THREE.Mesh {
               (i / SEGMENT_X * 2 - 1) * 10,
               0,
               0,
-            ));
+            ).applyMatrix4(rotateMat)
+          );
       }
-      applyDrag(acceleration, 0.7);
-      velocity.add(acceleration);
       position.setXYZ(index, velocity.x, velocity.y, velocity.z);
       position.needsUpdate = true;
     }
