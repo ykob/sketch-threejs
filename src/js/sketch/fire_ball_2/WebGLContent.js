@@ -19,10 +19,14 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const core = new Core();
-const plane = new Plane();
+const plane1 = new Plane();
+const plane2 = new Plane();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
 let isTouched = false;
+
+plane1.top.set(0, 1, 0);
+plane2.top.set(1, 0, 0);
 
 // ==========
 // Define WebGLContent Class.
@@ -52,11 +56,13 @@ export default class WebGLContent {
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
       core.start(noiseTex);
-      plane.start(noiseTex);
+      plane1.start(noiseTex);
+      plane2.start(noiseTex);
     })
 
     scene.add(core);
-    scene.add(plane);
+    scene.add(plane1);
+    scene.add(plane2);
 
     camera.start();
   }
@@ -79,7 +85,8 @@ export default class WebGLContent {
 
     // Update each objects.
     core.update(time, camera);
-    plane.update(time, core);
+    plane1.update(time, core);
+    plane2.update(time, core);
 
     // Render the 3D scene.
     renderer.render(scene, camera);

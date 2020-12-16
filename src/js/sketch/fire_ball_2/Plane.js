@@ -5,7 +5,6 @@ import fs from './glsl/Plane.fs';
 
 const SEGMENT_X = 9;
 const SEGMENT_Y = 18;
-const hookes = [];
 
 const applyDrag = (acceleration, value) => {
   const force = acceleration.clone();
@@ -26,6 +25,8 @@ const applyHook = (position, acceleration, anchor, restLength, k) => {
 
 export default class Plane extends THREE.Mesh {
   constructor() {
+    const hookes = [];
+
     // Define Geometry
     const geometry = new THREE.PlaneBufferGeometry(15, 15, SEGMENT_X, SEGMENT_Y);
     const { count } = geometry.attributes.position;
@@ -64,6 +65,7 @@ export default class Plane extends THREE.Mesh {
     this.name = 'Plane';
     this.anchor = new THREE.Vector3();
     this.top = new THREE.Vector3(0, 1, 0);
+    this.hookes = hookes ;
   }
   start(noiseTex) {
     const { uniforms } = this.material;
@@ -73,7 +75,7 @@ export default class Plane extends THREE.Mesh {
 
     for (let i = 0; i < hookesIndex.array.length; i++) {
       const index = hookesIndex.getX(i);
-      const { velocity } = hookes[index];
+      const { velocity } = this.hookes[index];
 
       velocity.set(
         position.getX(i),
@@ -92,16 +94,16 @@ export default class Plane extends THREE.Mesh {
 
     uniforms.time.value += time;
 
-    for (let i = 0; i < hookes.length; i++) {
-      const { velocity, acceleration } = hookes[i];
+    for (let i = 0; i < this.hookes.length; i++) {
+      const { velocity, acceleration } = this.hookes[i];
       const index = hookesIndex.getX(i);
       const k = Math.max(index - SEGMENT_X - 1, -1);
 
       if (k > -1) {
-        const anchor = hookes[k].velocity;
+        const anchor = this.hookes[k].velocity;
 
-        acceleration.add(new THREE.Vector3(0, 2.4, 0));
-        applyHook(velocity, acceleration, anchor, 1, 1.7);
+        acceleration.add(new THREE.Vector3(0, 1.8, 0));
+        applyHook(velocity, acceleration, anchor, 1, 1.4);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       } else {
@@ -118,14 +120,14 @@ export default class Plane extends THREE.Mesh {
       position.setXYZ(index, velocity.x, velocity.y, velocity.z);
       position.needsUpdate = true;
     }
-    for (let i = 0; i < hookes.length; i++) {
+    for (let i = 0; i < this.hookes.length; i++) {
       const { normal } = this.geometry.attributes;
       const index = hookesIndex.getX(i);
       const i2 = (i <= SEGMENT_X) ? i + SEGMENT_X + 1 : i - SEGMENT_X - 1;
       const i3 = (i % (SEGMENT_X + 1) === 0) ? i + 1 : i - 1;
-      const v1 = hookes[i].velocity;
-      const v2 = hookes[i2].velocity;
-      const v3 = hookes[i3].velocity;
+      const v1 = this.hookes[i].velocity;
+      const v2 = this.hookes[i2].velocity;
+      const v3 = this.hookes[i3].velocity;
       const n1 = v1.clone().sub(v2).normalize();
       const n2 = v1.clone().sub(v3).normalize();
       let cross;
