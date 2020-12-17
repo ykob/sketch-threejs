@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import MathEx from 'js-util/MathEx';
 
 import vs from './glsl/Plane.vs';
 import fs from './glsl/Plane.fs';
@@ -58,14 +59,15 @@ export default class Plane extends THREE.Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Plane';
     this.anchor = new THREE.Vector3();
-    this.top = new THREE.Vector3(0, 0, 0);
+    this.top = new THREE.Vector3(0, 1, 0);
     this.hookes = hookes;
   }
   start(noiseTex) {
@@ -103,8 +105,7 @@ export default class Plane extends THREE.Mesh {
       if (k > -1) {
         const anchor = this.hookes[k].velocity;
 
-        acceleration.add(new THREE.Vector3(0, 1.8, 0));
-        applyHook(velocity, acceleration, anchor, 1, 1.4);
+        applyHook(velocity, acceleration, anchor, 1, 1.2);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       } else {
@@ -112,9 +113,9 @@ export default class Plane extends THREE.Mesh {
           .copy(core.position)
           .add(
             new THREE.Vector3(
-              (i / SEGMENT_X * 2 - 1) * 10,
+              Math.cos(MathEx.radians(i / SEGMENT_X * 360)) * 15,
               0,
-              0,
+              Math.sin(MathEx.radians(i / SEGMENT_X * 360)) * 15,
             ).applyMatrix4(rotateMat)
           );
       }
