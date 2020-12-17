@@ -57,15 +57,16 @@ export default class Plane extends THREE.Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      side: THREE.DoubleSide
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'Plane';
     this.anchor = new THREE.Vector3();
-    this.top = new THREE.Vector3(0, 1, 0);
-    this.hookes = hookes ;
+    this.top = new THREE.Vector3(0, 0, 0);
+    this.hookes = hookes;
   }
   start(noiseTex) {
     const { uniforms } = this.material;

@@ -1,11 +1,19 @@
 precision highp float;
 
-varying vec3 vNormal;
+uniform float time;
+uniform sampler2D noiseTex;
+
+#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
 
 void main() {
-  vec3 light = normalize(vec3(1.0, 1.0, -0.5));
-  float diff = dot(vNormal, light);
-  vec3 color = vec3(0.5) + diff * 0.5;
+  float noise1 = texture2D(noiseTex, vUv + vec2(time * 0.1, 0.0)).r;
+  float noise2 = texture2D(noiseTex, vUv + vec2(time * -0.1, 0.0)).g;
+  vec3 hsv = vec3(
+    (noise1 + noise2) * 0.35 + time * 0.1,
+    1.0,
+    0.02
+  );
+  vec3 rgb = convertHsvToRgb(hsv);
 
-  gl_FragColor = vec4(color, 1.0);
+  gl_FragColor = vec4(rgb, 1.0);
 }
