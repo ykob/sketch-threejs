@@ -105,7 +105,7 @@ export default class Plane extends THREE.Mesh {
       if (k > -1) {
         const anchor = this.hookes[k].velocity;
 
-        applyHook(velocity, acceleration, anchor, 1, 1.2);
+        applyHook(velocity, acceleration, anchor, 0, 1.1);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       } else {
@@ -113,9 +113,9 @@ export default class Plane extends THREE.Mesh {
           .copy(core.position)
           .add(
             new THREE.Vector3(
-              Math.cos(MathEx.radians(i / SEGMENT_X * 360)) * 15,
+              Math.cos(MathEx.radians(i / SEGMENT_X * 360)) * 12,
               0,
-              Math.sin(MathEx.radians(i / SEGMENT_X * 360)) * 15,
+              Math.sin(MathEx.radians(i / SEGMENT_X * 360)) * 12,
             ).applyMatrix4(rotateMat)
           );
       }
