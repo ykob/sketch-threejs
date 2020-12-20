@@ -45,11 +45,11 @@ export default class Trail extends THREE.SkinnedMesh {
       skinWeights.push(1 - skinWeight, skinWeight, 0, 0);
     }
 
-    for (let j = 0; j < SEGMENT_COUNT + 1; j++) {
+    for (let j = 0; j <= SEGMENT_COUNT + 1; j++) {
       if (j === 0) {
         prevBone.position.y = HEIGHT / -2;
         bones.push(prevBone);
-      } else {
+      } else if (j <= SEGMENT_COUNT) {
         const bone = new THREE.Bone();
         bone.position.y = SEGMENT_HEIGHT;
         bones.push(bone);
@@ -84,6 +84,19 @@ export default class Trail extends THREE.SkinnedMesh {
     this.time = 0;
     this.add(bones[0]);
     this.bind(skeleton);
+
+    const pointsGeometry = new THREE.BufferGeometry;
+    const baPositions = new THREE.BufferAttribute(new Float32Array(hookes.length * 3), 3);
+    pointsGeometry.setAttribute('position', baPositions);
+    this.points = new THREE.Points(
+      pointsGeometry,
+      new THREE.PointsMaterial({
+        color: 0xffffff,
+        depthTest: false
+      })
+    )
+    this.add(this.points);
+    console.log(this.points)
   }
   update(time, core) {
     const { bones } = this.skeleton;
@@ -98,17 +111,19 @@ export default class Trail extends THREE.SkinnedMesh {
       } else {
         const anchor = this.hookes[i - 1].velocity;
 
-        applyHook(velocity, acceleration, anchor, 1, 1.1);
+        applyHook(velocity, acceleration, anchor, 5, 0.4);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
+      console.log(velocity);
+      this.points.geometry.attributes.position.setXYZ(i, velocity.x, velocity.y, velocity.z);
+      this.points.geometry.attributes.position.needsUpdate = true;
     }
 
     for (let i = 0; i < bones.length; i++) {
       const bone = bones[i];
       const { velocity } = this.hookes[i];
 
-      // if (i < bones.length - 1) {
       if (i === 0) {
         const nextVelocity = this.hookes[i + 1].velocity;
         const dir = nextVelocity.clone().sub(velocity).normalize();
@@ -117,14 +132,13 @@ export default class Trail extends THREE.SkinnedMesh {
         const rotateMat = new THREE.Matrix4().makeRotationAxis(axis, angle);
 
         bone.rotation.setFromRotationMatrix(rotateMat);
-      } else if (i < bones.length - 1) {
+      } else {
         const prevVelocity = this.hookes[i - 1].velocity;
         const nextVelocity = this.hookes[i + 1].velocity;
-        const dir1 = nextVelocity.clone().sub(velocity).normalize();
-        const dir2 = velocity.clone().sub(prevVelocity).normalize();
-        const dir = dir1.sub(dir2).normalize();
-        const axis = new THREE.Vector3().crossVectors(this.top, dir);
-        const angle = Math.acos(dir.clone().dot(this.top));
+        const dir1 = velocity.clone().sub(prevVelocity).normalize();
+        const dir2 = nextVelocity.clone().sub(velocity).normalize();
+        const axis = new THREE.Vector3().crossVectors(dir1, dir2);
+        const angle = Math.acos(dir2.clone().dot(dir1));
         const rotateMat = new THREE.Matrix4().makeRotationAxis(axis, angle);
 
         bone.rotation.setFromRotationMatrix(rotateMat);
@@ -132,7 +146,6 @@ export default class Trail extends THREE.SkinnedMesh {
       if (i === 0) {
         bone.position.copy(core.position);
       } else {
-        const prevBone = bones[i - 1];
         const prevVelocity = this.hookes[i - 1].velocity;
 
         bone.position.y = velocity.distanceTo(prevVelocity);

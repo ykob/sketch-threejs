@@ -64,6 +64,10 @@ export default class WebGLContent {
     scene.add(trail);
 
     camera.start();
+
+    const skeletonHelper = new THREE.SkeletonHelper(trail);
+    skeletonHelper.material.linewidth = 2;
+    scene.add(skeletonHelper);
   }
   play() {
     clock.start();
