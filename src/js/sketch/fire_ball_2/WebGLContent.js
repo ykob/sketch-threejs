@@ -4,6 +4,7 @@ import MathEx from 'js-util/MathEx';
 import Camera from './Camera';
 import Core from './Core';
 import Plane from './Plane';
+import Trail from './Trail';
 
 // ==========
 // Define common variables
@@ -20,6 +21,7 @@ const clock = new THREE.Clock({
 //
 const core = new Core();
 const plane1 = new Plane();
+const trail = new Trail();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
 let isTouched = false;
@@ -58,7 +60,8 @@ export default class WebGLContent {
     })
 
     scene.add(core);
-    scene.add(plane1);
+    // scene.add(plane1);
+    scene.add(trail);
 
     camera.start();
   }
@@ -82,6 +85,7 @@ export default class WebGLContent {
     // Update each objects.
     core.update(time, camera);
     plane1.update(time, core);
+    trail.update(time, core);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
