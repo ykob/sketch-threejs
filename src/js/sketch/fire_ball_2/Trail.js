@@ -111,7 +111,7 @@ export default class Trail extends THREE.SkinnedMesh {
       } else {
         const anchor = this.hookes[i - 1].velocity;
 
-        applyHook(velocity, acceleration, anchor, 5, 0.4);
+        applyHook(velocity, acceleration, anchor, 1, 0.4);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
@@ -124,24 +124,26 @@ export default class Trail extends THREE.SkinnedMesh {
       const bone = bones[i];
       const { velocity } = this.hookes[i];
 
+      const q = new THREE.Quaternion();
       if (i === 0) {
         const nextVelocity = this.hookes[i + 1].velocity;
         const dir = nextVelocity.clone().sub(velocity).normalize();
         const axis = new THREE.Vector3().crossVectors(this.top, dir);
         const angle = Math.acos(dir.clone().dot(this.top));
-        const rotateMat = new THREE.Matrix4().makeRotationAxis(axis, angle);
+        q.setFromAxisAngle(axis, angle);
 
-        bone.rotation.setFromRotationMatrix(rotateMat);
+        bone.rotation.setFromQuaternion(q);
       } else {
         const prevVelocity = this.hookes[i - 1].velocity;
         const nextVelocity = this.hookes[i + 1].velocity;
         const dir1 = velocity.clone().sub(prevVelocity).normalize();
         const dir2 = nextVelocity.clone().sub(velocity).normalize();
-        const axis = new THREE.Vector3().crossVectors(dir1, dir2);
-        const angle = Math.acos(dir2.clone().dot(dir1));
-        const rotateMat = new THREE.Matrix4().makeRotationAxis(axis, angle);
+        const dir = dir2.sub(dir1);
+        const axis = new THREE.Vector3().crossVectors(this.top, dir);
+        const angle = Math.acos(dir.clone().dot(this.top));
+        q.setFromAxisAngle(axis, angle);
 
-        bone.rotation.setFromRotationMatrix(rotateMat);
+        bone.rotation.setFromQuaternion(q);
       }
       if (i === 0) {
         bone.position.copy(core.position);

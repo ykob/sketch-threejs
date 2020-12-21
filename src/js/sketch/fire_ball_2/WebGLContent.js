@@ -99,7 +99,8 @@ export default class WebGLContent {
     renderer.setSize(resolution.x, resolution.y);
   }
   setCoreAnchor(resolution) {
-    const corePositionZ = (vTouch.y / resolution.y * 2.0 - 1.0) * 50;
+    // const corePositionZ = (vTouch.y / resolution.y * 2.0 - 1.0) * 50;
+    const corePositionZ = 0;
     const height = Math.abs(
       (camera.position.z - corePositionZ) *
         Math.tan(MathEx.radians(camera.fov) / 2) *
