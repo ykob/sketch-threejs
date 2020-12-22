@@ -26,7 +26,7 @@ export default class Trail extends THREE.SkinnedMesh {
     const hookes = [];
 
     // Define Geometry
-    const geometry = new THREE.CylinderBufferGeometry(2, 10, HEIGHT, 8, SEGMENT_COUNT * 3, true);
+    const geometry = new THREE.CylinderBufferGeometry(2, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
     const { position } = geometry.attributes;
     const vertex = new THREE.Vector3();
     const skinIndices = [];
@@ -68,10 +68,9 @@ export default class Trail extends THREE.SkinnedMesh {
     // Define Material
     const material = new THREE.MeshPhongMaterial({
       skinning: true,
-      color: 0x156289,
-      emissive: 0x072534,
-      side: THREE.DoubleSide,
-      flatShading: true
+      color: 0xffffff,
+      emissive: 0xffffff,
+      wireframe: true,
     });
 
     // Define Skelton
@@ -96,10 +95,11 @@ export default class Trail extends THREE.SkinnedMesh {
       })
     )
     this.add(this.points);
-    console.log(this.points)
   }
   update(time, core) {
     const { bones } = this.skeleton;
+    const q1 = new THREE.Quaternion();
+    const q2 = new THREE.Quaternion();
 
     this.time += time;
 
@@ -115,7 +115,6 @@ export default class Trail extends THREE.SkinnedMesh {
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
-      console.log(velocity);
       this.points.geometry.attributes.position.setXYZ(i, velocity.x, velocity.y, velocity.z);
       this.points.geometry.attributes.position.needsUpdate = true;
     }
@@ -124,23 +123,28 @@ export default class Trail extends THREE.SkinnedMesh {
       const bone = bones[i];
       const { velocity } = this.hookes[i];
 
-      const q = new THREE.Quaternion();
       if (i === 0) {
         const nextVelocity = this.hookes[i + 1].velocity;
         const dir = nextVelocity.clone().sub(velocity).normalize();
         const axis = new THREE.Vector3().crossVectors(this.top, dir).normalize();
         const angle = Math.acos(this.top.clone().dot(dir));
-        q.setFromAxisAngle(axis, angle);
+        q1.setFromAxisAngle(axis, angle);
 
-        bone.rotation.setFromQuaternion(q);
+        bone.rotation.setFromQuaternion(q1);
       } else {
-        const nextVelocity = this.hookes[i + 1].velocity;
-        const dir = nextVelocity.clone().sub(velocity).normalize();
-        const axis = new THREE.Vector3().crossVectors(this.top, dir).normalize();
-        const angle = Math.acos(this.top.clone().dot(dir));
-        q.setFromAxisAngle(axis, angle);
+        const prevVelocity = this.hookes[i - 1].velocity;
+        const dir1 = velocity.clone().sub(prevVelocity).normalize();
+        const axis1 = new THREE.Vector3().crossVectors(this.top, dir1).normalize();
+        const angle1 = Math.acos(this.top.clone().dot(dir1));
+        q1.setFromAxisAngle(axis1, angle1);
 
-        bone.rotation.setFromQuaternion(q);
+        const nextVelocity = this.hookes[i + 1].velocity;
+        const dir2 = nextVelocity.clone().sub(velocity).normalize();
+        const axis2 = new THREE.Vector3().crossVectors(this.top, dir2).normalize();
+        const angle2 = Math.acos(this.top.clone().dot(dir2));
+        q2.setFromAxisAngle(axis2, angle2).multiply(q1.conjugate());
+
+        bone.rotation.setFromQuaternion(q2);
       }
       if (i === 0) {
         bone.position.copy(core.position);
