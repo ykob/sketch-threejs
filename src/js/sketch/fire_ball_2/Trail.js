@@ -26,7 +26,7 @@ export default class Trail extends THREE.SkinnedMesh {
     const hookes = [];
 
     // Define Geometry
-    const geometry = new THREE.CylinderBufferGeometry(2, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
+    const geometry = new THREE.CylinderBufferGeometry(5, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
     const { position } = geometry.attributes;
     const vertex = new THREE.Vector3();
     const skinIndices = [];
@@ -111,7 +111,7 @@ export default class Trail extends THREE.SkinnedMesh {
       } else {
         const anchor = this.hookes[i - 1].velocity;
 
-        applyHook(velocity, acceleration, anchor, 1, 0.4);
+        applyHook(velocity, acceleration, anchor, 0, 1.2);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
@@ -136,15 +136,16 @@ export default class Trail extends THREE.SkinnedMesh {
         const dir1 = velocity.clone().sub(prevVelocity).normalize();
         const axis1 = new THREE.Vector3().crossVectors(this.top, dir1).normalize();
         const angle1 = Math.acos(this.top.clone().dot(dir1));
-        q1.setFromAxisAngle(axis1, angle1);
 
         const nextVelocity = this.hookes[i + 1].velocity;
         const dir2 = nextVelocity.clone().sub(velocity).normalize();
         const axis2 = new THREE.Vector3().crossVectors(this.top, dir2).normalize();
         const angle2 = Math.acos(this.top.clone().dot(dir2));
-        q2.setFromAxisAngle(axis2, angle2).multiply(q1.conjugate());
 
-        bone.rotation.setFromQuaternion(q2);
+        q1.setFromAxisAngle(axis1, angle1);
+        q2.setFromAxisAngle(axis2, angle2);
+        q1.conjugate().multiply(q2);
+        bone.rotation.setFromQuaternion(q1);
       }
       if (i === 0) {
         bone.position.copy(core.position);
