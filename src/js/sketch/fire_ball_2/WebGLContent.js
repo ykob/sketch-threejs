@@ -3,7 +3,6 @@ import MathEx from 'js-util/MathEx';
 
 import Camera from './Camera';
 import Core from './Core';
-import Plane from './Plane';
 import Trail from './Trail';
 
 // ==========
@@ -20,13 +19,10 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const core = new Core();
-const plane1 = new Plane();
 const trail = new Trail();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
 let isTouched = false;
-
-plane1.top.set(0, 1, 0);
 
 // ==========
 // Define WebGLContent Class.
@@ -56,11 +52,9 @@ export default class WebGLContent {
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
       core.start(noiseTex);
-      plane1.start(noiseTex);
     })
 
     scene.add(core);
-    // scene.add(plane1);
     scene.add(trail);
 
     camera.start();
@@ -88,7 +82,6 @@ export default class WebGLContent {
 
     // Update each objects.
     core.update(time, camera);
-    plane1.update(time, core);
     trail.update(time, core);
 
     // Render the 3D scene.
