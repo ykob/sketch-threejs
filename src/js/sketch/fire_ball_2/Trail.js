@@ -83,18 +83,6 @@ export default class Trail extends THREE.SkinnedMesh {
     this.time = 0;
     this.add(bones[0]);
     this.bind(skeleton);
-
-    const pointsGeometry = new THREE.BufferGeometry;
-    const baPositions = new THREE.BufferAttribute(new Float32Array(hookes.length * 3), 3);
-    pointsGeometry.setAttribute('position', baPositions);
-    this.points = new THREE.Points(
-      pointsGeometry,
-      new THREE.PointsMaterial({
-        color: 0xffffff,
-        depthTest: false
-      })
-    )
-    this.add(this.points);
   }
   update(time, core) {
     const { bones } = this.skeleton;
@@ -115,8 +103,6 @@ export default class Trail extends THREE.SkinnedMesh {
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
-      this.points.geometry.attributes.position.setXYZ(i, velocity.x, velocity.y, velocity.z);
-      this.points.geometry.attributes.position.needsUpdate = true;
     }
 
     for (let i = 0; i < bones.length; i++) {
