@@ -118,7 +118,7 @@ export default class Trail extends THREE.SkinnedMesh {
 
         bone.rotation.setFromQuaternion(q1);
         bone.position.copy(core.position);
-      } else {
+      } else if (i < bones.length - 1) {
         const prevVelocity = this.hookes[i - 1].velocity;
         const dir1 = velocity.clone().sub(prevVelocity).normalize();
         const axis1 = new THREE.Vector3().crossVectors(this.top, dir1).normalize();
