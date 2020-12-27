@@ -45,11 +45,11 @@ export default class Trail extends THREE.SkinnedMesh {
       skinWeights.push(1 - skinWeight, skinWeight, 0, 0);
     }
 
-    for (let j = 0; j <= SEGMENT_COUNT + 1; j++) {
+    for (let j = 0; j <= SEGMENT_COUNT; j++) {
       if (j === 0) {
         prevBone.position.y = HEIGHT / -2;
         bones.push(prevBone);
-      } else if (j <= SEGMENT_COUNT) {
+      } else {
         const bone = new THREE.Bone();
         bone.position.y = SEGMENT_HEIGHT;
         bones.push(bone);
