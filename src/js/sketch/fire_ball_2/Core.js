@@ -19,7 +19,7 @@ export default class Core extends THREE.Mesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs,
+      fragmentShader: fs
     });
 
     // Create Object3D

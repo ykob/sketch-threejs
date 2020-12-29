@@ -29,7 +29,7 @@ export default class Trail extends THREE.SkinnedMesh {
     const hookes = [];
 
     // Define Geometry
-    const geometry = new THREE.CylinderBufferGeometry(5, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
+    const geometry = new THREE.CylinderBufferGeometry(30, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
     const { position } = geometry.attributes;
     const vertex = new THREE.Vector3();
     const skinIndices = [];
@@ -91,7 +91,8 @@ export default class Trail extends THREE.SkinnedMesh {
         "}"
      ].join( "\n" ),
       fragmentShader: fs,
-      skinning: true
+      skinning: true,
+      side: THREE.DoubleSide
     });
 
     // Define Skelton
@@ -111,11 +112,13 @@ export default class Trail extends THREE.SkinnedMesh {
     uniforms.noiseTex.value = noiseTex;
   }
   update(time, core) {
+    const { uniforms } = this.material;
     const { bones } = this.skeleton;
     const q1 = new THREE.Quaternion();
     const q2 = new THREE.Quaternion();
 
     this.time += time;
+    uniforms.time.value += time;
 
     for (let i = 0; i < this.hookes.length; i++) {
       const { velocity, acceleration } = this.hookes[i];
@@ -125,7 +128,7 @@ export default class Trail extends THREE.SkinnedMesh {
       } else {
         const anchor = this.hookes[i - 1].velocity;
 
-        applyHook(velocity, acceleration, anchor, 0, 1.2);
+        applyHook(velocity, acceleration, anchor, 0, 0.6);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
