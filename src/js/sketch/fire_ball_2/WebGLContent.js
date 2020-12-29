@@ -52,6 +52,7 @@ export default class WebGLContent {
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
       core.start(noiseTex);
+      trail.start(noiseTex);
     })
 
     scene.add(core);

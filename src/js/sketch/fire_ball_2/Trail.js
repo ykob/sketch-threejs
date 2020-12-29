@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+import vs from './glsl/Trail.vs';
+import fs from './glsl/Trail.fs';
+
 const SEGMENT_HEIGHT = 2;
 const SEGMENT_COUNT = 10;
 const HEIGHT = SEGMENT_HEIGHT * SEGMENT_COUNT;
@@ -66,11 +69,29 @@ export default class Trail extends THREE.SkinnedMesh {
     geometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
 
     // Define Material
-    const material = new THREE.MeshPhongMaterial({
-      skinning: true,
-      color: 0xffffff,
-      emissive: 0xffffff,
-      wireframe: true,
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: {
+          value: 0
+        },
+        noiseTex: {
+          value: null
+        }
+      },
+      vertexShader: [
+        THREE.ShaderChunk["common"],
+        THREE.ShaderChunk["skinning_pars_vertex"],
+        "varying vec2 vUv;",
+        "void main() {",
+        THREE.ShaderChunk["begin_vertex"],
+        THREE.ShaderChunk["skinbase_vertex"],
+        THREE.ShaderChunk["skinning_vertex"],
+        THREE.ShaderChunk["project_vertex"],
+        "vUv = uv;",
+        "}"
+     ].join( "\n" ),
+      fragmentShader: fs,
+      skinning: true
     });
 
     // Define Skelton
@@ -83,6 +104,11 @@ export default class Trail extends THREE.SkinnedMesh {
     this.time = 0;
     this.add(bones[0]);
     this.bind(skeleton);
+  }
+  start(noiseTex) {
+    const { uniforms } = this.material;
+
+    uniforms.noiseTex.value = noiseTex;
   }
   update(time, core) {
     const { bones } = this.skeleton;
