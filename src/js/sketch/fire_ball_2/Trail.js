@@ -29,7 +29,7 @@ export default class Trail extends THREE.SkinnedMesh {
     const hookes = [];
 
     // Define Geometry
-    const geometry = new THREE.CylinderBufferGeometry(30, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
+    const geometry = new THREE.CylinderBufferGeometry(0, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
     const { position } = geometry.attributes;
     const vertex = new THREE.Vector3();
     const skinIndices = [];
