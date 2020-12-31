@@ -78,18 +78,7 @@ export default class Trail extends THREE.SkinnedMesh {
           value: null
         }
       },
-      vertexShader: [
-        THREE.ShaderChunk["common"],
-        THREE.ShaderChunk["skinning_pars_vertex"],
-        "varying vec2 vUv;",
-        "void main() {",
-        THREE.ShaderChunk["begin_vertex"],
-        THREE.ShaderChunk["skinbase_vertex"],
-        THREE.ShaderChunk["skinning_vertex"],
-        THREE.ShaderChunk["project_vertex"],
-        "vUv = uv;",
-        "}"
-     ].join( "\n" ),
+      vertexShader: vs,
       fragmentShader: fs,
       skinning: true,
       side: THREE.DoubleSide
