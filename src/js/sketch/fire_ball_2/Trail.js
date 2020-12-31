@@ -69,7 +69,7 @@ export default class Trail extends THREE.SkinnedMesh {
     geometry.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
 
     // Define Material
-    const material = new THREE.ShaderMaterial({
+    const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
           value: 0
