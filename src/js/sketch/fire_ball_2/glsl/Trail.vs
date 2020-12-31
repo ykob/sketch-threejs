@@ -17,6 +17,9 @@ uniform mat4 bindMatrixInverse;
 uniform highp sampler2D boneTexture;
 uniform int boneTextureSize;
 
+uniform float time;
+uniform sampler2D noiseTex;
+
 mat4 getBoneMatrix(const in float i) {
   float j = i * 4.0;
   float x = mod(j, float(boneTextureSize));
@@ -38,7 +41,11 @@ mat4 getBoneMatrix(const in float i) {
 varying vec2 vUv;
 
 void main() {
-  vec3 transformed = vec3(position);
+  float noise1 = texture2D(noiseTex, uv + vec2(0.4, -0.8) * time).r;
+  float noise2 = texture2D(noiseTex, uv + vec2(-0.4, -1.4) * time).g;
+  float noise = ((noise1 + noise2) * 2.0 - 1.0) * uv.y;
+
+  vec3 transformed = vec3(position + normalize(position) * vec3(1.0, 0.0, 1.0) * noise * 15.0);
 
   mat4 boneMatX = getBoneMatrix(skinIndex.x);
   mat4 boneMatY = getBoneMatrix(skinIndex.y);
