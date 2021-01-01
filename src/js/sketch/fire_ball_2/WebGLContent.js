@@ -125,7 +125,6 @@ export default class WebGLContent {
     }
   }
   touchEnd() {
-    core.anchor.set(0, 0, 0);
     isTouched = false;
   }
 }

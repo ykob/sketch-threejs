@@ -4,7 +4,7 @@ import vs from './glsl/Trail.vs';
 import fs from './glsl/Trail.fs';
 
 const SEGMENT_HEIGHT = 2;
-const SEGMENT_COUNT = 10;
+const SEGMENT_COUNT = 20;
 const HEIGHT = SEGMENT_HEIGHT * SEGMENT_COUNT;
 
 const applyDrag = (acceleration, value) => {
@@ -29,7 +29,7 @@ export default class Trail extends THREE.SkinnedMesh {
     const hookes = [];
 
     // Define Geometry
-    const geometry = new THREE.CylinderBufferGeometry(0, 10, HEIGHT, 12, SEGMENT_COUNT * 3, true);
+    const geometry = new THREE.CylinderBufferGeometry(5, 10, HEIGHT, 24, SEGMENT_COUNT * 3, true);
     const { position } = geometry.attributes;
     const vertex = new THREE.Vector3();
     const skinIndices = [];
@@ -76,6 +76,9 @@ export default class Trail extends THREE.SkinnedMesh {
         },
         noiseTex: {
           value: null
+        },
+        acceleration: {
+          value: new THREE.Vector3()
         }
       },
       vertexShader: vs,
@@ -117,11 +120,13 @@ export default class Trail extends THREE.SkinnedMesh {
       } else {
         const anchor = this.hookes[i - 1].velocity;
 
-        applyHook(velocity, acceleration, anchor, 0, 0.6);
+        applyHook(velocity, acceleration, anchor, 0, 1);
         applyDrag(acceleration, 0.7);
         velocity.add(acceleration);
       }
     }
+
+    uniforms.acceleration.value.copy(core.acceleration);
 
     for (let i = 0; i < bones.length; i++) {
       const bone = bones[i];
