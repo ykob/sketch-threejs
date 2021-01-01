@@ -3,6 +3,7 @@ import MathEx from 'js-util/MathEx';
 
 import Camera from './Camera';
 import Core from './Core';
+import CoreLight from './CoreLight';
 import Aura from './Aura';
 import Trail from './Trail';
 
@@ -20,6 +21,7 @@ const clock = new THREE.Clock({
 // Define unique variables
 //
 const core = new Core();
+const coreLight = new CoreLight();
 const aura = new Aura();
 const trail = new Trail();
 const texLoader = new THREE.TextureLoader();
@@ -54,11 +56,13 @@ export default class WebGLContent {
       noiseTex.minFilter = THREE.NearestFilter;
       noiseTex.magFilter = THREE.NearestFilter;
       core.start(noiseTex);
+      coreLight.start(noiseTex);
       aura.start(noiseTex);
       trail.start(noiseTex);
     })
 
     scene.add(core);
+    scene.add(coreLight);
     scene.add(aura);
     scene.add(trail);
 
@@ -83,6 +87,7 @@ export default class WebGLContent {
 
     // Update each objects.
     core.update(time, camera);
+    coreLight.update(time, core);
     aura.update(time, core);
     trail.update(time, core);
 
