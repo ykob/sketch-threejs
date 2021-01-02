@@ -7,6 +7,7 @@ import CoreLight from './CoreLight';
 import Aura from './Aura';
 import Sparks from './Sparks';
 import Trail from './Trail';
+import Background from './Background';
 
 // ==========
 // Define common variables
@@ -26,6 +27,7 @@ const coreLight = new CoreLight();
 const aura = new Aura();
 const sparks = new Sparks();
 const trail = new Trail();
+const background = new Background();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
 let isTouched = false;
@@ -62,6 +64,7 @@ export default class WebGLContent {
       aura.start(noiseTex);
       sparks.start(noiseTex);
       trail.start(noiseTex);
+      background.start(noiseTex);
     })
 
     scene.add(core);
@@ -69,6 +72,7 @@ export default class WebGLContent {
     scene.add(aura);
     scene.add(sparks);
     scene.add(trail);
+    scene.add(background);
 
     camera.start();
   }
@@ -95,12 +99,14 @@ export default class WebGLContent {
     aura.update(time, core);
     sparks.update(time, core);
     trail.update(time, core);
+    background.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);
   }
   resize(resolution) {
     camera.resize(resolution);
+    background.resize(camera, resolution);
     renderer.setSize(resolution.x, resolution.y);
   }
   setCoreAnchor(resolution) {

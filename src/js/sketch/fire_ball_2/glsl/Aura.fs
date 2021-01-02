@@ -15,7 +15,7 @@ void main() {
   float noise = (noise1 + noise2) / 2.0 * smoothstep(0.0, 0.15, vUv.y) * (1.0 - smoothstep(0.9, 1.0, vUv.y));
   noise = smoothstep(0.5 - min(length(acceleration) / 5.0, 1.0) * 0.15, 1.0, noise);
   vec3 hsv = vec3(
-    noise * 0.5 + time * 0.1 + noise3 * 0.3,
+    noise * 0.5 + time * 0.1 + noise3 * 0.4,
     0.7 - noise * 3.0,
     0.6 + noise * 0.6
   );
