@@ -5,6 +5,7 @@ import Camera from './Camera';
 import Core from './Core';
 import CoreLight from './CoreLight';
 import Aura from './Aura';
+import Sparks from './Sparks';
 import Trail from './Trail';
 
 // ==========
@@ -23,6 +24,7 @@ const clock = new THREE.Clock({
 const core = new Core();
 const coreLight = new CoreLight();
 const aura = new Aura();
+const sparks = new Sparks();
 const trail = new Trail();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
@@ -58,12 +60,14 @@ export default class WebGLContent {
       core.start(noiseTex);
       coreLight.start(noiseTex);
       aura.start(noiseTex);
+      sparks.start(noiseTex);
       trail.start(noiseTex);
     })
 
     scene.add(core);
     scene.add(coreLight);
     scene.add(aura);
+    scene.add(sparks);
     scene.add(trail);
 
     camera.start();
@@ -89,6 +93,7 @@ export default class WebGLContent {
     core.update(time, camera);
     coreLight.update(time, core);
     aura.update(time, core);
+    sparks.update(time, core);
     trail.update(time, core);
 
     // Render the 3D scene.
