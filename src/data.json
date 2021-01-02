@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "fire_ball_2": {
+      "title": "fire ball 2",
+      "id": "fire_ball_2",
+      "description": "Learning how to use SkinnedMesh, Skeleton, and Bone by creating a fireball tail.",
+      "path": "/sketch/fire_ball_2.html",
+      "posted": "2021.1.3",
+      "update": "",
+      "color": "white"
+    },
     "flow_field_5": {
       "title": "flow field 5",
       "id": "flow_field_5",
