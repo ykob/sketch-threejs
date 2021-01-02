@@ -19,5 +19,6 @@ export default class Camera extends THREE.PerspectiveCamera {
   resize(resolution) {
     this.aspect = resolution.x / resolution.y;
     this.updateProjectionMatrix();
+    this.position.z = this.aspect < 1 ? 150 : 120;
   }
 }
