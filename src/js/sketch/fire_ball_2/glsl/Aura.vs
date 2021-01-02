@@ -17,7 +17,7 @@ void main(void) {
   float noise2 = texture2D(noiseTex, uv * 0.25 + vec2(-0.1, -0.1) * time).g;
   float noise = (noise1 + noise2) * 0.5 * (1.0 - min(length(acceleration) / 5.0, 1.0));
 
-  vec3 transformed = vec3(position + normalize(position) * smoothstep(0.2, 1.0, noise) * 12.0);
+  vec3 transformed = vec3(position + normalize(position) * smoothstep(0.2, 1.0, noise) * 15.0);
 
   vec4 mPosition = modelMatrix * vec4(transformed, 1.0);
 
