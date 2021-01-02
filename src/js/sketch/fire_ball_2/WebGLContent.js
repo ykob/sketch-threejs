@@ -152,9 +152,8 @@ export default class WebGLContent {
     renderTarget1.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
     renderTarget2.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
     renderTarget3.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
-    postEffectBlurY.resize(resolution.x / 3, resolution.y / 3);
-    postEffectBlurX.resize(resolution.x / 3, resolution.y / 3);
-
+    postEffectBlurY.resize(resolution.x / 4, resolution.y / 4);
+    postEffectBlurX.resize(resolution.x / 4, resolution.y / 4);
   }
   setCoreAnchor(resolution) {
     const corePositionZ = (vTouch.y / resolution.y * 2.0 - 1.0) * 70;

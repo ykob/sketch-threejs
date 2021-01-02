@@ -20,7 +20,7 @@ void main() {
 
   vec3 hsv = vec3(
     noise2 * 0.5 + time * 0.1,
-    0.5 - stp * 5.0,
+    0.4 - stp * 5.0,
     0.95
   );
   vec3 rgb = convertHsvToRgb(hsv);
