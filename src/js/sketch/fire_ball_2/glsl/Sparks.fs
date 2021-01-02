@@ -14,14 +14,14 @@ void main() {
   vec2 p = vUv * 2.0 - 1.0;
 
   float noise = texture2D(noiseTex, (vUv + vUvDiff) * 0.25 + time * 0.1).r * 2.0 - 1.0;
-  float s = smoothstep(0.25, 1.0, vStep);
-  noise = smoothstep(0.0 + s, 0.1 + s, noise * (1.0 - length(p)));
+  float stp = smoothstep(0.25, 1.0, vStep);
+  noise = smoothstep(0.0 + stp, 0.2 + stp, noise * (1.0 - length(p)));
   float noise2 = texture2D(noiseTex, (vUv + vUvDiff) * 0.125 + time * 0.1).g;
 
   vec3 hsv = vec3(
     noise2 * 0.5 + time * 0.1,
-    0.5,
-    0.9
+    0.4 - stp * 5.0,
+    0.9 - stp * 5.0
   );
   vec3 rgb = convertHsvToRgb(hsv);
   float opacity = noise * vOpacity;
