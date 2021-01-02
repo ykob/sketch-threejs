@@ -4,7 +4,7 @@ import MathEx from 'js-util/MathEx';
 import vs from './glsl/Sparks.vs';
 import fs from './glsl/Sparks.fs';
 
-const COUNT = 300;
+const COUNT = 400;
 
 export default class Sparks extends THREE.InstancedMesh {
   constructor() {
@@ -32,9 +32,9 @@ export default class Sparks extends THREE.InstancedMesh {
 
       ibaPositions.setXYZ(i, spherical[0], spherical[1], spherical[2]);
       ibaDirections.setXYZ(i, spherical[0], spherical[1], spherical[2]);
-      ibaTimes.setXYZ(i, 0 - Math.random() * 4);
-      ibaDurations.setXYZ(i, 1.5 + Math.random() * 2);
-      ibaDistances.setXYZ(i, 40 + Math.random() * 20);
+      ibaTimes.setXYZ(i, 0 - Math.random() * 5);
+      ibaDurations.setXYZ(i, 2 + Math.random() * 3);
+      ibaDistances.setXYZ(i, 30 + Math.random() * 20);
       ibaScales.setXYZ(i, 1 + Math.random() * 1);
       ibaRotates.setXYZ(i, Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
       ibaUvDiffs.setXYZ(i, Math.random() * 2 - 1, Math.random() * 2 - 1);
