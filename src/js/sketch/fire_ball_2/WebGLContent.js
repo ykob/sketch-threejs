@@ -8,6 +8,9 @@ import Aura from './Aura';
 import Sparks from './Sparks';
 import Trail from './Trail';
 import Background from './Background';
+import PostEffectBright from './PostEffectBright';
+import PostEffectBlur from './PostEffectBlur';
+import PostEffectBloom from './PostEffectBloom';
 
 // ==========
 // Define common variables
@@ -18,6 +21,14 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+
+
+// For the post effect.
+const renderTarget1 = new THREE.WebGLRenderTarget();
+const renderTarget2 = new THREE.WebGLRenderTarget();
+const renderTarget3 = new THREE.WebGLRenderTarget();
+const scenePE = new THREE.Scene();
+const cameraPE = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2);
 
 // ==========
 // Define unique variables
@@ -31,6 +42,12 @@ const background = new Background();
 const texLoader = new THREE.TextureLoader();
 const vTouch = new THREE.Vector2();
 let isTouched = false;
+
+// For the post effect.
+const postEffectBright = new PostEffectBright();
+const postEffectBlurX = new PostEffectBlur();
+const postEffectBlurY = new PostEffectBlur();
+const postEffectBloom = new PostEffectBloom();
 
 // ==========
 // Define WebGLContent Class.
@@ -75,6 +92,11 @@ export default class WebGLContent {
     scene.add(background);
 
     camera.start();
+
+    postEffectBright.start(renderTarget1.texture);
+    postEffectBlurX.start(renderTarget2.texture, 1, 0);
+    postEffectBlurY.start(renderTarget3.texture, 0, 1);
+    postEffectBloom.start(renderTarget1.texture, renderTarget2.texture);
   }
   play() {
     clock.start();
@@ -101,13 +123,38 @@ export default class WebGLContent {
     trail.update(time, core);
     background.update(time);
 
-    // Render the 3D scene.
+    // Render the main scene to frame buffer.
+    renderer.setRenderTarget(renderTarget1);
     renderer.render(scene, camera);
+
+    // // Render the post effect.
+    scenePE.add(postEffectBright);
+    renderer.setRenderTarget(renderTarget2);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBright);
+    scenePE.add(postEffectBlurX);
+    renderer.setRenderTarget(renderTarget3);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBlurX);
+    scenePE.add(postEffectBlurY);
+    renderer.setRenderTarget(renderTarget2);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBlurY);
+    scenePE.add(postEffectBloom);
+    renderer.setRenderTarget(null);
+    renderer.render(scenePE, cameraPE);
+    scenePE.remove(postEffectBloom);
   }
   resize(resolution) {
     camera.resize(resolution);
     background.resize(camera, resolution);
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget1.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    renderTarget2.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    renderTarget3.setSize(resolution.x * renderer.getPixelRatio(), resolution.y * renderer.getPixelRatio());
+    postEffectBlurY.resize(resolution.x / 3, resolution.y / 3);
+    postEffectBlurX.resize(resolution.x / 3, resolution.y / 3);
+
   }
   setCoreAnchor(resolution) {
     const corePositionZ = (vTouch.y / resolution.y * 2.0 - 1.0) * 70;
