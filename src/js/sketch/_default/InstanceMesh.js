@@ -25,7 +25,6 @@ export default class InstanceMesh extends THREE.InstancedMesh {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
-          type: 'f',
           value: 0
         },
       },

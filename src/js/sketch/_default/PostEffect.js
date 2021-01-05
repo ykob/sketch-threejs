@@ -12,15 +12,12 @@ export default class PostEffect extends THREE.Mesh {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
-          type: 'f',
           value: 0,
         },
         texture: {
-          type: 't',
           value: null,
         },
         resolution: {
-          type: 'v2',
           value: new THREE.Vector2(),
         },
       },

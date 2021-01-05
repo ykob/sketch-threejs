@@ -20,15 +20,12 @@ export default class Points extends THREE.Points {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
-          type: 'f',
           value: 0
         },
         resolution: {
-          type: 'v2',
           value: new THREE.Vector2()
         },
         pixelRatio: {
-          type: 'f',
           value: window.devicePixelRatio
         },
       },
