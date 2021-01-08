@@ -10,7 +10,7 @@ export default class Sparks extends THREE.InstancedMesh {
   constructor() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1.5, 1.5);
+    const baseGeometry = new THREE.PlaneBufferGeometry(1, 1);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);
@@ -30,11 +30,11 @@ export default class Sparks extends THREE.InstancedMesh {
       const radius = 1;
       const spherical = MathEx.spherical(radian1, radian2, radius);
 
-      ibaPositions.setXYZ(i, spherical[0], spherical[1], spherical[2]);
+      ibaPositions.setXYZ(i, spherical[0] * 5, spherical[1] * 5, spherical[2] * 5);
       ibaDirections.setXYZ(i, spherical[0], spherical[1], spherical[2]);
       ibaTimes.setXYZ(i, 0 - Math.random() * 5);
-      ibaDurations.setXYZ(i, 2 + Math.random() * 3);
-      ibaDistances.setXYZ(i, 30 + Math.random() * 20);
+      ibaDurations.setXYZ(i, 2 + Math.random() * 4);
+      ibaDistances.setXYZ(i, 20 + Math.random() * 15);
       ibaScales.setXYZ(i, 1 + Math.random() * 1);
       ibaRotates.setXYZ(i, Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1);
       ibaUvDiffs.setXYZ(i, Math.random() * 2 - 1, Math.random() * 2 - 1);
@@ -76,7 +76,7 @@ export default class Sparks extends THREE.InstancedMesh {
     uniforms.noiseTex.value = noiseTex;
   }
   update(time, core) {
-    const { iPosition, iTime, iDuration } = this.geometry.attributes;
+    const { iPosition, iDirection, iTime, iDuration } = this.geometry.attributes;
     const { uniforms } = this.material;
 
     uniforms.time.value += time;
@@ -85,7 +85,12 @@ export default class Sparks extends THREE.InstancedMesh {
       let prevTime = iTime.getX(i);
       if (prevTime > duration || prevTime < 0 && prevTime + time > 0) {
         prevTime %= duration;
-        iPosition.setXYZ(i, core.position.x, core.position.y, core.position.z);
+        iPosition.setXYZ(
+          i,
+          iDirection.getX(i) * 5 + core.position.x,
+          iDirection.getY(i) * 5 + core.position.y,
+          iDirection.getZ(i) * 5 + core.position.z
+        );
       }
       iTime.setX(i, prevTime + time);
     }
