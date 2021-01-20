@@ -26,10 +26,10 @@ export default class InstanceMesh extends THREE.InstancedMesh {
       uniforms: {
         time: {
           value: 0
-        },
+        }
       },
       vertexShader: vs,
-      fragmentShader: fs,
+      fragmentShader: fs
     });
 
     // Create Object3D

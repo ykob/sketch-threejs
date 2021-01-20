@@ -12,17 +12,17 @@ export default class PostEffect extends THREE.Mesh {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
-          value: 0,
+          value: 0
         },
         texture: {
-          value: null,
+          value: null
         },
         resolution: {
-          value: new THREE.Vector2(),
-        },
+          value: new THREE.Vector2()
+        }
       },
       vertexShader: vs,
-      fragmentShader: fs,
+      fragmentShader: fs
     });
 
     // Create Object3D

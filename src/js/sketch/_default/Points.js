@@ -27,10 +27,10 @@ export default class Points extends THREE.Points {
         },
         pixelRatio: {
           value: window.devicePixelRatio
-        },
+        }
       },
       vertexShader: vs,
-      fragmentShader: fs,
+      fragmentShader: fs
     });
 
     // Create Object3D

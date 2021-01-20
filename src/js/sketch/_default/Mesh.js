@@ -13,10 +13,10 @@ export default class Mesh extends THREE.Mesh {
       uniforms: {
         time: {
           value: 0
-        },
+        }
       },
       vertexShader: vs,
-      fragmentShader: fs,
+      fragmentShader: fs
     });
 
     // Create Object3D
