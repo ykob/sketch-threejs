@@ -12,11 +12,9 @@ export default class PostEffectBright extends THREE.Mesh {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         minBright: {
-          type: 'f',
           value: 0.5
         },
         texture: {
-          type: 't',
           value: null
         },
       },

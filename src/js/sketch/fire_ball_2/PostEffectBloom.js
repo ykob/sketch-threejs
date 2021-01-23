@@ -12,11 +12,9 @@ export default class PostEffectBloom extends THREE.Mesh {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         texture1: {
-          type: 't',
           value: null
         },
         texture2: {
-          type: 't',
           value: null
         },
       },

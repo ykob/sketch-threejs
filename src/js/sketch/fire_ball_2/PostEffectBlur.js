@@ -12,15 +12,12 @@ export default class PostEffectBlur extends THREE.Mesh {
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         resolution: {
-          type: 'v2',
           value: new THREE.Vector2()
         },
         direction: {
-          type: 'v2',
           value: new THREE.Vector2()
         },
         texture: {
-          type: 't',
           value: null
         },
       },
