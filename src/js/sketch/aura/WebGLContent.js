@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import sleep from 'js-util/sleep';
 
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';

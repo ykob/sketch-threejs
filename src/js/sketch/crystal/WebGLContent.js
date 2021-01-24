@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
-import sleep from 'js-util/sleep';
 
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import PromiseOBJLoader from '../../common/PromiseOBJLoader';
