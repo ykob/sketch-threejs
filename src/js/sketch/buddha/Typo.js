@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-import promiseTextureLoader from '../../common/PromiseTextureLoader';
-
+const texLoader = new THREE.TextureLoader();
 const DURATION = 4;
 let iPositions = undefined;
 let iUvs = undefined;
@@ -89,7 +88,7 @@ export default class Typo {
       depthWrite: false,
     });
 
-    this.uniforms.texHannyaShingyo.value = await promiseTextureLoader('/sketch-threejs/img/sketch/buddha/hannya_text.png');
+    this.uniforms.texHannyaShingyo.value = await texLoader.loadAsync('/sketch-threejs/img/sketch/buddha/hannya_text.png');
     this.uniforms.unitUv.value = 1 / gridsPerSide;
 
     // Create Object3D

@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import CameraAura from './CameraAura';
 import AuraObject from './AuraObject';
@@ -27,6 +26,7 @@ for (var i = 0; i < auraObjs.length; i++) {
   auraObjs[i] = new AuraObject(alpha);
 }
 const bg = new Background();
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define WebGLContent Class.
@@ -44,7 +44,7 @@ export default class WebGLContent {
     renderer.setClearColor(0x000000, 1.0);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/splash/noise.png'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/splash/noise.png'),
     ]).then((response) => {
       const noiseTex = response[0];
 

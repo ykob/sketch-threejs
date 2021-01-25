@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
 const promiseOBJLoader = require('../../common/PromiseOBJLoader').default;
-const promiseTextureLoader = require('../../common/PromiseTextureLoader').default;
+const texLoader = new THREE.TextureLoader();
 
 export default class BuddhaHead {
   constructor() {
@@ -21,7 +21,7 @@ export default class BuddhaHead {
   async createObj() {
     // Load an obj file.
     const obj = await promiseOBJLoader('/sketch-threejs/model/buddha/buddha_head.obj');
-    this.uniforms.tex.value = await promiseTextureLoader('/sketch-threejs/model/buddha/buddha_ao.jpg');
+    this.uniforms.tex.value = await texLoader.loadAsync('/sketch-threejs/model/buddha/buddha_ao.jpg');
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
