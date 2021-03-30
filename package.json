@@ -20,10 +20,10 @@
     "IE 11"
   ],
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
     "babel-loader": "^8.2.2",
-    "browser-sync": "^2.26.13",
+    "browser-sync": "^2.26.14",
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "glslify-import-loader": "^0.1.2",
@@ -42,7 +42,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.1.0",
     "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-pngquant": "^9.0.1",
+    "imagemin-pngquant": "^9.0.2",
     "merge-stream": "^2.0.0",
     "node-sass": "^5.0.0",
     "pump": "^3.0.0",
@@ -50,8 +50,8 @@
     "require-dir": "^1.2.0",
     "slash": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
-    "webpack": "^5.16.0",
-    "webpack-stream": "^6.1.1",
+    "webpack": "^5.28.0",
+    "webpack-stream": "^6.1.2",
     "yargs": "^16.2.0"
   },
   "dependencies": {
@@ -65,7 +65,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.124.0",
+    "three": "^0.126.1",
     "vue": "^2.6.12"
   }
 }
