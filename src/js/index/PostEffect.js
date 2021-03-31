@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class PostEffect {
   constructor(texture) {
     this.uniforms = {

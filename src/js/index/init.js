@@ -3,7 +3,6 @@ const debounce = require('js-util/debounce');
 
 const SmoothScrollManager = require('../smooth_scroll_manager/SmoothScrollManager').default;
 const TitleObject = require('./TitleObject').default;
-const FrameObject = require('./FrameObject').default;
 const SkyOctahedron = require('./SkyOctahedron').default;
 const SkyOctahedronShell = require('./SkyOctahedronShell').default;
 const Ground = require('./Ground').default;
@@ -26,7 +25,6 @@ export default function() {
   const clock = new THREE.Clock();
 
   const titleObject = new TitleObject();
-  const frameObject = new FrameObject();
   const skyOctahedron = new SkyOctahedron();
   const skyOctahedronShell = new SkyOctahedronShell();
   const ground = new Ground();

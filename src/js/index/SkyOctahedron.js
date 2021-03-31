@@ -1,7 +1,5 @@
 const THREE = require('three');
 
-const MathEx = require('js-util/MathEx');
-
 const computeFaceNormal = (v0, v1, v2) => {
   const n = [];
   const v1a = [v1[0] - v0[0], v1[1] - v0[1], v1[2] - v0[2]];
