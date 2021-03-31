@@ -45,6 +45,7 @@
     "imagemin-pngquant": "^9.0.2",
     "merge-stream": "^2.0.0",
     "node-sass": "^5.0.0",
+    "pug": "^3.0.1",
     "pump": "^3.0.0",
     "raw-loader": "^4.0.2",
     "require-dir": "^1.2.0",
