@@ -27,7 +27,6 @@ export default class Skull extends THREE.Group {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      flatShading: true,
     });
 
     this.head = new THREE.Mesh(geometry1, this.material);

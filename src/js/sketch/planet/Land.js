@@ -66,7 +66,6 @@ export default class Land {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/land.vs').default,
       fragmentShader: require('./glsl/land.fs').default,
-      flatShading: true,
     });
 
     // Create Object3D

@@ -21,7 +21,6 @@ export default class Aura {
       vertexShader: require('./glsl/aura.vs').default,
       fragmentShader: require('./glsl/aura.fs').default,
       transparent: true,
-      flatShading: true,
     });
 
     // Create Object3D

@@ -50,7 +50,6 @@ export default class FlameStone {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/flameStone.vs').default,
       fragmentShader: require('./glsl/flameStone.fs').default,
-      flatShading: true,
     });
 
     // Create Object3D

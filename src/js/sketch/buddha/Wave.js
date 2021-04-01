@@ -21,7 +21,6 @@ export default class Wave {
       vertexShader: require('./glsl/wave.vs').default,
       fragmentShader: require('./glsl/wave.fs').default,
       transparent: true,
-      flatShading: true,
     });
 
     // Create Object3D

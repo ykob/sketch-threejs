@@ -49,7 +49,6 @@ export default class Clouds {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/clouds.vs').default,
       fragmentShader: require('./glsl/clouds.fs').default,
-      flatShading: true,
     });
 
     // Create Object3D

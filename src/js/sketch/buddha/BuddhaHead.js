@@ -28,7 +28,6 @@ export default class BuddhaHead {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/buddhaHead.vs').default,
       fragmentShader: require('./glsl/buddhaHead.fs').default,
-      flatShading: true,
     });
 
     // Create Object3D

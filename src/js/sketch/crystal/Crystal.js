@@ -32,7 +32,6 @@ export default class Crystal extends THREE.Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      flatShading: true,
     });
 
     // Create Object3D

@@ -27,7 +27,6 @@ export default class TorusKnot extends THREE.Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      flatShading: true,
     });
 
     // Create Object3D

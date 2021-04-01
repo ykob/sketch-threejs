@@ -49,7 +49,6 @@ export default class Pole {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/pole.vs').default,
       fragmentShader: require('./glsl/pole.fs').default,
-      flatShading: true,
       transparent: true,
       depthWrite: false,
     });

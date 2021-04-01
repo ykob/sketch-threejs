@@ -35,7 +35,6 @@ export default class Debris extends THREE.InstancedMesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      flatShading: true,
     });
 
     // Create Object3D

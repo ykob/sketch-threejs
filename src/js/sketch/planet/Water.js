@@ -24,7 +24,6 @@ export default class Water {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/water.vs').default,
       fragmentShader: require('./glsl/water.fs').default,
-      flatShading: true,
       transparent: true,
     });
 

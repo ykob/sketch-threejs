@@ -73,7 +73,6 @@ export default function() {
       },
       vertexShader: require('./glsl/background.vs').default,
       fragmentShader: require('./glsl/background.fs').default,
-      flatShading: true,
       side: THREE.BackSide
     });
     var mesh = new THREE.Mesh(geometry, material);

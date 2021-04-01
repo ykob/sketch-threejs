@@ -20,7 +20,6 @@ export default class Floor extends THREE.Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      flatShading: true,
     });
 
     // Create Object3D

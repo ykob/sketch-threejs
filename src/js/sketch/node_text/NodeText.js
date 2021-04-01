@@ -100,7 +100,6 @@ export default class Node {
       fragmentShader: require('./glsl/nodeText.fs').default,
       depthWrite: false,
       transparent: true,
-      flatShading: true,
     });
     const materialWire = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,

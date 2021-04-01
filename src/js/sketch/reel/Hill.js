@@ -34,7 +34,6 @@ export default class Hill {
         uniforms: this.uniforms,
         vertexShader: require('./glsl/hill.vs').default,
         fragmentShader: require('./glsl/hill.fs').default,
-        flatShading: true,
       }),
       this.instances
     )

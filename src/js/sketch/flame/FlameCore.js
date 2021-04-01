@@ -20,7 +20,6 @@ export default class FlameCore {
       uniforms: this.uniforms,
       vertexShader: require('./glsl/flameCore.vs').default,
       fragmentShader: require('./glsl/flameCore.fs').default,
-      flatShading: true,
     });
 
     // Create Object3D

@@ -54,7 +54,6 @@ export default class Wire {
         depthWrite: false,
         transparent: true,
         side: THREE.DoubleSide,
-        flatShading: true
       }),
       this.instances
     );

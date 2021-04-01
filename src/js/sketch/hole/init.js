@@ -135,7 +135,6 @@ export default function() {
       ]),
       vertexShader: require('./glsl/object.vs').default,
       fragmentShader: require('./glsl/object.fs').default,
-      flatShading: true,
       lights: true,
     });
     return new THREE.Mesh(geometry, material);

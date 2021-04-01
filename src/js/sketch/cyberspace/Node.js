@@ -25,7 +25,6 @@ export default class Node {
       depthWrite: false,
       transparent: true,
       blending: THREE.AdditiveBlending,
-      flatShading: true,
     });
     const materialWire = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,
