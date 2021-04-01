@@ -1,3 +1,5 @@
+#extension GL_OES_standard_derivatives : enable
+
 struct DirectionalLight {
   vec3 color;
   vec3 direction;

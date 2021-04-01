@@ -1,3 +1,5 @@
+#extension GL_OES_standard_derivatives : enable
+
 uniform float time;
 uniform float acceleration;
 
