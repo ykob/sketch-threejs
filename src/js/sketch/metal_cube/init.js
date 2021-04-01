@@ -57,9 +57,7 @@ export default function() {
     return mesh;
   };
   var createBackground =  function() {
-    var geometry_base = new THREE.OctahedronGeometry(30, 4);
-    var geometry = new THREE.BufferGeometry();
-    geometry.fromGeometry(geometry_base);
+    var geometry = new THREE.OctahedronBufferGeometry(30, 4);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {

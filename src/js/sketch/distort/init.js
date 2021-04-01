@@ -38,8 +38,7 @@ export default function() {
   var framebuffer = null;
 
   var createSphere = function() {
-    var geometry = new THREE.BufferGeometry();
-    geometry.fromGeometry(new THREE.OctahedronGeometry(200, 5));
+    var geometry = new THREE.OctahedronBufferGeometry(200, 5);
     var material = new THREE.ShaderMaterial({
       uniforms: THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],
@@ -74,9 +73,7 @@ export default function() {
   };
 
   var createPlaneForPostProcess = function() {
-    var geometry_base = new THREE.PlaneGeometry(2, 2);
-    var geometry = new THREE.BufferGeometry();
-    geometry.fromGeometry(geometry_base);
+    var geometry = new THREE.PlaneBufferGeometry(2, 2);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
