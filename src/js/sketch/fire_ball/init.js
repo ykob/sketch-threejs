@@ -1,5 +1,6 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
+import ForcePointLight from '../../old/ForcePointLight';
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
 
@@ -8,7 +9,6 @@ export default function() {
   const util = require('../../old/util');
   const Mover = require('../../old/Mover');
   const Points = require('../../old/Points');
-  const ForcePointLight = require('../../old/ForcePointLight');
   const ForceCamera = require('../../old/ForceCamera');
 
   const canvas = document.getElementById('canvas-webgl');

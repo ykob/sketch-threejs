@@ -1,21 +1,17 @@
-const THREE = require('three');
-const Util = require('./util');
-const Force3 = require('./Force3');
+import * as THREE from 'three';
+import Util from './util';
+import Force3 from './Force3';
 
-var exports = function(){
-  var ForcePointLight = function(hex, intensity, distance, decay) {
-    THREE.PointLight.call(this, hex, intensity, distance, decay);
+export default class ForcePointLight extends THREE.PointLight {
+  constructor(hex, intensity, distance, decay) {
+    super(hex, intensity, distance, decay);
+
     this.force = new Force3();
-  };
-  ForcePointLight.prototype = Object.create(THREE.PointLight.prototype);
-  ForcePointLight.prototype.constructor = ForcePointLight;
-  ForcePointLight.prototype.updatePosition = function() {
+  }
+  updatePosition() {
     this.position.copy(this.force.velocity);
-  };
-  ForcePointLight.prototype.setPolarCoord = function(rad1, rad2, range) {
+  }
+  setPolarCoord(rad1, rad2, range) {
     this.position.copy(Util.getPolarCoord(rad1, rad2, range));
-  };
-  return ForcePointLight;
-};
-
-module.exports = exports();
+  }
+}
