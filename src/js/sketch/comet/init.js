@@ -1,5 +1,7 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
+import ForcePointLight from '../../old/ForcePointLight';
+import ForceHemisphereLight from '../../old/ForceHemisphereLight';
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
 
@@ -9,8 +11,6 @@ export default function() {
   const Force2 = require('../../old/Force2');
   const Mover = require('../../old/Mover');
   const Points = require('../../old/Points.js');
-  const ForceHemisphereLight = require('../../old/ForceHemisphereLight');
-  const ForcePointLight = require('../../old/ForcePointLight');
   const ForceCamera = require('../../old/ForceCamera');
 
   const canvas = document.getElementById('canvas-webgl');
@@ -167,28 +167,11 @@ export default function() {
   };
 
   var createCommet = function() {
-    var base_geometry = new THREE.OctahedronGeometry(comet_radius, 2);
-    var geometry = new THREE.BufferGeometry();
+    var geometry = new THREE.OctahedronGeometry(comet_radius, 2);
     var material = new THREE.MeshPhongMaterial({
       color: new THREE.Color('hsl(' + comet_color_h + ', 100%, 100%)'),
       flatShading: true
     });
-    var positions = new Float32Array(base_geometry.vertices.length * 3);
-    for (var i = 0; i < base_geometry.vertices.length; i++) {
-      positions[i * 3] = base_geometry.vertices[i].x;
-      positions[i * 3 + 1] = base_geometry.vertices[i].y;
-      positions[i * 3 + 2] = base_geometry.vertices[i].z;
-    }
-    var indices = new Uint32Array(base_geometry.faces.length * 3);
-    for (var j = 0; j < base_geometry.faces.length; j++) {
-      indices[j * 3] = base_geometry.faces[j].a;
-      indices[j * 3 + 1] = base_geometry.faces[j].b;
-      indices[j * 3 + 2] = base_geometry.faces[j].c;
-    }
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.attributes.position.dynamic = true;
-    geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-    geometry.index.dynamic = true;
     return new THREE.Mesh(geometry, material);
   };
 
