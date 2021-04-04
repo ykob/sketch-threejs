@@ -378,7 +378,7 @@
       "description": "distort the sphere with simplex noise.",
       "path": "/sketch/distort.html",
       "posted": "2016.2.23",
-      "update": "2016.5.10",
+      "update": "2021.4.4",
       "color": "black"
     },
     "imageData": {

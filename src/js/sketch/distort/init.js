@@ -38,7 +38,7 @@ export default function() {
   var framebuffer = null;
 
   var createSphere = function() {
-    var geometry = new THREE.OctahedronBufferGeometry(200, 5);
+    var geometry = new THREE.OctahedronGeometry(200, 16);
     var material = new THREE.ShaderMaterial({
       uniforms: THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],
