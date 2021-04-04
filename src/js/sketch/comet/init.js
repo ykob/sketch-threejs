@@ -20,7 +20,6 @@ export default function() {
   });
   const scene = new THREE.Scene();
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
-  const clock = new THREE.Clock();
 
   //
   // process for this sketch.
@@ -54,7 +53,6 @@ export default function() {
   var updateMover = function() {
     for (var i = 0; i < movers.length; i++) {
       var mover = movers[i];
-      var position = new THREE.Vector3();
       if (mover.is_active) {
         mover.time++;
         mover.applyDrag(0.1);
