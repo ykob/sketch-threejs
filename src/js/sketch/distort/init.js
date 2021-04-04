@@ -90,7 +90,7 @@ export default function() {
         },
         texture: {
           type: 't',
-          value: render_target,
+          value: render_target.texture,
         },
       },
       vertexShader: require('./glsl/posteffect.vs').default,
