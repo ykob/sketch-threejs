@@ -1,12 +1,12 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
+import ForceHemisphereLight from '../../old/ForceHemisphereLight';
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
 
 export default function() {
   var Util = require('../../old/util');
   var Force3 = require('../../old/Force3');
-  var ForceHemisphereLight = require('../../old/ForceHemisphereLight');
   const ForceCamera = require('../../old/ForceCamera');
 
   const canvas = document.getElementById('canvas-webgl');
@@ -16,7 +16,6 @@ export default function() {
   });
   const scene = new THREE.Scene();
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
-  const clock = new THREE.Clock();
 
   //
   // process for this sketch.
