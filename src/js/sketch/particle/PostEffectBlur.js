@@ -28,7 +28,7 @@ export default class PostEffectBlur {
       })
     );
   }
-  resize() {
-    this.uniforms.resolution.value.set(document.body.clientWidth, window.innerHeight);
+  resize(x, y) {
+    this.uniforms.resolution.value.set(x, y);
   }
 }

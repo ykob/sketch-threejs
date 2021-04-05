@@ -42,16 +42,19 @@ export default function() {
   // common process
   //
   const resizeWindow = () => {
-    canvas.width = document.body.clientWidth;
-    canvas.height = window.innerHeight;
-    cameraBack.aspect = document.body.clientWidth / window.innerHeight;
+    const x = document.body.clientWidth;
+    const y = window.innerHeight;
+
+    canvas.width = x;
+    canvas.height = y;
+    cameraBack.aspect = x / y;
     cameraBack.updateProjectionMatrix();
-    postEffectBlurX.resize();
-    postEffectBlurY.resize();
-    renderBack1.setSize(document.body.clientWidth, window.innerHeight);
-    renderBack2.setSize(document.body.clientWidth, window.innerHeight);
-    renderBack3.setSize(document.body.clientWidth, window.innerHeight);
-    renderer.setSize(document.body.clientWidth, window.innerHeight);
+    postEffectBlurX.resize(x, y);
+    postEffectBlurY.resize(x, y);
+    renderBack1.setSize(x, y);
+    renderBack2.setSize(x, y);
+    renderBack3.setSize(x, y);
+    renderer.setSize(x, y);
   }
   const render = () => {
     const time = clock.getDelta();
