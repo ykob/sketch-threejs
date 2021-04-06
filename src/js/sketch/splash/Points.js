@@ -9,7 +9,7 @@ const DURATION = 4;
 export default class Points extends THREE.Points {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.IcosahedronBufferGeometry(1, 5);
+    const geometry = new THREE.IcosahedronGeometry(1, 100);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
