@@ -13,7 +13,7 @@ export default class FlameCore {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.OctahedronBufferGeometry(450, 3);
+    const geometry = new THREE.OctahedronGeometry(450, 10);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
