@@ -1,7 +1,6 @@
 const THREE = require('three');
 const debounce = require('js-util/debounce');
 
-const normalizeVector2 = require('../../common/normalizeVector2').default;
 const Boxes = require('./Boxes.js').default;
 const Floor = require('./Floor.js').default;
 const Hill = require('./Hill.js').default;

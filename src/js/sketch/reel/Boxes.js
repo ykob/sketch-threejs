@@ -1,8 +1,3 @@
-const THREE = require('three');
-
-const MathEx = require('js-util/MathEx');
-const debounce = require('js-util/debounce');
-
 const Force3 = require('../../common/Force3').default;
 const Core = require('./Core').default;
 const Wire = require('./Wire').default;

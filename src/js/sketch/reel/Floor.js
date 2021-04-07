@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class Floor {
   constructor() {
     this.mirrorCamera = new THREE.PerspectiveCamera(24, document.body.clientWidth / window.innerHeight, 1, 15000);

@@ -1,6 +1,5 @@
 const THREE = require('three');
 
-
 export default class Hill {
   constructor() {
     var cubeRenderTarget = new THREE.WebGLCubeRenderTarget(128);
