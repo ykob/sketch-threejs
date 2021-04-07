@@ -59,7 +59,7 @@ export default function() {
     render();
     requestAnimationFrame(renderLoop);
   }
-  const touchStart = (isTouched) => {
+  const touchStart = () => {
     isDrag = true;
   };
   const touchMove = (isTouched) => {
@@ -76,7 +76,7 @@ export default function() {
       boxes.picked((pixelBuffer[0] << 16) | (pixelBuffer[1] << 8) | (pixelBuffer[2]));
     }
   };
-  const touchEnd = (isTouched) => {
+  const touchEnd = () => {
     isDrag = false;
   };
   const wheel = (event) => {
