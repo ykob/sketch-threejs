@@ -7,7 +7,7 @@ import fs from './glsl/Aura.fs';
 export default class Aura extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(20, 20);
+    const geometry = new THREE.PlaneGeometry(20, 20);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

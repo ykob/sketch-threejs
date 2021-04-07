@@ -8,7 +8,7 @@ export default class Debris extends THREE.InstancedMesh {
   constructor() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.OctahedronBufferGeometry(2, 0);
+    const baseGeometry = new THREE.OctahedronGeometry(2, 0);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

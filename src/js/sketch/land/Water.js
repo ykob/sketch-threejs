@@ -17,7 +17,7 @@ export default class Water {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(100, 100, 60, 60);
+    const geometry = new THREE.PlaneGeometry(100, 100, 60, 60);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

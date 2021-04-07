@@ -14,7 +14,7 @@ export default class Bg {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.SphereBufferGeometry(10000, 32, 32);
+    const geometry = new THREE.SphereGeometry(10000, 32, 32);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

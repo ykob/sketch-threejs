@@ -25,7 +25,7 @@ export default class Core {
     const geometry = new THREE.InstancedBufferGeometry();
 
     // Setting BufferAttribute
-    const baseGeometry = new THREE.OctahedronBufferGeometry(30, 4);
+    const baseGeometry = new THREE.OctahedronGeometry(30, 4);
     geometry.copy(baseGeometry);
 
     // Setting InstancedBufferAttribute

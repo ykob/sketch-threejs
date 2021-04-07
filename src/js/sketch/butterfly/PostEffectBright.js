@@ -17,7 +17,7 @@ export default class PostEffectBright {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.PlaneGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/postEffect.vs').default,

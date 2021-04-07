@@ -87,7 +87,7 @@ export default function() {
   };
 
   var createObject = function() {
-    var geometry_base = new THREE.SphereBufferGeometry(2, 4, 4);
+    var geometry_base = new THREE.SphereGeometry(2, 4, 4);
     var attr = geometry_base.attributes;
     var geometry = new THREE.BufferGeometry();
     var vertices_base = [];
@@ -191,7 +191,7 @@ export default function() {
   };
 
   var createBackgroundInFramebuffer = function() {
-    var geometry = new THREE.SphereBufferGeometry(1000, 128, 128);
+    var geometry = new THREE.SphereGeometry(1000, 128, 128);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -207,7 +207,7 @@ export default function() {
   };
 
   var createPlaneForFramebuffer = function() {
-    var geometry = new THREE.PlaneBufferGeometry(1000, 1000);
+    var geometry = new THREE.PlaneGeometry(1000, 1000);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {

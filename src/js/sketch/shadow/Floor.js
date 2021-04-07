@@ -7,7 +7,7 @@ import fs from './glsl/Floor.fs';
 export default class Floor extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(30, 30, 128, 128);
+    const geometry = new THREE.PlaneGeometry(30, 30, 128, 128);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

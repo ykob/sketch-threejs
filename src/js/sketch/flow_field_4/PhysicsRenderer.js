@@ -5,7 +5,7 @@ import fs from './glsl/physicsRendererInit.fs';
 
 const createMesh = (uniforms, vs, fs) => {
   return new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(2, 2),
+    new THREE.PlaneGeometry(2, 2),
     new THREE.RawShaderMaterial({
       uniforms,
       vertexShader: vs,
@@ -163,7 +163,7 @@ export default class PhysicsRenderer {
     aInitData.needsUpdate = true;
 
     const accelerationInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.PlaneGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: {
           initData: {
@@ -196,7 +196,7 @@ export default class PhysicsRenderer {
     vInitData.needsUpdate = true;
 
     const velocityInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.PlaneGeometry(2, 2),
       new THREE.RawShaderMaterial({
         uniforms: {
           initData: {

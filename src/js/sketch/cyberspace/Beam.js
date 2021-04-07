@@ -15,7 +15,7 @@ export default class Beam {
   createObj() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(100, 4000, 2, 2, 2);
+    const baseGeometry = new THREE.BoxGeometry(100, 4000, 2, 2, 2);
 
     // Add common attributes
     geometry.copy(baseGeometry);

@@ -21,7 +21,7 @@ export default class Puddle {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(1500, 1500),
+      new THREE.PlaneGeometry(1500, 1500),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/puddle.vs').default,

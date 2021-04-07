@@ -16,7 +16,7 @@ export default class Clouds {
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(2, 2, 20, 2, 2, 6);
+    const baseGeometry = new THREE.BoxGeometry(2, 2, 20, 2, 2, 6);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

@@ -13,7 +13,7 @@ export default class FlameCylinder {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(1000, 3000, 128, 128);
+    const geometry = new THREE.PlaneGeometry(1000, 3000, 128, 128);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

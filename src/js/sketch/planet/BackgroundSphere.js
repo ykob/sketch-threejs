@@ -16,7 +16,7 @@ export default class BackgroundSphere {
     this.obj;
   }
   createObj() {
-    const geometry = new THREE.SphereBufferGeometry(200, 128, 128);
+    const geometry = new THREE.SphereGeometry(200, 128, 128);
 
     const material = new THREE.RawShaderMaterial({
       uniforms: this.uniforms,

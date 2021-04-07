@@ -20,7 +20,7 @@ export default class Mover extends THREE.InstancedMesh {
   constructor() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(0.25, 0.5, 0.25, 1, HEIGHT_SEGMENTS, 1);
+    const baseGeometry = new THREE.BoxGeometry(0.25, 0.5, 0.25, 1, HEIGHT_SEGMENTS, 1);
 
     // Add common attributes
     geometry.copy(baseGeometry);

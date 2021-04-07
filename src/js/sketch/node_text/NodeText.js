@@ -40,8 +40,8 @@ export default class Node {
       curveSegments: 1,
     };
     const baseGeometries = [
-      new THREE.TextBufferGeometry('HELLO', optTextGeometry),
-      new THREE.TextBufferGeometry('WORLD', optTextGeometry),
+      new THREE.TextGeometry('HELLO', optTextGeometry),
+      new THREE.TextGeometry('WORLD', optTextGeometry),
     ];
     const geometry = new THREE.BufferGeometry();
     let maxCount = 0;

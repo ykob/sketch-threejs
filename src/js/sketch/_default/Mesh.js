@@ -6,7 +6,7 @@ import fs from './glsl/Mesh.fs';
 export default class Mesh extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BoxBufferGeometry(10, 10, 10);
+    const geometry = new THREE.BoxGeometry(10, 10, 10);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

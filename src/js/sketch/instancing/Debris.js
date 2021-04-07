@@ -23,7 +23,7 @@ export default class Debris {
   createObj() {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(10, 10, 10);
+    const baseGeometry = new THREE.BoxGeometry(10, 10, 10);
 
     // Add common attributes
     geometry.copy(baseGeometry);

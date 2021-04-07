@@ -21,7 +21,7 @@ export default class Points {
   }
   createObj(tex) {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(800, 800, 200, 200);
+    const geometry = new THREE.PlaneGeometry(800, 800, 200, 200);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

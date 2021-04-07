@@ -24,7 +24,7 @@ export default class Land {
     // Define Geometry
     const baseY = 5;
     const simplex = new SimplexNoise(Math.random);
-    const geometry = new THREE.BoxBufferGeometry(100, baseY, 100, 60, 1, 60);
+    const geometry = new THREE.BoxGeometry(100, baseY, 100, 60, 1, 60);
     for (var i = 0; i < geometry.attributes.position.count; i++) {
       const x = geometry.attributes.position.getX(i);
       const y = geometry.attributes.position.getY(i);

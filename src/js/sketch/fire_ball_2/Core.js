@@ -6,7 +6,7 @@ import fs from './glsl/Core.fs';
 export default class Core extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.OctahedronBufferGeometry(10, 6);
+    const geometry = new THREE.OctahedronGeometry(10, 6);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

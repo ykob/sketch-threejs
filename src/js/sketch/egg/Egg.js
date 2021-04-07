@@ -45,7 +45,7 @@ export default class Egg {
   }
   createObj() {
     const mesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(640, 640),
+      new THREE.PlaneGeometry(640, 640),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/egg.vs').default,

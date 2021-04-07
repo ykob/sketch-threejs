@@ -38,7 +38,7 @@ export default class Floor {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(4000, 4000);
+    const geometry = new THREE.PlaneGeometry(4000, 4000);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

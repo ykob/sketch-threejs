@@ -27,7 +27,7 @@ export default class GUI {
   createObj(textures) {
     // Define Geometry
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1200, 1200, 2, 2);
+    const baseGeometry = new THREE.PlaneGeometry(1200, 1200, 2, 2);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

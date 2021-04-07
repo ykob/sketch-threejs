@@ -4,7 +4,7 @@ import MathEx from 'js-util/MathEx';
 export default class BackgroundSphere extends THREE.Mesh {
   constructor() {
     // Define the geometry.
-    const geometry = new THREE.SphereBufferGeometry(100, 128, 128);
+    const geometry = new THREE.SphereGeometry(100, 128, 128);
 
     // Define the material.
     const material = new THREE.RawShaderMaterial({

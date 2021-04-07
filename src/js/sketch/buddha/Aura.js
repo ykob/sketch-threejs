@@ -13,7 +13,7 @@ export default class Aura {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(60, 60, 512, 512);
+    const geometry = new THREE.PlaneGeometry(60, 60, 512, 512);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

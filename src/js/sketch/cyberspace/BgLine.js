@@ -29,7 +29,7 @@ export default class BgLine {
   }
   createObj(radius, wave1, wave2, wave3, wave4) {
     // Define Geometry
-    const geometry = new THREE.SphereBufferGeometry(radius, 64, 64);
+    const geometry = new THREE.SphereGeometry(radius, 64, 64);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

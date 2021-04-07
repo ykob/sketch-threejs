@@ -44,7 +44,7 @@ export default class Typo {
 
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(6, 6);
+    const baseGeometry = new THREE.PlaneGeometry(6, 6);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

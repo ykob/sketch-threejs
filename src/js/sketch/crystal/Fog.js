@@ -7,7 +7,7 @@ import fs from './glsl/Fog.fs';
 export default class Fog extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(55, 55);
+    const geometry = new THREE.PlaneGeometry(55, 55);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

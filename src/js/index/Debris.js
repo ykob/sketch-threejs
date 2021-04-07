@@ -19,7 +19,7 @@ export default class Debris {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.BoxBufferGeometry(100, 100, 100),
+      new THREE.BoxGeometry(100, 100, 100),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/debris.vs').default,

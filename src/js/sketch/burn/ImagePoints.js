@@ -6,7 +6,7 @@ import fs from './glsl/ImagePoints.fs';
 export default class ImagePoints extends THREE.Points {
   constructor() {
     // Define Geometry
-    const gaseGeometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32);
+    const gaseGeometry = new THREE.PlaneGeometry(1, 1, 32, 32);
     const geometry = new THREE.BufferGeometry();
 
     geometry.setAttribute('position', gaseGeometry.attributes.position);

@@ -16,7 +16,7 @@ export default class Hill {
   }
   createObj() {
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(40, 1, 10);
+    const baseGeometry = new THREE.BoxGeometry(40, 1, 10);
     geometry.copy(baseGeometry);
 
     const height = new THREE.InstancedBufferAttribute(new Float32Array(this.instances), 1);

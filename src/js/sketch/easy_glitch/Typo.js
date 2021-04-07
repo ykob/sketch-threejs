@@ -7,7 +7,7 @@ import fs from './glsl/typo.fs';
 export default class Typo extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(20, 10);
+    const geometry = new THREE.PlaneGeometry(20, 10);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

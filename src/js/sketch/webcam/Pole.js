@@ -18,7 +18,7 @@ export default class Pole {
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(1.2, 1.2, 18);
+    const baseGeometry = new THREE.BoxGeometry(1.2, 1.2, 18);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

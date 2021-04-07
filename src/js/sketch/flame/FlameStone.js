@@ -15,7 +15,7 @@ export default class FlameStone {
   createObj() {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.BoxBufferGeometry(16, 800, 200);
+    const baseGeometry = new THREE.BoxGeometry(16, 800, 200);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

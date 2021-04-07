@@ -28,7 +28,7 @@ export default class Floor {
   }
   createObj() {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(4000, 4000),
+      new THREE.PlaneGeometry(4000, 4000),
       new THREE.RawShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: require('./glsl/floor.vs').default,

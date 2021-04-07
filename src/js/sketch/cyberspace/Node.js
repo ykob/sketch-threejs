@@ -15,7 +15,7 @@ export default class Node {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.RingBufferGeometry(1550, 1600, 36, 2, MathEx.radians(135), MathEx.radians(270));
+    const geometry = new THREE.RingGeometry(1550, 1600, 36, 2, MathEx.radians(135), MathEx.radians(270));
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

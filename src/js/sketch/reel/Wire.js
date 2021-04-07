@@ -5,7 +5,7 @@ const MathEx = require('js-util/MathEx');
 export default class Wire {
   constructor(instances) {
     this.size = 120;
-    this.baseGeometry = new THREE.BoxBufferGeometry(
+    this.baseGeometry = new THREE.BoxGeometry(
       this.size, this.size, this.size
     );
     this.uniforms = {

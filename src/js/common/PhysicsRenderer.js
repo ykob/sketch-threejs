@@ -128,7 +128,7 @@ export default class PhysicsRenderer {
     this.vUniforms.velocityInit.value = new THREE.DataTexture(new Float32Array(velocityArray), this.side, this.side, THREE.RGBFormat, THREE.FloatType);
     this.vUniforms.velocityInit.value.needsUpdate = true;
     const velocityInitMesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.PlaneGeometry(2, 2),
       new THREE.ShaderMaterial({
         uniforms: {
           velocity: {
@@ -156,7 +156,7 @@ export default class PhysicsRenderer {
   }
   createMesh(uniforms, vs, fs) {
     return new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2, 2),
+      new THREE.PlaneGeometry(2, 2),
       new THREE.ShaderMaterial({
         uniforms: uniforms,
         vertexShader: vs,

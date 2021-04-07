@@ -19,7 +19,7 @@ export default class Fog {
   createObj(tex) {
     // Define Geometries
     const geometry = new THREE.InstancedBufferGeometry();
-    const baseGeometry = new THREE.PlaneBufferGeometry(1100, 1100, 20, 20);
+    const baseGeometry = new THREE.PlaneGeometry(1100, 1100, 20, 20);
 
     // Copy attributes of the base Geometry to the instancing Geometry
     geometry.copy(baseGeometry);

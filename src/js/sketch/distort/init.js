@@ -73,7 +73,7 @@ export default function() {
   };
 
   var createPlaneForPostProcess = function() {
-    var geometry = new THREE.PlaneBufferGeometry(2, 2);
+    var geometry = new THREE.PlaneGeometry(2, 2);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {

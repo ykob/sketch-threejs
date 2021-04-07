@@ -7,7 +7,7 @@ import fs from './glsl/Blob.fs';
 export default class Blob extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.TorusKnotBufferGeometry(2.4, 0.8, 200, 32);
+    const geometry = new THREE.TorusKnotGeometry(2.4, 0.8, 200, 32);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

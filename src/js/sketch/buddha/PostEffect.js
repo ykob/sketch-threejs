@@ -20,7 +20,7 @@ export default class PostEffect {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+    const geometry = new THREE.PlaneGeometry(2, 2);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

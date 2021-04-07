@@ -29,7 +29,7 @@ export default class Plane {
   }
   createObj(webcam) {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(50, 50, 2, 2);
+    const geometry = new THREE.PlaneGeometry(50, 50, 2, 2);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

@@ -28,7 +28,7 @@ export default function() {
   cube_force.mass = 1.4;
 
   var createPlaneForRaymarching = function() {
-    var geometry = new THREE.PlaneBufferGeometry(6.0, 6.0);
+    var geometry = new THREE.PlaneGeometry(6.0, 6.0);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -57,7 +57,7 @@ export default function() {
     return mesh;
   };
   var createBackground =  function() {
-    var geometry = new THREE.OctahedronBufferGeometry(30, 4);
+    var geometry = new THREE.OctahedronGeometry(30, 4);
     var material = new THREE.ShaderMaterial({
       uniforms: {
         time: {

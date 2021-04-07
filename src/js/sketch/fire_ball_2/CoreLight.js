@@ -6,7 +6,7 @@ import fs from './glsl/CoreLight.fs';
 export default class CoreLight extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(30, 30);
+    const geometry = new THREE.PlaneGeometry(30, 30);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

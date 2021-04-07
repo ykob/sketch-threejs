@@ -6,7 +6,7 @@ import promiseTextureLoader from '../../common/PromiseTextureLoader';
 export default class Typo extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(36, 36);
+    const geometry = new THREE.PlaneGeometry(36, 36);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
