@@ -23,7 +23,7 @@ export default class Land {
   createObj() {
     // Define Geometry
     const simplex = new SimplexNoise(Math.random);
-    const geometry = new THREE.OctahedronBufferGeometry(50, 5);
+    const geometry = new THREE.OctahedronGeometry(50, 30);
     for (var i = 0; i < geometry.attributes.position.count; i++) {
       const v3 = new THREE.Vector3(
         geometry.attributes.position.getX(i),

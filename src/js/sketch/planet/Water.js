@@ -17,7 +17,7 @@ export default class Water {
   }
   createObj() {
     // Define Geometry
-    const geometry = new THREE.OctahedronBufferGeometry(50, 5);
+    const geometry = new THREE.OctahedronGeometry(50, 30);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
