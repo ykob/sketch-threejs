@@ -69,7 +69,9 @@ export default function() {
       }
     } else {
       renderer.setClearColor(0xffffff, 1.0);
-      renderer.render(scenePicked, camera, renderPicked);
+      renderer.setRenderTarget(renderPicked);
+      renderer.render(scenePicked, camera);
+      renderer.setRenderTarget(null);
       renderer.readRenderTargetPixels(renderPicked, vectorTouchMove.x, renderPicked.height - vectorTouchMove.y, 1, 1, pixelBuffer);
       boxes.picked((pixelBuffer[0] << 16) | (pixelBuffer[1] << 8) | (pixelBuffer[2]));
     }
