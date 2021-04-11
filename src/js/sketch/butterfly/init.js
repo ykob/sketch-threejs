@@ -80,6 +80,7 @@ export default function() {
     }
     points.render(time);
     floor.render(renderer, scene, sceneBack, camera, time);
+    renderer.setRenderTarget(renderBack1);
     renderer.render(sceneBack, cameraBack, renderBack1);
 
     // render post effects
