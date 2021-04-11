@@ -93,13 +93,13 @@ export default function() {
     render();
     requestAnimationFrame(renderLoop);
   }
-  const touchStart = (isTouched) => {
+  const touchStart = () => {
     isDrag = true;
   };
-  const touchMove = (isTouched) => {
+  const touchMove = () => {
     if (isDrag) {}
   };
-  const touchEnd = (isTouched) => {
+  const touchEnd = () => {
     isDrag = false;
   };
   const mouseOut = () => {
