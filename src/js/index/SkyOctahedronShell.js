@@ -11,7 +11,7 @@ export default class SkyOctahedronShell {
     this.obj = this.createObj();
   }
   createObj() {
-    const geometry = new THREE.OctahedronGeometry(150, 4);
+    const geometry = new THREE.OctahedronGeometry(150, 20);
     return new THREE.Mesh(
       geometry,
       new THREE.RawShaderMaterial({
