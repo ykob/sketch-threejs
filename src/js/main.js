@@ -1,11 +1,9 @@
 require("@babel/polyfill");
 
-const ConsoleSignature = require('./common/ConsoleSignature.js').default;
 const redirectOldSketches = require('./common/redirectOldSketches.js').default;
 
 const page = document.querySelector('.l-page');
 const pageId = page.dataset.id;
-const consoleSignature = new ConsoleSignature();
 
 // running each init functions.
 if (pageId == 'index') {
