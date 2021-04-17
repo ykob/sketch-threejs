@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
-import PromiseOBJLoader from '../../common/PromiseOBJLoader';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 import Camera from './Camera';
 import Crystal from './Crystal';
@@ -22,6 +22,7 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+const objLoader = new OBJLoader();
 
 // For the post effect.
 const renderTarget1 = new THREE.WebGLRenderTarget();
@@ -76,7 +77,7 @@ export default class WebGLContent {
     let crystalFogTex;
 
     await Promise.all([
-      PromiseOBJLoader('/sketch-threejs/model/crystal/crystal.obj'),
+      objLoader.loadAsync('/sketch-threejs/model/crystal/crystal.obj'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/normal.jpg'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/surface.jpg'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/fog.jpg'),

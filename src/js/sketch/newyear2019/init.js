@@ -1,10 +1,10 @@
 import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import UaParser from 'ua-parser-js';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 import MathEx from 'js-util/MathEx';
 
-import promiseOBJLoader from '../../common/PromiseOBJLoader';
 import BoarHead from './BoarHead';
 import Typo from './Typo';
 import Confetti from './Confetti';
@@ -31,6 +31,7 @@ export default async function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
+  const objLoader = new OBJLoader();
 
   // For the post effect.
   const renderTarget1 = new THREE.WebGLRenderTarget();
@@ -190,7 +191,7 @@ export default async function() {
   camera.lookAt(new THREE.Vector3());
 
   // Load an obj file.
-  const obj = await promiseOBJLoader('/sketch-threejs/model/newyear2019/boar_head.obj');
+  const obj = await objLoader.loadAsync('/sketch-threejs/model/newyear2019/boar_head.obj');
   const boarGeometry = obj.children[0].geometry;
 
   boarHead = new BoarHead(boarGeometry);

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import sleep from 'js-util/sleep';
 
-import promiseOBJLoader from '../../common/PromiseOBJLoader';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import CameraAura from './CameraAura';
@@ -19,6 +19,7 @@ const clock = new THREE.Clock({
 });
 const sceneAura = new THREE.Scene();
 const cameraAura = new CameraAura();
+const objLoader = new OBJLoader();
 
 // ==========
 // Define unique variables
@@ -42,7 +43,7 @@ export default class WebGLContent {
     renderer.setClearColor(0x000000, 1.0);
 
     await Promise.all([
-      promiseOBJLoader('/sketch-threejs/model/skull/SkullHead.obj'),
+      objLoader.loadAsync('/sketch-threejs/model/skull/SkullHead.obj'),
       PromiseTextureLoader('/sketch-threejs/img/sketch/splash/noise.png'),
     ]).then((response) => {
       const geometrySkullHead = response[0].children[1].geometry;
