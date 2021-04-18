@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Sun from './Sun';
 import Core from './Core';
@@ -9,6 +8,8 @@ import Shell from './Shell';
 import Points from './Points';
 import SunShine from './SunShine';
 import Background from './Background';
+
+const texLoader = new THREE.TextureLoader();
 
 export default async function() {
   // ==========
@@ -116,9 +117,9 @@ export default async function() {
   resizeWindow();
 
   await Promise.all([
-    PromiseTextureLoader('../img/sketch/sun/core.png'),
-    PromiseTextureLoader('../img/sketch/sun/core_normal.png'),
-    PromiseTextureLoader('../img/sketch/sun/sunshine.png'),
+    texLoader.loadAsync('../img/sketch/sun/core.png'),
+    texLoader.loadAsync('../img/sketch/sun/core_normal.png'),
+    texLoader.loadAsync('../img/sketch/sun/sunshine.png'),
   ]).then(response => {
     textures = response;
   });

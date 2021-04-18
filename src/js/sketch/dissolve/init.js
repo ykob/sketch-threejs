@@ -5,6 +5,8 @@ import sleep from 'js-util/sleep';
 import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Image from './Image';
 
+const texLoader = new THREE.TextureLoader();
+
 export default async function() {
   // ==========
   // Define common variables
@@ -88,11 +90,11 @@ export default async function() {
   resizeWindow();
 
   await Promise.all([
-    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka01.jpg'),
-    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka02.jpg'),
-    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka03.jpg'),
-    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka04.jpg'),
-    PromiseTextureLoader('/sketch-threejs/img/sketch/dissolve/osaka05.jpg'),
+    texLoader.loadAsync('/sketch-threejs/img/sketch/dissolve/osaka01.jpg'),
+    texLoader.loadAsync('/sketch-threejs/img/sketch/dissolve/osaka02.jpg'),
+    texLoader.loadAsync('/sketch-threejs/img/sketch/dissolve/osaka03.jpg'),
+    texLoader.loadAsync('/sketch-threejs/img/sketch/dissolve/osaka04.jpg'),
+    texLoader.loadAsync('/sketch-threejs/img/sketch/dissolve/osaka05.jpg'),
   ]).then((response) => {
     image.start(resolution, response);
   });
