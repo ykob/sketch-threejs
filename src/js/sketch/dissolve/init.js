@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Image from './Image';
 
 const texLoader = new THREE.TextureLoader();
@@ -64,14 +63,6 @@ export default async function() {
     renderer.setSize(resolution.x, resolution.y);
   };
   const on = () => {
-    // window.addEventListener('blur', () => {
-    //   // this window is inactive.
-    //   clock.stop();
-    // });
-    // window.addEventListener('focus', () => {
-    //   // this window is inactive.
-    //   clock.start();
-    // });
     window.addEventListener('resize', debounce(resizeWindow, 1000));
   };
 
