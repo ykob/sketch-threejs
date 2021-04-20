@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import sleep from 'js-util/sleep';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import Points from './Points';
 
@@ -14,6 +12,7 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define unique variables
@@ -38,7 +37,7 @@ export default class WebGLContent {
     renderer.setClearColor(0x0e0e0e, 1.0);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/splash/noise.png'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/splash/noise.png'),
     ]).then((response) => {
       const noiseTex = response[0];
 

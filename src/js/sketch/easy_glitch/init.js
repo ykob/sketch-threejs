@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
 import sleep from 'js-util/sleep';
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 
 import Typo from './Typo';
 import Debris from './Debris';
@@ -24,6 +23,7 @@ export default async function() {
   const clock = new THREE.Clock({
     autoStart: false
   });
+  const texLoader = new THREE.TextureLoader();
 
   // For the preloader.
   const preloader = document.querySelector('.p-preloader');
@@ -104,8 +104,8 @@ export default async function() {
   camera.lookAt(new THREE.Vector3());
 
   await Promise.all([
-    PromiseTextureLoader('../img/sketch/easy_glitch/typo.png'),
-    PromiseTextureLoader('../img/sketch/easy_glitch/noise.png'),
+    texLoader.loadAsync('../img/sketch/easy_glitch/typo.png'),
+    texLoader.loadAsync('../img/sketch/easy_glitch/noise.png'),
   ]).then(response => {
     textures = response;
   });

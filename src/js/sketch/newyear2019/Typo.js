@@ -1,7 +1,6 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
 
-import promiseTextureLoader from '../../common/PromiseTextureLoader';
+const texLoader = new THREE.TextureLoader();
 
 export default class Typo extends THREE.Mesh {
   constructor() {
@@ -39,7 +38,7 @@ export default class Typo extends THREE.Mesh {
     this.isOver = false;
   }
   async loadTexture() {
-    this.material.uniforms.tex.value = await promiseTextureLoader(
+    this.material.uniforms.tex.value = await texLoader.loadAsync(
       '/sketch-threejs/img/sketch/newyear2019/typo.png'
     );
   }

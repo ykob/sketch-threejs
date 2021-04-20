@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import MathEx from 'js-util/MathEx';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 import Camera from './Camera';
@@ -23,6 +22,7 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 const objLoader = new OBJLoader();
+const texLoader = new THREE.TextureLoader();
 
 // For the post effect.
 const renderTarget1 = new THREE.WebGLRenderTarget();
@@ -42,7 +42,6 @@ const fogs = [];
 const lookPosition = new THREE.Vector3();
 const panPosition = new THREE.Vector3();
 let lookIndex = 0;
-let lookTimer = 0;
 
 const bg = new Background();
 
@@ -78,9 +77,9 @@ export default class WebGLContent {
 
     await Promise.all([
       objLoader.loadAsync('/sketch-threejs/model/crystal/crystal.obj'),
-      PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/normal.jpg'),
-      PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/surface.jpg'),
-      PromiseTextureLoader('/sketch-threejs/img/sketch/crystal/fog.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/crystal/normal.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/crystal/surface.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/crystal/fog.jpg'),
     ])
     .then((response) => {
       crystalGeometries = response[0].children.map((mesh) => {

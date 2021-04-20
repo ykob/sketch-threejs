@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-import PromiseTextureLoader from '../../common/PromiseTextureLoader';
 import Camera from './Camera';
 import ImageGroup from './ImageGroup';
 
@@ -13,6 +12,7 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define unique variables
@@ -35,10 +35,10 @@ export default class WebGLContent {
     renderer.setClearColor(0x0e0e0e, 1.0);
 
     await Promise.all([
-      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/noise.png'),
-      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/image01.jpg'),
-      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/image02.jpg'),
-      PromiseTextureLoader('/sketch-threejs/img/sketch/burn/image03.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/burn/noise.png'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/burn/image01.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/burn/image02.jpg'),
+      texLoader.loadAsync('/sketch-threejs/img/sketch/burn/image03.jpg'),
     ]).then((response) => {
       const noiseTex = response[0];
       const imgTexes = response.slice(1);
