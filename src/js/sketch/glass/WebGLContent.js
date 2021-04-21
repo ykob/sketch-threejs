@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import Camera from './Camera';
 import Glass from './Glass';
+import Background from './Background';
 
 // ==========
 // Define common variables
@@ -15,12 +16,14 @@ const clock = new THREE.Clock({
   autoStart: false
 });
 const objLoader = new OBJLoader();
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define unique variables
 //
 let glass;
 let controls;
+const bg = new Background();
 
 // ==========
 // Define WebGLContent Class.
@@ -45,13 +48,16 @@ export default class WebGLContent {
     
     await Promise
       .all([
-        objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj')
+        objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj'),
+        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/landscape.jpg')
       ])
       .then((response) => {
         glass = new Glass(response[0].children[0].geometry);
+        bg.start(response[1]);
       });
-    scene.add(glass);
-    camera.start();
+      scene.add(glass);
+      scene.add(bg);
+      camera.start();
   }
   play() {
     clock.start();
