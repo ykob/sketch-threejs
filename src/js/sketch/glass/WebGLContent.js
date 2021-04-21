@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import Camera from './Camera';
 import Glass from './Glass';
@@ -19,6 +20,7 @@ const objLoader = new OBJLoader();
 // Define unique variables
 //
 let glass;
+let controls;
 
 // ==========
 // Define WebGLContent Class.
@@ -34,7 +36,13 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
-
+    
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.dampingFactor = 0.1;
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.enableZoom = false;
+    
     await Promise
       .all([
         objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj')
@@ -63,6 +71,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    controls.update();
 
     // Render the 3D scene.
     renderer.render(scene, camera);
