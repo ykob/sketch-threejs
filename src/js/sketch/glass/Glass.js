@@ -1,13 +1,10 @@
 import * as THREE from 'three';
 
-import vs from './glsl/Mesh.vs';
-import fs from './glsl/Mesh.fs';
+import vs from './glsl/Glass.vs';
+import fs from './glsl/Glass.fs';
 
-export default class Mesh extends THREE.Mesh {
-  constructor() {
-    // Define Geometry
-    const geometry = new THREE.BoxGeometry(10, 10, 10);
-
+export default class Glass extends THREE.Mesh {
+  constructor(geometry) {
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
@@ -21,7 +18,7 @@ export default class Mesh extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Mesh';
+    this.name = 'Glass';
     this.isActive = false;
   }
   start() {

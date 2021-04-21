@@ -1,6 +1,8 @@
 import * as THREE from 'three';
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 
 import Camera from './Camera';
+import Glass from './Glass';
 
 // ==========
 // Define common variables
@@ -11,10 +13,12 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+const objLoader = new OBJLoader();
 
 // ==========
 // Define unique variables
 //
+let glass;
 
 // ==========
 // Define WebGLContent Class.
@@ -22,7 +26,7 @@ const clock = new THREE.Clock({
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
+  async start(canvas) {
     renderer = new THREE.WebGL1Renderer({
       alpha: true,
       antialias: true,
@@ -31,6 +35,14 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x0e0e0e, 1.0);
 
+    await Promise
+      .all([
+        objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj')
+      ])
+      .then((response) => {
+        glass = new Glass(response[0].children[0].geometry);
+      });
+    scene.add(glass);
     camera.start();
   }
   play() {
