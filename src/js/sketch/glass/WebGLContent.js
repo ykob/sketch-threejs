@@ -51,13 +51,14 @@ export default class WebGLContent {
       .all([
         objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj'),
         texLoader.loadAsync('/sketch-threejs/img/sketch/glass/landscape.jpg'),
-        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/displace.jpg')
+        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/displace.jpg'),
+        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/noise.jpg')
       ])
       .then((response) => {
-        response[2].wrapT = THREE.RepeatWrapping;
-        response[2].wrapS = THREE.RepeatWrapping;
+        response[2].wrapT = response[2].wrapS = THREE.RepeatWrapping;
+        response[3].wrapT = response[3].wrapS = THREE.RepeatWrapping;
         glass = new Glass(response[0].children[0].geometry);
-        glass.start(renderTarget.texture, response[2]);
+        glass.start(renderTarget.texture, response[2], response[3]);
         bg.start(response[1]);
       });
       scene.add(glass);
@@ -82,7 +83,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
-    controls.update();
+    glass.update(time);
 
     // Render the 3D scene.
     glass.visible = false;
@@ -91,6 +92,8 @@ export default class WebGLContent {
     glass.visible = true;
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
+
+    controls.update();
   }
   resize(resolution) {
     camera.resize(resolution);

@@ -20,7 +20,7 @@ void main(void) {
   vPosition = mPosition.xyz;
   vUv = uv;
   vNormal = (viewMatrix * modelMatrix * vec4(normal, 1.0)).xyz;
-  vEdge = pow(smoothstep(0.25, 1.0, abs(sin(angleToCamera))), 3.0);
+  vEdge = pow(smoothstep(0.0, 1.0, abs(sin(angleToCamera))), 3.0);
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
 }
