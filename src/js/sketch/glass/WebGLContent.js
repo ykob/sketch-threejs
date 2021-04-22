@@ -50,15 +50,18 @@ export default class WebGLContent {
     await Promise
       .all([
         objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj'),
-        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/landscape.jpg')
+        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/landscape.jpg'),
+        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/displace.jpg')
       ])
       .then((response) => {
+        response[2].wrapT = THREE.RepeatWrapping;
+        response[2].wrapS = THREE.RepeatWrapping;
         glass = new Glass(response[0].children[0].geometry);
+        glass.start(renderTarget.texture, response[2]);
         bg.start(response[1]);
       });
       scene.add(glass);
       scene.add(bg);
-      glass.start(renderTarget.texture);
       camera.start();
   }
   play() {

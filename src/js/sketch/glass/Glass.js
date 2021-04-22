@@ -16,6 +16,9 @@ export default class Glass extends THREE.Mesh {
         },
         tScene: {
           value: null
+        },
+        tDisplace: {
+          value: null
         }
       },
       vertexShader: vs,
@@ -27,9 +30,12 @@ export default class Glass extends THREE.Mesh {
     this.name = 'Glass';
     this.isActive = false;
   }
-  start(tScene) {
+  start(tScene, tDisplace) {
+    const { uniforms } = this.material;
+
+    uniforms.tScene.value = tScene;
+    uniforms.tDisplace.value = tDisplace;
     this.isActive = true;
-    this.material.uniforms.tScene.value = tScene;
   }
   update(time) {
     if (this.isActive === false) return;
