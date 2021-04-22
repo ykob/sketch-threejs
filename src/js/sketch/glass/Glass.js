@@ -10,6 +10,12 @@ export default class Glass extends THREE.Mesh {
       uniforms: {
         time: {
           value: 0
+        },
+        resolution: {
+          value: new THREE.Vector2()
+        },
+        tScene: {
+          value: null
         }
       },
       vertexShader: vs,
@@ -21,11 +27,15 @@ export default class Glass extends THREE.Mesh {
     this.name = 'Glass';
     this.isActive = false;
   }
-  start() {
+  start(tScene) {
     this.isActive = true;
+    this.material.uniforms.tScene.value = tScene;
   }
   update(time) {
     if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
+  }
+  resize(resolution) {
+    this.material.uniforms.resolution.value.copy(resolution);
   }
 }

@@ -24,6 +24,7 @@ const texLoader = new THREE.TextureLoader();
 let glass;
 let controls;
 const bg = new Background();
+const renderTarget = new THREE.WebGLRenderTarget();
 
 // ==========
 // Define WebGLContent Class.
@@ -57,6 +58,7 @@ export default class WebGLContent {
       });
       scene.add(glass);
       scene.add(bg);
+      glass.start(renderTarget.texture);
       camera.start();
   }
   play() {
@@ -80,10 +82,17 @@ export default class WebGLContent {
     controls.update();
 
     // Render the 3D scene.
+    glass.visible = false;
+    renderer.setRenderTarget(renderTarget);
+    renderer.render(scene, camera);
+    glass.visible = true;
+    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   resize(resolution) {
     camera.resize(resolution);
+    glass.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
+    renderTarget.setSize(resolution.x, resolution.y);
   }
 }
