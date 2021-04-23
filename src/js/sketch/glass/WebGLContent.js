@@ -51,7 +51,7 @@ export default class WebGLContent {
       .all([
         objLoader.loadAsync('/sketch-threejs/model/glass/glass.obj'),
         texLoader.loadAsync('/sketch-threejs/img/sketch/glass/landscape.jpg'),
-        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/displace.jpg'),
+        texLoader.loadAsync('/sketch-threejs/img/sketch/glass/roughness.jpg'),
         texLoader.loadAsync('/sketch-threejs/img/sketch/glass/noise.jpg')
       ])
       .then((response) => {

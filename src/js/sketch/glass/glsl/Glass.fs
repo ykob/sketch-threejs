@@ -3,7 +3,7 @@ precision highp float;
 uniform float time;
 uniform vec2 resolution;
 uniform sampler2D tScene;
-uniform sampler2D tDisplace;
+uniform sampler2D tRoughness;
 uniform sampler2D tNoise;
 
 varying vec3 vPosition;
@@ -16,11 +16,11 @@ varying float vEdge;
 void main() {
   vec2 uv = gl_FragCoord.xy / resolution * 0.7 + 0.15;
   vec4 tSceneColor = texture2D(tScene, uv + vNormal.xy * 0.3);
-  vec4 tDisplaceColor = texture2D(tDisplace, vUv);
+  vec4 tRoughnessColor = texture2D(tRoughness, vUv);
   vec4 tNoiseColor = texture2D(tNoise, vUv);
   float str =
-    (1.0 - tDisplaceColor.r) * 0.45 +
-    vEdge * 0.55;
+    length(tRoughnessColor.r) * 0.8 +
+    vEdge * 0.5;
   vec3 hsv = vec3(
     0.45 + sin(radians(tNoiseColor.r * 360.0) + time) * 0.08 + cos(radians(tNoiseColor.g * 360.0) + time * 2.0) * 0.08,
     0.25 - str * 0.24,
