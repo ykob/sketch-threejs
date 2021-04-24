@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "glass": {
+      "title": "glass",
+      "id": "glass",
+      "description": "I made an object that has refraction of light like glass. It's distorting the frame buffer of the landscape with normals.",
+      "path": "/sketch/glass.html",
+      "posted": "2021.4.24",
+      "update": "",
+      "color": "white"
+    },
     "fire_ball_2": {
       "title": "fire ball 2",
       "id": "fire_ball_2",
