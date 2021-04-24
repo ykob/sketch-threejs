@@ -25,7 +25,8 @@ export default class Glass extends THREE.Mesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs
+      fragmentShader: fs,
+      transparent: true
     });
 
     // Create Object3D
