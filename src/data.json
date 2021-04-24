@@ -15,9 +15,9 @@
     "glass": {
       "title": "glass",
       "id": "glass",
-      "description": "",
+      "description": "I made an object that has refraction of light like glass. It's distorting the frame buffer of the landscape with normals.",
       "path": "/sketch/glass.html",
-      "posted": "2021.x.x",
+      "posted": "2021.4.24",
       "update": "",
       "color": "white"
     },
