@@ -23,4 +23,21 @@
     line-height: 1.5;
     margin: 10px 0 0;
   }
+  &__assets {
+    display: flex;
+    margin-top: 8px;
+    margin-bottom: 0;
+    dd {
+      margin: 0;
+    }
+    ul {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      margin-left: 12px;
+    }
+  }
 }
