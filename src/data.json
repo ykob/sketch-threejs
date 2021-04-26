@@ -19,7 +19,17 @@
       "path": "/sketch/glass.html",
       "posted": "2021.4.24",
       "update": "",
-      "color": "white"
+      "color": "white",
+      "assets": [
+        {
+          "name": "Stone Texture",
+          "link": "https://cc0textures.com/view?id=Marble012"
+        },
+        {
+          "name": "HDRI Image",
+          "link": "https://hdrihaven.com/hdri/?c=skies&h=table_mountain_1"
+        }
+      ]
     },
     "fire_ball_2": {
       "title": "fire ball 2",
