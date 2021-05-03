@@ -12,6 +12,15 @@
       "path": "/",
       "color": "white"
     },
+    "water": {
+      "title": "water",
+      "id": "water",
+      "description": "",
+      "path": "/sketch/water.html",
+      "posted": "2021.5.x",
+      "update": "",
+      "color": "black"
+    },
     "glass": {
       "title": "glass",
       "id": "glass",
