@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import Camera from './Camera';
+import Water from './Water';
 
 // ==========
 // Define common variables
@@ -11,10 +12,12 @@ const camera = new Camera();
 const clock = new THREE.Clock({
   autoStart: false
 });
+const texLoader = new THREE.TextureLoader();
 
 // ==========
 // Define unique variables
 //
+const water = new Water();
 
 // ==========
 // Define WebGLContent Class.
@@ -22,8 +25,8 @@ const clock = new THREE.Clock({
 export default class WebGLContent {
   constructor() {
   }
-  start(canvas) {
-    renderer = new THREE.WebGL1Renderer({
+  async start(canvas) {
+    renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
       canvas: canvas,
@@ -31,7 +34,16 @@ export default class WebGLContent {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0xf9f9f9, 1.0);
 
-    camera.start();
+    await Promise
+      .all([
+        texLoader.loadAsync('/sketch-threejs/img/sketch/water/normal.jpg')
+      ])
+      .then((response) => {
+        response[0].wrapT = response[0].wrapS = THREE.RepeatWrapping;
+        water.start(response[0]);
+      });
+      camera.start();
+      scene.add(water);
   }
   play() {
     clock.start();
@@ -51,6 +63,7 @@ export default class WebGLContent {
     camera.update(time);
 
     // Update each objects.
+    water.update(time);
 
     // Render the 3D scene.
     renderer.render(scene, camera);

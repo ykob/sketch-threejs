@@ -1,18 +1,21 @@
 import * as THREE from 'three';
 
-import vs from './glsl/Mesh.vs';
-import fs from './glsl/Mesh.fs';
+import vs from './glsl/Water.vs';
+import fs from './glsl/Water.fs';
 
-export default class Mesh extends THREE.Mesh {
+export default class Water extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.BoxGeometry(10, 10, 10);
+    const geometry = new THREE.PlaneGeometry(24, 24);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: {
           value: 0
+        },
+        tNormal: {
+          value: null
         }
       },
       vertexShader: vs,
@@ -21,14 +24,12 @@ export default class Mesh extends THREE.Mesh {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'Mesh';
-    this.isActive = false;
+    this.name = 'Water';
   }
-  start() {
-    this.isActive = true;
+  start(tNormal) {
+    this.material.uniforms.tNormal.value = tNormal;
   }
   update(time) {
-    if (this.isActive === false) return;
     this.material.uniforms.time.value += time;
   }
 }
