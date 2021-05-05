@@ -6,7 +6,7 @@ import fs from './glsl/Water.fs';
 export default class Water extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneGeometry(24, 24);
+    const geometry = new THREE.PlaneGeometry(30, 30);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
