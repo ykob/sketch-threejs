@@ -55,6 +55,7 @@
     "vinyl-source-stream": "^2.0.0",
     "webpack": "^5.36.2",
     "webpack-stream": "^6.1.2",
+    "xmlhttprequest-ssl": "^1.6.2",
     "yargs": "^17.0.1"
   },
   "dependencies": {
