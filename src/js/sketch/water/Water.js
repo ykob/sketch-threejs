@@ -14,6 +14,12 @@ export default class Water extends THREE.Mesh {
         time: {
           value: 0
         },
+        resolution: {
+          value: new THREE.Vector2()
+        },
+        tScene: {
+          value: null
+        },
         tNormal: {
           value: null
         }
@@ -26,10 +32,16 @@ export default class Water extends THREE.Mesh {
     super(geometry, material);
     this.name = 'Water';
   }
-  start(tNormal) {
-    this.material.uniforms.tNormal.value = tNormal;
+  start(tScene, tNormal) {
+    const { uniforms } = this.material;
+
+    uniforms.tScene.value = tScene;
+    uniforms.tNormal.value = tNormal;
   }
   update(time) {
     this.material.uniforms.time.value += time;
+  }
+  resize(resolution) {
+    this.material.uniforms.resolution.value.copy(resolution);
   }
 }
