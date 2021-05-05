@@ -7,7 +7,6 @@ uniform vec2 resolution;
 uniform sampler2D tScene;
 uniform sampler2D tNormal;
 
-varying vec3 vPosition;
 varying vec2 vUv;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
