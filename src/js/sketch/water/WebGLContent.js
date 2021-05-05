@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import Camera from './Camera';
 import Water from './Water';
 import Image from './Image';
+import Background from './Background';
 
 // ==========
 // Define common variables
@@ -20,6 +21,7 @@ const texLoader = new THREE.TextureLoader();
 //
 const water = new Water();
 const image = new Image();
+const bg = new Background();
 const renderTarget = new THREE.WebGLRenderTarget();
 
 // ==========
@@ -48,9 +50,10 @@ export default class WebGLContent {
         image.start(response[1]);
       });
       camera.start();
-      image.position.set(0, 0, -5);
+      image.position.set(0, 0, -10);
       scene.add(image);
       scene.add(water);
+      scene.add(bg);
   }
   play() {
     clock.start();

@@ -28,7 +28,7 @@ void main() {
   vec3 rgb = convertHsvToRgb(hsv);
 
   vec2 uv = gl_FragCoord.xy / resolution;
-  vec4 tSceneColor = texture2D(tScene, uv + normal.xy * 0.15);
+  vec4 tSceneColor = texture2D(tScene, uv + normal.xy * 0.2);
 
-  gl_FragColor = vec4(rgb + pow(diffuse * 2.0, 30.0) * 0.5, 1.0) + tSceneColor;
+  gl_FragColor = vec4(rgb + pow(diffuse * 2.0, 30.0) * 0.2, 1.0) + tSceneColor;
 }
