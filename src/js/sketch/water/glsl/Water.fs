@@ -20,9 +20,9 @@ void main() {
   vec3 light = normalize(vec3(0.0, 1.0, 0.5));
   float diffuse = clamp(dot(normal, light), 0.0, 1.0);
   vec3 hsv = vec3(
-    0.46 - diffuse * 2.0,
+    0.46 - diffuse,
     1.0,
-    diffuse * 2.0 - 0.6
+    diffuse - 0.6
   );
   vec3 rgb = convertHsvToRgb(hsv);
 
