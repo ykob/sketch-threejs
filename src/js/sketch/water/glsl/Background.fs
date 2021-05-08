@@ -1,16 +1,14 @@
 precision highp float;
 
-varying vec2 vUv;
+varying vec3 vPosition;
 
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
 
 void main() {
-  vec3 hsv = vec3(
-    0.8 - vUv.y * 0.5,
-    0.5,
-    0.9
-  );
-  vec3 rgb = convertHsvToRgb(hsv);
+  float alpha = vPosition.z / 100.0 * 0.5 + 0.5;
+  vec3 hsv1 = vec3(0.49, 0.5, 0.7);
+  vec3 hsv2 = vec3(1.1, 0.1, 0.9);
+  vec3 rgb = mix(convertHsvToRgb(hsv1), convertHsvToRgb(hsv2), alpha);
 
   gl_FragColor = vec4(rgb, 1.0);
 }
