@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import Camera from './Camera';
 import Water from './Water';
@@ -23,6 +24,7 @@ const water = new Water();
 const image = new Image();
 const bg = new Background();
 const renderTarget = new THREE.WebGLRenderTarget();
+let controls;
 
 // ==========
 // Define WebGLContent Class.
@@ -38,6 +40,12 @@ export default class WebGLContent {
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0xf9f9f9, 1.0);
+
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.dampingFactor = 0.1;
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.enableZoom = false;
 
     await Promise
       .all([
@@ -82,6 +90,8 @@ export default class WebGLContent {
     water.visible = true;
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
+
+    controls.update();
   }
   resize(resolution) {
     camera.resize(resolution);
