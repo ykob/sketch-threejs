@@ -50,7 +50,7 @@ export default class WebGLContent {
         image.start(response[1]);
       });
       camera.start();
-      image.position.set(0, 0, -10);
+      image.position.set(0, 0, -5);
       scene.add(image);
       scene.add(water);
       scene.add(bg);
