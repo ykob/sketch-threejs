@@ -42,6 +42,7 @@ http://opensource.org/licenses/mit-license.php
 
 ### Excluded files from the MIT License
 
+- Textures these are using on the sketch "glass".
 - 3D model that is using on the sketch "skull".
 - 3D model and texture these are using on the sketch "crystal".
 - 3D model that is using on the sketch "newyear2019".
