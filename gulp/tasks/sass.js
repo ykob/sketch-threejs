@@ -5,7 +5,7 @@ const conf = require('../conf').sass;
 
 gulp.task('sass', () => {
   return gulp.src(conf.src)
-    .pipe($.sass().on('error', $.sass.logError))
+    .pipe($.dartSass().on('error', $.dartSass.logError))
     .pipe($.autoprefixer({
       browsers: conf.browsers,
       cascade: false
