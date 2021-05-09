@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>glass │ sketch of three.js</title>
+    <title>water │ sketch of three.js</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
-    <meta name="description" content="I made an object that has refraction of light like glass. It's distorting the frame buffer of the landscape with normals.">
+    <meta name="description" content="Distort the scene with the water surface normal map.">
     <meta name="keywords" content="undefined, Yoichi Kobayashi, WebGL, three.js">
     <meta name="theme-color" content="#111111">
     <meta name="msapplication-TileImage" content="/sketch-threejs/img/common/ms_tileimage.png">
@@ -13,28 +13,28 @@
     <link rel="shortcut icon" href="/sketch-threejs/img/common/icon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/sketch-threejs/img/common/app_icon.png">
     <link rel="stylesheet" href="/sketch-threejs/css/main.min.css">
-    <meta property="og:title" content="glass │ sketch of three.js">
+    <meta property="og:title" content="water │ sketch of three.js">
     <meta property="og:site_name">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="I made an object that has refraction of light like glass. It's distorting the frame buffer of the landscape with normals.">
-    <meta property="og:url" content="http://ykob.github.io/sketch-threejs/sketch/glass.html">
-    <meta property="og:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_glass.jpg">
+    <meta property="og:description" content="Distort the scene with the water surface normal map.">
+    <meta property="og:url" content="http://ykob.github.io/sketch-threejs/sketch/water.html">
+    <meta property="og:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_water.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="glass │ sketch of three.js">
-    <meta name="twitter:description" content="I made an object that has refraction of light like glass. It's distorting the frame buffer of the landscape with normals.">
-    <meta name="twitter:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_glass.jpg">
+    <meta name="twitter:title" content="water │ sketch of three.js">
+    <meta name="twitter:description" content="Distort the scene with the water surface normal map.">
+    <meta name="twitter:image" content="http://ykob.github.io/sketch-threejs/img/common/ogp_water.jpg">
   </head>
   <body>
-    <div class="l-page l-page--white" data-id="glass">
+    <div class="l-page l-page--black" data-id="water">
       <div class="p-preloader">
-        <div class="p-preloader__box p-preloader__box--white p-preloader__box--01"></div>
-        <div class="p-preloader__box p-preloader__box--white p-preloader__box--02"></div>
-        <div class="p-preloader__box p-preloader__box--white p-preloader__box--03"></div>
+        <div class="p-preloader__box p-preloader__box--black p-preloader__box--01"></div>
+        <div class="p-preloader__box p-preloader__box--black p-preloader__box--02"></div>
+        <div class="p-preloader__box p-preloader__box--black p-preloader__box--03"></div>
       </div>
       <div class="p-website-outline">
-        <h1 class="p-website-outline__title"><a class="c-text-link" href="../" target=""><span class="c-text-link__label">sketch of three.js</span><span class="c-text-link__bg c-text-link__bg--white"></span></a>
+        <h1 class="p-website-outline__title"><a class="c-text-link" href="../" target=""><span class="c-text-link__label">sketch of three.js</span><span class="c-text-link__bg c-text-link__bg--black"></span></a>
         </h1>
-        <p class="p-website-outline__description">created by <a class="c-text-link" href="https://www.tplh.net/" target="_blank"><span class="c-text-link__label">yoichi kobayashi.</span><span class="c-text-link__bg c-text-link__bg--white"></span></a>
+        <p class="p-website-outline__description">created by <a class="c-text-link" href="https://www.tplh.net/" target="_blank"><span class="c-text-link__label">yoichi kobayashi.</span><span class="c-text-link__bg c-text-link__bg--black"></span></a>
         </p>
         <div class="p-website-outline__links"><a class="p-website-outline__link" href="https://github.com/ykob/sketch-threejs/" target="_blank">
             <svg width="24" height="23.411042944785276" viewBox="0 0 32.6 31.8">
@@ -48,24 +48,22 @@
             </svg></a></div>
       </div>
       <div class="p-sketch-outline">
-        <h2 class="p-sketch-outline__title">glass</h2>
-        <p class="p-sketch-outline__date">posted: 2021.4.24 
+        <h2 class="p-sketch-outline__title">water</h2>
+        <p class="p-sketch-outline__date">posted: 2021.5.9 
         </p>
-        <p class="p-sketch-outline__description">I made an object that has refraction of light like glass. It's distorting the frame buffer of the landscape with normals.</p>
+        <p class="p-sketch-outline__description">Distort the scene with the water surface normal map.</p>
         <dl class="p-sketch-outline__assets">
           <dt>Assets:</dt>
           <dd> 
             <ul>
-              <li><a class="c-text-link" href="https://cc0textures.com/view?id=Marble012" target="_blank"><span class="c-text-link__label">Stone Texture</span><span class="c-text-link__bg c-text-link__bg--white"></span></a>
-              </li>
-              <li><a class="c-text-link" href="https://hdrihaven.com/hdri/?c=skies&amp;h=table_mountain_1" target="_blank"><span class="c-text-link__label">HDRI Image</span><span class="c-text-link__bg c-text-link__bg--white"></span></a>
+              <li><a class="c-text-link" href="https://www.cgtrader.com/3d-model-collections/ocean-8k" target="_blank"><span class="c-text-link__label">Ocean Textures</span><span class="c-text-link__bg c-text-link__bg--black"></span></a>
               </li>
             </ul>
           </dd>
         </dl>
       </div>
       <canvas class="p-canvas-webgl" id="canvas-webgl"></canvas>
-      <div class="p-utility-menu"><a class="c-button c-button--white" href="/sketch-threejs/"><span class="c-button__icon c-button__icon--back c-button__icon--white"></span><span class="c-button__label"><span class="js-split-str">b</span><span class="js-split-str">a</span><span class="js-split-str">c</span><span class="js-split-str">k</span></span></a></div>
+      <div class="p-utility-menu"><a class="c-button c-button--black" href="/sketch-threejs/"><span class="c-button__icon c-button__icon--back c-button__icon--black"></span><span class="c-button__label"><span class="js-split-str">b</span><span class="js-split-str">a</span><span class="js-split-str">c</span><span class="js-split-str">k</span></span></a></div>
     </div>
     <script src="/sketch-threejs/js/main.min.js"></script>
     <script>
