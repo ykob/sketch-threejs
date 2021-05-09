@@ -12,6 +12,21 @@
       "path": "/",
       "color": "white"
     },
+    "water": {
+      "title": "water",
+      "id": "water",
+      "description": "Distort the scene with the water surface normal map.",
+      "path": "/sketch/water.html",
+      "posted": "2021.5.9",
+      "update": "",
+      "color": "black",
+      "assets": [
+        {
+          "name": "Ocean Textures",
+          "link": "https://www.cgtrader.com/3d-model-collections/ocean-8k"
+        }
+      ]
+    },
     "glass": {
       "title": "glass",
       "id": "glass",

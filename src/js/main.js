@@ -18,6 +18,7 @@ if (pageId == 'index') {
   });
 
   switch (pageId) {
+    case 'water':        require('./sketch/water/init.js').default(); break;
     case 'glass':        require('./sketch/glass/init.js').default(); break;
     case 'fire_ball_2':  require('./sketch/fire_ball_2/init.js').default(); break;
     case 'flow_field_5': require('./sketch/flow_field_5/init.js').default(); break;
