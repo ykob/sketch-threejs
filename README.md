@@ -12,7 +12,7 @@ https://www.paypal.me/ykob
 
 ## Requirements
 
-Node > v10.x
+Node >=12.x <15
 
 ## Usage
 
