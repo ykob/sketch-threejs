@@ -6,7 +6,7 @@ import fs from './glsl/Image.fs';
 export default class Image extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneGeometry(27, 27);
+    const geometry = new THREE.PlaneGeometry(30, 30);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({

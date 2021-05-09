@@ -30,7 +30,7 @@ void main() {
   float edgeGradual = (1.0 - smoothstep(0.5, 1.0, length(p)));
 
   vec2 uv = gl_FragCoord.xy / resolution;
-  vec4 tSceneColor = texture2D(tScene, uv + normal.xy * 0.4);
+  vec4 tSceneColor = texture2D(tScene, uv + normal.xy * 0.1);
 
   gl_FragColor = vec4((rgb + diffuse) * edgeGradual + tSceneColor.rgb, 1.0);
 }
