@@ -31,6 +31,7 @@ export default class Water extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Water';
+    this.rotation.x = Math.PI / 180 * -90;
   }
   start(tScene, tNormal) {
     const { uniforms } = this.material;

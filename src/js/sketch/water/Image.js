@@ -25,6 +25,8 @@ export default class Image extends THREE.Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'Image';
+    this.rotation.x = Math.PI / 180 * -90;
+    this.position.y = -5;
   }
   start(tImage) {
     this.material.uniforms.tImage.value = tImage;
