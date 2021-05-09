@@ -46,6 +46,7 @@ export default class WebGLContent {
     controls.enableDamping = true;
     controls.enablePan = false;
     controls.enableZoom = false;
+    controls.maxPolarAngle = Math.PI / 180 * 80;
 
     await Promise
       .all([
