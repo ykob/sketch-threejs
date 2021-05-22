@@ -1,14 +1,11 @@
-const THREE = require('three');
-const debounce = require('js-util/debounce');
+import * as THREE from 'three';
+import debounce from 'js-util/debounce';
 
-const normalizeVector2 = require('../../common/normalizeVector2').default;
+import normalizeVector2 from '../../common/normalizeVector2';
+import Force2 from '../../old/Force2';
+import ForceCamera from '../../old/ForceCamera';
 
 export default function() {
-
-  const Util = require('../../old/util');
-  const Force2 = require('../../old/Force2');
-  const ForceCamera = require('../../old/ForceCamera');
-
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGL1Renderer({
     antialias: true,
