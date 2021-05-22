@@ -1,18 +1,16 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
+
+import normalizeVector2 from '../../common/normalizeVector2';
+import Force2 from '../../old/Force2';
+import ForceCamera from '../../old/ForceCamera';
 import ForcePointLight from '../../old/ForcePointLight';
 import ForceHemisphereLight from '../../old/ForceHemisphereLight';
-
-const normalizeVector2 = require('../../common/normalizeVector2').default;
+import Mover from '../../old/Mover';
+import Points from '../../old/Points';
+import Util from '../../old/util';
 
 export default function() {
-
-  const Util = require('../../old/util');
-  const Force2 = require('../../old/Force2');
-  const Mover = require('../../old/Mover');
-  const Points = require('../../old/Points.js');
-  const ForceCamera = require('../../old/ForceCamera');
-
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGL1Renderer({
     antialias: true,

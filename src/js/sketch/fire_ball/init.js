@@ -1,16 +1,14 @@
 import * as THREE from 'three';
 import debounce from 'js-util/debounce';
-import ForcePointLight from '../../old/ForcePointLight';
 
-const normalizeVector2 = require('../../common/normalizeVector2').default;
+import normalizeVector2 from '../../common/normalizeVector2';
+import ForceCamera from '../../old/ForceCamera';
+import ForcePointLight from '../../old/ForcePointLight';
+import Mover from '../../old/Mover';
+import Points from '../../old/Points';
+import Util from '../../old/util';
 
 export default function() {
-
-  const util = require('../../old/util');
-  const Mover = require('../../old/Mover');
-  const Points = require('../../old/Points');
-  const ForceCamera = require('../../old/ForceCamera');
-
   const canvas = document.getElementById('canvas-webgl');
   const renderer = new THREE.WebGL1Renderer({
     antialias: true,
@@ -71,17 +69,17 @@ export default function() {
       for (var i = 0; i < movers.length; i++) {
         var mover = movers[i];
         if (mover.is_active) continue;
-        var rad1 = util.getRadian(Math.log(util.getRandomInt(0, 256)) / Math.log(256) * 260);
-        var rad2 = util.getRadian(util.getRandomInt(0, 360));
-        var range = (1- Math.log(util.getRandomInt(32, 256)) / Math.log(256)) * 12;
+        var rad1 = Util.getRadian(Math.log(Util.getRandomInt(0, 256)) / Math.log(256) * 260);
+        var rad2 = Util.getRadian(Util.getRandomInt(0, 360));
+        var range = (1- Math.log(Util.getRandomInt(32, 256)) / Math.log(256)) * 12;
         var vector = new THREE.Vector3();
-        var force = util.getPolarCoord(rad1, rad2, range);
+        var force = Util.getPolarCoord(rad1, rad2, range);
         vector.add(points.velocity);
         mover.activate();
         mover.init(vector);
         mover.applyForce(force);
         mover.a = 0.2;
-        mover.size = Math.pow(12 - range, 2) * util.getRandomInt(1, 24) / 10;
+        mover.size = Math.pow(12 - range, 2) * Util.getRandomInt(1, 24) / 10;
         count++;
         if (count >= 6) break;
       }
@@ -133,11 +131,11 @@ export default function() {
   const initSketch = () => {
     for (var i = 0; i < movers_num; i++) {
       var mover = new Mover();
-      var h = util.getRandomInt(0, 45);
-      var s = util.getRandomInt(60, 90);
+      var h = Util.getRandomInt(0, 45);
+      var s = Util.getRandomInt(60, 90);
       var color = new THREE.Color('hsl(' + h + ', ' + s + '%, 50%)');
 
-      mover.init(new THREE.Vector3(util.getRandomInt(-100, 100), 0, 0));
+      mover.init(new THREE.Vector3(Util.getRandomInt(-100, 100), 0, 0));
       movers.push(mover);
       positions[i * 3 + 0] = mover.velocity.x;
       positions[i * 3 + 1] = mover.velocity.y;
@@ -160,8 +158,8 @@ export default function() {
     scene.add(light);
     bg = createBackground();
     scene.add(bg);
-    camera.setPolarCoord(util.getRadian(25), 0, 1000);
-    light.setPolarCoord(util.getRadian(25), 0, 200);
+    camera.setPolarCoord(Util.getRadian(25), 0, 1000);
+    light.setPolarCoord(Util.getRadian(25), 0, 200);
   }
 
   //
