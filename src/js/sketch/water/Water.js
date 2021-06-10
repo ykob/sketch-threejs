@@ -6,7 +6,7 @@ import fs from './glsl/Water.fs';
 export default class Water extends THREE.Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneGeometry(80, 80);
+    const geometry = new THREE.PlaneGeometry(30, 30);
 
     // Define Material
     const material = new THREE.RawShaderMaterial({
@@ -14,14 +14,14 @@ export default class Water extends THREE.Mesh {
         time: {
           value: 0
         },
-        resolution: {
-          value: new THREE.Vector2()
-        },
-        tScene: {
+        tImage: {
           value: null
         },
         tNormal: {
           value: null
+        },
+        normalScale: {
+          value: 1
         }
       },
       vertexShader: vs,
@@ -33,16 +33,13 @@ export default class Water extends THREE.Mesh {
     this.name = 'Water';
     this.rotation.x = Math.PI / 180 * -90;
   }
-  start(tScene, tNormal) {
+  start(tImage, tNormal) {
     const { uniforms } = this.material;
 
-    uniforms.tScene.value = tScene;
+    uniforms.tImage.value = tImage;
     uniforms.tNormal.value = tNormal;
   }
   update(time) {
     this.material.uniforms.time.value += time;
-  }
-  resize(resolution) {
-    this.material.uniforms.resolution.value.copy(resolution);
   }
 }

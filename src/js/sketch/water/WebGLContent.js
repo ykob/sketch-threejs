@@ -3,7 +3,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import Camera from './Camera';
 import Water from './Water';
-import Image from './Image';
 import Background from './Background';
 
 // ==========
@@ -21,9 +20,7 @@ const texLoader = new THREE.TextureLoader();
 // Define unique variables
 //
 const water = new Water();
-const image = new Image();
 const bg = new Background();
-const renderTarget = new THREE.WebGLRenderTarget();
 let controls;
 
 // ==========
@@ -50,16 +47,14 @@ export default class WebGLContent {
 
     await Promise
       .all([
+        texLoader.loadAsync('/sketch-threejs/img/sketch/water/image.jpg'),
         texLoader.loadAsync('/sketch-threejs/img/sketch/water/normal.jpg'),
-        texLoader.loadAsync('/sketch-threejs/img/sketch/water/image.jpg')
       ])
       .then((response) => {
-        response[0].wrapT = response[0].wrapS = THREE.RepeatWrapping;
-        water.start(renderTarget.texture, response[0]);
-        image.start(response[1]);
+        response[1].wrapT = response[1].wrapS = THREE.RepeatWrapping;
+        water.start(response[0], response[1]);
       });
       camera.start();
-      scene.add(image);
       scene.add(water);
       scene.add(bg);
   }
@@ -84,19 +79,12 @@ export default class WebGLContent {
     water.update(time);
 
     // Render the 3D scene.
-    water.visible = false;
-    renderer.setRenderTarget(renderTarget);
-    renderer.render(scene, camera);
-    water.visible = true;
-    renderer.setRenderTarget(null);
     renderer.render(scene, camera);
 
     controls.update();
   }
   resize(resolution) {
     camera.resize(resolution);
-    water.resize(resolution);
     renderer.setSize(resolution.x, resolution.y);
-    renderTarget.setSize(resolution.x, resolution.y);
   }
 }
