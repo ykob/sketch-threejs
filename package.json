@@ -69,7 +69,7 @@
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
-    "three": "^0.128.0",
+    "three": "^0.137.0",
     "vue": "^2.6.12"
   }
 }
