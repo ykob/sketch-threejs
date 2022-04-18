@@ -1,5 +1,5 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 const Points = require('./Points').default;
 
 export default function() {

@@ -1,6 +1,6 @@
 const THREE = require('three');
 const glMatrix = require('gl-matrix');
-const MathEx = require('js-util/MathEx');
+const { MathEx } = require('@ykob/js-util');
 
 export default class CameraController {
   constructor(camera, focalLength) {

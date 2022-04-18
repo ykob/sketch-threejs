@@ -1,5 +1,5 @@
 const THREE = require('three');
-const MathEx = require('js-util/MathEx');
+const { MathEx } = require('@ykob/js-util');
 const SimplexNoise = require('../../vendor/simplex-noise');
 
 export default class Land {

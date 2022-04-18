@@ -1,7 +1,6 @@
 import * as THREE from 'three';
-import debounce from 'js-util/debounce';
-import sleep from 'js-util/sleep';
-import MathEx from 'js-util/MathEx';
+import { debounce } from '@ykob/js-util';
+import { sleep } from '@ykob/js-util';
 
 import BuddhaHead from './BuddhaHead';
 import Typo from './Typo';

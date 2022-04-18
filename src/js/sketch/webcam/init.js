@@ -1,6 +1,6 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
-const MathEx = require('js-util/MathEx');
+const { debounce } = require('@ykob/js-util');
+const { MathEx } = require('@ykob/js-util');
 
 const WebCamera = require('./WebCamera').default;
 const Plane = require('./Plane').default;

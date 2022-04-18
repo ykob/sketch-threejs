@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
+import { MathEx } from '@ykob/js-util';
 
 import vs from './glsl/Background.vs';
 import fs from './glsl/Background.fs';

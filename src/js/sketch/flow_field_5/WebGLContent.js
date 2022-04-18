@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
+import { MathEx } from '@ykob/js-util';
 
 import Camera from './Camera';
 import Core from './Core';

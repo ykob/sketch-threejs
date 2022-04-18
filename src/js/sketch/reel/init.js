@@ -1,5 +1,5 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 
 const Boxes = require('./Boxes.js').default;
 const Floor = require('./Floor.js').default;

@@ -1,4 +1,4 @@
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
 const Hookes = require('./Hookes').default;

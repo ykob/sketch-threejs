@@ -1,5 +1,5 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 
 import normalizeVector2 from '../../common/normalizeVector2';
 import ForceCamera from '../../old/ForceCamera';

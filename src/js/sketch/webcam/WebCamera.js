@@ -1,5 +1,5 @@
 const THREE = require('three');
-const sleep = require('js-util/sleep');
+const { sleep } = require('@ykob/js-util');
 
 export default class WebCamera {
   constructor() {

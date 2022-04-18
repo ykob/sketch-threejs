@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import MathEx from 'js-util/MathEx';
+import { MathEx } from '@ykob/js-util';
 
 const objLoader = new OBJLoader();
 const texLoader = new THREE.TextureLoader();

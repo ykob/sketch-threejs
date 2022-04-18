@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import debounce from 'js-util/debounce';
-import sleep from 'js-util/sleep';
+import { debounce } from '@ykob/js-util';
+import { sleep } from '@ykob/js-util';
 
 import Image from './Image';
 

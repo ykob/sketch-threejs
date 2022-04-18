@@ -1,6 +1,6 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
-const MathEx = require('js-util/MathEx');
+const { debounce } = require('@ykob/js-util');
+const { MathEx } = require('@ykob/js-util');
 const isiOS = require('js-util/isiOS');
 const isAndroid = require('js-util/isAndroid');
 

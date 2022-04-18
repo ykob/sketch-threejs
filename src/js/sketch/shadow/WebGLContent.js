@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import sleep from 'js-util/sleep';
+import { sleep } from '@ykob/js-util';
 
 import Camera from './Camera';
 import Blob from './Blob';

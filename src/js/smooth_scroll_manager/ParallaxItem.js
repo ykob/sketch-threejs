@@ -1,4 +1,4 @@
-const MathEx = require('js-util/MathEx');
+const { MathEx } = require('@ykob/js-util');
 const isIE = require('js-util/isIE');
 
 export default class ParallaxItem {
