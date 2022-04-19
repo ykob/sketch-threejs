@@ -1,4 +1,4 @@
-const ScrollInnerPage = require('js-util/ScrollInnerPage');
+const ScrollInnerPage = require('../old/ScrollInnerPage');
 
 export default class AnchorLink {
   constructor(elm, scrollManager) {

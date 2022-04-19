@@ -1,8 +1,8 @@
 const THREE = require('three');
 const { debounce } = require('@ykob/js-util');
 const { MathEx } = require('@ykob/js-util');
-const isiOS = require('js-util/isiOS');
-const isAndroid = require('js-util/isAndroid');
+const isiOS = require('../../old/isiOS');
+const isAndroid = require('../../old/isAndroid');
 
 const ForcePerspectiveCamera = require('../../common/ForcePerspectiveCamera').default;
 const loadTexs = require('../../common/loadTexs').default;
