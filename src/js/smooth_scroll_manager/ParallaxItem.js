@@ -1,5 +1,4 @@
 const { MathEx } = require('@ykob/js-util');
-const isIE = require('js-util/isIE');
 
 export default class ParallaxItem {
   constructor(elm, scrollManager, hookes, opt) {
@@ -34,9 +33,6 @@ export default class ParallaxItem {
       this.rangeY * -1,
       this.rangeY
     ) : 0;
-    this.elm.style.transform =
-      (isIE())
-        ? `translate(${x}${this.unitX}, ${y}${this.unitY})`
-        : `translate3D(${x}${this.unitX}, ${y}${this.unitY}, 0)`;
+    this.elm.style.transform = `translate3D(${x}${this.unitX}, ${y}${this.unitY}, 0)`;
   }
 }
