@@ -1,5 +1,5 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 const NodeText = require('./NodeText').default;
 const BackgroundSphere = require('./BackgroundSphere').default;
 

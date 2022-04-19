@@ -1,6 +1,6 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
-const MathEx = require('js-util/MathEx');
+const { debounce } = require('@ykob/js-util');
+const { MathEx } = require('@ykob/js-util');
 
 const Land = require('./Land').default;
 const Water = require('./Water').default;

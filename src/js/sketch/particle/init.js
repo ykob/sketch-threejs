@@ -1,5 +1,5 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 
 const normalizeVector2 = require('../../common/normalizeVector2').default;
 const PostEffectBright = require('./PostEffectBright.js').default;

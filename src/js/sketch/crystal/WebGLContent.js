@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
+import { MathEx } from '@ykob/js-util';
 
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 

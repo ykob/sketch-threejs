@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import debounce from 'js-util/debounce';
+import { debounce } from '@ykob/js-util';
 
 import WebGLContent from './WebGLContent';
 

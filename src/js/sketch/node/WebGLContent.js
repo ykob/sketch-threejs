@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import sleep from 'js-util/sleep';
+import { sleep } from '@ykob/js-util';
 
 import NodePoints from './NodePoints';
 import NodeLine from './NodeLine';

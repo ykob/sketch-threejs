@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import UaParser from 'ua-parser-js';
-import debounce from 'js-util/debounce';
-import sleep from 'js-util/sleep';
-import MathEx from 'js-util/MathEx';
+import { debounce } from '@ykob/js-util';
+import { sleep } from '@ykob/js-util';
+import { MathEx } from '@ykob/js-util';
 
 import BoarHead from './BoarHead';
 import Typo from './Typo';

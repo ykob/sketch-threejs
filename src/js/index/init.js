@@ -1,5 +1,5 @@
 const THREE = require('three');
-const debounce = require('js-util/debounce');
+const { debounce } = require('@ykob/js-util');
 
 const SmoothScrollManager = require('../smooth_scroll_manager/SmoothScrollManager').default;
 const TitleObject = require('./TitleObject').default;

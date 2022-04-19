@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@ykob/js-util": "^2.0.0",
     "easing-js": "git://github.com/danro/easing-js.git",
     "gl-matrix": "^3.3.0",
     "glsl-easings": "^1.0.0",
@@ -68,7 +69,6 @@
     "glsl-matrix": "git://github.com/ykob/glsl-matrix.git",
     "glsl-noise": "0.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
-    "js-util": "git://github.com/ykob/js-util.git",
     "three": "^0.128.0",
     "vue": "^2.6.12"
   }

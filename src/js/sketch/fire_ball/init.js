@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import debounce from 'js-util/debounce';
+import { debounce } from '@ykob/js-util';
 
 import normalizeVector2 from '../../common/normalizeVector2';
 import ForceCamera from '../../old/ForceCamera';

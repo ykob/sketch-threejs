@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import MathEx from 'js-util/MathEx';
+import { MathEx } from '@ykob/js-util';
 
 import MoverCore from './MoverCore';
 import MoverTrail from './MoverTrail';
