@@ -14,8 +14,8 @@ varying float vStep2;
 varying float vStep3;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
-#pragma glslify: random = require(glsl-util/random);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: random = require(@ykob/glsl-util/src/random);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 const float rgbDiff = 0.01;
 

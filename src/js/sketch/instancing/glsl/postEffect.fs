@@ -8,7 +8,7 @@ uniform float strengthGlitch;
 
 varying vec2 vUv;
 
-#pragma glslify: random = require(glsl-util/random);
+#pragma glslify: random = require(@ykob/glsl-util/src/random);
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 
 void main(void){

@@ -16,7 +16,7 @@ varying vec3 vColor;
 
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
 
 void main(void) {

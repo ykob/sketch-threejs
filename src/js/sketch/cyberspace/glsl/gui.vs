@@ -18,7 +18,7 @@ varying float vRotate1;
 varying float vRotate2;
 varying float vRotate3;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main(void) {
   // calculate colors

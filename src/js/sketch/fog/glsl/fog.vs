@@ -16,7 +16,7 @@ varying float vBlink;
 const float duration = 200.0;
 
 #pragma glslify: calcRotateMat4Z = require(glsl-matrix/calcRotateMat4Z);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main(void) {
   float now = mod(time + delay * duration, duration) / duration;

@@ -4,7 +4,7 @@ uniform float time;
 
 varying vec2 vUv;
 
-#pragma glslify: polar = require(glsl-util/polar)
+#pragma glslify: polar = require(@ykob/glsl-util/src/polar)
 
 const float radius = 100.0;
 

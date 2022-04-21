@@ -11,7 +11,7 @@ varying vec3 vColor;
 const vec3 hsv1 = vec3(0.0, 0.6, 0.4);
 const vec3 hsv2 = vec3(0.24, 0.6, 0.4);
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main(void) {
   // calculate gradation with position.y

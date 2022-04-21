@@ -8,7 +8,7 @@ varying vec3 vPosition;
 varying vec3 vMPosition;
 varying vec2 vUv;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 const float edge1 = 48.0;
 const float edge2 = 24.0;

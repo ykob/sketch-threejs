@@ -7,7 +7,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 varying float vSinAll;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   // Flat Shading

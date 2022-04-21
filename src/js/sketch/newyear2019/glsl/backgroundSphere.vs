@@ -7,7 +7,7 @@ uniform float time;
 
 varying vec3 vColor;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 #pragma glslify: ease = require(glsl-easings/exponential-out)
 
 void main(void) {

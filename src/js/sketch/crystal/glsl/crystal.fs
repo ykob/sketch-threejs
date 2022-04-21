@@ -10,7 +10,7 @@ uniform sampler2D fogTex;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   // Get normal vector from the normal map.

@@ -7,7 +7,7 @@ varying vec3 vPosition;
 const float duration = 8.0;
 const float delay = 4.0;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   float now = clamp((time - delay) / duration, 0.0, 1.0);

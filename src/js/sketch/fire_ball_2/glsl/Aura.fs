@@ -6,7 +6,7 @@ uniform vec3 acceleration;
 
 varying vec2 vUv;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main() {
   float noise1 = texture2D(noiseTex, vUv * vec2(1.0, 0.5) + vec2(0.4, -0.3) * time).r;

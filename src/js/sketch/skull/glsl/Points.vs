@@ -13,7 +13,7 @@ uniform sampler2D noiseTex;
 varying vec3 vColor;
 varying float vAlpha;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   // Coordinate transformation

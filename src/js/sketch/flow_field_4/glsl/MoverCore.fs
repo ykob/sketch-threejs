@@ -4,7 +4,7 @@ varying vec2 vUv;
 varying vec3 vColor;
 varying float vOpacity;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   vec2 p = vUv * 2.0 - 1.0;

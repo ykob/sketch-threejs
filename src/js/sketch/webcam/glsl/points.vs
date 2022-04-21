@@ -9,7 +9,7 @@ uniform float force;
 varying vec3 vColor;
 varying float vOpacity;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 const float duration = 8.0;
 
