@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@ykob/glsl-util": "github:ykob/glsl-util",
+    "@ykob/glsl-util": "^1.0.3",
     "@ykob/js-util": "^2.0.0",
     "easing-js": "git://github.com/danro/easing-js.git",
     "gl-matrix": "^3.3.0",
