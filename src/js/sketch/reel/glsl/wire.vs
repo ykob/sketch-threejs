@@ -19,7 +19,7 @@ varying mat4 vInvertMatrix;
 #pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 #pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main(void) {
   float easeStep = ease(timeHover / 0.3);

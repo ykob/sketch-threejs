@@ -10,7 +10,7 @@ varying vec3 vColor;
 varying float vOpacity;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);

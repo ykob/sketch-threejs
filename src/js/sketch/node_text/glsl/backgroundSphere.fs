@@ -7,7 +7,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 varying vec3 vColor;
 
-#pragma glslify: random = require(glsl-util/random);
+#pragma glslify: random = require(@ykob/glsl-util/src/random);
 
 void main() {
   float noise = random(vUv) * 0.08;

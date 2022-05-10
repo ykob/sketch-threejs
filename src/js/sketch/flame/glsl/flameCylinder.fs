@@ -6,7 +6,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   float noise = snoise3(

@@ -12,7 +12,7 @@ varying vec2 vUv;
 
 const float blurIteration = 12.0;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main() {
   vec4 texColor1 = texture2D(postEffectTex, vUv * 1.05 - 0.025);

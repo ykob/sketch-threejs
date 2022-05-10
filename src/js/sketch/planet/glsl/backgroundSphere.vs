@@ -7,7 +7,7 @@ uniform float addH;
 
 varying vec3 vColor;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main(void) {
   // calculate gradation with position.y

@@ -3,7 +3,7 @@ precision highp float;
 
 varying vec3 vPosition;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   // Flat Shading

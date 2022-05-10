@@ -7,7 +7,7 @@ uniform sampler2D textureNoise;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-#pragma glslify: random = require(glsl-util/random);
+#pragma glslify: random = require(@ykob/glsl-util/src/random);
 
 vec4 getGlitchColor(vec2 uv, float force) {
   vec2 r = vec2(

@@ -16,7 +16,7 @@ varying vec3 vColor;
 varying float vOpacity;
 
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d);
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   float thisTime = mod(time + i / size * interval, interval);

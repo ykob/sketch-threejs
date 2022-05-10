@@ -13,7 +13,7 @@ const vec3 lightDirection = vec3(1.0, -1.0, -1.0);
 const float duration = 2.0;
 const float delayAll = 1.0;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   float now = clamp((time - delayAll - 1.5) / duration, 0.0, 1.0);

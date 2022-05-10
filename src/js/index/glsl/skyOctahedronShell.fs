@@ -8,9 +8,9 @@ varying float vOpacity;
 const float duration = 4.0;
 const float delay = 3.0;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
-#pragma glslify: random = require(glsl-util/random);
+#pragma glslify: random = require(@ykob/glsl-util/src/random);
 
 void main() {
   float now = clamp((time - delay) / duration, 0.0, 1.0);

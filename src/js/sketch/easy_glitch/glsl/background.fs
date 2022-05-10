@@ -5,7 +5,7 @@ uniform float time;
 varying vec2 vUv;
 varying vec3 vColor;
 
-#pragma glslify: random = require(glsl-util/random);
+#pragma glslify: random = require(@ykob/glsl-util/src/random);
 
 const vec3 rgb1 = vec3(0.0 / 255.0, 0.0 / 255.0, 0.0 / 255.0);
 const vec3 rgb2 = vec3(44.0 / 255.0, 58.0 / 255.0, 83.0 / 255.0);

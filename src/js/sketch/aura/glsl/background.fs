@@ -6,7 +6,7 @@ uniform float hex;
 varying vec2 vUv;
 varying vec3 vColor;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main() {
   vec3 rgb = mix(

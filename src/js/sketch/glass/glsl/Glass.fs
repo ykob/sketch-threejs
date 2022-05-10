@@ -11,7 +11,7 @@ varying vec2 vUv;
 varying vec3 vNormal;
 varying float vEdge;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main() {
   vec2 uv = abs(gl_FragCoord.xy / resolution - vec2(0.0, 1.0));

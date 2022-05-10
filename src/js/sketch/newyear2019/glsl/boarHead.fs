@@ -10,7 +10,7 @@ varying vec3 vMPosition;
 varying vec2 vUv;
 
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 #pragma glslify: ease = require(glsl-easings/exponential-out)
 
 void main() {

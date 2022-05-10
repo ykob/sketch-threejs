@@ -10,7 +10,7 @@ varying vec2 vUv;
 
 const float blurIteration = 8.0;
 
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main() {
   // calculate blur mask.

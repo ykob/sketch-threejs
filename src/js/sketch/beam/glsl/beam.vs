@@ -15,7 +15,7 @@ varying vec3 vColor;
 
 #pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
-#pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb)
+#pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main(void) {
   // calculate posiitons of instances.
