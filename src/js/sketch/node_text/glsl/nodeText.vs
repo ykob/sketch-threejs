@@ -17,7 +17,7 @@ varying vec2 vUv;
 varying float vOpacity;
 
 #pragma glslify: easeExpoOut = require(glsl-easings/exponential-out)
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 
 void main(void) {
   // transform

@@ -13,8 +13,8 @@ varying vec3 vPosition;
 varying vec2 vUv;
 varying float vDistance;
 
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
+#pragma glslify: calcScaleMat4 = require(@ykob/glsl-util/src/calcScaleMat4);
 
 void main(void) {
   mat4 scaleMat = calcScaleMat4(vec3(scale));

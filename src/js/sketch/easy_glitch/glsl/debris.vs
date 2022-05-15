@@ -10,8 +10,8 @@ uniform float time;
 
 varying vec3 vPosition;
 
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
-#pragma glslify: calcRotateMat4Y = require(glsl-matrix/calcRotateMat4Y);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
+#pragma glslify: calcRotateMat4Y = require(@ykob/glsl-util/src/calcRotateMat4Y);
 
 void main(void) {
   // coordinate transformation

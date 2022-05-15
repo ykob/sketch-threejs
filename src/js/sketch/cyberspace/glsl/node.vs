@@ -9,7 +9,7 @@ uniform float timeShow;
 uniform float durationShow;
 
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 
 varying vec3 vPosition;
 varying vec3 vColor;

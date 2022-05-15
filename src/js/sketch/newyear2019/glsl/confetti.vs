@@ -14,7 +14,7 @@ varying vec3 vPosition;
 varying vec2 vUv;
 varying vec4 vColor;
 
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 #pragma glslify: ease = require(glsl-easings/exponential-out)
 
 const float DURATION = 5.5;

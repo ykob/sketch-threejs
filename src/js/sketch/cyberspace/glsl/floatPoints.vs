@@ -11,7 +11,7 @@ varying vec3 vColor2;
 varying float vOpacity;
 
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 
 const float duration = 3.0;
 

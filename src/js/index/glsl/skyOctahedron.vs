@@ -16,8 +16,8 @@ const float duration = 2.0;
 const float delayAll = 1.0;
 
 #pragma glslify: ease = require(glsl-easings/exponential-out)
-#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcTranslateMat4 = require(@ykob/glsl-util/src/calcTranslateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
 
 void main() {

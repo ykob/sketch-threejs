@@ -21,7 +21,7 @@ varying float vStep3;
 
 #pragma glslify: ease = require(glsl-easings/exponential-in-out);
 #pragma glslify: cnoise3 = require(glsl-noise/classic/3d);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 
 void main() {
   // Calcurate time of tranforming

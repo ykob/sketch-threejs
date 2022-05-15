@@ -6,7 +6,7 @@ uniform sampler2D texture;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-#pragma glslify: calcRotateMat3 = require(glsl-matrix/calcRotateMat3);
+#pragma glslify: calcRotateMat3 = require(@ykob/glsl-util/src/calcRotateMat3);
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main() {

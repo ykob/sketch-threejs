@@ -13,7 +13,7 @@ varying vec3 vMPosition;
 varying vec2 vUv;
 
 #pragma glslify: ease = require(glsl-easings/exponential-out)
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+#pragma glslify: calcScaleMat4 = require(@ykob/glsl-util/src/calcScaleMat4);
 
 void main(void) {
   float show = ease(min(time - 1.0, 4.0) / 4.0);

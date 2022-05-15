@@ -60,14 +60,13 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@ykob/glsl-util": "^1.0.3",
+    "@ykob/glsl-util": "^1.1.0",
     "@ykob/js-util": "^2.0.0",
     "easing-js": "git://github.com/danro/easing-js.git",
     "gl-matrix": "^3.3.0",
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",
     "glsl-inverse": "^1.0.0",
-    "glsl-matrix": "git://github.com/ykob/glsl-matrix.git",
     "glsl-noise": "0.0.0",
     "three": "^0.128.0",
     "vue": "^2.6.12"
