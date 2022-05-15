@@ -67,7 +67,6 @@
     "glsl-easings": "^1.0.0",
     "glsl-force": "git://github.com/ykob/glsl-force.git",
     "glsl-inverse": "^1.0.0",
-    "glsl-matrix": "git://github.com/ykob/glsl-matrix.git",
     "glsl-noise": "0.0.0",
     "three": "^0.128.0",
     "vue": "^2.6.12"
