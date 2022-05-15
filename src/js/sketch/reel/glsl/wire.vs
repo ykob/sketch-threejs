@@ -16,9 +16,9 @@ varying mat4 vInvertMatrix;
 
 #pragma glslify: inverse = require(glsl-inverse);
 #pragma glslify: ease = require(glsl-easings/circular-out)
-#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+#pragma glslify: calcTranslateMat4 = require(@ykob/glsl-util/src/calcTranslateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
+#pragma glslify: calcScaleMat4 = require(@ykob/glsl-util/src/calcScaleMat4);
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 void main(void) {

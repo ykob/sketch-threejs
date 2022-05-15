@@ -12,8 +12,8 @@ uniform float time;
 varying vec3 vPosition;
 varying vec3 vNormal;
 
-#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcTranslateMat4 = require(@ykob/glsl-util/src/calcTranslateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 
 void main(void) {
   float radian = radians(time);

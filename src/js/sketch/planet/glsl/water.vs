@@ -9,7 +9,7 @@ uniform float time;
 varying vec3 vPosition;
 varying float vSinAll;
 
-#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
+#pragma glslify: calcTranslateMat4 = require(@ykob/glsl-util/src/calcTranslateMat4);
 
 void main(void) {
   float sin1 = sin(time + position.x / 16.0);

@@ -15,7 +15,7 @@ varying float vBlink;
 
 const float duration = 200.0;
 
-#pragma glslify: calcRotateMat4Z = require(glsl-matrix/calcRotateMat4Z);
+#pragma glslify: calcRotateMat4Z = require(@ykob/glsl-util/src/calcRotateMat4Z);
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main(void) {

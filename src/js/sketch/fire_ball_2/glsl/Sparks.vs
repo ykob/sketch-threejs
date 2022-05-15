@@ -19,8 +19,8 @@ varying vec2 vUvDiff;
 varying float vOpacity;
 varying float vStep;
 
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
+#pragma glslify: calcScaleMat4 = require(@ykob/glsl-util/src/calcScaleMat4);
 
 void main(void) {
   float stp = iTime / iDuration;

@@ -20,8 +20,8 @@ varying vec2 vUvBase;
 varying float vOpacity;
 varying float vStep;
 
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcScaleMat4 = require(@ykob/glsl-util/src/calcScaleMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 
 void main(void) {
   vec3 move = vec3(0.0, iTime / duration * iMove, 0.0);

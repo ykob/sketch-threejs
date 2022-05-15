@@ -13,7 +13,7 @@ varying vec3 vPosition;
 varying vec3 vColor;
 varying float vOpacity;
 
-#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
+#pragma glslify: calcTranslateMat4 = require(@ykob/glsl-util/src/calcTranslateMat4);
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb);
 
 const float duration = 8.0;

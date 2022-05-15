@@ -10,8 +10,8 @@ uniform mat4 modelMatrix;
 varying vec3 vPosition;
 varying mat4 vInvertMatrix;
 
-#pragma glslify: calcTranslateMat4 = require(glsl-matrix/calcTranslateMat4);
-#pragma glslify: calcScaleMat4 = require(glsl-matrix/calcScaleMat4);
+#pragma glslify: calcTranslateMat4 = require(@ykob/glsl-util/src/calcTranslateMat4);
+#pragma glslify: calcScaleMat4 = require(@ykob/glsl-util/src/calcScaleMat4);
 #pragma glslify: inverse = require(glsl-inverse);
 
 void main(void) {

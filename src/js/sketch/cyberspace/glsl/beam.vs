@@ -13,7 +13,7 @@ varying vec2 vUv;
 varying float vDelay;
 varying vec3 vColor;
 
-#pragma glslify: calcRotateMat4 = require(glsl-matrix/calcRotateMat4);
+#pragma glslify: calcRotateMat4 = require(@ykob/glsl-util/src/calcRotateMat4);
 #pragma glslify: convertHsvToRgb = require(@ykob/glsl-util/src/convertHsvToRgb)
 
 void main(void) {
