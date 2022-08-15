@@ -1,8 +1,0 @@
-.p-preloader
-  each val in [1, 2, 3]
-    -
-      var classColor = (page.color == "white") ? 'p-preloader__box--white' : 'p-preloader__box--black';
-      var classNum = `p-preloader__box--0${val}`;
-    .p-preloader__box(
-      class = `${classColor} ${classNum}`,
-      )
