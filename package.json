@@ -9,8 +9,7 @@
   "private": true,
   "scripts": {
     "start": "npm run dev",
-    "dev": "cross-env NODE_ENV=development gulp",
-    "build": "cross-env NODE_ENV=production gulp build"
+    "build": "webpack"
   },
   "engines": {
     "node": ">=12.x <15"
