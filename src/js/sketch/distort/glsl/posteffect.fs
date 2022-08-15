@@ -17,8 +17,8 @@ vec2 diffUv(float v, float diff) {
 void main() {
   float diff = 300.0 * length(acceleration);
   vec2 uv_r = diffUv(0.0, diff);
-  vec2 uv_g = diffUv(1.0, diff);
-  vec2 uv_b = diffUv(-1.0, diff);
+  vec2 uv_g = diffUv(0.0, diff);
+  vec2 uv_b = diffUv(0.0, diff);
   float r = texture2D(texture, uv_r).r;
   float g = texture2D(texture, uv_g).g;
   float b = texture2D(texture, uv_b).b;
