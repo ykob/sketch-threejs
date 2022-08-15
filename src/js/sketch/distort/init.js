@@ -19,13 +19,12 @@ export default function() {
   // process for this sketch.
   //
   var sphere = null;
-  var bg = null;
   var light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var sub_scene = new THREE.Scene();
   var sub_camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
   var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var force = new Force2();
-  var time_unit = 1;
+  var time_unit = 0.6;
   var render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {
     magFilter: THREE.NearestFilter,
     minFilter: THREE.NearestFilter,
@@ -61,14 +60,6 @@ export default function() {
     return new THREE.Mesh(geometry, material);
   };
 
-  var createBackground = function() {
-    var geometry = new THREE.SphereGeometry(1800);
-    var material = new THREE.MeshPhongMaterial({
-      side: THREE.BackSide,
-    });
-    return new THREE.Mesh(geometry, material);
-  };
-
   var createPlaneForPostProcess = function() {
     var geometry = new THREE.PlaneGeometry(2, 2);
     var material = new THREE.ShaderMaterial({
@@ -97,11 +88,8 @@ export default function() {
   }
 
   const initSketch = () => {
-    document.body.className = 'bg-white';
     sphere = createSphere();
     sub_scene.add(sphere);
-    bg = createBackground();
-    sub_scene.add(bg);
     sub_scene.add(sub_light);
     sub_camera.force.position.anchor.set(1800, 1800, 0);
     sub_camera.force.look.anchor.set(0, 0, 0);
@@ -176,10 +164,10 @@ export default function() {
       vectorTouchStart.set(x, y);
       normalizeVector2(vectorTouchStart);
       if (force.anchor.x < 3) {
-        force.k += 0.005;
-        force.d -= 0.02;
-        force.anchor.x += 0.8;
-        time_unit += 0.4;
+        force.k += 0.00025;
+        force.d -= 0.01;
+        force.anchor.x += 0.4;
+        time_unit += 0.05;
       } else {
         force.k = 0.05;
         force.d = 0.16;
