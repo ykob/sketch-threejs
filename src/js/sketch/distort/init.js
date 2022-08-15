@@ -5,8 +5,9 @@ import normalizeVector2 from '../../common/normalizeVector2';
 import Force2 from '../../old/Force2';
 import ForceCamera from '../../old/ForceCamera';
 
-export default function() {
-  const canvas = document.getElementById('canvas-webgl');
+export default function(id, options={}) {
+  const { interactive = true } = options
+  const canvas = document.getElementById(id);
   const renderer = new THREE.WebGL1Renderer({
     antialias: false,
     canvas: canvas,
@@ -32,10 +33,12 @@ export default function() {
     wrapT: THREE.ClampToEdgeWrapping
   })
   var framebuffer = null;
+  var alpha = 1.0;
 
   var createSphere = function() {
     var geometry = new THREE.OctahedronGeometry(200, 16);
     var material = new THREE.ShaderMaterial({
+      transparent: true,
       uniforms: THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],
         {
@@ -50,6 +53,10 @@ export default function() {
           distort: {
             type: 'f',
             value: 0.4
+          },
+          alpha: {
+            type: 'f',
+            value: alpha
           }
         }
       ]),
@@ -174,34 +181,17 @@ export default function() {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
     }), 1000);
-    canvas.addEventListener('mousedown', function (event) {
-      event.preventDefault();
-      touchStart(event.clientX, event.clientY, false);
-    });
-    canvas.addEventListener('mousemove', function (event) {
-      event.preventDefault();
-      touchMove(event.clientX, event.clientY, false);
-    });
-    canvas.addEventListener('mouseup', function (event) {
-      event.preventDefault();
-      touchEnd(event.clientX, event.clientY, false);
-    });
-    canvas.addEventListener('touchstart', function (event) {
-      event.preventDefault();
-      touchStart(event.touches[0].clientX, event.touches[0].clientY, true);
-    });
-    canvas.addEventListener('touchmove', function (event) {
-      event.preventDefault();
-      touchMove(event.touches[0].clientX, event.touches[0].clientY, true);
-    });
-    canvas.addEventListener('touchend', function (event) {
-      event.preventDefault();
-      touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY, true);
-    });
-    window.addEventListener('mouseout', function () {
-      event.preventDefault();
-      mouseOut();
-    });
+    if (interactive) {
+      canvas.addEventListener('mousedown', function (event) {
+        event.preventDefault();
+        touchStart(event.clientX, event.clientY, false);
+      });
+    }
+  }
+
+  const setAlpha = newAlpha => {
+    alpha = newAlpha
+    sphere.material.uniforms.alpha.value = alpha
   }
 
   const init = () => {
@@ -216,4 +206,6 @@ export default function() {
     renderLoop();
   }
   init();
+
+  return { setAlpha }
 }
