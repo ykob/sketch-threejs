@@ -13,10 +13,6 @@
   "engines": {
     "node": ">=12.x <15"
   },
-  "browserslist": [
-    "last 2 version",
-    "IE 11"
-  ],
   "devDependencies": {
     "glslify-loader": "^2.0.0",
     "raw-loader": "^4.0.2",
