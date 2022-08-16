@@ -11,7 +11,7 @@
     "build": "webpack"
   },
   "engines": {
-    "node": ">=12.x <15"
+    "node": ">=16.x"
   },
   "devDependencies": {
     "glslify-loader": "^2.0.0",
