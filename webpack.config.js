@@ -5,7 +5,7 @@ const config = {
   mode: "development",
   entry: "./src/js/main.js",
   output: {
-    path: path.resolve(__dirname, "dst"),
+    path: path.resolve(__dirname, "static"),
     filename: "[name].js",
   },
   module: {
@@ -16,9 +16,6 @@ const config = {
         use: ["raw-loader", "glslify-loader"],
       },
     ],
-  },
-  devServer: {
-    static: "./dst",
   },
 };
 

@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
 ignore
-dst/main.js
 psd/*-assets/
+static
 .sass-cache
 !src/model/**/*
 !docs/model/**/*
