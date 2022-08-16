@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { debounce } from '@ykob/js-util';
 
 import normalizeVector2 from '../../common/normalizeVector2';
 import Force2 from '../../old/Force2';
@@ -162,6 +161,17 @@ export default function(id, options={}) {
   const setAlpha = newAlpha => {
     alpha = newAlpha
     sphere.material.uniforms.alpha.value = alpha
+  }
+
+  const debounce = (callback, duration, event) => {
+    let timer
+
+    return (event) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        callback && callback(event)
+      }, duration)
+    }
   }
 
   const init = () => {
