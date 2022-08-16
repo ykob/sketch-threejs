@@ -32,7 +32,7 @@ export default function(id, options={}) {
   var alpha = 1.0;
 
   var createSphere = function() {
-    var geometry = new THREE.OctahedronGeometry(200, 16);
+    var geometry = new THREE.OctahedronGeometry(200, 32);
     var material = new THREE.ShaderMaterial({
       transparent: true,
       uniforms: THREE.UniformsUtils.merge([
