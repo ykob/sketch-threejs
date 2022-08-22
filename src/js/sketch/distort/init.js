@@ -28,7 +28,7 @@ export default function(id, options={}) {
   var sub_camera = new ForceCamera(45, _width() / _height(), 1, 10000);
   var sub_light = new THREE.HemisphereLight(0xffffff, 0x666666, 1);
   var force = new Force2();
-  var time_unit = 0.6;
+  var time_unit = 0.4;
   var alpha = 1.0;
 
   var createSphere = function() {
