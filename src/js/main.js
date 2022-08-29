@@ -1,7 +1,6 @@
 import initDistort from './sketch/distort/init'
 
 const init = () => {
-  initDistort('canvas-webgl');
+  initDistort('canvas-webgl')
 }
-init();
-
+init()
