@@ -1,5 +1,15 @@
 # ![sketch of three.js](http://ykob.github.io/sketch-threejs/img/common/ogp_common.jpg)
 
+## ⚠️ Notice: This repository is no longer actively maintained or updated.
+
+I have moved my development efforts and newer projects to a different location.  
+For the latest updates and new experiments, please visit my new site here:  
+✨➡️ https://ykob.github.io/threejs-experiments/ ⬅️✨
+
+Thank you for your understanding!
+
+---
+
 Interactive sketches made with three.js.  
 https://ykob.github.io/sketch-threejs/
 
